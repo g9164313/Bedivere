@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_sched" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="25d7c2fc-3ceb-465a-a9d2-be9fc24c9eca">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="tenures" uuid="fd284d5d-e83d-4417-b6d3-9dc3067050fa">
+		<field name="tenure_vendor" class="java.lang.String"/>
+		<field name="tenure_serial" class="java.lang.String"/>
+		<field name="tenure_number" class="java.lang.Integer"/>
+	</subDataset>
+	<field name="owner_name" class="java.lang.String"/>
+	<field name="owner_code" class="java.lang.String"/>
+	<field name="owner_addr" class="java.lang.String"/>
+	<field name="owner_dept" class="java.lang.String"/>
+	<field name="owner_contact" class="java.lang.String"/>
+	<field name="tenure_source" class="java.lang.Object"/>
+	<field name="owner_phone" class="java.lang.String"/>
+	<field name="meet_day" class="java.lang.String"/>
+	<field name="meet_hour" class="java.lang.String"/>
+	<field name="total_tenure" class="java.lang.Integer"/>
+	<variable name="groups_total" class="java.lang.Integer" resetType="Group" resetGroup="meet_day" calculation="Sum">
+		<variableExpression><![CDATA[$F{total_tenure}]]></variableExpression>
+	</variable>
+	<group name="meet_day" keepTogether="true">
+		<groupExpression><![CDATA[$F{meet_day}]]></groupExpression>
+		<groupHeader>
+			<band height="43">
+				<line>
+					<reportElement uuid="19c8995a-4895-4319-8144-d0a4c07de049" mode="Transparent" x="0" y="3" width="554" height="1"/>
+					<graphicElement>
+						<pen lineWidth="1.0" lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement uuid="9ce35a37-3bb9-4a91-9c89-82b890b65ec6" x="53" y="6" width="87" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{meet_day}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="3403d752-7233-4430-afe0-988d64e160ac" x="1" y="26" width="52" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<paragraph tabStopWidth="10"/>
+					</textElement>
+					<text><![CDATA[代號]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="ca95fa2c-1586-4717-8218-0125d351e2f2" x="53" y="26" width="184" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<paragraph tabStopWidth="10"/>
+					</textElement>
+					<text><![CDATA[公司]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="8b794275-a8a0-4b1e-b889-a15c8259da55" x="453" y="26" width="99" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<paragraph tabStopWidth="10"/>
+					</textElement>
+					<text><![CDATA[電話]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="6b95af7a-06d6-4eea-b73f-204ee3b2c0df" x="401" y="26" width="52" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<paragraph tabStopWidth="10"/>
+					</textElement>
+					<text><![CDATA[聯絡人]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="ea444969-9e4f-4806-9488-f2c1e87ca06c" x="325" y="26" width="76" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<paragraph tabStopWidth="10"/>
+					</textElement>
+					<text><![CDATA[部門]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="dd17051b-2a97-4888-bce1-ec62eada9787" x="1" y="6" width="52" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<font isBold="false"/>
+						<paragraph tabStopWidth="10"/>
+					</textElement>
+					<text><![CDATA[預約日期：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="5508aed5-1b05-4967-8aec-103fa9b44e89" x="237" y="26" width="40" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<paragraph tabStopWidth="10"/>
+					</textElement>
+					<text><![CDATA[時間]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="cb216114-c1a7-4613-af02-322ce318b541" x="277" y="26" width="41" height="15"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<paragraph tabStopWidth="10"/>
+					</textElement>
+					<text><![CDATA[儀器數量]]></text>
+				</staticText>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="16">
+				<textField>
+					<reportElement uuid="d1d38e08-eec8-43ce-84c6-0978bfe96573" x="277" y="0" width="41" height="16"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$V{groups_total}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="34fbea82-66f4-44f9-95be-2b6d55e0dc16" x="237" y="0" width="81" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<paragraph tabStopWidth="10"/>
+					</textElement>
+					<text><![CDATA[總數量：]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<group name="owner_code">
+		<groupExpression><![CDATA[$F{owner_code}]]></groupExpression>
+		<groupHeader>
+			<band height="20">
+				<textField>
+					<reportElement uuid="ec06082c-4324-4ddd-8971-44cff94a7223" x="401" y="3" width="52" height="15"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{owner_contact}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="03724ced-1e29-4cd6-a8e6-5b104d5a88e4" x="453" y="3" width="101" height="15"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{owner_phone}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="4e6e294f-71e3-496f-b22e-fec4384e4ed3" x="1" y="3" width="52" height="15"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{owner_code}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="d076d06a-212e-46fc-9ef7-8a96297debb1" x="325" y="3" width="76" height="15"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{owner_dept}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="25073e34-c9ce-4964-9079-aaab56e9e8a5" x="237" y="3" width="40" height="15"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{meet_hour}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="edb6a64e-a8c6-43fa-946e-69b20c583c2a" x="53" y="3" width="184" height="15"/>
+					<textElement verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{owner_name}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement uuid="09c9489b-e76b-45d2-8e95-44f00c8d7815" x="277" y="3" width="41" height="15"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{total_tenure}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<title>
+		<band height="27" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="b8321f2a-338b-409e-ac13-a90c7284efd0" x="1" y="-1" width="129" height="26"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[校正日期排定表]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="16">
+			<textField>
+				<reportElement uuid="707f2c9e-49b0-4fba-be61-eaeee17842da" x="50" y="0" width="112" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Serif"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="3403d752-7233-4430-afe0-988d64e160ac" x="1" y="0" width="49" height="14"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[列印日期:]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<pageFooter>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c9baf24c-ad1b-4985-ad2d-c0aa63c8cb71" x="378" y="4" width="174" height="14"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA["第"+$V{PAGE_NUMBER}+"頁"]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

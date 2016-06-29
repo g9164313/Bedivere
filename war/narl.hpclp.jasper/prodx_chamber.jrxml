@@ -1,0 +1,680 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="prodx_chamber" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="1" uuid="4693656d-8ba0-420d-bba8-7080191798ff">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="290"/>
+	<subDataset name="scribble" uuid="22f28131-619e-4a4e-b407-e1e38e4ced4d">
+		<field name="field0" class="java.lang.String"/>
+		<field name="field1" class="java.lang.String"/>
+		<field name="field2" class="java.lang.String"/>
+		<field name="field3" class="java.lang.String"/>
+		<field name="field4" class="java.lang.String"/>
+		<field name="field5" class="java.lang.String"/>
+		<field name="field6" class="java.lang.String"/>
+		<field name="field7" class="java.lang.String"/>
+	</subDataset>
+	<field name="print_day" class="java.lang.String"/>
+	<field name="use_logo" class="java.lang.Boolean"/>
+	<field name="scribble_source" class="java.lang.Object"/>
+	<field name="agreement0" class="java.lang.String"/>
+	<field name="agreement1" class="java.lang.String"/>
+	<field name="agreement2" class="java.lang.String"/>
+	<field name="agreement3" class="java.lang.String"/>
+	<field name="material0" class="java.lang.String"/>
+	<field name="material1" class="java.lang.String"/>
+	<field name="material2" class="java.lang.String"/>
+	<field name="material3" class="java.lang.String"/>
+	<field name="material4" class="java.lang.String"/>
+	<field name="material5" class="java.lang.String"/>
+	<field name="material6" class="java.lang.String"/>
+	<field name="material7" class="java.lang.String"/>
+	<field name="material8" class="java.lang.String"/>
+	<field name="expert0" class="java.lang.String"/>
+	<field name="expert1" class="java.lang.String"/>
+	<field name="expert2" class="java.lang.String"/>
+	<field name="expert3" class="java.lang.String"/>
+	<field name="expert4" class="java.lang.String"/>
+	<field name="expert5" class="java.lang.String"/>
+	<field name="expert5.1" class="java.lang.String"/>
+	<field name="expert6" class="java.lang.String"/>
+	<field name="expert7" class="java.lang.String"/>
+	<field name="expert8" class="java.lang.String"/>
+	<field name="expert9" class="java.lang.String"/>
+	<field name="expert10" class="java.lang.String"/>
+	<field name="expert11" class="java.lang.String"/>
+	<field name="expert12" class="java.lang.String"/>
+	<field name="expert13" class="java.lang.String"/>
+	<field name="expert14" class="java.lang.String"/>
+	<field name="expert15" class="java.lang.String"/>
+	<field name="title0" class="java.lang.String"/>
+	<field name="title1" class="java.lang.String"/>
+	<field name="title1.1" class="java.lang.String"/>
+	<field name="title2" class="java.lang.String"/>
+	<field name="title3" class="java.lang.String"/>
+	<field name="title3.1" class="java.lang.String"/>
+	<field name="title4" class="java.lang.String"/>
+	<field name="title4.1" class="java.lang.String"/>
+	<field name="title5" class="java.lang.String"/>
+	<field name="title5.1" class="java.lang.String"/>
+	<field name="title6" class="java.lang.String"/>
+	<field name="title7" class="java.lang.String"/>
+	<field name="title7.1" class="java.lang.String"/>
+	<group name="grp">
+		<groupExpression><![CDATA[$F{material0}+$F{material1}+$F{material2}]]></groupExpression>
+		<groupFooter>
+			<band height="235">
+				<line>
+					<reportElement uuid="03c48e91-0848-4543-a8f5-1a6e70db243d" x="-1" y="0" width="555" height="1"/>
+					<graphicElement>
+						<pen lineWidth="4.25" lineStyle="Double"/>
+					</graphicElement>
+				</line>
+				<staticText>
+					<reportElement uuid="f0561a36-987d-4266-b2e3-9cd613c247e9" x="8" y="17" width="48" height="18"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="標楷體" size="11"/>
+					</textElement>
+					<text><![CDATA[備註：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="3d53ee1c-62d7-44b2-9c02-bd5025bb0395" x="8" y="35" width="492" height="15"/>
+					<textElement>
+						<font fontName="標楷體" size="11"/>
+						<paragraph tabStopWidth="20"/>
+					</textElement>
+					<text><![CDATA[	1. 校正因子 ＝ 參考值÷實際值 。]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="bc3fc526-6e53-4a69-8b49-c715da2fc79d" x="8" y="50" width="492" height="15"/>
+					<textElement>
+						<font fontName="標楷體" size="11"/>
+						<paragraph tabStopWidth="20"/>
+					</textElement>
+					<text><![CDATA[	2. 實際值 ＝ 器示值 × 溫壓修正因數 ( F )  。]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="1fe99572-2ad5-4d2c-8ccf-ee57828a026b" x="8" y="65" width="492" height="15"/>
+					<textElement>
+						<font fontName="標楷體" size="11"/>
+						<paragraph tabStopWidth="20"/>
+					</textElement>
+					<text><![CDATA[	3. 溫壓修正因數之計算公式如下 ：]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="d3a6a829-2c0d-4d00-8933-93bcd2519589" x="8" y="95" width="217" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="標楷體" size="11"/>
+						<paragraph tabStopWidth="20"/>
+					</textElement>
+					<text><![CDATA[	4. 本儀器之參考標準值對校正射源應乘]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="08f1b788-f47f-4053-9489-f651dda11fa0" x="225" y="95" width="63" height="15"/>
+					<textElement textAlignment="Center" verticalAlignment="Top">
+						<font fontName="標楷體" size="11" isBold="false" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+						<paragraph lineSpacing="1_1_2" tabStopWidth="20"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{expert15}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement uuid="f8c57b6a-728d-4de3-8e76-29fa21985410" x="225" y="110" width="61" height="1"/>
+				</line>
+				<staticText>
+					<reportElement uuid="59d96e3d-7f7b-4a04-ba71-b4378c179ef5" x="8" y="127" width="544" height="15"/>
+					<textElement>
+						<font fontName="標楷體" size="11"/>
+						<paragraph tabStopWidth="20"/>
+					</textElement>
+					<text><![CDATA[	6. 送校單位可以自由使用此報告，但須整份使用，不得任意摘錄。]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="54c2c0e3-1480-4590-9cfe-f07cfa830be6" x="8" y="142" width="544" height="15"/>
+					<textElement>
+						<font fontName="標楷體" size="11"/>
+						<paragraph tabStopWidth="20"/>
+					</textElement>
+					<text><![CDATA[	7. 校正方法依據 ANSI N323A ( 1997 ) 之規範，自訂 HPCLP－02 方法執行]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="fa0db385-b8b1-4244-822f-0b20108cb40c" x="8" y="172" width="544" height="25"/>
+					<textElement>
+						<font fontName="標楷體" size="11"/>
+						<paragraph tabStopWidth="20"/>
+					</textElement>
+					<textFieldExpression><![CDATA["	   校正報告編號："+$F{expert11}+"。"]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="81ad30bf-42c0-4d28-b2bd-c197a1dbcde3" x="287" y="95" width="14" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="標楷體" size="11" isUnderline="false"/>
+					</textElement>
+					<text><![CDATA[。]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="ae144487-5fd4-4479-a516-5b622a7c8c54" x="8" y="80" width="492" height="15"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="標楷體" size="11"/>
+						<paragraph tabStopWidth="20"/>
+					</textElement>
+					<text><![CDATA[		F = ( ( 273.2 / T ) / ( 273.2 + 22 ) ) × ( 101.3 / P )]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="e7482604-0411-4a91-bdbe-0646da33c71b" x="8" y="197" width="544" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="標楷體" size="14" isBold="true"/>
+						<paragraph tabStopWidth="20"/>
+					</textElement>
+					<text><![CDATA[	校驗單位：										報告簽署人： ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="276ca409-0dda-4fb6-89ab-8c58396653ec" x="8" y="157" width="544" height="15"/>
+					<textElement>
+						<font fontName="標楷體" size="11"/>
+						<paragraph tabStopWidth="20"/>
+					</textElement>
+					<text><![CDATA[	8. 校正追溯：標準游離腔 PTW TM32002 序號：298 已追溯至中華民國國家游離輻射標準。]]></text>
+				</staticText>
+				<textField>
+					<reportElement uuid="4b5f3a19-0723-47c6-9e12-55ad6ba00d67" x="28" y="111" width="524" height="16"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="標楷體" size="11"/>
+					</textElement>
+					<textFieldExpression><![CDATA["5. 本報告的擴充不確定度，係以組合標準不確定度乘以涵蓋因子 "+$F{expert12}+" 來表示，相應之涵蓋機率約為 "+$F{expert13}+" 。"]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<pageHeader>
+		<band height="116" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="74a5540e-5304-49bb-8bfe-4831c8f09758" positionType="Float" x="205" y="0" width="146" height="31"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="標楷體" size="22" isBold="true"/>
+				</textElement>
+				<text><![CDATA[校正報告]]></text>
+			</staticText>
+			<line>
+				<reportElement uuid="99de98f1-d946-4eb7-b0be-86e1e5702d84" x="1" y="33" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="4.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="43f50eba-6bd5-4ea4-b94a-b8b70d98c9d9" positionType="Float" x="160" y="64" width="243" height="24"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="標楷體" size="14"/>
+				</textElement>
+				<text><![CDATA[輕便型輻射偵檢儀校正實驗室]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da5d7295-25b3-4323-bf07-c6a7efbe85c3" positionType="Float" x="160" y="40" width="243" height="24"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="標楷體" size="14"/>
+				</textElement>
+				<text><![CDATA[國立清華大學原子科學技術發展中心]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0f150041-29aa-4b83-a810-30c81abbbbc9" positionType="Float" x="125" y="95" width="304" height="14"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="標楷體" size="8" isBold="false"/>
+				</textElement>
+				<text><![CDATA[新竹市光復路二段101號          FAX:（03）5722660          TEL:（03）5745157]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="6a1510ca-862a-449e-893a-21de76d5d605" x="466" y="19" width="90" height="12"/>
+				<textElement textAlignment="Right" verticalAlignment="Bottom">
+					<font fontName="DejaVu Serif" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{print_day}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement uuid="ade195d9-b54f-4e4f-8359-6d6c845c0c6d" x="474" y="45" width="68" height="61">
+					<printWhenExpression><![CDATA[$F{use_logo}]]></printWhenExpression>
+				</reportElement>
+				<imageExpression><![CDATA["tfa_logo.jpg"]]></imageExpression>
+			</image>
+			<line>
+				<reportElement uuid="31501bd7-ba90-4047-b753-f8d1949a7c0f" x="0" y="113" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="4.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="7aa96e46-c642-4144-91ad-2de45dcbb221" x="1" y="95" width="140" height="14"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體" size="8"/>
+				</textElement>
+				<text><![CDATA[共 1頁 第 1頁]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="250" splitType="Stretch">
+			<textField>
+				<reportElement uuid="c96cec2e-7108-40fd-80b6-a9d0af3812a4" x="286" y="70" width="91" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="02165a33-0d8f-41aa-8d4e-79e8ef7ebb8b" x="286" y="110" width="91" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expert3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="161403fe-2840-494c-b7fd-b13ec2ed2f39" x="465" y="50" width="90" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expert1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="cbb890b3-4f9d-45bc-b7b9-a31bbb0cdd22" x="0" y="30" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[單位地址	：]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="157d6eb4-6006-4d25-8a43-74ede9597e5f" x="465" y="70" width="90" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bf06c25f-089f-403f-8a94-24595381d293" x="86" y="90" width="114" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material3}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="225d9526-fe54-4430-bea8-53a417d15595" x="378" y="110" width="87" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[相對濕度	：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="9736bdeb-7831-4dc4-a593-bde38fdd6d35" x="0" y="150" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[校正射源活度	：]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="f37e673c-5004-477a-bdef-9da0907b6a49" x="86" y="50" width="114" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agreement1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="4f5c6b61-f3bb-4bd8-bb76-43e687a18b4b" x="0" y="90" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[偵檢器		：]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="0d4f3f85-4595-45b3-9c7b-2d038dc26344" x="86" y="70" width="114" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material0}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="30e058c1-0e96-4d0f-b58e-04d66269c41e" x="0" y="50" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[單位代號	：]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="cd1e861d-bea0-4d7d-8e31-02e0480854d1" x="86" y="10" width="469" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agreement0}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="da4561dd-f3ea-42bb-a987-b3c94e9283f9" x="0" y="110" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[環境溫度	：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="22edb2a9-f812-4d8e-9934-7499f4dac4d3" x="200" y="50" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[報告編號	：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="3b9b51da-8c72-4237-a57c-4cb1b1b0fa5b" x="200" y="110" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[大氣壓力	：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="97c1c55b-4851-430a-8854-da8346d74c31" x="378" y="90" width="87" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[偵檢器序號	：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fc6c3351-1544-47d6-b321-d7faf391f46e" x="200" y="70" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[儀器型號	：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="facf378c-3c35-4b41-a478-f2a06f7b480a" x="378" y="70" width="87" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[儀器序號	：]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="cc8115e5-1e48-423f-a650-06801b65f15e" x="86" y="30" width="469" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agreement2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="f7f3617e-5ba5-4439-a2f4-ace6e93d88cc" x="86" y="130" width="114" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expert7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ac0705fb-0803-4eda-8383-d1be3203238b" x="286" y="130" width="91" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expert5}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="18bb195b-bd3c-4c94-8717-b8c59eee6845" x="465" y="110" width="90" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expert4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="fcb10eb5-462d-42d8-bf7b-6181922f883a" x="378" y="50" width="87" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[校正日期	：]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e8fd26d2-8119-4c12-aa8e-70c33068cabc" x="286" y="90" width="91" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material4}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="91f910de-44b2-43a8-84b1-d872337b9a2a" x="378" y="130" width="87" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[器示值單位	：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="b372279c-5052-4363-b10a-3bbd89cfa1c5" x="200" y="90" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[偵檢器型號	：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="2eabe10f-0410-450d-886c-050fb732f03c" x="0" y="70" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[儀器廠牌	：]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5618ab72-c8d8-48d8-8330-346dd7a09f12" x="465" y="130" width="90" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expert5.1}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="c8ecf2d1-332f-44cc-af4c-494a186aa2e1" x="0" y="130" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[校正射源	：]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="5a0d082e-360d-4fe2-8d78-23abf87d8f23" x="286" y="50" width="91" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expert0}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="69a03e9c-5446-4531-9392-ec91e01d1a28" x="86" y="110" width="114" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expert2}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="bc736f18-2789-4ec9-831b-c5499d7d0e13" x="200" y="130" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[參考值單位	：]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="9b6f9fa3-3a11-4e2e-a8d9-640e7f60fdfe" x="465" y="90" width="90" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{material5}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="b79ad12c-f270-4dd0-85bd-e51eba585ac0" x="0" y="10" width="86" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="12" isBold="false"/>
+					<paragraph tabStopWidth="37"/>
+				</textElement>
+				<text><![CDATA[單位名稱	：]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e9b529ee-cb09-485f-b96a-4ab9e7244f0a" x="86" y="150" width="469" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{expert9}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="f8ebf3b2-8bde-4413-9bde-48db96bd950b" x="0" y="175" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="4.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement uuid="59e212f6-7979-41e5-b3ff-b0e3b14e20b7" x="465" y="182" width="87" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title7}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e67259eb-b221-47d7-9183-97888d2179c9" x="217" y="182" width="88" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title4}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5a8a7f39-c2ee-4b0e-a100-51905f73cf48" x="217" y="202" width="88" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title4.1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6c562173-05b4-44e7-adb2-0821cc840a79" x="138" y="202" width="80" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title3.1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="43eef382-9e01-426a-9916-3b7f00feef8e" x="385" y="182" width="80" height="36"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title6}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="5cc932cf-38d5-4a80-a7b2-49b79c2c7c37" x="53" y="202" width="85" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="DejaVu Serif" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title1.1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="54970640-c3e4-401d-9e7b-17810c5a6221" x="305" y="182" width="80" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title5}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="ba23a8e1-4496-4bbb-87ee-a377b9b4ab09" x="305" y="202" width="80" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title5.1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="dba0952e-d0fe-4d8a-8572-284a43ebf238" x="0" y="182" width="53" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title0}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="904f21b4-f786-4912-9733-5d100a7f456d" x="138" y="182" width="80" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="437eaba2-384b-4d6b-a56d-0d37b37c2343" x="53" y="182" width="85" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title1}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement uuid="56355976-58b6-4afa-ad92-6b4af92f7e69" x="0" y="223" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="4.25" lineStyle="Double"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement uuid="91b53f7d-bab9-41ba-8ddd-12399720174a" x="465" y="202" width="87" height="16"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{title7.1}]]></textFieldExpression>
+			</textField>
+			<componentElement>
+				<reportElement uuid="e649fb3f-7e96-4087-b629-b95d6d7ce391" x="1" y="229" width="555" height="17"/>
+				<jr:list xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" printOrder="Vertical">
+					<datasetRun subDataset="scribble" uuid="3fca269d-1dab-4510-8a31-50851b1228c3">
+						<dataSourceExpression><![CDATA[$F{scribble_source}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:listContents height="17" width="555">
+						<textField>
+							<reportElement uuid="55207c39-e117-4cd6-80a3-bed8191ab2d2" x="53" y="0" width="85" height="16"/>
+							<textElement textAlignment="Center" verticalAlignment="Bottom">
+								<font fontName="標楷體" size="12"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{field1}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="358a45cf-b3bf-4b06-a6ab-327ebf676eac" x="305" y="0" width="79" height="16"/>
+							<textElement textAlignment="Justified" verticalAlignment="Bottom">
+								<font fontName="標楷體" size="12"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{field5}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="a4fec1a1-8774-42aa-9d23-37bbc6267fd6" x="217" y="0" width="87" height="16"/>
+							<textElement textAlignment="Justified" verticalAlignment="Bottom">
+								<font fontName="標楷體" size="12"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{field4}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="64f63be2-24dc-464d-90bf-ffdf8a11ca54" x="7" y="0" width="46" height="16"/>
+							<textElement verticalAlignment="Top">
+								<font fontName="標楷體" size="12"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{field0}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="2ef4353e-e6d6-4967-9a2c-68d936fd29e1" x="465" y="0" width="86" height="16"/>
+							<textElement textAlignment="Center" verticalAlignment="Bottom">
+								<font fontName="標楷體" size="12"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{field7}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="32b96691-c26d-47b8-b6df-8aea2ba28f81" x="384" y="0" width="81" height="16"/>
+							<textElement textAlignment="Justified" verticalAlignment="Bottom">
+								<font fontName="標楷體" size="12"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{field6}]]></textFieldExpression>
+						</textField>
+						<textField>
+							<reportElement uuid="9ef3dec4-da0f-4854-b38c-eb6accda738a" x="138" y="0" width="80" height="16"/>
+							<textElement textAlignment="Justified" verticalAlignment="Bottom">
+								<font fontName="標楷體" size="12"/>
+							</textElement>
+							<textFieldExpression><![CDATA[$F{field3}]]></textFieldExpression>
+						</textField>
+					</jr:listContents>
+				</jr:list>
+			</componentElement>
+		</band>
+	</detail>
+</jasperReport>

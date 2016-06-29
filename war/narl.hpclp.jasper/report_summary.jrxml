@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_summary" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ed5ef986-4ed5-4866-8313-9bc63c6eac30">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="36"/>
+	<property name="ireport.y" value="0"/>
+	<field name="o_code" class="java.lang.String"/>
+	<field name="o_name" class="java.lang.String"/>
+	<field name="o_dept" class="java.lang.String"/>
+	<field name="p_cnt" class="java.lang.Integer"/>
+	<field name="p_day" class="java.util.Date"/>
+	<variable name="sum_cnt" class="java.lang.Integer" resetType="Group" resetGroup="day" calculation="Sum">
+		<variableExpression><![CDATA[$F{p_cnt}]]></variableExpression>
+	</variable>
+	<variable name="total_cnt" class="java.lang.Integer" calculation="Sum">
+		<variableExpression><![CDATA[$F{p_cnt}]]></variableExpression>
+	</variable>
+	<group name="day" keepTogether="true">
+		<groupExpression><![CDATA[$F{p_day}]]></groupExpression>
+		<groupHeader>
+			<band height="21">
+				<textField pattern="yyyy/MM/dd">
+					<reportElement uuid="09c73215-b0a2-4dcf-a136-96511d79205f" x="0" y="0" width="129" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="標楷體"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{p_day}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band height="27">
+				<line>
+					<reportElement uuid="84ee499c-9bff-4f21-8809-bdddad24e000" mode="Transparent" x="0" y="20" width="554" height="1"/>
+					<graphicElement>
+						<pen lineWidth="1.0" lineStyle="Solid"/>
+					</graphicElement>
+				</line>
+				<textField>
+					<reportElement uuid="948398a9-634c-4b26-8687-8ed2deb4b6a4" x="474" y="0" width="80" height="20"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="標楷體"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$V{sum_cnt}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement uuid="472b1efa-c761-4c4e-827f-cb677104d37f" x="373" y="1" width="91" height="19"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font fontName="標楷體"/>
+					</textElement>
+					<text><![CDATA[本日件數：]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<title>
+		<band height="30" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="96ee061c-a896-4641-91f5-d1c7af390323" x="0" y="0" width="129" height="26"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[統計校正報告]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement uuid="bc1c355f-4cef-48c8-ab19-0342b336fa7a" x="0" y="0" width="49" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{o_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="47ec0081-3913-43d7-9a00-687c996b27d6" x="373" y="0" width="91" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{o_dept}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6791ea4c-8e1c-4b60-af96-acd26598bbf0" x="474" y="0" width="80" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{p_cnt}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="193121fd-00ee-48bd-92f9-1e9b787558e3" x="49" y="0" width="324" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{o_name}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="26" splitType="Stretch"/>
+	</pageFooter>
+	<lastPageFooter>
+		<band height="24">
+			<textField>
+				<reportElement uuid="32cefccb-ae72-4abb-b40f-a1b9014d6e55" x="473" y="0" width="81" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{total_cnt}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="30580668-44b1-4454-8e3b-9ce7bc125291" x="372" y="0" width="91" height="20"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font fontName="標楷體"/>
+				</textElement>
+				<text><![CDATA[累積件數：]]></text>
+			</staticText>
+		</band>
+	</lastPageFooter>
+</jasperReport>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_service" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="571" leftMargin="12" rightMargin="12" topMargin="11" bottomMargin="11" isFloatColumnFooter="true" uuid="a85d5df8-820f-4afb-b63d-ac7746095ef9">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="60"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#FFBFBF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="SetFare" uuid="dc61955e-4a98-4563-9617-0d1064301027">
+		<field name="fare_name" class="java.lang.String"/>
+		<field name="fare_fee" class="java.lang.String"/>
+		<field name="fare_count" class="java.lang.String"/>
+		<field name="fare_cost" class="java.lang.String"/>
+		<field name="fare_memo" class="java.lang.String"/>
+		<field name="fare_total" class="java.lang.String"/>
+	</subDataset>
+	<subDataset name="dataset1" uuid="4a21f6d1-eb28-40ae-bb08-74cf6fd2d6b8"/>
+	<subDataset name="dataset2" uuid="26495075-c0fb-43d2-a770-8d68f16afbf6"/>
+	<subDataset name="dataset3" uuid="530869e0-1288-42d7-b971-b39726b9cf75"/>
+	<field name="owner_key" class="java.lang.String"/>
+	<field name="owner_name" class="java.lang.String"/>
+	<field name="account_key" class="java.lang.String"/>
+	<field name="account_stamp" class="java.lang.String"/>
+	<field name="fare_set" class="java.lang.Object"/>
+	<group name="aky" isStartNewPage="true">
+		<groupExpression><![CDATA[$F{account_key}]]></groupExpression>
+		<groupFooter>
+			<band height="238">
+				<staticText>
+					<reportElement uuid="1b87b230-f4fd-4989-92c0-56cdeb77117e" x="73" y="25" width="196" height="18"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="標楷體" size="14"/>
+					</textElement>
+					<text><![CDATA[輕便型輻射偵檢儀校正實驗室       ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="ab4d5ab1-f22a-4f2b-851f-6ab15d67cb16" x="2" y="84" width="71" height="18"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="標楷體" size="14"/>
+					</textElement>
+					<text><![CDATA[附    註：
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="d94f430c-2480-4c41-be98-ba9481cc25cf" x="2" y="25" width="71" height="18"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="標楷體" size="14"/>
+					</textElement>
+					<text><![CDATA[主辦單位：
+]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="d754fad4-c4d9-4b27-8b90-59f190ded822" x="73" y="46" width="196" height="18"/>
+					<textElement verticalAlignment="Top">
+						<font fontName="標楷體" size="14"/>
+					</textElement>
+					<text><![CDATA[原子科學技術發展中心       ]]></text>
+				</staticText>
+				<staticText>
+					<reportElement uuid="9a3c80e3-450c-431c-9992-7231939a0736" x="73" y="84" width="498" height="154"/>
+					<textElement markup="styled">
+						<font fontName="標楷體" size="14"/>
+						<paragraph lineSpacing="1_1_2"/>
+					</textElement>
+					<text><![CDATA[１.委辦單位收到通知單後，請將技術服務費用於一個月內匯入
+   台灣銀行新竹分行<u>015-036-07004-1</u>帳號，<u>國立清華大學401專戶</u>。
+２.請於匯款人處註明單位名稱、繳款單號次。
+３.手續費請繳款單位自行支付。]]></text>
+				</staticText>
+			</band>
+		</groupFooter>
+	</group>
+	<pageHeader>
+		<band height="86" splitType="Stretch">
+			<staticText>
+				<reportElement uuid="8338ffe6-a026-43c2-8411-fffd54077085" x="0" y="0" width="581" height="70"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="標楷體" size="17" isBold="true"/>
+					<paragraph lineSpacing="1_1_2"/>
+				</textElement>
+				<text><![CDATA[國 立 清 華 大 學
+技 術 服 務 費 用 通 知 單]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="153" splitType="Stretch">
+			<componentElement>
+				<reportElement uuid="395c776d-92fa-43a3-b863-b3d90d0a62f2" key="table" style="table" x="2" y="50" width="569" height="87"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
+					<datasetRun subDataset="SetFare" uuid="72d2fb23-412d-46d8-9e04-f43423bfad85">
+						<dataSourceExpression><![CDATA[$F{fare_set}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:column width="160" uuid="d7ce1c6a-91d8-41ce-9143-0bca575dc400">
+						<jr:tableHeader style="table_TH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="b84a4c4d-fc24-42cf-ba5e-58584613e391" x="0" y="0" width="160" height="25"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Serif" size="12"/>
+								</textElement>
+								<text><![CDATA[服務項目]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="25" rowSpan="1">
+							<textField>
+								<reportElement uuid="5dcbc128-2ef0-4c7a-ae8c-3c604f572fc1" x="7" y="0" width="153" height="25"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Serif" size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fare_name}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="84" uuid="8ac8ef37-7b04-41d1-a69d-10c4649f1730">
+						<jr:tableHeader style="table_TH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="7c2716ab-aa8c-4608-b752-3b46c12a910c" x="0" y="0" width="84" height="25"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Serif" size="12"/>
+								</textElement>
+								<text><![CDATA[金額]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="25" rowSpan="1">
+							<textField>
+								<reportElement uuid="f9674f09-d59d-4d38-926f-3835733b4349" x="0" y="0" width="81" height="25"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="DejaVu Serif" size="11"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fare_fee}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="89" uuid="9ebaabdc-710b-4059-99b1-7524c0cbbd8e">
+						<jr:tableHeader style="table_TH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="67afd0d0-5998-46a0-847e-65ae9067eb58" x="0" y="0" width="89" height="25"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Serif" size="12"/>
+								</textElement>
+								<text><![CDATA[數量]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter height="21" rowSpan="1">
+							<staticText>
+								<reportElement uuid="faea123f-4220-4efa-9a3f-31a5d35669ff" x="0" y="0" width="89" height="21"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="Serif" size="12"/>
+								</textElement>
+								<text><![CDATA[總金額：＄]]></text>
+							</staticText>
+						</jr:tableFooter>
+						<jr:detailCell style="table_TD" height="25" rowSpan="1">
+							<textField>
+								<reportElement uuid="41ccd5c7-a25e-44a9-84fc-249b8bcb16cf" x="0" y="0" width="85" height="25"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="DejaVu Serif" size="11"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fare_count}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="93" uuid="780d75f2-ae4c-4cb7-8a04-45c4aa456e83">
+						<jr:tableHeader style="table_TH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="6478a341-9da7-4734-ba02-b478201acd25" x="0" y="0" width="93" height="25"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Serif" size="12"/>
+								</textElement>
+								<text><![CDATA[費用]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter height="21" rowSpan="1">
+							<textField>
+								<reportElement uuid="062d0f58-65fc-4902-b876-e0507cfdcb2d" x="0" y="0" width="87" height="21"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="DejaVu Serif" size="12"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fare_total}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:detailCell style="table_TD" height="25" rowSpan="1">
+							<textField>
+								<reportElement uuid="4ed71835-e5e1-4626-8180-6eedd15b465f" x="0" y="0" width="87" height="25"/>
+								<textElement textAlignment="Right" verticalAlignment="Middle">
+									<font fontName="DejaVu Serif" size="11"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fare_cost}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+					<jr:column width="115" uuid="60778a92-59aa-4f63-b206-f01f423bde9b">
+						<jr:tableHeader style="table_TH" height="25" rowSpan="1">
+							<staticText>
+								<reportElement uuid="5c96b975-fde3-4210-941e-a3d4f85be716" x="0" y="0" width="115" height="25"/>
+								<textElement textAlignment="Center" verticalAlignment="Middle">
+									<font fontName="Serif" size="12"/>
+								</textElement>
+								<text><![CDATA[備註]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:detailCell style="table_TD" height="25" rowSpan="1">
+							<textField>
+								<reportElement uuid="51e72ce1-bb03-4b53-b7d4-d015bdc75e8b" x="7" y="0" width="108" height="25"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="Serif"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{fare_memo}]]></textFieldExpression>
+							</textField>
+						</jr:detailCell>
+					</jr:column>
+				</jr:table>
+			</componentElement>
+			<staticText>
+				<reportElement uuid="54697e5b-4ea6-40e7-a47e-c59f86afae08" x="2" y="22" width="63" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<text><![CDATA[單位名稱：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="1b87b230-f4fd-4989-92c0-56cdeb77117e" x="2" y="2" width="63" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<text><![CDATA[單位代號：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="58d5eb83-436b-4783-ac16-a73ee8cd6749" x="398" y="2" width="75" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<text><![CDATA[繳款單號次：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d73dcc88-6ee2-4dc4-bc61-0da20eca3ed1" x="398" y="22" width="75" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<text><![CDATA[日      期：]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="a6b45937-346e-4795-a062-2a72ad90684f" x="65" y="2" width="333" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{owner_key}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="a1143008-596d-46b9-8b8b-436a564d70e9" x="65" y="22" width="333" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{owner_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="77e8672f-1d14-4543-ad09-463c1085a9de" x="473" y="22" width="98" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體" size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{account_stamp}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6a4dfcd4-4c02-431e-b373-57750dba49d0" x="473" y="2" width="98" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="標楷體" size="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{account_key}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
