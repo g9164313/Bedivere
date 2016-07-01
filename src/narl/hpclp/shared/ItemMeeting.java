@@ -15,10 +15,24 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 	/**
 	 * This presents why today is restday
 	 */
-	public String comment = "";
+	public String memo = "";
 
 	public ItemMeeting(){
 		super();
+	}
+	
+	/**
+	 * this construct must be a restday
+	 * @param day - like 1990/1/1
+	 * @param memo - any reason, or the defaul is "假日"
+	 * @param stmp - it is same as 'day', byt different type
+	 */
+	public ItemMeeting(String day,String memo,Date stmp){
+		super();
+		this.day = day;
+		this.memo= (memo==null)?("假日"):(memo);
+		stmp.setTime(stmp.getTime());
+		last.setTime(last.getTime());
 	}
 	
 	public ItemMeeting(
@@ -40,7 +54,7 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 	}
 	
 	public boolean isRestday(){
-		if(comment.length()==0){
+		if(memo.length()==0){
 			return false;
 		}
 		return true;
@@ -48,9 +62,9 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 	
 	public void setRestday(String txt){
 		if(txt==null){
-			comment = "假日";
+			memo = "假日";
 		}else{
-			comment = txt;
+			memo = txt;
 		}
 	}
 }

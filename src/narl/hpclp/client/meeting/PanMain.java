@@ -216,14 +216,23 @@ public class PanMain extends Composite {
 		
 		for(int i=0; i<grpStart.size(); i++){
 			int beg = grpStart.get(i);
-			int end = grpTail.get(i);		
+			int end = grpTail.get(i);
 			int cnt = 0;
+			ItemMeeting itm = lstMeet.get(beg);
+			if(itm==null){
+				break;//Is it possible???
+			}
 			for(int j=beg; j<=end; j++){
-				ItemMeeting itm = lstMeet.get(j);
+				itm = lstMeet.get(j);
 				cnt = cnt + itm.lst.size();
 			}
-			tab.setValue(i, 0, Main.fmtDate.parse(lstMeet.get(beg).day));
-			tab.setValue(i, 1, cnt);
+			tab.setValue(i, 0, Main.fmtDate.parse(itm.day));
+			if(itm.isRestday()==true){
+				tab.setValue(i, 1, -30);//treak restday as red color~~~
+			}else{
+				System.out.println(itm.day+"==>"+cnt);
+				tab.setValue(i, 1, cnt);
+			}
 		}
 
 		CalendarOptions opt = CalendarOptions.create();

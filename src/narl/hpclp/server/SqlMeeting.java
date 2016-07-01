@@ -16,9 +16,39 @@ public class SqlMeeting {
 	public static HashMap<String,String> listRestday(
 		String dayFst, 
 		String dayEnd
-	){
+	) throws SQLException {
+		
+		long tickFst = RpcBridge.fmtSql2.parse(dayFst).getTime();
+		long tickEnd = RpcBridge.fmtSql2.parse(dayEnd).getTime();
+		
 		HashMap<String,String> lst = new HashMap<String,String>();
 		
+		String cmd = "SELECT * FROM PARAM WHERE key SIMILAR TO '%RESTDAY_%'";
+			
+		ResultSet rs = RpcBridge.getResult(cmd);
+		while(rs.next()){
+			String txt = rs.getString("val");
+			String[] arg = txt.split("@");
+			String _day,memo;
+			if(arg.length==1){
+				_day = arg[0];
+				memo = "假日";//default comment
+			}else if(arg.length==2){
+				_day = arg[0];
+				memo = arg[1];
+			}else{
+				continue;
+			}
+			long tickCur = RpcBridge.fmtDate.parse(_day).getTime();
+			if(tickFst<=tickCur && tickCur<=tickEnd){
+				if(arg[1].length()==0){
+					lst.put(arg[0], "假日");
+				}else{
+					
+				}
+				lst.put(_day,memo);
+			}
+		}
 		return lst;
 	}
 	
@@ -28,10 +58,14 @@ public class SqlMeeting {
 		String dayEnd
 	) throws SQLException {
 		
+		//first, prepare restday~~
+		HashMap<String,String> restday = listRestday(dayFst,dayEnd);
+		ArrayList<String> remnday = new ArrayList<String>();
+		
 		final int idxOwnerKey = ItemOwner.INFO_OKEY + 1;//1-base;
 		final int idxTenurKey = ItemTenur.INFO_TKEY + 1;//1-base;
 		
-		//first, list all tenures with owner
+		//second, list all tenures with owner
 		String cmd =
 			"SELECT "+
 			Const.OWNER+".id AS oid, "+
@@ -61,7 +95,7 @@ public class SqlMeeting {
 				t1,t2,t3
 			);
 			
-			String   day = RpcBridge.fmtDay.format(t3);
+			String   day = RpcBridge.fmtDate.format(t3);
 			String   oid = RpcBridge.uuid2flat(rs,"oid");				
 			String[] inf = RpcBridge.info2flat(rs,"o_info"); 				
 			if(meet.getKey().equalsIgnoreCase(inf[ItemOwner.INFO_OKEY])==false){
@@ -69,40 +103,58 @@ public class SqlMeeting {
 				meet = new ItemMeeting(oid,inf,day,rs.getTimestamp("t_meet"));
 				meet.lst.add(tenu);
 				tenu.owner= meet;
-				lst.add(meet);
-				continue;
-			}				
-			meet.lst.add(tenu);
-			tenu.owner = meet;
+				lst.add(meet);				
+			}else{
+				//same owner and meeting day~~~
+				meet.lst.add(tenu);
+				tenu.owner = meet;
+			}
+			//always check whether day is holiday~~~
+			String rday = restday.get(meet.day);
+			if(rday!=null){
+				meet.setRestday(rday);
+				if(remnday.contains(rday)==false){
+					remnday.add(rday);
+				}
+			}
 		}
 	
-		//second, list owners which are needed to meet
+		//third, list owners which are needed to meet
 		cmd = "SELECT * FROM "+Const.OWNER+
 			" WHERE '"+dayFst+"'<=stamp AND stamp<='"+dayEnd+"'";
 		
 		rs = RpcBridge.getResult(cmd);
 		while(rs.next()){
-			Date day = rs.getTimestamp("stamp");
+			Date stmp = rs.getTimestamp("stamp");
 			meet = new ItemMeeting(
 				RpcBridge.uuid2flat(rs,"id"),
 				RpcBridge.info2flat(rs,"info"),
-				RpcBridge.fmtDay.format(day),
-				day
+				RpcBridge.fmtDate.format(stmp),
+				stmp
+			);
+			lst.add(meet);
+			//always check whether day is holiday~~~
+			String rday = restday.get(meet.day);
+			if(rday!=null){
+				meet.setRestday(rday);
+				if(remnday.contains(rday)==false){
+					remnday.add(rday);
+				}
+			}			
+		}
+		
+		//finall, add remaind restday~~~~
+		for(String rday:restday.keySet()){
+			if(remnday.contains(rday)==true){
+				continue;
+			}
+			meet = new ItemMeeting(
+				rday,
+				restday.get(rday),
+				RpcBridge.fmtDate.parse(rday)
 			);
 			lst.add(meet);
 		}
-		
-		//third, list all restday and check list again~~
-		HashMap<String,String> restday = listRestday(dayFst,dayEnd);
-		if(restday.size()!=0){
-			for(ItemMeeting itm:lst){
-				String txt = restday.get(itm.day);
-				if(txt!=null){
-					itm.setRestday(txt);
-				}
-			}
-		}
 		return lst;
 	}
-	
 }

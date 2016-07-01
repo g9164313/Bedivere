@@ -24,7 +24,9 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class RpcBridge extends RemoteServiceServlet 
 	implements RPC
 {
-	public static FmtDate fmtDay = FmtDate.getFormat("yyyy/M/d"); 
+	public static FmtDate fmtDate = FmtDate.getFormat("yyyy/M/d"); 
+	public static FmtDate fmtSql1 = FmtDate.getFormat("yyyy-M-d");
+	public static FmtDate fmtSql2 = FmtDate.getFormat("yyyy-M-d HH:mm:ss");
 	
 	public static Connection conn;
 	public static PreparedStatement statInsOwner,statModOwner;	
