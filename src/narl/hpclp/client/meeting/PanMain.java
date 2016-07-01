@@ -1,24 +1,20 @@
-package narl.hpclp.client;
+package narl.hpclp.client.meeting;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-import narl.hpclp.shared.ItmMeeting;
-import gwt.material.design.client.ui.MaterialCardContent;
+import narl.hpclp.client.Main;
+import narl.hpclp.shared.ItemMeeting;
 import gwt.material.design.client.ui.MaterialCollapsible;
-import gwt.material.design.client.ui.MaterialCollapsibleItem;
-import gwt.material.design.client.ui.MaterialContainer;
 import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialLoader;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialSearch;
-import gwt.material.design.client.ui.MaterialSplashScreen;
 import gwt.material.design.client.ui.MaterialToast;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.core.client.JsArray;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -27,7 +23,6 @@ import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
@@ -36,20 +31,17 @@ import com.googlecode.gwt.charts.client.ChartLoader;
 import com.googlecode.gwt.charts.client.ChartPackage;
 import com.googlecode.gwt.charts.client.ColumnType;
 import com.googlecode.gwt.charts.client.DataTable;
-import com.googlecode.gwt.charts.client.Selection;
 import com.googlecode.gwt.charts.client.calendar.Calendar;
 import com.googlecode.gwt.charts.client.calendar.CalendarOptions;
 import com.googlecode.gwt.charts.client.event.SelectEvent;
 import com.googlecode.gwt.charts.client.event.SelectHandler;
-import com.googlecode.gwt.charts.client.gauge.Gauge;
-import com.googlecode.gwt.charts.client.gauge.GaugeOptions;
 
-public class PanMeeting extends Composite {
+public class PanMain extends Composite {
 
-	private static PanMeetingUiBinder uiBinder = GWT
-			.create(PanMeetingUiBinder.class);
+	private static PanMainUiBinder uiBinder = GWT
+			.create(PanMainUiBinder.class);
 
-	interface PanMeetingUiBinder extends UiBinder<Widget, PanMeeting> {
+	interface PanMainUiBinder extends UiBinder<Widget, PanMain> {
 	}
 
     @UiField
@@ -59,15 +51,15 @@ public class PanMeeting extends Composite {
     MaterialSearch search;
     
     @UiField
-    MaterialLink lnkPanProdx,lnkPanAccnt;
+    MaterialLink lnkPanProdx,lnkPanAccnt,txtPickDay;
      
     @UiField
     MaterialPanel panArch1;
     
     @UiField
-    MaterialCollapsible lstOwner,lstTenur;
+    public MaterialCollapsible lstOwner,lstTenur;
 
-	public PanMeeting() {
+	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));
 		search.addCloseHandler(new CloseHandler<String>() {
             @Override
@@ -111,7 +103,7 @@ public class PanMeeting extends Composite {
        
     private Calendar chrMeet;
     
-    private ArrayList<ItmMeeting> lstMeet = null;
+    private ArrayList<ItemMeeting> lstMeet = null;
     
     private HashMap<Integer,Integer> grpStart= new HashMap<Integer,Integer>();
     private HashMap<Integer,Integer> grpTail = new HashMap<Integer,Integer>();
@@ -127,7 +119,7 @@ public class PanMeeting extends Composite {
     	CalendarUtil.addMonthsToDate(day,12);
     	String end = Main.fmtSQLDay.format(day)+" 24:00:00";
     	
-    	Main.rpc.listMeeting(beg, end, new AsyncCallback<ArrayList<ItmMeeting>>(){
+    	Main.rpc.listMeeting(beg, end, new AsyncCallback<ArrayList<ItemMeeting>>(){
 			@Override
 			public void onFailure(Throwable caught) {
 				lstMeet = null;
@@ -136,7 +128,7 @@ public class PanMeeting extends Composite {
 				MaterialToast.fireToast(caught.getMessage());
 			}
 			@Override
-			public void onSuccess(ArrayList<ItmMeeting> result) {
+			public void onSuccess(ArrayList<ItemMeeting> result) {
 				lstMeet = result;
 				chrMeet.clearChart();								
 		    	if(lstMeet.isEmpty()==true){
@@ -181,7 +173,7 @@ public class PanMeeting extends Composite {
 			int end = grpTail.get(i);		
 			int cnt = 0;
 			for(int j=beg; j<=end; j++){
-				ItmMeeting itm = lstMeet.get(i);
+				ItemMeeting itm = lstMeet.get(i);
 				cnt = cnt + itm.lst.size();
 			}
 			tab.setValue(i, 0, Main.fmtDate.parse(lstMeet.get(beg).day));
@@ -196,6 +188,7 @@ public class PanMeeting extends Composite {
     private SelectHandler eventPickDay = new SelectHandler(){
 		@Override
 		public void onSelect(SelectEvent event) {
+			txtPickDay.setText("");
 			lstOwner.clear();
 			lstTenur.clear();
 			if(lstMeet==null){
@@ -205,19 +198,18 @@ public class PanMeeting extends Composite {
 			if(idx==null){
 				return;
 			}
+			
 			//String txt = "";
 			int beg = grpStart.get(idx);
-			int end = grpTail.get(idx);			
+			int end = grpTail.get(idx);
+			ItemMeeting itm = null;
 			for(int i=beg; i<=end; i++){
-				ItmMeeting itm = lstMeet.get(i);
-				//lstOwner.add(new );
+				itm = lstMeet.get(i);
+				lstOwner.add(new CpiOwner(PanMain.this,itm));
 			}
-			//ItmMeeting itm = lstMeet.get(idx);
-			//lstOwner.add(child);
-			//System.out.println("row = "+idx+"\n"+txt);
-			//MaterialToast.fireToast(txt+"total="+cnt);
-			//lstOwner.clear();
-			
+			if(itm!=null){
+				txtPickDay.setText(itm.day);
+			}		
 		}
     };
 }

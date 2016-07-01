@@ -1,8 +1,6 @@
 package narl.hpclp.client;
 
-import gwt.material.design.client.ui.MaterialLabel;
-import gwt.material.design.client.ui.MaterialLoader;
-import gwt.material.design.client.ui.MaterialSplashScreen;
+import narl.hpclp.client.meeting.PanMain;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -14,12 +12,8 @@ public class Main implements EntryPoint {
 	
 	public static RPCAsync rpc = GWT.create(RPC.class);
 	
-	private static PanMeeting meeting = new PanMeeting();
+	private static PanMain meeting = new PanMain();
 
-	private final static int PAN_MEETING=0;
-	private final static int PAN_PRODX=1;
-	private final static int PAN_ACCNT=2;
-	
 	public final static DateTimeFormat fmtDate = DateTimeFormat.getFormat("yyyy/M/d"); 
 	
 	public final static DateTimeFormat fmtYear = DateTimeFormat.getFormat("yyyy"); 	
@@ -32,18 +26,28 @@ public class Main implements EntryPoint {
 	
 	public final static DateTimeFormat fmtSQLDay = DateTimeFormat.getFormat("yyyy-M-d");
 	
-	public static void switchPanMeeting(){
-		switch_panel(PAN_MEETING);
-	}
 	
+	private final static int PAN_MEETING=0;
+	private final static int PAN_PRODUCT=1;
+	private final static int PAN_ACCOUNT=2;
+
 	private static void switch_panel(int id){
 		RootPanel.get().clear();
 		switch(id){
 		case PAN_MEETING:
 			RootPanel.get().add(meeting);
 			break;
+		case PAN_PRODUCT:
+			break;
+		case PAN_ACCOUNT:
+			break;
 		}
 	}
+		
+	public static void switchPanMeeting(){
+		switch_panel(PAN_MEETING);
+	}
+	
 	
 	@Override
 	public void onModuleLoad() {

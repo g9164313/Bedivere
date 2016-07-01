@@ -1,0 +1,47 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
+	xmlns:m="urn:import:gwt.material.design.client.ui" >
+	
+	<ui:style>
+	.important {
+		font-weight: bold;
+	}
+	@external .active;
+        .colapsHeader.active{
+        background: #e0e0e0;
+    }
+	</ui:style>
+	<m:MaterialCollapsibleItem ui:field="cpiEntry" waves="DEFAULT" width="100%">
+	
+		<!-- Header component for custome layouts -->
+		<m:MaterialCollapsibleHeader addStyleNames="{style.colapsHeader}">
+			<m:MaterialRow margin="0">			
+				<m:MaterialLabel ui:field="txtKey" truncate="true" fontSize="0.8em" grid="l1 s1" marginTop="12" />				
+				<m:MaterialLabel ui:field="txtName" truncate="true" fontSize="0.8em" grid="l8 s9" marginTop="12" />
+			</m:MaterialRow>
+		</m:MaterialCollapsibleHeader>
+		
+		<m:MaterialCollapsibleBody>
+			<m:MaterialRow>			
+				<m:MaterialLabel grid="l1 s1" test="聯絡地址："/>
+				<m:MaterialLabel grid="l10 s10" ui:field="txtAddress" />				
+			</m:MaterialRow>
+			<m:MaterialRow>			
+				<m:MaterialLabel grid="l1 s1" test="聯絡方式："/>
+				<m:MaterialLabel grid="l10 s10" ui:field="txtInteract" />				
+			</m:MaterialRow>
+			<m:MaterialRow>			
+				<m:MaterialLabel grid="l1 s1" test="聯絡人："/>
+				<m:MaterialLabel grid="l01 s10" ui:field="txtPerson" />				
+			</m:MaterialRow>
+			<m:MaterialRow>			
+				<m:MaterialLabel grid="l1 s1" test="附註事項："/>
+				<m:MaterialLabel grid="l10 s10" ui:field="txtMemo" />				
+			</m:MaterialRow>
+		</m:MaterialCollapsibleBody>
+	
+	</m:MaterialCollapsibleItem>
+</ui:UiBinder> 

@@ -1,8 +1,9 @@
 package narl.hpclp.shared;
 
 import java.io.Serializable;
+import java.util.Date;
 
-public class ItmOwner extends ItmBase implements Serializable {
+public class ItemOwner extends ItemBase implements Serializable {
 
 	private static final long serialVersionUID = -8999124501083199660L;
 
@@ -14,12 +15,21 @@ public class ItmOwner extends ItmBase implements Serializable {
 	public static final int INFO_CONT = 5;	
 	public static final int INFO_TEL = 6;
 	public static final int INFO_EMAIL = 7;
-	public static final int INFO_CLASS = 8;
+	public static final int INFO_CLASS = 8;//deprecate~~~~
 	public static final int INFO_MEMO = 9;
 	public static final int INFO_MAX_COL = 10;	
 	
-	public ItmOwner(){
+	public ItemOwner(){
 		super(INFO_MAX_COL);
+	}
+	
+	public ItemOwner(
+		String oid,
+		String[] info,
+		Date stmp
+	){
+		super(INFO_MAX_COL);
+		map(oid,info,stmp);
 	}
 	
 	public String getKey(){
@@ -52,5 +62,9 @@ public class ItmOwner extends ItmBase implements Serializable {
 	
 	public String getEmail(){
 		return inf[INFO_EMAIL];
+	}
+	
+	public String getMemo(){
+		return inf[INFO_MEMO];
 	}
 }

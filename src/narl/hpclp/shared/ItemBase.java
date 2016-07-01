@@ -3,7 +3,7 @@ package narl.hpclp.shared;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ItmBase implements Serializable {
+public class ItemBase implements Serializable {
 
 	private static final long serialVersionUID = 7096858623078746344L;
 
@@ -12,7 +12,7 @@ public class ItmBase implements Serializable {
 	public Date last = new Date();
 	public String[] inf;
 	
-	public ItmBase(int size){
+	public ItemBase(int size){
 		inf = new String[size];
 		for(int i=0; i<size; i++){
 			inf[i] = "????";
@@ -24,7 +24,11 @@ public class ItmBase implements Serializable {
 			if(i>=val.length){
 				break;
 			}
-			inf[i] = val[i];
+			if(val[i]==null){
+				inf[i] = "";//some old data still keep the value null :-( 
+			}else{
+				inf[i] = val[i];
+			}
 		}
 	}
 	
@@ -44,7 +48,7 @@ public class ItmBase implements Serializable {
 		this.id = id;
 		long tick = stmp.getTime();
 		this.stmp.setTime(tick);
-		this.stmp.setTime(tick);
+		this.last.setTime(tick);
 		map(val);		
 	}
 	

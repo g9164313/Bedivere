@@ -3,7 +3,7 @@ package narl.hpclp.shared;
 import java.io.Serializable;
 import java.util.Date;
 
-public class ItmTenur extends ItmBase implements Serializable {
+public class ItemTenur extends ItemBase implements Serializable {
 
 	private static final long serialVersionUID = -3588414162261404996L;
 
@@ -22,13 +22,13 @@ public class ItmTenur extends ItmBase implements Serializable {
 	
 	public Date meet = new Date();
 	
-	public ItmBase owner = null;
+	public ItemBase owner = null;
 	
-	public ItmTenur(){
+	public ItemTenur(){
 		super(INFO_MAX_COL);
 	}
 
-	public ItmTenur(
+	public ItemTenur(
 		String id,
 		String[] info,
 		Date stmp,
@@ -39,7 +39,7 @@ public class ItmTenur extends ItmBase implements Serializable {
 		this.meet.setTime(stmp.getTime());
 	}
 	
-	public ItmTenur(
+	public ItemTenur(
 		String id,
 		String[] info,
 		Date stmp,

@@ -53,6 +53,11 @@
 				layoutPosition="RELATIVE"
 				marginTop="20"			
 				padding="7" />
+			<m:MaterialPanel>			
+			<m:MaterialRow>
+				<!-- Put some special functions, here-->
+				<m:MaterialLabel ui:field="txtPickDay" truncate="true" grid="l1 s1" marginTop="12" />	
+			</m:MaterialRow>
 			<m:MaterialRow layoutPosition="RELATIVE" grid="l12 m12 s12">
 				<m:MaterialColumn grid="l6 m6 s6">
 					<m:MaterialCollapsible ui:field="lstOwner" marginTop="20" padding="0"/>
@@ -61,6 +66,7 @@
 					<m:MaterialCollapsible ui:field="lstTenur" marginTop="20" padding="0"/>
 				</m:MaterialColumn>
 			</m:MaterialRow>
+			</m:MaterialPanel>
         </m:MaterialContainer>
 
 </m:MaterialPanel>  

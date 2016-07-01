@@ -14,9 +14,9 @@ import java.util.UUID;
 
 import narl.hpclp.client.RPC;
 import narl.hpclp.shared.Const;
-import narl.hpclp.shared.ItmMeeting;
-import narl.hpclp.shared.ItmOwner;
-import narl.hpclp.shared.ItmTenur;
+import narl.hpclp.shared.ItemMeeting;
+import narl.hpclp.shared.ItemOwner;
+import narl.hpclp.shared.ItemTenur;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -148,11 +148,11 @@ public class RpcBridge extends RemoteServiceServlet
 	//---------------------------------//
 	
 	@Override
-	public ArrayList<ItmMeeting> listMeeting(String dayFst, String dayEnd) {
-		ArrayList<ItmMeeting> lst = new ArrayList<ItmMeeting>();
+	public ArrayList<ItemMeeting> listMeeting(String dayFst, String dayEnd) {
+		ArrayList<ItemMeeting> lst = new ArrayList<ItemMeeting>();
 		
-		final int idxOwnerKey = ItmOwner.INFO_OKEY + 1;//1-base;
-		final int idxTenurKey = ItmTenur.INFO_TKEY + 1;//1-base;
+		final int idxOwnerKey = ItemOwner.INFO_OKEY + 1;//1-base;
+		final int idxTenurKey = ItemTenur.INFO_TKEY + 1;//1-base;
 		
 		try {
 		//first, list all tenures with owner
@@ -176,13 +176,13 @@ public class RpcBridge extends RemoteServiceServlet
 			Const.OWNER+".info["+idxOwnerKey+"] ASC, "+
 			Const.TENUR+".info["+idxTenurKey+"] ASC;";
 		
-			ItmMeeting meet = new ItmMeeting();//the first item~~~
+			ItemMeeting meet = new ItemMeeting();//the first item~~~
 			ResultSet rs = getResult(cmd);
 			while(rs.next()){
 				Date t1 = rs.getTimestamp("t_stmp");
 				Date t2 = rs.getTimestamp("t_last");
 				Date t3 = rs.getTimestamp("t_meet");
-				ItmTenur tenu = new ItmTenur(
+				ItemTenur tenu = new ItemTenur(
 					uuid2flat(rs,"tid"),
 					info2flat(rs,"t_info"),
 					t1,t2,t3
@@ -191,9 +191,9 @@ public class RpcBridge extends RemoteServiceServlet
 				String   day = fmtDay.format(t3);
 				String   oid = uuid2flat(rs,"oid");				
 				String[] inf = info2flat(rs,"o_info"); 				
-				if(meet.getKey().equalsIgnoreCase(inf[ItmOwner.INFO_OKEY])==false){
+				if(meet.getKey().equalsIgnoreCase(inf[ItemOwner.INFO_OKEY])==false){
 					//same owner but different meeting day (different tenure)
-					meet = new ItmMeeting(oid,inf,rs.getTimestamp("t_meet"));
+					meet = new ItemMeeting(oid,inf,rs.getTimestamp("t_meet"));
 					meet.lst.add(tenu);
 					meet.day  = day;//update again~~~
 					tenu.owner= meet;
