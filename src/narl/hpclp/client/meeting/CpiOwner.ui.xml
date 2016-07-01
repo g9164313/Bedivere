@@ -17,30 +17,55 @@
 	<m:MaterialCollapsibleItem ui:field="cpiEntry" waves="DEFAULT" width="100%">
 	
 		<!-- Header component for custome layouts -->
-		<m:MaterialCollapsibleHeader addStyleNames="{style.colapsHeader}">
-			<m:MaterialRow margin="0">			
-				<m:MaterialLabel ui:field="txtKey" truncate="true" fontSize="0.8em" grid="l1 s1" marginTop="12" />				
-				<m:MaterialLabel ui:field="txtName" truncate="true" fontSize="0.8em" grid="l8 s9" marginTop="12" />
-				<m:MaterialLabel ui:field="txtTotal" truncate="true" fontSize="0.8em" grid="l1 s1" marginTop="12" />
+		<m:MaterialCollapsibleHeader  addStyleNames="{style.colapsHeader}">
+			
+			<m:MaterialRow margin="0">
+				<m:MaterialColumn>
+					<m:MaterialLabel ui:field="txtTotal" />
+				</m:MaterialColumn>
+				<m:MaterialColumn>
+					<m:MaterialLabel ui:field="txtKey"  />
+				</m:MaterialColumn>
+				<m:MaterialColumn truncate="true">				
+					<m:MaterialLabel grid="l15 m15 s15"   ui:field="txtName" />					
+				</m:MaterialColumn>
+				<m:MaterialIcon iconType="PIN_DROP" waves="DEFAULT" float="RIGHT" circle="true" />			
 			</m:MaterialRow>
+			
 		</m:MaterialCollapsibleHeader>
 		
 		<m:MaterialCollapsibleBody>
-			<m:MaterialRow>			
-				<m:MaterialLabel grid="l1 s1" test="聯絡地址："/>
-				<m:MaterialLabel grid="l10 s10" ui:field="txtAddress" />				
+			<m:MaterialRow>
+				<m:MaterialColumn>
+					<m:MaterialLabel text="聯絡地址："/>
+				</m:MaterialColumn>
+				<m:MaterialColumn>
+					<m:MaterialLabel ui:field="txtAddress" />
+				</m:MaterialColumn>				
 			</m:MaterialRow>
-			<m:MaterialRow>			
-				<m:MaterialLabel grid="l1 s1" test="聯絡方式："/>
-				<m:MaterialLabel grid="l10 s10" ui:field="txtInteract" />				
+			<m:MaterialRow>
+				<m:MaterialColumn>		
+					<m:MaterialLabel text="聯絡方式："/>
+				</m:MaterialColumn>
+				<m:MaterialColumn>					
+					<m:MaterialLabel ui:field="txtInteract" />
+				</m:MaterialColumn>				
 			</m:MaterialRow>
-			<m:MaterialRow>			
-				<m:MaterialLabel grid="l1 s1" test="聯絡人："/>
-				<m:MaterialLabel grid="l01 s10" ui:field="txtPerson" />				
+			<m:MaterialRow>
+				<m:MaterialColumn>
+					<m:MaterialLabel text="聯絡人："/>
+				</m:MaterialColumn>
+				<m:MaterialColumn>
+					<m:MaterialLabel ui:field="txtPerson" />
+				</m:MaterialColumn>				
 			</m:MaterialRow>
-			<m:MaterialRow>			
-				<m:MaterialLabel grid="l1 s1" test="附註事項："/>
-				<m:MaterialLabel grid="l10 s10" ui:field="txtMemo" />				
+			<m:MaterialRow>
+				<m:MaterialColumn>	
+					<m:MaterialLabel text="附註事項："/>
+				</m:MaterialColumn>
+				<m:MaterialColumn>
+					<m:MaterialLabel ui:field="txtMemo" />
+				</m:MaterialColumn>				
 			</m:MaterialRow>
 		</m:MaterialCollapsibleBody>
 		

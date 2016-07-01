@@ -9,6 +9,7 @@
 
 	<entry-point class="narl.hpclp.client.Main"/>
 	<source path="client" />
+	
 	<source path="shared" />
 	
     <!-- allow Super Dev Mode -->

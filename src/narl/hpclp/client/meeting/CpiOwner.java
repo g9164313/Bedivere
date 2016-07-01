@@ -42,9 +42,16 @@ public class CpiOwner extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.root = root;
 		this.meet = item;
+		//head title
 		txtKey.setText(item.getKey());
 		txtName.setText(item.getName());
-		txtTotal.setText(""+item.lst.size());
+		txtTotal.setText(""+item.lst.size()+"台");		
+		//body context
+		txtAddress.setText(meet.getZip()+" "+meet.getAddress());
+		txtInteract.setText(meet.getTelphone()+"   "+meet.getEmail());
+		txtPerson.setText(meet.getDepartment()+"   "+meet.getContact());
+		txtMemo.setText(meet.getMemo());
+		//hook event
 		cpiEntry.addClickHandler(eventPick);
 	}
 	
@@ -52,15 +59,15 @@ public class CpiOwner extends Composite {
 		@Override
 		public void onClick(ClickEvent event) {
 			root.lstTenur.clear();
-			txtAddress.setText(meet.getZip()+" "+meet.getAddress());
-			txtInteract.setText(meet.getTelphone()+" "+meet.getEmail());
-			txtPerson.setText(meet.getDepartment()+" "+meet.getContact());
-			txtMemo.setText(meet.getMemo());
+			String txt = cpiEntry.getStyleName();
+			if(txt.indexOf("active")>=0){
+				return;
+			}
 			if(meet.lst.isEmpty()==true){
 				return;
 			}
 			for(ItemTenur item:meet.lst){
-				root.lstTenur.add(new CpiTenure(root,item));
+				root.lstTenur.add(new CpiTenure(item));
 			}			
 		}
 	};

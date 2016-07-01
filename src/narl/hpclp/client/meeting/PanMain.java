@@ -7,6 +7,7 @@ import java.util.HashMap;
 import narl.hpclp.client.Main;
 import narl.hpclp.shared.ItemMeeting;
 import gwt.material.design.client.ui.MaterialCollapsible;
+import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialLoader;
 import gwt.material.design.client.ui.MaterialNavBar;
@@ -51,8 +52,11 @@ public class PanMain extends Composite {
     MaterialSearch search;
     
     @UiField
-    MaterialLink lnkPanProdx,lnkPanAccnt,txtPickDay;
-     
+    MaterialLink lnkPanProdx,lnkPanAccnt;
+    
+    @UiField
+    MaterialLabel txtPickDay;
+    		
     @UiField
     MaterialPanel panArch1;
     
@@ -173,7 +177,7 @@ public class PanMain extends Composite {
 			int end = grpTail.get(i);		
 			int cnt = 0;
 			for(int j=beg; j<=end; j++){
-				ItemMeeting itm = lstMeet.get(i);
+				ItemMeeting itm = lstMeet.get(j);
 				cnt = cnt + itm.lst.size();
 			}
 			tab.setValue(i, 0, Main.fmtDate.parse(lstMeet.get(beg).day));

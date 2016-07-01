@@ -18,28 +18,76 @@
 	
 		<!-- Header component for custome layouts -->
 		<m:MaterialCollapsibleHeader addStyleNames="{style.colapsHeader}">
-			<m:MaterialRow margin="0">			
-				<m:MaterialLabel ui:field="txtKey" truncate="true" fontSize="0.8em" grid="l1 s1" marginTop="12" />				
-				<m:MaterialLabel ui:field="txtName" truncate="true" fontSize="0.8em" grid="l8 s9" marginTop="12" />
+			<m:MaterialRow margin="0">
+				<m:MaterialColumn>
+					<m:MaterialLabel ui:field="txtDevVendor" />
+				</m:MaterialColumn>
+				<m:MaterialColumn>				
+					<m:MaterialLabel ui:field="txtDevSerial" />
+				</m:MaterialColumn>
+				<m:MaterialColumn>
+					<m:MaterialLabel ui:field="txtDevNumber"  />
+				</m:MaterialColumn>
+				<m:MaterialIcon iconType="PIN_DROP" waves="DEFAULT" float="RIGHT" circle="true" />	
 			</m:MaterialRow>
 		</m:MaterialCollapsibleHeader>
 		
 		<m:MaterialCollapsibleBody>
-			<m:MaterialRow>			
-				<m:MaterialLabel grid="l1 s1" test="聯絡地址："/>
-				<m:MaterialLabel grid="l10 s10" ui:field="txtAddress" />				
+			<m:MaterialRow>
+				<m:MaterialColumn>
+					<m:MaterialLabel text="偵檢器類型："/>
+				</m:MaterialColumn>
+				<m:MaterialColumn>				
+					<m:MaterialLabel ui:field="txtDetType" />
+				</m:MaterialColumn>				
 			</m:MaterialRow>
-			<m:MaterialRow>			
-				<m:MaterialLabel grid="l1 s1" test="聯絡方式："/>
-				<m:MaterialLabel grid="l10 s10" ui:field="txtInteract" />				
+			<m:MaterialRow>
+				<m:MaterialColumn>			
+					<m:MaterialLabel text="偵檢器型號："/>
+				</m:MaterialColumn>
+				<m:MaterialColumn>					
+					<m:MaterialLabel ui:field="txtDetSerial" />
+				</m:MaterialColumn>				
 			</m:MaterialRow>
-			<m:MaterialRow>			
-				<m:MaterialLabel grid="l1 s1" test="聯絡人："/>
-				<m:MaterialLabel grid="l01 s10" ui:field="txtPerson" />				
+			<m:MaterialRow>
+				<m:MaterialColumn>	
+					<m:MaterialLabel text="偵檢器序號："/>
+				</m:MaterialColumn>
+				<m:MaterialColumn>
+					<m:MaterialLabel  ui:field="txtDetNumber" />
+				</m:MaterialColumn>				
 			</m:MaterialRow>
-			<m:MaterialRow>			
-				<m:MaterialLabel grid="l1 s1" test="附註事項："/>
-				<m:MaterialLabel grid="l10 s10" ui:field="txtMemo" />				
+			<m:MaterialRow>
+				<m:MaterialColumn>	
+					<m:MaterialLabel text="偵測窗面積："/>
+				</m:MaterialColumn>
+				<m:MaterialColumn>
+					<m:MaterialLabel ui:field="txtArea" />
+				</m:MaterialColumn>				
+			</m:MaterialRow>
+			<m:MaterialRow>
+				<m:MaterialColumn>	
+					<m:MaterialLabel text="方向修正值："/>
+				</m:MaterialColumn>
+				<m:MaterialColumn>
+					<m:MaterialLabel ui:field="txtFactor" />
+				</m:MaterialColumn>				
+			</m:MaterialRow>
+			<m:MaterialRow>
+				<m:MaterialColumn>	
+					<m:MaterialLabel text="廠商建議值："/>
+				</m:MaterialColumn>
+				<m:MaterialColumn>
+					<m:MaterialLabel  ui:field="txtSteer" />
+				</m:MaterialColumn>				
+			</m:MaterialRow>
+			<m:MaterialRow>
+				<m:MaterialColumn>	
+					<m:MaterialLabel text="附註事項："/>
+				</m:MaterialColumn>
+				<m:MaterialColumn>
+					<m:MaterialLabel ui:field="txtMemo" />
+				</m:MaterialColumn>			
 			</m:MaterialRow>
 		</m:MaterialCollapsibleBody>
 	
