@@ -10,8 +10,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface RPCAsync {
 	
 	void listMeeting(
-		Date brg,
-		Date end,
+		String dayFst,
+		String dayEnd,
 		AsyncCallback<ArrayList<ItmMeeting>> res
 	) throws IllegalArgumentException;
 	

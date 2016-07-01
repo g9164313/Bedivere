@@ -47,17 +47,20 @@
         </m:MaterialHeader>
 
         <!-- Container -->
-        <m:MaterialContainer paddingTop="64" paddingLeft="7" paddingRight="7">
+        <m:MaterialContainer paddingTop="70" paddingLeft="7" paddingRight="7">
 			<m:MaterialPanel ui:field="panArch1" 
 				backgroundColor="white" 
-				layoutPosition="RELATIVE" 
+				layoutPosition="RELATIVE"
+				marginTop="20"			
 				padding="7" />
-			<m:MaterialPanel 
-				backgroundColor="white" 
-				layoutPosition="RELATIVE" 
-				padding="7" >
-				<m:MaterialCollapsible ui:field="lstMeeting" marginTop="20" padding="0"/>
-			</m:MaterialPanel>
+			<m:MaterialRow layoutPosition="RELATIVE" grid="l12 m12 s12">
+				<m:MaterialColumn grid="l6 m6 s6">
+					<m:MaterialCollapsible ui:field="lstOwner" marginTop="20" padding="0"/>
+				</m:MaterialColumn>
+				<m:MaterialColumn grid="l6 m6 s6">
+					<m:MaterialCollapsible ui:field="lstTenur" marginTop="20" padding="0"/>
+				</m:MaterialColumn>
+			</m:MaterialRow>
         </m:MaterialContainer>
 
 </m:MaterialPanel>  

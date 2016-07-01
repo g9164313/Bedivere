@@ -8,13 +8,12 @@ public final class Const {
 	public static final String DATABASE_USER = "qq";
 	public static final String DATABASE_PASS = "qq";
 		
-	public static final String TABLE0 = "param";
-	public static final String TABLE1 = "owner";
-	public static final String TABLE2 = "tenure";
-	public static final String TABLE3 = "account";
-	public static final String TABLE4 = "product";
-	public static final String TABLE5 = "zipcode";
-	
+	public static final String PARAM = "param";
+	public static final String OWNER = "owner";
+	public static final String TENUR = "tenure";
+	public static final String ACCNT = "account";
+	public static final String PRODX = "product";
+
 	public static final String CUSTOM_ITEM = "--自訂--";
 	
 	public static final String SPECIAL_PREFIX = "調整";

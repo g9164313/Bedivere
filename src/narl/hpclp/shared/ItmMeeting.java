@@ -1,16 +1,29 @@
 package narl.hpclp.shared;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 
-public class ItmMeeting implements Serializable {
+public class ItmMeeting extends ItmBase implements Serializable {
 
-	private Date day = new Date();
+	public ArrayList<ItmTenur> lst = new ArrayList<ItmTenur>();
 	
-	private String[] info = new String[10];
-		
+	public String day = "";
+	
 	public ItmMeeting(){
+		super(ItmOwner.INFO_MAX_COL);
 	}
 	
+	public ItmMeeting(
+		String oid,
+		String[] info,
+		Date stmp
+	){
+		super(ItmOwner.INFO_MAX_COL);
+		map(oid,info,stmp);
+	}
 	
+	public String getKey(){
+		return inf[ItmOwner.INFO_OKEY];
+	}
 }

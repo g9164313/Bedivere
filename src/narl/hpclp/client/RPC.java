@@ -12,7 +12,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 public interface RPC extends RemoteService {
 	
 	
-	ArrayList<ItmMeeting> listMeeting(Date brg, Date end);
+	ArrayList<ItmMeeting> listMeeting(String dayFst, String dayEnd);
 	
 	String initServer() throws IllegalArgumentException;	
 }
