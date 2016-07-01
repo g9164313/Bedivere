@@ -19,6 +19,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -64,7 +65,9 @@ public class PanMain extends Composite {
     public MaterialCollapsible lstOwner,lstTenur;
 
 	public PanMain() {
-		initWidget(uiBinder.createAndBindUi(this));
+		initWidget(uiBinder.createAndBindUi(this));		
+		addAttachHandler(eventShownOrHide);
+		
 		search.addCloseHandler(new CloseHandler<String>() {
             @Override
             public void onClose(CloseEvent<String> event) {
@@ -91,12 +94,10 @@ public class PanMain extends Composite {
 
 	@UiHandler("lnkPanProdx")
 	void onLnkProdx(ClickEvent e){
-		
 	}
 	
 	@UiHandler("lnkPanAccnt")
 	void onLnkAccnt(ClickEvent e){
-		
 	}
 	
     @UiHandler("lnkSearch")
@@ -104,16 +105,57 @@ public class PanMain extends Composite {
         appNav.setVisible(false);
         searchNav.setVisible(true);
     }
-       
+    
+    @UiHandler("lnkRenew")
+    void onRenew(ClickEvent e) {
+    	refresh();
+    }
+ 
+    private AttachEvent.Handler eventShownOrHide = new AttachEvent.Handler(){
+		@Override
+		public void onAttachOrDetach(AttachEvent event) {
+			if(event.isAttached()==true){
+				refresh();
+			}
+		}
+    };
+    
+    private SelectHandler eventPickDay = new SelectHandler(){
+		@Override
+		public void onSelect(SelectEvent event) {
+			txtPickDay.setText("");
+			lstOwner.clear();
+			lstTenur.clear();
+			if(lstMeet==null){
+				return;
+			}
+			Integer idx = chrMeet.getSelection().get(0).getRow();
+			if(idx==null){
+				return;
+			}
+			
+			//String txt = "";
+			int beg = grpStart.get(idx);
+			int end = grpTail.get(idx);
+			ItemMeeting itm = null;
+			for(int i=beg; i<=end; i++){
+				itm = lstMeet.get(i);
+				lstOwner.add(new CpiOwner(PanMain.this,itm));
+			}
+			if(itm!=null){
+				txtPickDay.setText(itm.day);
+			}		
+		}
+    };
+    
     private Calendar chrMeet;
     
     private ArrayList<ItemMeeting> lstMeet = null;
     
     private HashMap<Integer,Integer> grpStart= new HashMap<Integer,Integer>();
     private HashMap<Integer,Integer> grpTail = new HashMap<Integer,Integer>();
-    
-    @UiHandler("lnkRenew")
-    void onRenew(ClickEvent e) {
+
+    public void refresh(){
     	MaterialLoader.showLoading(true);
     	
     	Date day = new Date();    	
@@ -146,7 +188,7 @@ public class PanMain extends Composite {
 			}
     	});
     }
- 
+    
     private void group(){
     	grpStart.clear();
     	grpTail.clear();    	
@@ -183,37 +225,9 @@ public class PanMain extends Composite {
 			tab.setValue(i, 0, Main.fmtDate.parse(lstMeet.get(beg).day));
 			tab.setValue(i, 1, cnt);
 		}
-		
+
 		CalendarOptions opt = CalendarOptions.create();
 		opt.setTitle("儀器數量");
 		chrMeet.draw(tab, opt);
     }
-    
-    private SelectHandler eventPickDay = new SelectHandler(){
-		@Override
-		public void onSelect(SelectEvent event) {
-			txtPickDay.setText("");
-			lstOwner.clear();
-			lstTenur.clear();
-			if(lstMeet==null){
-				return;
-			}
-			Integer idx = chrMeet.getSelection().get(0).getRow();
-			if(idx==null){
-				return;
-			}
-			
-			//String txt = "";
-			int beg = grpStart.get(idx);
-			int end = grpTail.get(idx);
-			ItemMeeting itm = null;
-			for(int i=beg; i<=end; i++){
-				itm = lstMeet.get(i);
-				lstOwner.add(new CpiOwner(PanMain.this,itm));
-			}
-			if(itm!=null){
-				txtPickDay.setText(itm.day);
-			}		
-		}
-    };
 }

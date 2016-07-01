@@ -22,7 +22,7 @@ public class Main implements EntryPoint {
 	
 	public final static DateTimeFormat fmtMonDay = DateTimeFormat.getFormat("MM/dd");	
 	public final static DateTimeFormat fmtWeek = DateTimeFormat.getFormat("EEE");	
-	public final static DateTimeFormat fmtMeetDay = DateTimeFormat.getFormat("yyyy MM/dd H");
+	public final static DateTimeFormat fmtMeeting = DateTimeFormat.getFormat("MM/dd EEE H");
 	
 	public final static DateTimeFormat fmtSQLDay = DateTimeFormat.getFormat("yyyy-M-d");
 	
@@ -56,12 +56,12 @@ public class Main implements EntryPoint {
 			@Override
 			public void onFailure(Throwable caught) {
 				//MaterialLoader.showLoading(false);
-				RootPanel.get().add(meeting);
+				switchPanMeeting();
 			}
 			@Override
 			public void onSuccess(String result) {
 				//MaterialLoader.showLoading(false);
-				RootPanel.get().add(meeting);
+				switchPanMeeting();
 			}
 		});
 		

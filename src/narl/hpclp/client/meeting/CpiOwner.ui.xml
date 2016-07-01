@@ -37,6 +37,14 @@
 		<m:MaterialCollapsibleBody>
 			<m:MaterialRow>
 				<m:MaterialColumn>
+					<m:MaterialLabel text="預約時間："/>
+				</m:MaterialColumn>
+				<m:MaterialColumn>
+					<m:MaterialLabel ui:field="txtTime" />
+				</m:MaterialColumn>				
+			</m:MaterialRow>
+			<m:MaterialRow>
+				<m:MaterialColumn>
 					<m:MaterialLabel text="聯絡地址："/>
 				</m:MaterialColumn>
 				<m:MaterialColumn>

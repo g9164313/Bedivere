@@ -12,6 +12,11 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 	
 	public String day = "";
 	
+	/**
+	 * This presents why today is restday
+	 */
+	public String comment = "";
+
 	public ItemMeeting(){
 		super();
 	}
@@ -22,5 +27,30 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 		Date stmp
 	){
 		super(oid,info,stmp);
+	}
+	
+	public ItemMeeting(
+		String oid,
+		String[] info,
+		String day,
+		Date stmp		
+	){
+		super(oid,info,stmp);
+		this.day = day;
+	}
+	
+	public boolean isRestday(){
+		if(comment.length()==0){
+			return false;
+		}
+		return true;
+	}
+	
+	public void setRestday(String txt){
+		if(txt==null){
+			comment = "假日";
+		}else{
+			comment = txt;
+		}
 	}
 }

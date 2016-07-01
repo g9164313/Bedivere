@@ -394,7 +394,7 @@ import com.google.gwt.i18n.shared.impl.DateRecord;
  * <h3>Example</h3> {@example com.google.gwt.examples.DateTimeFormatExample}
  * 
  */
-public class SDateFmt {
+public class FmtDate {
 
 	/**
 	 * Predefined date/time formats -- see {@link CustomDateTimeFormat} if you
@@ -454,7 +454,7 @@ public class SDateFmt {
 	private static final int NUMBER_BASE = 10;
 	private static final int JS_START_YEAR = 1900;
 
-	private static final Map<String, SDateFmt> cache;
+	private static final Map<String, FmtDate> cache;
 
 	private static final int NUM_MILLISECONDS_IN_DAY = 24 * 60 * 60000;
 
@@ -471,7 +471,7 @@ public class SDateFmt {
 	private static final int MINUTES_PER_HOUR = 60;
 
 	static {
-		cache = new HashMap<String, SDateFmt>();
+		cache = new HashMap<String, FmtDate>();
 	}
 
 	/**
@@ -485,7 +485,7 @@ public class SDateFmt {
 	 *            {@link PredefinedFormat} describing desired format
 	 * @return a DateTimeFormat instance for the specified format
 	 */
-	public static SDateFmt getFormat(PredefinedFormat predef) {
+	public static FmtDate getFormat(PredefinedFormat predef) {
 		if (usesFixedEnglishStrings(predef)) {
 			String pattern;
 			switch (predef) {
@@ -634,7 +634,7 @@ public class SDateFmt {
 	 * @throws IllegalArgumentException
 	 *             if the specified pattern could not be parsed
 	 */
-	public static SDateFmt getFormat(String pattern) {
+	public static FmtDate getFormat(String pattern) {
 		return getFormat(pattern, getDefaultDateTimeFormatInfo());
 	}
 
@@ -645,14 +645,14 @@ public class SDateFmt {
 	 * @param dtfi
 	 * @return DateTimeFormat instance
 	 */
-	protected static SDateFmt getFormat(String pattern, DateTimeFormatInfo dtfi) {
+	protected static FmtDate getFormat(String pattern, DateTimeFormatInfo dtfi) {
 		DateTimeFormatInfo defaultDtfi = getDefaultDateTimeFormatInfo();
-		SDateFmt dtf = null;
+		FmtDate dtf = null;
 		if (dtfi == defaultDtfi) {
 			dtf = cache.get(pattern);
 		}
 		if (dtf == null) {
-			dtf = new SDateFmt(pattern, dtfi);
+			dtf = new FmtDate(pattern, dtfi);
 			if (dtfi == defaultDtfi) {
 				cache.put(pattern, dtf);
 			}
@@ -704,7 +704,7 @@ public class SDateFmt {
 	 * @param pattern
 	 *            string pattern specification
 	 */
-	protected SDateFmt(String pattern) {
+	protected FmtDate(String pattern) {
 		this(pattern, getDefaultDateTimeFormatInfo());
 	}
 
@@ -717,7 +717,7 @@ public class SDateFmt {
 	 * @param dtfi
 	 *            DateTimeFormatInfo instance to use
 	 */
-	protected SDateFmt(String pattern, DateTimeFormatInfo dtfi) {
+	protected FmtDate(String pattern, DateTimeFormatInfo dtfi) {
 		this.pattern = pattern;
 		this.dateTimeFormatInfo = dtfi;
 

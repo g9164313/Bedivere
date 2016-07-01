@@ -2,6 +2,7 @@ package narl.hpclp.client.meeting;
 
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
 import gwt.material.design.client.ui.MaterialLabel;
+import narl.hpclp.client.Main;
 import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemTenur;
 
@@ -25,7 +26,7 @@ public class CpiOwner extends Composite {
 	MaterialLabel txtKey,txtName,txtTotal;
 	
 	@UiField
-	MaterialLabel txtAddress,txtInteract,txtPerson,txtMemo;
+	MaterialLabel txtTime,txtAddress,txtInteract,txtPerson,txtMemo;
 	
 	@UiField
 	MaterialCollapsibleItem cpiEntry;
@@ -47,6 +48,7 @@ public class CpiOwner extends Composite {
 		txtName.setText(item.getName());
 		txtTotal.setText(""+item.lst.size()+"台");		
 		//body context
+		txtTime.setText(Main.fmtMeeting.format(item.stmp));
 		txtAddress.setText(meet.getZip()+" "+meet.getAddress());
 		txtInteract.setText(meet.getTelphone()+"   "+meet.getEmail());
 		txtPerson.setText(meet.getDepartment()+"   "+meet.getContact());

@@ -24,7 +24,7 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 public class RpcBridge extends RemoteServiceServlet 
 	implements RPC
 {
-	public static SDateFmt fmtDay = SDateFmt.getFormat("yyyy/M/d"); 
+	public static FmtDate fmtDay = FmtDate.getFormat("yyyy/M/d"); 
 	
 	public static Connection conn;
 	public static PreparedStatement statInsOwner,statModOwner;	
@@ -44,7 +44,7 @@ public class RpcBridge extends RemoteServiceServlet
 		return stat.getResultSet();	
 	} 
 	
-	private static String[] info2flat(
+	public static String[] info2flat(
 		ResultSet rs, 
 		String col
 	) throws SQLException {
@@ -55,7 +55,7 @@ public class RpcBridge extends RemoteServiceServlet
 		return (String[]) tmp.getArray();
 	}
 
-	private static String uuid2flat(
+	public static String uuid2flat(
 		ResultSet rs, 
 		String col
 	) throws SQLException {
@@ -148,69 +148,14 @@ public class RpcBridge extends RemoteServiceServlet
 	//---------------------------------//
 	
 	@Override
-	public ArrayList<ItemMeeting> listMeeting(String dayFst, String dayEnd) {
-		ArrayList<ItemMeeting> lst = new ArrayList<ItemMeeting>();
-		
-		final int idxOwnerKey = ItemOwner.INFO_OKEY + 1;//1-base;
-		final int idxTenurKey = ItemTenur.INFO_TKEY + 1;//1-base;
-		
-		try {
-		//first, list all tenures with owner
-		String cmd =
-			"SELECT "+
-			Const.OWNER+".id AS oid, "+
-			Const.OWNER+".info AS o_info,"+
-			Const.TENUR+".id AS tid, "+
-			Const.TENUR+".info AS t_info, "+
-			Const.TENUR+".stamp AS t_stmp, "+
-			Const.TENUR+".last AS t_last, "+
-			Const.TENUR+".meet AS t_meet "+
-			" FROM "+Const.OWNER+" JOIN "+Const.TENUR+
-			" ON "+Const.TENUR+".oid=owner.id"+
-			" WHERE "+
-			"'"+dayFst+"'<="+Const.TENUR+".meet "+
-			" AND "+
-			Const.TENUR+".meet<='"+dayEnd+"' "+
-			" ORDER BY "+
-			Const.TENUR+".meet ASC, "+
-			Const.OWNER+".info["+idxOwnerKey+"] ASC, "+
-			Const.TENUR+".info["+idxTenurKey+"] ASC;";
-		
-			ItemMeeting meet = new ItemMeeting();//the first item~~~
-			ResultSet rs = getResult(cmd);
-			while(rs.next()){
-				Date t1 = rs.getTimestamp("t_stmp");
-				Date t2 = rs.getTimestamp("t_last");
-				Date t3 = rs.getTimestamp("t_meet");
-				ItemTenur tenu = new ItemTenur(
-					uuid2flat(rs,"tid"),
-					info2flat(rs,"t_info"),
-					t1,t2,t3
-				);
-				
-				String   day = fmtDay.format(t3);
-				String   oid = uuid2flat(rs,"oid");				
-				String[] inf = info2flat(rs,"o_info"); 				
-				if(meet.getKey().equalsIgnoreCase(inf[ItemOwner.INFO_OKEY])==false){
-					//same owner but different meeting day (different tenure)
-					meet = new ItemMeeting(oid,inf,rs.getTimestamp("t_meet"));
-					meet.lst.add(tenu);
-					meet.day  = day;//update again~~~
-					tenu.owner= meet;
-					lst.add(meet);
-					continue;
-				}				
-				meet.lst.add(tenu);
-				tenu.owner = meet;
-			}
-			
-			//cmd = 
-			
-		//first, list owners which are needed to meet
+	public ArrayList<ItemMeeting> listMeeting(String dayFst, String dayEnd) {		
+		ArrayList<ItemMeeting> res = new ArrayList<ItemMeeting>();		
+		try {			
+			return SqlMeeting.list(res,dayFst, dayEnd);			
 		} catch (SQLException e) {
 			//e.printStackTrace();
 			System.err.println(e.getMessage());
 		}
-		return lst;
+		return res;
 	}
 }
