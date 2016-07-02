@@ -12,8 +12,8 @@ public class ItemOwner extends ItemBase implements Serializable {
 	public static final int INFO_ZIP = 2;
 	public static final int INFO_ADDR = 3;
 	public static final int INFO_DEPT = 4;
-	public static final int INFO_CONT = 5;	
-	public static final int INFO_TEL = 6;
+	public static final int INFO_PRSN = 5;	
+	public static final int INFO_PHONE = 6;
 	public static final int INFO_EMAIL = 7;
 	public static final int INFO_CLASS = 8;//deprecate~~~~
 	public static final int INFO_MEMO = 9;
@@ -48,16 +48,16 @@ public class ItemOwner extends ItemBase implements Serializable {
 		return inf[INFO_ADDR];
 	}
 	
-	public String getDepartment(){
+	public String getDepart(){
 		return inf[INFO_DEPT];
 	}
 	
-	public String getContact(){
-		return inf[INFO_CONT];
+	public String getPerson(){
+		return inf[INFO_PRSN];
 	}
 	
-	public String getTelphone(){
-		return inf[INFO_TEL];
+	public String getPhone(){
+		return inf[INFO_PHONE];
 	}
 	
 	public String getEmail(){

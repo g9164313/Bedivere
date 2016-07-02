@@ -29,7 +29,8 @@
 				<m:MaterialColumn truncate="true">				
 					<m:MaterialLabel grid="l15 m15 s15"   ui:field="txtName" />					
 				</m:MaterialColumn>
-				<m:MaterialIcon iconType="PIN_DROP" waves="DEFAULT" float="RIGHT" circle="true" />			
+				<m:MaterialIcon iconType="PRINT" waves="DEFAULT" float="RIGHT" circle="true" ui:field="icoPrint" />
+				<m:MaterialIcon iconType="CREATE" waves="DEFAULT" float="RIGHT" circle="true" ui:field="icoEdit" />						
 			</m:MaterialRow>
 			
 		</m:MaterialCollapsibleHeader>

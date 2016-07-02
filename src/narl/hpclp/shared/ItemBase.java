@@ -15,7 +15,7 @@ public class ItemBase implements Serializable {
 	public ItemBase(int size){
 		inf = new String[size];
 		for(int i=0; i<size; i++){
-			inf[i] = "????";
+			inf[i] = "";
 		}
 	}
 		

@@ -46,6 +46,9 @@ public class PanMain extends Composite {
 	interface PanMainUiBinder extends UiBinder<Widget, PanMain> {
 	}
 
+	@UiField
+	MaterialPanel root;
+			
     @UiField
     MaterialNavBar appNav, searchNav;
 
@@ -66,7 +69,16 @@ public class PanMain extends Composite {
 
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));		
-		addAttachHandler(eventShownOrHide);
+		addAttachHandler(new AttachEvent.Handler(){
+			@Override
+			public void onAttachOrDetach(AttachEvent event) {
+				if(event.isAttached()==true){
+					refresh();
+				}
+			}
+	    });
+		root.add(Main.dlgOwner);
+		root.add(Main.dlgTenur);
 		
 		search.addCloseHandler(new CloseHandler<String>() {
             @Override
@@ -111,15 +123,6 @@ public class PanMain extends Composite {
     	refresh();
     }
  
-    private AttachEvent.Handler eventShownOrHide = new AttachEvent.Handler(){
-		@Override
-		public void onAttachOrDetach(AttachEvent event) {
-			if(event.isAttached()==true){
-				refresh();
-			}
-		}
-    };
-    
     private SelectHandler eventPickDay = new SelectHandler(){
 		@Override
 		public void onSelect(SelectEvent event) {
@@ -230,7 +233,6 @@ public class PanMain extends Composite {
 			if(itm.isRestday()==true){
 				tab.setValue(i, 1, -30);//treak restday as red color~~~
 			}else{
-				System.out.println(itm.day+"==>"+cnt);
 				tab.setValue(i, 1, cnt);
 			}
 		}

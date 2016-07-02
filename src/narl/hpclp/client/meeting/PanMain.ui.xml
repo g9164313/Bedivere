@@ -24,7 +24,7 @@
     }
 </ui:style>
 	
-<m:MaterialPanel>
+<m:MaterialPanel ui:field="root">
 
         <!-- Header Section -->
         <m:MaterialHeader depth="996" layoutPosition="FIXED" width="100%">

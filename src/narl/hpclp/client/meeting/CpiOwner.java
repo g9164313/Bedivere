@@ -11,6 +11,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -50,13 +51,23 @@ public class CpiOwner extends Composite {
 		//body context
 		txtTime.setText(Main.fmtMeeting.format(item.stmp));
 		txtAddress.setText(meet.getZip()+" "+meet.getAddress());
-		txtInteract.setText(meet.getTelphone()+"   "+meet.getEmail());
-		txtPerson.setText(meet.getDepartment()+"   "+meet.getContact());
+		txtInteract.setText(meet.getPhone()+"   "+meet.getEmail());
+		txtPerson.setText(meet.getDepart()+"   "+meet.getPerson());
 		txtMemo.setText(meet.getMemo());
 		//hook event
 		cpiEntry.addClickHandler(eventPick);
 	}
 	
+	@UiHandler("icoEdit")
+	void onEditItem(ClickEvent e){
+		Main.dlgOwner.appear(meet);
+	}
+	
+	@UiHandler("icoPrint")
+	void onPrintItem(ClickEvent e){
+		
+	}
+
 	private ClickHandler eventPick = new ClickHandler(){
 		@Override
 		public void onClick(ClickEvent event) {

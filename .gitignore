@@ -38,6 +38,9 @@ www-test/
 #old GWT (1.5) created this dir
 .gwt-tmp/
 
+#GWT SDK cann't override this file
+war/WEB-INF/web.xml
+
 #Eclipse setting
 .externalToolBuilders/
 .gwt/
