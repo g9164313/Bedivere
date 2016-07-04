@@ -70,10 +70,11 @@ public class SqlMeeting {
 			"SELECT "+
 			Const.OWNER+".id AS oid, "+
 			Const.OWNER+".info AS o_info,"+
+			Const.OWNER+".last AS o_last,"+
 			Const.TENUR+".id AS tid, "+
 			Const.TENUR+".info AS t_info, "+
 			Const.TENUR+".stamp AS t_stmp, "+
-			Const.TENUR+".last AS t_last, "+
+			Const.TENUR+".last AS t_last, "+  
 			Const.TENUR+".meet AS t_meet "+
 			" FROM "+Const.OWNER+" JOIN "+Const.TENUR+
 			" ON "+Const.TENUR+".oid=owner.id"+
@@ -86,6 +87,7 @@ public class SqlMeeting {
 		ItemMeeting meet = new ItemMeeting();//the first item~~~
 		ResultSet rs = RpcBridge.getResult(cmd);
 		while(rs.next()){
+			Date t0 = rs.getTimestamp("o_last");
 			Date t1 = rs.getTimestamp("t_stmp");
 			Date t2 = rs.getTimestamp("t_last");
 			Date t3 = rs.getTimestamp("t_meet");
@@ -94,13 +96,13 @@ public class SqlMeeting {
 				RpcBridge.info2flat(rs,"t_info"),
 				t1,t2,t3
 			);
-			
-			String   day = RpcBridge.fmtDate.format(t3);
+						
 			String   oid = RpcBridge.uuid2flat(rs,"oid");				
-			String[] inf = RpcBridge.info2flat(rs,"o_info"); 				
-			if(meet.getKey().equalsIgnoreCase(inf[ItemOwner.INFO_OKEY])==false){
+			String[] info = RpcBridge.info2flat(rs,"o_info"); 
+			String   stmp = RpcBridge.fmtDate.format(t3);
+			if(meet.getKey().equalsIgnoreCase(info[ItemOwner.INFO_OKEY])==false){
 				//same owner but different meeting day (different tenure)
-				meet = new ItemMeeting(oid,inf,day,rs.getTimestamp("t_meet"));
+				meet = new ItemMeeting(oid,info,stmp,t3,t0);
 				meet.lst.add(tenu);
 				tenu.owner= meet;
 				lst.add(meet);				
@@ -126,11 +128,12 @@ public class SqlMeeting {
 		rs = RpcBridge.getResult(cmd);
 		while(rs.next()){
 			Date stmp = rs.getTimestamp("stamp");
+			Date last = rs.getTimestamp("stamp");
 			meet = new ItemMeeting(
 				RpcBridge.uuid2flat(rs,"id"),
 				RpcBridge.info2flat(rs,"info"),
 				RpcBridge.fmtDate.format(stmp),
-				stmp
+				stmp,last
 			);
 			lst.add(meet);
 			//always check whether day is holiday~~~

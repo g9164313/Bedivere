@@ -26,10 +26,11 @@ public class ItemOwner extends ItemBase implements Serializable {
 	public ItemOwner(
 		String oid,
 		String[] info,
-		Date stmp
+		Date stmp,
+		Date last
 	){
 		super(INFO_MAX_COL);
-		map(oid,info,stmp);
+		map(oid,info,stmp,last);
 	}
 	
 	public String getKey(){

@@ -35,7 +35,7 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 		last.setTime(last.getTime());
 	}
 	
-	public ItemMeeting(
+	/*public ItemMeeting(
 		String oid,
 		String[] info,
 		Date stmp
@@ -50,6 +50,17 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 		Date stmp		
 	){
 		super(oid,info,stmp);
+		this.day = day;
+	}*/
+	
+	public ItemMeeting(
+		String oid,
+		String[] info,
+		String day,
+		Date stmp,
+		Date last
+	){
+		super(oid,info,stmp,last);
 		this.day = day;
 	}
 	
