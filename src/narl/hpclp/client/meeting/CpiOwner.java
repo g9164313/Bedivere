@@ -51,8 +51,8 @@ public class CpiOwner extends Composite {
 		//body context
 		txtTime.setText(Main.fmtMeeting.format(item.stmp));
 		txtAddress.setText(meet.getZip()+" "+meet.getAddress());
-		txtInteract.setText(meet.getPhone()+"   "+meet.getEmail());
-		txtPerson.setText(meet.getDepart()+"   "+meet.getPerson());
+		txtInteract.setText(meet.getPhone()+"   "+meet.getEMail());
+		txtPerson.setText(meet.getDepartment()+"   "+meet.getPerson());
 		txtMemo.setText(meet.getMemo());
 		//hook event
 		cpiEntry.addClickHandler(eventPick);

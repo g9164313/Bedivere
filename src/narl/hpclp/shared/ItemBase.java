@@ -7,27 +7,44 @@ public class ItemBase implements Serializable {
 
 	private static final long serialVersionUID = 7096858623078746344L;
 
-	public String id = "";
+	/**
+	 * When UUID is null, just delete it.<p>
+	 * When UUID is a empty string, create a new one and insert it to database.<p>
+	 * When UUID is valid, modify record in database.<p>
+	 */
+	public String uuid = "";
+	
 	public Date stmp = new Date();
+		
 	public Date last = new Date();
-	public String[] inf;
+	
+	public String[] info;
 	
 	public ItemBase(int size){
-		inf = new String[size];
+		info = new String[size];
 		for(int i=0; i<size; i++){
-			inf[i] = "";
+			info[i] = "";
 		}
 	}
-		
+	
+	public void copyTo(ItemBase dst){
+		dst.uuid = this.uuid;
+		dst.stmp.setTime(this.stmp.getTime());
+		dst.last.setTime(this.last.getTime());
+		for(int i=0; i<info.length; i++){
+			dst.info[i] = this.info[i];
+		}
+	}
+	
 	public void map(String[] val){
-		for(int i=0; i<inf.length; i++){
+		for(int i=0; i<info.length; i++){
 			if(i>=val.length){
 				break;
 			}
 			if(val[i]==null){
-				inf[i] = "";//some old data still keep the value null :-( 
+				info[i] = "";//some old data still keep the value null :-( 
 			}else{
-				inf[i] = val[i];
+				info[i] = val[i];
 			}
 		}
 	}
@@ -36,7 +53,7 @@ public class ItemBase implements Serializable {
 		String id,
 		String[] val
 	){
-		this.id = id;
+		this.uuid = id;
 		map(val);
 	}
 	
@@ -45,7 +62,7 @@ public class ItemBase implements Serializable {
 		String[] val,
 		Date stmp
 	){
-		this.id = id;
+		this.uuid = id;
 		long tick = stmp.getTime();
 		this.stmp.setTime(tick);
 		this.last.setTime(tick);
@@ -58,9 +75,17 @@ public class ItemBase implements Serializable {
 		Date stmp,
 		Date last
 	){
-		this.id = id;
+		this.uuid = id;
 		this.stmp.setTime(stmp.getTime());
 		this.last.setTime(last.getTime());
 		map(val);		
-	}	
+	}
+	
+	public void setStmp(Date d){
+		stmp.setTime(d.getTime());
+	}
+	
+	public void setLast(Date d){
+		stmp.setTime(d.getTime());
+	}
 }

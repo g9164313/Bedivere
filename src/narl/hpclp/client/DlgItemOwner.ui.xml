@@ -38,7 +38,7 @@
 				<m:MaterialTextBox ui:field="boxDept" placeholder="部門" width="5em"/>
 			</m:MaterialColumn>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxCont" placeholder="聯絡(委託)人" width="8em"/>
+				<m:MaterialTextBox ui:field="boxPern" placeholder="聯絡(委託)人" width="8em"/>
 			</m:MaterialColumn>
 			<m:MaterialColumn>
 				<m:MaterialTextBox ui:field="boxMail" placeholder="E-mail" width="13em"/>

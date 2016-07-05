@@ -36,7 +36,7 @@ public class DlgItemTenur extends DlgItem {
 	
 	public void appear(ItemTenur itm){
 		item = itm;
-		appear(itm.id);
+		appear(itm.uuid);
 	}
 
 	@Override

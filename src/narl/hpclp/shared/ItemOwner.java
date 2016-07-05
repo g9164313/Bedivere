@@ -33,39 +33,70 @@ public class ItemOwner extends ItemBase implements Serializable {
 		map(oid,info,stmp,last);
 	}
 	
+	public void copyTo(ItemOwner dst){
+		super.copyTo(dst);
+	}
+	
 	public String getKey(){
-		return inf[INFO_OKEY];
+		return info[INFO_OKEY];
+	}
+	public void setKey(String txt){
+		info[INFO_OKEY] = txt;
 	}
 	
 	public String getName(){
-		return inf[INFO_NAME];
+		return info[INFO_NAME];
+	}
+	public void setName(String txt){
+		info[INFO_NAME] = txt;
 	}
 	
 	public String getZip(){
-		return inf[INFO_ZIP];
+		return info[INFO_ZIP];
+	}
+	public void setZip(String txt){
+		info[INFO_ZIP] = txt;
 	}
 	
 	public String getAddress(){
-		return inf[INFO_ADDR];
+		return info[INFO_ADDR];
+	}
+	public void setAddress(String txt){
+		info[INFO_ADDR] = txt;
 	}
 	
-	public String getDepart(){
-		return inf[INFO_DEPT];
+	public String getDepartment(){
+		return info[INFO_DEPT];
+	}
+	public void setDepartment(String txt){
+		info[INFO_DEPT] = txt;
 	}
 	
 	public String getPerson(){
-		return inf[INFO_PRSN];
+		return info[INFO_PRSN];
+	}
+	public void setPerson(String txt){
+		info[INFO_PRSN] = txt;
 	}
 	
 	public String getPhone(){
-		return inf[INFO_PHONE];
+		return info[INFO_PHONE];
+	}
+	public void setPhone(String txt){
+		info[INFO_PHONE] = txt;
 	}
 	
-	public String getEmail(){
-		return inf[INFO_EMAIL];
+	public String getEMail(){
+		return info[INFO_EMAIL];
+	}
+	public void setEMail(String txt){
+		info[INFO_EMAIL] = txt;
 	}
 	
 	public String getMemo(){
-		return inf[INFO_MEMO];
+		return info[INFO_MEMO];
+	}
+	public void setMemo(String txt){
+		info[INFO_MEMO] = txt;
 	}
 }

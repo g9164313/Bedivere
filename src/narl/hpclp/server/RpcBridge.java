@@ -9,13 +9,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.UUID;
 
 import narl.hpclp.client.RPC;
 import narl.hpclp.shared.Const;
+import narl.hpclp.shared.ItemAccnt;
 import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemOwner;
+import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
@@ -159,5 +160,25 @@ public class RpcBridge extends RemoteServiceServlet
 			System.err.println(e.getMessage());
 		}
 		return res;
+	}
+
+	@Override
+	public ItemOwner modifyOwner(ItemOwner obj) throws IllegalArgumentException {
+		return SqlModify.Owner(obj);
+	}
+
+	@Override
+	public ItemTenur modifyTenur(ItemTenur obj) throws IllegalArgumentException {
+		return SqlModify.Tenur(obj);
+	}
+
+	@Override
+	public ItemAccnt modifyAccnt(ItemAccnt obj) throws IllegalArgumentException {
+		return SqlModify.Accnt(obj);
+	}
+
+	@Override
+	public ItemProdx modifyProdx(ItemProdx obj) throws IllegalArgumentException {
+		return SqlModify.Prodx(obj);
 	}
 }

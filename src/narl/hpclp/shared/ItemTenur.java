@@ -52,85 +52,85 @@ public class ItemTenur extends ItemBase implements Serializable {
 	}
 	
 	public String getKey(){
-		return inf[INFO_TKEY];
+		return info[INFO_TKEY];
 	}	
 	public void setKey(String val){
-		inf[INFO_TKEY]=val;
+		info[INFO_TKEY]=val;
 	}
 	
 	public String getDeviceVendor(){
-		return inf[INFO_DEV_VENDOR];
+		return info[INFO_DEV_VENDOR];
 	}	
 	public void setDeviceVendor(String val){
-		inf[INFO_DEV_VENDOR]=val;
+		info[INFO_DEV_VENDOR]=val;
 		genkey();
 	}	
 	
 	public String getDeviceSerial(){		
-		return inf[INFO_DEV_SERIAL];
+		return info[INFO_DEV_SERIAL];
 	}	
 	public void setDeviceSerial(String val){
-		inf[INFO_DEV_SERIAL]=val;
+		info[INFO_DEV_SERIAL]=val;
 		genkey();
 	}	
 	
 	public String getDeviceNumber(){
-		return inf[INFO_DEV_NUMBER];
+		return info[INFO_DEV_NUMBER];
 	}	
 	public void setDeviceNumber(String val){
-		inf[INFO_DEV_NUMBER]=val;
+		info[INFO_DEV_NUMBER]=val;
 		genkey();
 	}
 		
 	public String getDetectType(){
-		return inf[INFO_DET_TYPE];
+		return info[INFO_DET_TYPE];
 	}
 	public void setDetectType(String val){
-		inf[INFO_DET_TYPE]=val;
+		info[INFO_DET_TYPE]=val;
 	}
 	
 	public String getDetectSerial(){
-		return inf[INFO_DET_SERIAL];
+		return info[INFO_DET_SERIAL];
 	}
 	public void setDetectSerial(String val){
-		inf[INFO_DET_SERIAL]=val;
+		info[INFO_DET_SERIAL]=val;
 		genkey();
 	}
 	
 	public String getDetectNumber(){
-		return inf[INFO_DET_NUMBER];
+		return info[INFO_DET_NUMBER];
 	}
 	public void setDetectNumber(String val){
-		inf[INFO_DET_NUMBER]=val;
+		info[INFO_DET_NUMBER]=val;
 		genkey();
 	}
 	
 	public String getArea(){
-		return inf[INFO_AREA];
+		return info[INFO_AREA];
 	}
 	public void setArea(String val){
-		inf[INFO_AREA]=val;
+		info[INFO_AREA]=val;
 	}
 	
 	public String getFactor(){
-		return inf[INFO_FACTOR];
+		return info[INFO_FACTOR];
 	}
 	public void setFactor(String val){
-		inf[INFO_FACTOR]=val;
+		info[INFO_FACTOR]=val;
 	}
 	
 	public String getSteer(){
-		return inf[INFO_STEER];
+		return info[INFO_STEER];
 	}
 	public void setSteer(String val){
-		inf[INFO_STEER]=val;
+		info[INFO_STEER]=val;
 	}
 
 	public String getMemo(){
-		return inf[INFO_MEMO];
+		return info[INFO_MEMO];
 	}
 	public void setMemo(String val){
-		inf[INFO_MEMO]=val;
+		info[INFO_MEMO]=val;
 	}
 	
 	public boolean isChamber(){
@@ -142,12 +142,12 @@ public class ItemTenur extends ItemBase implements Serializable {
 	}
 	
 	private void genkey(){
-		inf[INFO_TKEY] = genKeyPattern(
-			inf[INFO_DEV_SERIAL], 
-			inf[INFO_DEV_NUMBER],			
-			inf[INFO_DET_SERIAL],
-			inf[INFO_DET_NUMBER],
-			inf[INFO_DEV_VENDOR]
+		info[INFO_TKEY] = genKeyPattern(
+			info[INFO_DEV_SERIAL], 
+			info[INFO_DEV_NUMBER],			
+			info[INFO_DET_SERIAL],
+			info[INFO_DET_NUMBER],
+			info[INFO_DEV_VENDOR]
 		);
 	}
 	

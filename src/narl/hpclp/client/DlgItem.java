@@ -10,7 +10,7 @@ import gwt.material.design.client.ui.MaterialModal;
 
 public abstract class DlgItem extends Composite {
 
-	private MaterialModal dlgRoot;
+	protected MaterialModal dlgRoot;
 	
 	private MaterialButton btnAction,btnCancel;
 	
@@ -46,8 +46,7 @@ public abstract class DlgItem extends Composite {
 	private ClickHandler eventAction = new ClickHandler(){
 		@Override
 		public void onClick(ClickEvent event) {
-			takeAction(event);
-			dlgRoot.closeModal();
+			takeAction(event);			
 		}		
 	};
 	
