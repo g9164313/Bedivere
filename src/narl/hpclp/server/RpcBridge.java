@@ -31,10 +31,6 @@ public class RpcBridge extends RemoteServiceServlet
 	public static FmtDate fmtSql2 = FmtDate.getFormat("yyyy-M-d HH:mm:ss");
 	
 	public static Connection conn;
-	public static PreparedStatement statInsOwner,statModOwner;	
-	public static PreparedStatement statInsTenue,statModTenue;	
-	public static PreparedStatement statInsAccnt,statModAccnt;
-	public static PreparedStatement statInsProdx,statModProdx;
 	
 	public static ResultSet getResult(String cmd) throws SQLException{
 		if(conn==null){
@@ -81,46 +77,7 @@ public class RpcBridge extends RemoteServiceServlet
 				Const.DATABASE_USER,
 				Const.DATABASE_PASS
 			);
-			//---------------------------//
-			/*statInsOwner = conn.prepareStatement(
-				"INSERT INTO "+
-				Const.TABLE1+"(info,stamp,last,id) " + 
-				"VALUES(?,?,?,?)"
-			);	
-			statModOwner = conn.prepareStatement(
-				"UPDATE "+Const.TABLE1+" SET "+ 
-				"info=?, stamp=?, last=? WHERE id=?"
-			);	
-			//---------------------------//
-			statInsTenue = conn.prepareStatement(
-				"INSERT INTO "+Const.TABLE2+
-				"(info,stamp,last,meet,dirty,oid,id) " + 
-				"VALUES(?,?,?,?,?,?,?)"
-			);
-			statModTenue = conn.prepareStatement(
-				"UPDATE "+Const.TABLE2+" SET "+ 
-				"info=?, stamp=?, last=?, meet=?, dirty=?, oid=? WHERE id=?"
-			);
-			//---------------------------//
-			statInsAccnt = conn.prepareStatement(
-				"INSERT INTO "+Const.TABLE3+
-				"(info,stamp,last,fare,final,oid,id) " + 
-				"VALUES(?,?,?,?,?,?,?)"
-			);
-			statModAccnt = conn.prepareStatement(
-				"UPDATE "+Const.TABLE3+" SET "+ 
-				"info=?, stamp=?, last=?, fare=?, final=?, oid=? WHERE id=?"
-			);
-			//---------------------------//
-			statInsProdx = conn.prepareStatement(
-				"INSERT INTO "+Const.TABLE4+
-				"(info,stamp,last,format,scribble,oid,tid,id) " + 
-				"VALUES(?,?,?,?,?,?,?,?)"
-			);
-			statModProdx = conn.prepareStatement(
-				"UPDATE "+Const.TABLE4+" SET "+
-				"info=?, stamp=?, last=?, format=?, scribble=?, oid=?, tid=? WHERE id=?"
-			);*/			
+			SqlDBase.prepare(conn);
 		} catch(ClassNotFoundException e){
 			return res.appendError(e.getMessage());
 		} catch (SQLException e) {			

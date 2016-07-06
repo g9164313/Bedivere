@@ -21,6 +21,7 @@ gwt-unitCache/
 .apt_generated/
 
 # more caches and things from deploy #
+war/WEB-INF/web.xml
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
 war/narl.hpclp.main/

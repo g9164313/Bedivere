@@ -20,6 +20,10 @@ public class ItemBase implements Serializable {
 	
 	public String[] info;
 	
+	public boolean deprecated = false;
+	
+	public String error = "";
+	
 	public ItemBase(int size){
 		info = new String[size];
 		for(int i=0; i<size; i++){

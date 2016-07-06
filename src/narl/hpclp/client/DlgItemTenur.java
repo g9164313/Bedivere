@@ -3,6 +3,7 @@ package narl.hpclp.client;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -47,7 +48,6 @@ public class DlgItemTenur extends DlgItem {
 	@UiField
 	MaterialTextBox boxArea,boxFactor,boxSteer;
 
-	
 	public DlgItemTenur() {
 		initWidget(uiBinder.createAndBindUi(this));
 		refxWidget(root,btnAction,btnCancel);
@@ -76,6 +76,18 @@ public class DlgItemTenur extends DlgItem {
 	void onDropdown(SelectionEvent<Widget> event){
 		MaterialLabel txt = (MaterialLabel) event.getSelectedItem();
 		btnDetType.setText(txt.getText());
+	}
+	
+	@UiHandler("boxArea")
+	public void onChangeArea(ValueChangeEvent<String> event) {
+		String txt = boxArea.getText();
+		txt = txt.replace("^2","²").replace("^3","³");
+		boxArea.setText(txt);
+	}
+	
+	@UiHandler("boxSteer")
+	public void onChangeSteer(ValueChangeEvent<String> event) {
+		onChangeArea(event);
 	}
 	
 	private ItemTenur item = null;
@@ -109,7 +121,7 @@ public class DlgItemTenur extends DlgItem {
 		item.setSteer(boxSteer.getText());
 		Main.rpc.modifyTenur(item,eventModify);
 	}
-	
+
 	private AsyncCallback<ItemTenur> eventModify = 
 		new AsyncCallback<ItemTenur>()
 	{
