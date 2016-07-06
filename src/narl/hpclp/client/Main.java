@@ -1,11 +1,13 @@
 package narl.hpclp.client;
 
 import narl.hpclp.client.meeting.PanMain;
+import narl.hpclp.shared.ItemParam;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.rpc.AsyncCallback;
+import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class Main implements EntryPoint {
@@ -28,6 +30,8 @@ public class Main implements EntryPoint {
 	public static DlgItemOwner dlgOwner = new DlgItemOwner();
 	
 	public static DlgItemTenur dlgTenur = new DlgItemTenur();
+	
+	public static ItemParam param = null;
 	
 	private static PanMain meeting = new PanMain();
 	
@@ -52,19 +56,23 @@ public class Main implements EntryPoint {
 		switch_panel(PAN_MEETING);
 	}
 	
-	
 	@Override
 	public void onModuleLoad() {
 		//MaterialLoader.showLoading(true);
-		rpc.initServer(new AsyncCallback<String>(){
+		rpc.initServer(new AsyncCallback<ItemParam>(){
 			@Override
 			public void onFailure(Throwable caught) {
-				//MaterialLoader.showLoading(false);
 				switchPanMeeting();
 			}
 			@Override
-			public void onSuccess(String result) {
-				//MaterialLoader.showLoading(false);
+			public void onSuccess(ItemParam result) {
+				if(result.error!=null){
+					//just post a error message~~~~
+					RootPanel.get().add(new Label(result.error));
+					return;
+				}
+				param = result;
+				dlgTenur.initDetectType();
 				switchPanMeeting();
 			}
 		});

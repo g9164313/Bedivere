@@ -172,7 +172,7 @@ public class PanMain extends Composite {
 			@Override
 			public void onFailure(Throwable caught) {
 				lstMeet = null;
-				chrMeet.clearChart();
+				if(chrMeet!=null){ chrMeet.clearChart(); }
 				MaterialLoader.showLoading(false);
 				MaterialToast.fireToast(caught.getMessage());
 			}

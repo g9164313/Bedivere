@@ -16,6 +16,7 @@ import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemAccnt;
 import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemOwner;
+import narl.hpclp.shared.ItemParam;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
 
@@ -71,8 +72,8 @@ public class RpcBridge extends RemoteServiceServlet
 	//---------------------------------//
 	
 	@Override
-	public String initServer() throws IllegalArgumentException {
-		String txt = null;
+	public ItemParam initServer() throws IllegalArgumentException {
+		ItemParam res = new ItemParam();
 		try {		
 			Class.forName("org.postgresql.Driver");					
 			conn = DriverManager.getConnection(
@@ -120,33 +121,59 @@ public class RpcBridge extends RemoteServiceServlet
 				"UPDATE "+Const.TABLE4+" SET "+
 				"info=?, stamp=?, last=?, format=?, scribble=?, oid=?, tid=? WHERE id=?"
 			);*/			
-		} catch(ClassNotFoundException e){		
-			e.printStackTrace();
-			txt = "FAIL: "+e.getMessage();
+		} catch(ClassNotFoundException e){
+			return res.appendError(e.getMessage());
 		} catch (SQLException e) {			
-			e.printStackTrace();
-			txt = "FAIL: "+e.getMessage();
+			return res.appendError(e.getMessage());
 		}
-		if(txt!=null){
-			System.err.println(txt);
-			return txt;
-		}
+
+		checkParamData(res);
 		
+		checkJasperPath(res);
+
+		return res;
+	}
+	
+	private void checkParamData(ItemParam res){
+		try {
+			ResultSet rs;
+			rs = getResult("SELECT val FROM param WHERE key SIMILAR TO '%UNIT%' ORDER BY val");			
+			while(rs.next()){ res.gather(rs.getString(1)); }
+			res.mapping("prodxUnit");
+			
+			rs = getResult("SELECT val FROM param WHERE key SIMILAR TO '%DETTYPE%' ORDER BY key");			
+			while(rs.next()){ res.gather(rs.getString(1)); }
+			res.mapping("detectType");
+			
+			rs = getResult("SELECT val FROM param WHERE key SIMILAR TO '%SERVICE%' ORDER BY val");			
+			while(rs.next()){ res.gather(rs.getString(1)); }
+			res.mapping("accntService");
+			
+			rs = getResult("SELECT val FROM param WHERE key SIMILAR TO '%EMITTER%' ORDER BY val");			
+			while(rs.next()){ res.gather(rs.getString(1)); }
+			res.mapping("prodxEmitter");
+			
+		} catch (SQLException e) {			
+			res.appendError(e.getMessage());
+		}
+	}
+	
+	private void checkJasperPath(ItemParam res){
 		final String name = "/narl.hpclp.jasper/";
-		String path = new File(".").getAbsolutePath();		
+		String path = new File(".").getAbsolutePath();
+		String dstPath;
 		//Try every possible path~~~
 		if(new File(path+name).exists()==true){
-			txt = path + name;		
+			dstPath = path + name;		
 		}else if(new File(path+"/webapps/bedivere"+name).exists()==true){
 			//If user deploy package in Apache-Tomcat, the default location may be his root path.
-			txt = path +"/webapps/bedivere"+name;
+			dstPath = path +"/webapps/bedivere"+name;
 		}else if(new File(path+"/bedivere"+name).exists()==true){
 			//Is this possible???
-			txt = path+"/bedivere"+name;
+			dstPath = path+"/bedivere"+name;
 		}else{
-			return "FAIL: path is undetermined."+path;
-		}	
-		return "";
+			res.appendError("FAIL: path is undetermined."+path);
+		}
 	}
 	//---------------------------------//
 	
@@ -164,21 +191,21 @@ public class RpcBridge extends RemoteServiceServlet
 
 	@Override
 	public ItemOwner modifyOwner(ItemOwner obj) throws IllegalArgumentException {
-		return SqlModify.Owner(obj);
+		return SqlDBase.modifyOwner(obj);
 	}
 
 	@Override
 	public ItemTenur modifyTenur(ItemTenur obj) throws IllegalArgumentException {
-		return SqlModify.Tenur(obj);
+		return SqlDBase.modifyTenur(obj);
 	}
 
 	@Override
 	public ItemAccnt modifyAccnt(ItemAccnt obj) throws IllegalArgumentException {
-		return SqlModify.Accnt(obj);
+		return SqlDBase.modifyAccnt(obj);
 	}
 
 	@Override
 	public ItemProdx modifyProdx(ItemProdx obj) throws IllegalArgumentException {
-		return SqlModify.Prodx(obj);
+		return SqlDBase.modifyProdx(obj);
 	}
 }
