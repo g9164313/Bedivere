@@ -28,7 +28,7 @@
 				<m:MaterialColumn>
 					<m:MaterialLabel ui:field="txtDevNumber"  />
 				</m:MaterialColumn>
-				<m:MaterialIcon iconType="PIN_DROP" waves="DEFAULT" float="RIGHT" circle="true" />	
+				<m:MaterialIcon iconType="PIN_DROP" waves="DEFAULT" float="RIGHT" circle="true" ui:field="icoEdit" />	
 			</m:MaterialRow>
 		</m:MaterialCollapsibleHeader>
 		

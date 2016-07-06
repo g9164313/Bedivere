@@ -58,6 +58,13 @@ public class ItemTenur extends ItemBase implements Serializable {
 		info[INFO_TKEY]=val;
 	}
 	
+	public void copyTo(ItemTenur dst){
+		super.copyTo(dst);
+		this.owner.copyTo(dst.owner);
+		dst.meet.setTime(this.meet.getTime());
+	}
+	
+	
 	public String getDeviceVendor(){
 		return info[INFO_DEV_VENDOR];
 	}	

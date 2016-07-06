@@ -44,30 +44,28 @@ public class CpiOwner extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.root = root;
 		this.meet = item;
-		//head title
-		txtKey.setText(item.getKey());
-		txtName.setText(item.getName());
-		txtTotal.setText(""+item.lst.size()+"台");		
-		//body context
-		txtTime.setText(Main.fmtMeeting.format(item.stmp));
-		txtAddress.setText(meet.getZip()+" "+meet.getAddress());
-		txtInteract.setText(meet.getPhone()+"   "+meet.getEMail());
-		txtPerson.setText(meet.getDepartment()+"   "+meet.getPerson());
-		txtMemo.setText(meet.getMemo());
+		mapping();
 		//hook event
 		cpiEntry.addClickHandler(eventPick);
 	}
 	
 	@UiHandler("icoEdit")
 	void onEditItem(ClickEvent e){
-		Main.dlgOwner.appear(meet);
+		Main.dlgOwner.appear(meet,eventRefresh);
 	}
 	
 	@UiHandler("icoPrint")
 	void onPrintItem(ClickEvent e){
 		
 	}
-
+	
+	private Runnable eventRefresh = new Runnable(){
+		@Override
+		public void run() {
+			mapping();
+		}
+	};
+	
 	private ClickHandler eventPick = new ClickHandler(){
 		@Override
 		public void onClick(ClickEvent event) {
@@ -84,4 +82,17 @@ public class CpiOwner extends Composite {
 			}			
 		}
 	};
+	
+	private void mapping(){
+		//head title
+		txtKey.setText(meet.getKey());
+		txtName.setText(meet.getName());
+		txtTotal.setText(""+meet.lst.size()+"台");		
+		//body context
+		txtTime.setText(Main.fmtMeeting.format(meet.stmp));
+		txtAddress.setText(meet.getZip()+" "+meet.getAddress());
+		txtInteract.setText(meet.getPhone()+"   "+meet.getEMail());
+		txtPerson.setText(meet.getDepartment()+"   "+meet.getPerson());
+		txtMemo.setText(meet.getMemo());
+	}
 }

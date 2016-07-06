@@ -8,8 +8,59 @@
 	</ui:style>
 	
 <m:MaterialModal type="DEFAULT" dismissable="true" inDuration="500" outDuration="500" ui:field="root">
+	
 	<m:MaterialModalContent >
+	
+		<m:MaterialRow>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxMeet" placeholder="預約日期" width="11em"/>
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxLast" placeholder="更新日期" width="11em"/>
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxMemo" placeholder="備註" width="11em"/>				
+			</m:MaterialColumn>
+		</m:MaterialRow>
+		
+		<m:MaterialRow>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxDevVendor" placeholder="儀器廠牌" width="11em"/>
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxDevSerial" placeholder="儀器型號" width="11em"/>				
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxDevNumber" placeholder="儀器序號" width="11em"/>
+			</m:MaterialColumn>
+		</m:MaterialRow>
+		
+		<m:MaterialRow>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxDetType" placeholder="偵檢器類型" width="11em"/>
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxDetSerial" placeholder="偵檢器型號" width="11em"/>				
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxDetNumber" placeholder="偵檢器序號" width="11em"/>
+			</m:MaterialColumn>
+		</m:MaterialRow>
+		
+		<m:MaterialRow>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxArea" placeholder="偵檢窗面積" width="11em"/>
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxFactor" placeholder="方向修正值" width="11em"/>				
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxSteer" placeholder="廠商建議值" width="11em"/>
+			</m:MaterialColumn>
+		</m:MaterialRow>
+		
 	</m:MaterialModalContent>
+	
 	<m:MaterialModalFooter>		
 		<m:MaterialButton text="確認" type="FLAT" ui:field="btnAction" />
 		<m:MaterialButton text="取消" type="FLAT" ui:field="btnCancel" />

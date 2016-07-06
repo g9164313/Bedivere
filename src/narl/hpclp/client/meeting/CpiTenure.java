@@ -1,12 +1,15 @@
 package narl.hpclp.client.meeting;
 
+import narl.hpclp.client.Main;
 import narl.hpclp.shared.ItemTenur;
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
 import gwt.material.design.client.ui.MaterialLabel;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -34,11 +37,27 @@ public class CpiTenure extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 
-	//private ItemTenur tenur;
+	private ItemTenur item;
 
 	public CpiTenure(ItemTenur item){
 		initWidget(uiBinder.createAndBindUi(this));
-		//this.tenur= item;
+		this.item= item;
+		mapping();
+	}
+	
+	@UiHandler("icoEdit")
+	void onEditItem(ClickEvent e){
+		Main.dlgTenur.appear(item,eventRefresh);
+	}
+	
+	private Runnable eventRefresh = new Runnable(){
+		@Override
+		public void run() {
+			mapping();
+		}
+	};
+	
+	private void mapping(){
 		//head title
 		txtDevVendor.setText(item.getDeviceVendor());
 		txtDevSerial.setText(item.getDeviceSerial());
@@ -52,5 +71,4 @@ public class CpiTenure extends Composite {
 		txtSteer.setText(item.getSteer());
 		txtMemo.setText(item.getMemo());
 	}
-	
 }

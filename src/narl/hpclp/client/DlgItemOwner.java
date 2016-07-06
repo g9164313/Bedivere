@@ -4,9 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
 import gwt.material.design.client.ui.MaterialButton;
@@ -39,12 +37,12 @@ public class DlgItemOwner extends DlgItem {
 	
 	public DlgItemOwner() {
 		initWidget(uiBinder.createAndBindUi(this));
-		refxWidget(root,btnAction,btnCancel);
+		refxWidget(root,btnAction,btnCancel);		
 	}
 
 	private ItemOwner item = null;
-	
-	public void appear(ItemOwner itm){
+
+	public DlgItem appear(ItemOwner itm,Runnable event){
 		item = itm;
 		//mapping variable to box~~~
 		boxKey.setText(item.getKey());
@@ -56,7 +54,7 @@ public class DlgItemOwner extends DlgItem {
 		boxPern.setText(item.getPerson());
 		boxMail.setText(item.getEMail());
 		boxMemo.setText(item.getMemo());
-		appear(itm.uuid);
+		return appear(itm.uuid,event);
 	}
 
 	@Override
@@ -90,6 +88,7 @@ public class DlgItemOwner extends DlgItem {
 			MaterialToast.fireToast("已更新 "+result.getKey());
 			result.copyTo(item);
 			dlgRoot.closeModal();
+			handleClose();
 		}
 	};
 }

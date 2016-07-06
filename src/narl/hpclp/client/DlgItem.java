@@ -2,6 +2,7 @@ package narl.hpclp.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.client.ui.Composite;
 
 import gwt.material.design.client.base.MaterialWidget;
@@ -30,7 +31,16 @@ public abstract class DlgItem extends Composite {
 		btnCancel.addClickHandler(eventCancel);	
 	}
 
-	protected void appear(String id){
+	private Runnable eventClose = null; 
+	
+	protected void handleClose(){
+		if(eventClose!=null){
+			eventClose.run();
+		}
+	}
+	
+	protected DlgItem appear(String id,Runnable event){
+		eventClose = event;
 		if(id==null){
 			btnAction.setText("新增");
 		}else if(id.length()==0){
@@ -38,9 +48,10 @@ public abstract class DlgItem extends Composite {
 		}else{
 			btnAction.setText("修改");
 		}
-		dlgRoot.openModal();		
+		dlgRoot.openModal();
+		return this;
 	}
-	
+
 	abstract void takeAction(ClickEvent event);
 	
 	private ClickHandler eventAction = new ClickHandler(){
