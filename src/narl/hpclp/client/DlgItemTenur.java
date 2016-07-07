@@ -46,6 +46,9 @@ public class DlgItemTenur extends DlgItem {
 	MaterialTextBox boxDetSerial,boxDetNumber;
 	
 	@UiField
+	MaterialTextBox boxMeet,boxLast,boxMemo;
+	
+	@UiField
 	MaterialTextBox boxArea,boxFactor,boxSteer;
 
 	public DlgItemTenur() {
@@ -53,25 +56,6 @@ public class DlgItemTenur extends DlgItem {
 		refxWidget(root,btnAction,btnCancel);
 	}
 
-	public void initDetectType(){
-		drpDetType.clear();
-		String[] val = Main.param.detectType;
-		for(int i=0; i<val.length; i++){
-			drpDetType.add(new MaterialLabel(val[i]));
-		}
-	}
-	
-	private void setDetectType(String val){
-		btnDetType.setText(val);
-		for(Widget wid:drpDetType.getItems()){
-			MaterialLabel txt = (MaterialLabel)wid;
-			if(val.equalsIgnoreCase(txt.getText())==true){
-				return;//we found the old one~~~
-			}
-		}		
-		drpDetType.add(new MaterialLabel(val));
-	}
-	
 	@UiHandler("drpDetType")
 	void onDropdown(SelectionEvent<Widget> event){
 		MaterialLabel txt = (MaterialLabel) event.getSelectedItem();
@@ -80,30 +64,56 @@ public class DlgItemTenur extends DlgItem {
 	
 	@UiHandler("boxArea")
 	public void onChangeArea(ValueChangeEvent<String> event) {
-		String txt = boxArea.getText();
-		txt = txt.replace("^2","²").replace("^3","³");
-		boxArea.setText(txt);
+		makeSpecialCharacter(boxArea);
 	}
 	
 	@UiHandler("boxSteer")
 	public void onChangeSteer(ValueChangeEvent<String> event) {
-		onChangeArea(event);
+		makeSpecialCharacter(boxSteer);
 	}
 	
+	@UiHandler("boxMeet")
+	public void onChangeMeet(ValueChangeEvent<String> event) {
+		if(Main.text2stmp(boxMeet, item.meet)==true){
+			boxLast.setFocus(true);
+		}
+	}
+	
+	@UiHandler("boxLast")
+	public void onChangeLast(ValueChangeEvent<String> event) {
+		if(Main.text2stmp(boxLast, item.last)==true){
+			boxMemo.setFocus(true);
+		}
+	}
+	
+	@UiHandler("boxMemo")
+	public void onChangeMemo(ValueChangeEvent<String> event) {
+		boxMemo.setFocus(false);//end of chain~~~
+	}
+
 	private ItemTenur item = null;
 	
 	public DlgItem appear(ItemTenur itm,Runnable event){
 		item = itm;
+		boxDevVendor.setFocus(true);
+		
 		//mapping variable to box~~~
 		boxDevVendor.setText(item.getDeviceVendor());
 		boxDevSerial.setText(item.getDeviceSerial());
 		boxDevNumber.setText(item.getDeviceNumber());		
+		
 		setDetectType(itm.getDetectType());		
 		boxDetSerial.setText(item.getDetectSerial());
 		boxDetNumber.setText(item.getDetectNumber());
+		
 		boxArea.setText(item.getArea());
 		boxFactor.setText(item.getFactor());
 		boxSteer.setText(item.getSteer());
+		
+		boxMeet.setText(Main.fmtStmpLast.format(itm.meet));
+		boxLast.setText(Main.fmtStmpLast.format(itm.last));
+		boxMemo.setText(item.getMemo());
+		
 		return appear(itm.uuid,event);
 	}
 
@@ -113,12 +123,20 @@ public class DlgItemTenur extends DlgItem {
 		item.setDeviceVendor(boxDevVendor.getText());
 		item.setDeviceSerial(boxDevSerial.getText());
 		item.setDeviceNumber(boxDevNumber.getText());
+		
 		item.setDetectType(btnDetType.getText());
 		item.setDetectSerial(boxDetSerial.getText());
 		item.setDetectNumber(boxDetNumber.getText());
+		
 		item.setArea(boxArea.getText());
 		item.setFactor(boxFactor.getText());
 		item.setSteer(boxSteer.getText());
+		
+		item.setMeet(Main.fmtStmpLast.parse(boxMeet.getText()));
+		//item.setStmp(Main.fmtStmpLast.parse(boxMeet.getText()));//future~~~~	
+		item.setLast(Main.fmtStmpLast.parse(boxLast.getText()));		
+		item.setMemo(boxMemo.getText());
+		
 		Main.rpc.modifyTenur(item,eventModify);
 	}
 
@@ -140,4 +158,29 @@ public class DlgItemTenur extends DlgItem {
 			handleClose();
 		}
 	};
+	
+	private void makeSpecialCharacter(MaterialTextBox box){
+		String txt = box.getText();
+		txt = txt.replace("^2","²").replace("^3","³");
+		box.setText(txt);
+	}
+	
+	public void initDetectType(){
+		drpDetType.clear();
+		String[] val = Main.param.detectType;
+		for(int i=0; i<val.length; i++){
+			drpDetType.add(new MaterialLabel(val[i]));
+		}
+	}
+	
+	private void setDetectType(String val){
+		btnDetType.setText(val);
+		for(Widget wid:drpDetType.getItems()){
+			MaterialLabel txt = (MaterialLabel)wid;
+			if(val.equalsIgnoreCase(txt.getText())==true){
+				return;//we found the old one~~~
+			}
+		}		
+		drpDetType.add(new MaterialLabel(val));
+	}
 }

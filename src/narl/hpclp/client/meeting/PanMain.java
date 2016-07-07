@@ -138,7 +138,7 @@ public class PanMain extends Composite {
 			}
 			
 			//String txt = "";
-			int beg = grpStart.get(idx);
+			int beg = grpHead.get(idx);
 			int end = grpTail.get(idx);
 			ItemMeeting itm = null;
 			for(int i=beg; i<=end; i++){
@@ -146,16 +146,15 @@ public class PanMain extends Composite {
 				lstOwner.add(new CpiOwner(PanMain.this,itm));
 			}
 			if(itm!=null){
-				txtPickDay.setText(itm.day);
+				txtPickDay.setText(itm.getSDay());
 			}		
 		}
     };
     
     private Calendar chrMeet;
     
-    private ArrayList<ItemMeeting> lstMeet = null;
-    
-    private HashMap<Integer,Integer> grpStart= new HashMap<Integer,Integer>();
+    public ArrayList<ItemMeeting> lstMeet = null;
+    private HashMap<Integer,Integer> grpHead = new HashMap<Integer,Integer>();
     private HashMap<Integer,Integer> grpTail = new HashMap<Integer,Integer>();
 
     public void refresh(){
@@ -179,46 +178,51 @@ public class PanMain extends Composite {
 			@Override
 			public void onSuccess(ArrayList<ItemMeeting> result) {
 				lstMeet = result;
-				chrMeet.clearChart();								
 		    	if(lstMeet.isEmpty()==true){
 		    		MaterialLoader.showLoading(false);
 		    		return;
 		    	}
 		    	MaterialLoader.showLoading(false);
 		    	MaterialToast.fireToast("共"+result.size()+"筆預約項目");
-		    	group();
-		    	draw();				
+		    	redraw();
 			}
     	});
     }
     
-    private void group(){
-    	grpStart.clear();
+    public void redraw(){
+    	lstOwner.clear();
+		lstTenur.clear();
+    	groupItem();
+    	drawChart();
+    }
+    
+    private void groupItem(){
+    	grpHead.clear();
     	grpTail.clear();    	
 		int idxGroup=0;//mapping to the row of chart~~~		
-		String txtDay = lstMeet.get(0).day;
-		grpStart.put(idxGroup,0);
+		String txtDay = lstMeet.get(0).getSDay();
+		grpHead.put(idxGroup,0);
     	for(int i=0; i<lstMeet.size(); i++){
-    		String day = lstMeet.get(i).day;
+    		String day = lstMeet.get(i).getSDay();
 			if(day.equalsIgnoreCase(txtDay)==false){				
 				grpTail.put(idxGroup,i-1);				
 				txtDay = day;//update~~~
 				idxGroup++;
-				grpStart.put(idxGroup,i);
+				grpHead.put(idxGroup,i);
 			}		
     	}
     	grpTail.put(idxGroup,lstMeet.size()-1);//the last one~~~
     }
     
-    private void draw(){
-    	
+    private void drawChart(){
+    	chrMeet.clearChart();
 		DataTable tab = DataTable.create();		
 		tab.addColumn(ColumnType.DATE,"預約日期");
 		tab.addColumn(ColumnType.NUMBER,"儀器數量");
-		tab.addRows(grpStart.size());
+		tab.addRows(grpHead.size());
 		
-		for(int i=0; i<grpStart.size(); i++){
-			int beg = grpStart.get(i);
+		for(int i=0; i<grpHead.size(); i++){
+			int beg = grpHead.get(i);
 			int end = grpTail.get(i);
 			int cnt = 0;
 			ItemMeeting itm = lstMeet.get(beg);
@@ -229,7 +233,7 @@ public class PanMain extends Composite {
 				itm = lstMeet.get(j);
 				cnt = cnt + itm.lst.size();
 			}
-			tab.setValue(i, 0, Main.fmtDate.parse(itm.day));
+			tab.setValue(i, 0, Main.fmtDate.parse(itm.getSDay()));
 			if(itm.isRestday()==true){
 				tab.setValue(i, 1, -30);//treak restday as red color~~~
 			}else{

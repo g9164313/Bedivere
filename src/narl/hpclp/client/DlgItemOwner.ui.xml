@@ -13,38 +13,40 @@
 	
 		<m:MaterialRow>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxKey" placeholder="公司代號" width="5em"/>
+				<m:MaterialTextBox placeholder="公司代號" width="5em" ui:field="boxKey"/>
 			</m:MaterialColumn>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxName" placeholder="公司名稱" width="20em"/>
-			</m:MaterialColumn>
-
-		</m:MaterialRow>
-		
-		<m:MaterialRow>
-			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxZip" placeholder="郵遞區號" width="5em"/>
+				<m:MaterialTextBox placeholder="公司名稱" width="20em" ui:field="boxName"/>
 			</m:MaterialColumn>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxAddr" placeholder="公司地址" width="20em"/>				
-			</m:MaterialColumn>
-			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxPhon" placeholder="聯絡電話" width="11em"/>
+				<m:MaterialTextBox placeholder="預約日期" width="11em" ui:field="boxStmp"/>
 			</m:MaterialColumn>
 		</m:MaterialRow>
 		
 		<m:MaterialRow>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxDept" placeholder="部門" width="5em"/>
+				<m:MaterialTextBox placeholder="郵遞區號" width="5em" ui:field="boxZip"/>
 			</m:MaterialColumn>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxPern" placeholder="聯絡(委託)人" width="8em"/>
+				<m:MaterialTextBox placeholder="公司地址" width="20em" ui:field="boxAddr"/>				
 			</m:MaterialColumn>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxMail" placeholder="E-mail" width="13em"/>
+				<m:MaterialTextBox placeholder="聯絡電話" width="11em" ui:field="boxPhon"/>
+			</m:MaterialColumn>
+		</m:MaterialRow>
+		
+		<m:MaterialRow>
+			<m:MaterialColumn>
+				<m:MaterialTextBox placeholder="部門" width="5em" ui:field="boxDept"/>
 			</m:MaterialColumn>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxMemo" placeholder="備註" width="8em"/>
+				<m:MaterialTextBox placeholder="聯絡(委託)人" width="8em" ui:field="boxPern"/>
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialTextBox placeholder="E-mail" width="13em" ui:field="boxMail"/>
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialTextBox placeholder="備註" width="8em" ui:field="boxMemo" />
 			</m:MaterialColumn>
 		</m:MaterialRow>
 		

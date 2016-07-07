@@ -32,6 +32,9 @@ public class ItemBase implements Serializable {
 	}
 	
 	public void copyTo(ItemBase dst){
+		if(dst==null){
+			return;
+		}
 		dst.uuid = this.uuid;
 		dst.stmp.setTime(this.stmp.getTime());
 		dst.last.setTime(this.last.getTime());

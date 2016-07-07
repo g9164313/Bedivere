@@ -8,9 +8,16 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 
 	private static final long serialVersionUID = 6586334759632561992L;
 
+	/**
+	 * Format is 'yyyy/M/d'.<p>
+	 * Making schedule must depend on this data.<p> 
+	 */
+	private String sday = "";
+
+	/**
+	 * keep how many tenures must be analysised.<p> 
+	 */
 	public ArrayList<ItemTenur> lst = new ArrayList<ItemTenur>();
-	
-	public String day = "";
 	
 	/**
 	 * This presents why today is restday
@@ -22,6 +29,20 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 	}
 	
 	/**
+	 * Just copy information, but no tenure list
+	 * @param src
+	 */
+	public ItemMeeting(ItemMeeting src,ItemTenur... lst){
+		super();
+		this.sday = src.sday;
+		for(int i=0; i<lst.length; i++){
+			this.lst.add(lst[i]);
+		}
+		this.memo= src.memo;		
+		src.copyTo(this);		
+	}
+	
+	/**
 	 * this construct must be a restday
 	 * @param day - like 1990/1/1
 	 * @param memo - any reason, or the defaul is "假日"
@@ -29,7 +50,7 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 	 */
 	public ItemMeeting(String day,String memo,Date stmp){
 		super();
-		this.day = day;
+		this.sday = day;
 		this.memo= (memo==null)?("假日"):(memo);
 		stmp.setTime(stmp.getTime());
 		last.setTime(last.getTime());
@@ -61,7 +82,16 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 		Date last
 	){
 		super(oid,info,stmp,last);
-		this.day = day;
+		this.sday = day;//it should be same as stamp, but we don't have formater
+	}
+	
+	public void setSDay(String s_txt,Date s_stmp){
+		stmp.setTime(s_stmp.getTime());
+		sday = s_txt;
+	}
+	
+	public String getSDay(){
+		return sday;
 	}
 	
 	public boolean isRestday(){
@@ -77,5 +107,5 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 		}else{
 			memo = txt;
 		}
-	}
+	}	
 }

@@ -9,8 +9,8 @@
 	
 <m:MaterialModal type="DEFAULT" dismissable="true" inDuration="500" outDuration="500" ui:field="root">
 	
-	<m:MaterialModalContent >
-			
+	<m:MaterialModalContent>
+
 		<m:MaterialRow>
 			<m:MaterialColumn>
 				<m:MaterialTextBox ui:field="boxDevVendor" placeholder="儀器廠牌" width="11em"/>
@@ -39,13 +39,13 @@
 		
 		<m:MaterialRow>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxMeet" placeholder="預約日期" width="11em"/>
+				<m:MaterialTextBox placeholder="預約日期" width="11em" ui:field="boxMeet" />
 			</m:MaterialColumn>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxLast" placeholder="更新日期" width="11em"/>
+				<m:MaterialTextBox placeholder="更新日期" width="11em" ui:field="boxLast" />
 			</m:MaterialColumn>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxMemo" placeholder="備註" width="11em"/>				
+				<m:MaterialTextBox placeholder="備註" width="11em" ui:field="boxMemo" />				
 			</m:MaterialColumn>
 		</m:MaterialRow>
 		
@@ -60,7 +60,7 @@
 				<m:MaterialTextBox ui:field="boxSteer" placeholder="廠商建議值" width="11em"/>
 			</m:MaterialColumn>
 		</m:MaterialRow>
-		
+
 	</m:MaterialModalContent>
 	
 	<m:MaterialModalFooter>		

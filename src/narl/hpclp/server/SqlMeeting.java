@@ -99,10 +99,10 @@ public class SqlMeeting {
 						
 			String   oid = RpcBridge.uuid2flat(rs,"oid");				
 			String[] info = RpcBridge.info2flat(rs,"o_info"); 
-			String   stmp = RpcBridge.fmtDate.format(t3);
+			String   t_t3 = RpcBridge.fmtDate.format(t3);
 			if(meet.getKey().equalsIgnoreCase(info[ItemOwner.INFO_OKEY])==false){
 				//same owner but different meeting day (different tenure)
-				meet = new ItemMeeting(oid,info,stmp,t3,t0);
+				meet = new ItemMeeting(oid,info,t_t3,t3,t0);
 				meet.lst.add(tenu);
 				tenu.owner= meet;
 				lst.add(meet);				
@@ -112,7 +112,7 @@ public class SqlMeeting {
 				tenu.owner = meet;
 			}
 			//always check whether day is holiday~~~
-			String rday = restday.get(meet.day);
+			String rday = restday.get(meet.getSDay());
 			if(rday!=null){
 				meet.setRestday(rday);
 				if(remnday.contains(rday)==false){
@@ -137,7 +137,7 @@ public class SqlMeeting {
 			);
 			lst.add(meet);
 			//always check whether day is holiday~~~
-			String rday = restday.get(meet.day);
+			String rday = restday.get(meet.getSDay());
 			if(rday!=null){
 				meet.setRestday(rday);
 				if(remnday.contains(rday)==false){

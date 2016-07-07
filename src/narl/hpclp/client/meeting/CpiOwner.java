@@ -27,19 +27,14 @@ public class CpiOwner extends Composite {
 	MaterialLabel txtKey,txtName,txtTotal;
 	
 	@UiField
-	MaterialLabel txtTime,txtAddress,txtInteract,txtPerson,txtMemo;
+	MaterialLabel txtStmp,txtAddr,txtPhon,txtPern,txtMemo;
 	
 	@UiField
 	MaterialCollapsibleItem cpiEntry;
-			
+	
+	private PanMain root;	
 	private ItemMeeting meet;
 	
-	private PanMain root;
-	
-	public CpiOwner() {
-		initWidget(uiBinder.createAndBindUi(this));
-	}
-
 	public CpiOwner(PanMain root,ItemMeeting item) {
 		initWidget(uiBinder.createAndBindUi(this));
 		this.root = root;
@@ -51,20 +46,16 @@ public class CpiOwner extends Composite {
 	
 	@UiHandler("icoEdit")
 	void onEditItem(ClickEvent e){
-		Main.dlgOwner.appear(meet,eventRefresh);
+		if(meet.isRestday()==true){
+			return;
+		}
+		Main.dlgOwner.appear(meet,eventEditDone);
 	}
 	
 	@UiHandler("icoPrint")
 	void onPrintItem(ClickEvent e){
 		
 	}
-	
-	private Runnable eventRefresh = new Runnable(){
-		@Override
-		public void run() {
-			mapping();
-		}
-	};
 	
 	private ClickHandler eventPick = new ClickHandler(){
 		@Override
@@ -77,22 +68,44 @@ public class CpiOwner extends Composite {
 			if(meet.lst.isEmpty()==true){
 				return;
 			}
-			for(ItemTenur item:meet.lst){
-				root.lstTenur.add(new CpiTenure(item));
+			for(ItemTenur tenu:meet.lst){
+				root.lstTenur.add(new CpiTenure(root,meet,tenu));
 			}			
 		}
 	};
 	
-	private void mapping(){
+	private Runnable eventEditDone = new Runnable(){
+		@Override
+		public void run() {
+			mapping();
+			//update again!!!
+			//because sorting depend on this text~~
+			meet.setSDay(Main.fmtDate.format(meet.stmp),meet.stmp);
+			root.redraw();
+		}
+	};
+
+	private void mapping(){		
 		//head title
-		txtKey.setText(meet.getKey());
-		txtName.setText(meet.getName());
-		txtTotal.setText(""+meet.lst.size()+"台");		
-		//body context
-		txtTime.setText(Main.fmtMeeting.format(meet.stmp));
-		txtAddress.setText(meet.getZip()+" "+meet.getAddress());
-		txtInteract.setText(meet.getPhone()+"   "+meet.getEMail());
-		txtPerson.setText(meet.getDepartment()+"   "+meet.getPerson());
+		if(meet.isRestday()==true){
+			String msg = meet.memo;
+			int cnt = meet.lst.size();
+			if(cnt!=0){
+				msg = msg+"("+cnt+"台)";
+			}
+			txtKey.setText("");	
+			txtName.setText(msg);
+			txtTotal.setText("");
+		}else{
+			txtKey.setText(meet.getKey());
+			txtName.setText(meet.getName());
+			txtTotal.setText(""+meet.lst.size()+"台");
+		}	
+		//body context		
+		txtStmp.setText(Main.fmtMeeting.format(meet.stmp));		
+		txtAddr.setText(meet.getZip()+" "+meet.getAddress());
+		txtPhon.setText(meet.getPhone()+"   "+meet.getEMail());
+		txtPern.setText(meet.getDepartment()+"   "+meet.getPerson());
 		txtMemo.setText(meet.getMemo());
 	}
 }

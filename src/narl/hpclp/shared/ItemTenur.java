@@ -60,10 +60,15 @@ public class ItemTenur extends ItemBase implements Serializable {
 	
 	public void copyTo(ItemTenur dst){
 		super.copyTo(dst);
-		this.owner.copyTo(dst.owner);
+		if(this.owner==null){
+			this.owner.copyTo(dst.owner);
+		}
 		dst.meet.setTime(this.meet.getTime());
 	}
 	
+	public void setMeet(Date d){
+		meet.setTime(d.getTime());
+	}
 	
 	public String getDeviceVendor(){
 		return info[INFO_DEV_VENDOR];
@@ -187,10 +192,11 @@ public class ItemTenur extends ItemBase implements Serializable {
 	}
 	
 	private static String trimTypo(String txt){
-		txt = txt.toLowerCase();
-		txt = txt.replaceAll("\\s","");
-		txt = txt.replaceAll(",","");
-		txt = txt.replaceAll("－","");//strange character!!
-		return txt;
+		return txt.toLowerCase()
+			.replaceAll("\\s","")
+			.replaceAll(",","")
+			.replaceAll("－","")
+			.replaceAll("＋","")
+			.trim();		
 	}	
 }

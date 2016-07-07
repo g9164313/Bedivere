@@ -41,7 +41,7 @@
 					<m:MaterialLabel text="預約時間："/>
 				</m:MaterialColumn>
 				<m:MaterialColumn>
-					<m:MaterialLabel ui:field="txtTime" />
+					<m:MaterialLabel ui:field="txtStmp" />
 				</m:MaterialColumn>				
 			</m:MaterialRow>
 			<m:MaterialRow>
@@ -49,7 +49,7 @@
 					<m:MaterialLabel text="聯絡地址："/>
 				</m:MaterialColumn>
 				<m:MaterialColumn>
-					<m:MaterialLabel ui:field="txtAddress" />
+					<m:MaterialLabel ui:field="txtAddr" />
 				</m:MaterialColumn>				
 			</m:MaterialRow>
 			<m:MaterialRow>
@@ -57,7 +57,7 @@
 					<m:MaterialLabel text="聯絡方式："/>
 				</m:MaterialColumn>
 				<m:MaterialColumn>					
-					<m:MaterialLabel ui:field="txtInteract" />
+					<m:MaterialLabel ui:field="txtPhon" />
 				</m:MaterialColumn>				
 			</m:MaterialRow>
 			<m:MaterialRow>
@@ -65,7 +65,7 @@
 					<m:MaterialLabel text="聯絡人："/>
 				</m:MaterialColumn>
 				<m:MaterialColumn>
-					<m:MaterialLabel ui:field="txtPerson" />
+					<m:MaterialLabel ui:field="txtPern" />
 				</m:MaterialColumn>				
 			</m:MaterialRow>
 			<m:MaterialRow>

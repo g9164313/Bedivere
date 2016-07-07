@@ -1,5 +1,9 @@
 package narl.hpclp.client;
 
+import java.util.Date;
+
+import gwt.material.design.client.ui.MaterialTextBox;
+import gwt.material.design.client.ui.MaterialToast;
 import narl.hpclp.client.meeting.PanMain;
 import narl.hpclp.shared.ItemParam;
 
@@ -14,17 +18,33 @@ public class Main implements EntryPoint {
 	
 	public final static DateTimeFormat fmtDate = DateTimeFormat.getFormat("yyyy/M/d"); 
 	
+	public final static DateTimeFormat fmtStmpLast = DateTimeFormat.getFormat("yyyy/M/d H:m");
+	
 	public final static DateTimeFormat fmtYear = DateTimeFormat.getFormat("yyyy"); 	
 	public final static DateTimeFormat fmtMonth = DateTimeFormat.getFormat("M"); 	
 	public final static DateTimeFormat fmtDay = DateTimeFormat.getFormat("d"); 
 	
-	public final static DateTimeFormat fmtMonDay = DateTimeFormat.getFormat("MM/dd");	
-	public final static DateTimeFormat fmtWeek = DateTimeFormat.getFormat("EEE");	
+	public final static DateTimeFormat fmtMonthDay = DateTimeFormat.getFormat("MM/dd");	
+	public final static DateTimeFormat fmtWeekDay = DateTimeFormat.getFormat("EEE");	
 	public final static DateTimeFormat fmtMeeting = DateTimeFormat.getFormat("MM/dd EEE H");
 	
 	public final static DateTimeFormat fmtSQLDay = DateTimeFormat.getFormat("yyyy-M-d");
 	
-
+	public static boolean text2stmp(MaterialTextBox box,Date stmp){
+		String tmp = fmtStmpLast.format(stmp);
+		boolean valid = true;
+		try{
+			Date dd = fmtStmpLast.parse(box.getText());
+			stmp.setTime(dd.getTime());
+			tmp = fmtStmpLast.format(stmp);
+		}catch(IllegalArgumentException e){
+			MaterialToast.fireToast("錯誤的日期格式");
+			valid = false;
+		}
+		box.setText(tmp);
+		return valid;
+	}
+	
 	public static RPCAsync rpc = GWT.create(RPC.class);
 	
 	public static DlgItemOwner dlgOwner = new DlgItemOwner();
