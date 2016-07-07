@@ -23,4 +23,7 @@ public interface RPC extends RemoteService {
 	ItemTenur modifyTenur(ItemTenur obj) throws IllegalArgumentException;
 	ItemAccnt modifyAccnt(ItemAccnt obj) throws IllegalArgumentException;
 	ItemProdx modifyProdx(ItemProdx obj) throws IllegalArgumentException;
+	
+	void cacheOwner(ArrayList<ItemOwner> lst) throws IllegalArgumentException;
+	void cacheMeeting(ArrayList<ItemMeeting> lst) throws IllegalArgumentException;
 }

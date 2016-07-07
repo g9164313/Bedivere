@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import narl.hpclp.client.Main;
+import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemMeeting;
 import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialLabel;
@@ -25,6 +26,7 @@ import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
@@ -116,6 +118,10 @@ public class PanMain extends Composite {
     void onSearch(ClickEvent e) {
         appNav.setVisible(false);
         searchNav.setVisible(true);
+    }
+    
+    @UiHandler("lnkPrint")
+    void onPrint(ClickEvent e) {    	
     }
     
     @UiHandler("lnkRenew")

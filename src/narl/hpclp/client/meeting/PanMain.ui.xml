@@ -35,8 +35,9 @@
                 	<m:MaterialLink ui:field="lnkPanAccnt" iconPosition="NONE" tooltip="會計" tooltipPosition="BOTTOM" iconType="ACCOUNT_BALANCE"/>
                 </m:MaterialNavSection>
                 <m:MaterialNavSection float="RIGHT" hideOn="NONE">
-                    <m:MaterialLink ui:field="lnkSearch" iconPosition="NONE" tooltip="搜尋" tooltipPosition="BOTTOM" iconType="SEARCH"/>
-                    <m:MaterialLink ui:field="lnkRenew" iconPosition="NONE" tooltip="重新整理" tooltipPosition="BOTTOM" iconType="AUTORENEW"/>
+                    <m:MaterialLink iconPosition="NONE" tooltip="搜尋" tooltipPosition="BOTTOM" iconType="SEARCH" ui:field="lnkSearch" />
+                    <m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="BOTTOM" iconType="SEARCH" ui:field="lnkPrint" />
+                    <m:MaterialLink iconPosition="NONE" tooltip="重新整理" tooltipPosition="BOTTOM" iconType="AUTORENEW" ui:field="lnkRenew" />
                 </m:MaterialNavSection>
             </m:MaterialNavBar>
                         

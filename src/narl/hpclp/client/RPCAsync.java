@@ -42,4 +42,14 @@ public interface RPCAsync {
 		ItemProdx obj,
 		AsyncCallback<ItemProdx> res
 	) throws IllegalArgumentException;
+	
+	void cacheOwner(
+		ArrayList<ItemOwner> lst,
+		AsyncCallback<Void> res
+	) throws IllegalArgumentException;
+	
+	void cacheMeeting(
+		ArrayList<ItemMeeting> lst,
+		AsyncCallback<Void> res
+	) throws IllegalArgumentException;
 }

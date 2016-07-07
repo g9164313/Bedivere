@@ -8,6 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 import narl.hpclp.client.RPC;
@@ -28,6 +29,33 @@ public class RpcBridge extends RemoteServiceServlet
 	public static FmtDate fmtDate = FmtDate.getFormat("yyyy/M/d"); 
 	public static FmtDate fmtSql1 = FmtDate.getFormat("yyyy-M-d");
 	public static FmtDate fmtSql2 = FmtDate.getFormat("yyyy-M-d HH:mm:ss");
+	
+	public static FmtDate fmtYear = FmtDate.getFormat("yyyy");
+	public static FmtDate fmtDay = FmtDate.getFormat("MM/dd");
+	public static FmtDate fmtTime = FmtDate.getFormat("HH:mm");
+	
+	public static String date2tw_y(Date stamp){		
+		String year = fmtYear.format(stamp);		
+		int yy = Integer.valueOf(year);		
+		if(yy>1911){
+			yy = yy - 1911;
+		}else{
+			yy = 0;
+		}		
+		return ""+yy;
+	}	
+	public static String date2tw_y(){
+		return date2tw_y(new Date());
+	}
+	
+	public static String date2tw_d(Date stamp){		
+		return date2tw_y(stamp)+"/"+fmtDay.format(stamp);		
+	}
+	
+	public static String twToday(){
+		return date2tw_d(new Date());
+	}
+	//-------------------------------//
 	
 	public static Connection conn;
 	
@@ -117,16 +145,19 @@ public class RpcBridge extends RemoteServiceServlet
 	private void checkJasperPath(ItemParam res){
 		final String name = "/narl.hpclp.jasper/";
 		String path = new File(".").getAbsolutePath();
-		String dstPath;
 		//Try every possible path~~~
 		if(new File(path+name).exists()==true){
-			dstPath = path + name;		
+			RpcPrint.DOC_PATH = path + name;			
 		}else if(new File(path+"/webapps/bedivere"+name).exists()==true){
 			//If user deploy package in Apache-Tomcat, the default location may be his root path.
-			dstPath = path +"/webapps/bedivere"+name;
+			RpcPrint.DOC_PATH = path +"/webapps/bedivere"+name;
 		}else if(new File(path+"/bedivere"+name).exists()==true){
-			//Is this possible???
-			dstPath = path+"/bedivere"+name;
+			//Is this possible???	
+			RpcPrint.DOC_PATH = path+"/bedivere"+name;
+		}else if(new File(path+"/webapps/Bedivere"+name).exists()==true){
+			RpcPrint.DOC_PATH = path +"/webapps/Bedivere"+name;
+		}else if(new File(path+"/Bedivere"+name).exists()==true){
+			RpcPrint.DOC_PATH = path+"/Bedivere"+name;
 		}else{
 			res.appendError("FAIL: path is undetermined."+path);
 		}
@@ -163,5 +194,14 @@ public class RpcBridge extends RemoteServiceServlet
 	@Override
 	public ItemProdx modifyProdx(ItemProdx obj) throws IllegalArgumentException {
 		return SqlDBase.modifyProdx(obj);
+	}
+	
+	@Override
+	public void cacheOwner(ArrayList<ItemOwner> lst) throws IllegalArgumentException {
+		DSrcLetter.lst = lst;
+	}
+	@Override
+	public void cacheMeeting(ArrayList<ItemMeeting> lst) throws IllegalArgumentException {
+		DSrcNotify.lst = lst;
 	}
 }

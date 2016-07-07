@@ -1,7 +1,5 @@
 package narl.hpclp.shared;
 
-import java.util.LinkedList;
-
 public final class Const {
 	
 	public static final String DATABASE_URL = "jdbc:postgresql://localhost:8765/bookkeeping";
@@ -18,10 +16,10 @@ public final class Const {
 	
 	public static final String SPECIAL_PREFIX = "調整";
 
-	public static final String URL_PATT1 = "report_letter.pdf";
-	public static final String URL_PATT2 = "report_notify.pdf";
-	public static final String URL_PATT3 = "report_service.pdf";
-	public static final String URL_PATT4 = "report_demand.pdf";
+	public static final String REPORT_LETTER = "report_letter.pdf";
+	public static final String REPORT_NOTIFY = "report_notify.pdf";
+	public static final String REPORT_SERVICE= "report_service.pdf";
+	public static final String REPORT_DEMAND = "report_demand.pdf";
 	
 	public static String insertSlash(String unit1, String unit2){
 		unit1 = invertSlash(unit1);

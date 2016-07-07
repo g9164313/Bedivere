@@ -1,9 +1,14 @@
 package narl.hpclp.client.meeting;
 
+import java.util.ArrayList;
+
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
 import gwt.material.design.client.ui.MaterialLabel;
+import gwt.material.design.client.ui.MaterialToast;
 import narl.hpclp.client.Main;
+import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemMeeting;
+import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemTenur;
 
 import com.google.gwt.core.client.GWT;
@@ -12,6 +17,8 @@ import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
@@ -54,7 +61,20 @@ public class CpiOwner extends Composite {
 	
 	@UiHandler("icoPrint")
 	void onPrintItem(ClickEvent e){
-		
+		ArrayList<ItemOwner> buf = new ArrayList<ItemOwner>();
+		buf.add(meet);
+		Main.rpc.cacheOwner(buf, new AsyncCallback<Void>(){
+			@Override
+			public void onFailure(Throwable caught) {
+				MaterialToast.fireToast("內部錯誤");
+			}
+			@Override
+			public void onSuccess(Void result) {
+				String url = GWT.getHostPageBaseURL();
+		    	url = url + Const.REPORT_LETTER;
+		    	Window.open(url,"_blank","");
+			}
+		});		
 	}
 	
 	private ClickHandler eventPick = new ClickHandler(){
