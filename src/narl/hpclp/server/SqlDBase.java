@@ -45,7 +45,7 @@ public class SqlDBase {
 	}
 	
 	public static ItemOwner modifyOwner(ItemOwner obj) throws IllegalArgumentException {
-		/*try {
+		try {
 			if(obj.uuid.length()==0){
 				mapping(insertOwner,obj);//create a new one~~~
 			}else if(obj.deprecated==false){
@@ -58,7 +58,7 @@ public class SqlDBase {
 		} catch (SQLException e) {			
 			e.printStackTrace();
 			obj.error = e.getMessage();//update last error message
-		}*/
+		}
 		return obj;
 	}
 
@@ -71,7 +71,7 @@ public class SqlDBase {
 	}
 	
 	public static ItemTenur modifyTenur(ItemTenur obj) throws IllegalArgumentException {
-		/*try {
+		try {
 			if(obj.uuid.length()==0){
 				mapping(insertTenur,obj);//create a new one
 			}else if(obj.deprecated==false){
@@ -84,7 +84,7 @@ public class SqlDBase {
 		} catch (SQLException e) {			
 			e.printStackTrace();
 			obj.error = e.getMessage();//update last error message
-		}*/
+		}
 		return obj;
 	}
 
