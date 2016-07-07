@@ -120,9 +120,9 @@ public class PanMain extends Composite {
         searchNav.setVisible(true);
     }
     
-    @UiHandler("lnkPrint")
+    /*@UiHandler("lnkPrint")
     void onPrint(ClickEvent e) {    	
-    }
+    }*/
     
     @UiHandler("lnkRenew")
     void onRenew(ClickEvent e) {

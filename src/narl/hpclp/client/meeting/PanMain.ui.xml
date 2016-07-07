@@ -36,7 +36,15 @@
                 </m:MaterialNavSection>
                 <m:MaterialNavSection float="RIGHT" hideOn="NONE">
                     <m:MaterialLink iconPosition="NONE" tooltip="搜尋" tooltipPosition="BOTTOM" iconType="SEARCH" ui:field="lnkSearch" />
-                    <m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="BOTTOM" iconType="SEARCH" ui:field="lnkPrint" />
+                    <m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="BOTTOM" iconType="PRINT" activates="dpPrint" >
+                    	<m:MaterialDropDown activator="dpPrint" width="200px" belowOrigin="true" constrainWidth="false">
+                    		<m:MaterialLink text="排程表" iconType="FOLDER" textColor="grey darken-1"/>
+                    		<m:MaterialLink text="信封(日)" iconType="FOLDER" textColor="grey darken-1"/>                            
+                            <m:MaterialLink text="信封(月)" iconType="FOLDER" textColor="grey darken-1"/>
+                            <m:MaterialLink text="通知單(日)" iconType="FOLDER" textColor="grey darken-1"/>                        
+                            <m:MaterialLink text="通知單(月)" iconType="FOLDER" textColor="grey darken-1"/>                            
+                    	</m:MaterialDropDown>
+                    </m:MaterialLink>                    
                     <m:MaterialLink iconPosition="NONE" tooltip="重新整理" tooltipPosition="BOTTOM" iconType="AUTORENEW" ui:field="lnkRenew" />
                 </m:MaterialNavSection>
             </m:MaterialNavBar>
