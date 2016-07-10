@@ -1,15 +1,19 @@
 package narl.hpclp.client;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
-import narl.hpclp.client.meeting.PanMain;
+import narl.hpclp.shared.Const;
+import narl.hpclp.shared.ItemMeeting;
+import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemParam;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -52,8 +56,51 @@ public class Main implements EntryPoint {
 	public static DlgItemTenur dlgTenur = new DlgItemTenur();
 	
 	public static ItemParam param = null;
+	//----------------------------//
 	
-	private static PanMain meeting = new PanMain();
+	public static void printLetter(ItemOwner itm){
+		ArrayList<ItemOwner> lst = new ArrayList<ItemOwner>();
+		lst.add(itm);
+		printLetter(lst);
+	}
+	public static void printLetter(ArrayList<ItemOwner> buf){
+		rpc.cacheOwner(buf, new AsyncCallback<Void>(){
+			@Override
+			public void onFailure(Throwable caught) {
+				MaterialToast.fireToast("內部錯誤");
+			}
+			@Override
+			public void onSuccess(Void result) {
+				String url = GWT.getHostPageBaseURL();
+		    	url = url + Const.REPORT_LETTER;
+		    	Window.open(url,"_blank","");
+			}
+		});
+	}
+	
+	public static void printNotify(ItemMeeting itm){
+		ArrayList<ItemMeeting> lst = new ArrayList<ItemMeeting>();
+		lst.add(itm);
+		printNotify(lst);
+	}
+	public static void printNotify(ArrayList<ItemMeeting> buf){
+		rpc.cacheMeeting(buf, new AsyncCallback<Void>(){
+			@Override
+			public void onFailure(Throwable caught) {
+				MaterialToast.fireToast("內部錯誤");
+			}
+			@Override
+			public void onSuccess(Void result) {
+				String url = GWT.getHostPageBaseURL();
+		    	url = url + Const.REPORT_NOTIFY;
+		    	Window.open(url,"_blank","");
+			}
+		});
+	}
+	//----------------------------//
+	
+	private static narl.hpclp.client.meeting.PanMain meeting = new narl.hpclp.client.meeting.PanMain();
+	private static narl.hpclp.client.product.PanMain product = new  narl.hpclp.client.product.PanMain();
 	
 	private final static int PAN_MEETING=0;
 	private final static int PAN_PRODUCT=1;
@@ -66,6 +113,7 @@ public class Main implements EntryPoint {
 			RootPanel.get().add(meeting);
 			break;
 		case PAN_PRODUCT:
+			RootPanel.get().add(product);
 			break;
 		case PAN_ACCOUNT:
 			break;

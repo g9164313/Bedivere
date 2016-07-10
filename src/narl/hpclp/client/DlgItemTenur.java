@@ -95,9 +95,8 @@ public class DlgItemTenur extends DlgItem {
 	
 	public DlgItem appear(ItemTenur itm,Runnable event){
 		item = itm;
-		boxDevVendor.setFocus(true);
-		
 		//mapping variable to box~~~
+		
 		boxDevVendor.setText(item.getDeviceVendor());
 		boxDevSerial.setText(item.getDeviceSerial());
 		boxDevNumber.setText(item.getDeviceNumber());		

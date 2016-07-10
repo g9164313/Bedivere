@@ -7,6 +7,7 @@ import java.util.HashMap;
 import narl.hpclp.client.Main;
 import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemMeeting;
+import narl.hpclp.shared.ItemOwner;
 import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialLink;
@@ -67,7 +68,7 @@ public class PanMain extends Composite {
     MaterialPanel panArch1;
     
     @UiField
-    public MaterialCollapsible lstOwner,lstTenur;
+    public MaterialCollapsible colOwner,colTenur;
 
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));		
@@ -120,9 +121,53 @@ public class PanMain extends Composite {
         searchNav.setVisible(true);
     }
     
-    /*@UiHandler("lnkPrint")
-    void onPrint(ClickEvent e) {    	
-    }*/
+    @UiHandler("lnkPrintSchedule")
+    void onPrintSchedule(ClickEvent e) {    	
+    }
+    
+    private final String MSG1 = "請指定圖表裡的日期";
+    
+    @UiHandler("lnkPrintLetter1")
+    void onPrintLetter1(ClickEvent e) {
+    	ArrayList<ItemOwner> buf = new ArrayList<ItemOwner>();
+    	gatherMonth(buf);
+    	if(buf.size()==0){
+    		MaterialToast.fireToast(MSG1);
+    		return;
+    	}
+    	Main.printLetter(buf);
+    }
+    @UiHandler("lnkPrintNotify1")
+    void onPrintNotify1(ClickEvent e) {
+    	ArrayList<ItemMeeting> buf = new ArrayList<ItemMeeting>();
+    	gatherMonth(buf);
+    	if(buf.size()==0){
+    		MaterialToast.fireToast(MSG1);
+    		return;
+    	}
+    	Main.printNotify(buf);
+    }
+    
+    @UiHandler("lnkPrintLetter2")
+    void onPrintLetter2(ClickEvent e) {
+    	ArrayList<ItemOwner> buf = new ArrayList<ItemOwner>();
+    	gatherOneDay(buf);
+    	if(buf.size()==0){
+    		MaterialToast.fireToast(MSG1);
+    		return;
+    	}
+    	Main.printLetter(buf);
+    }
+    @UiHandler("lnkPrintNotify2")
+    void onPrintNotify2(ClickEvent e) {
+    	ArrayList<ItemMeeting> buf = new ArrayList<ItemMeeting>();
+    	gatherOneDay(buf);
+    	if(buf.size()==0){
+    		MaterialToast.fireToast(MSG1);
+    		return;
+    	}
+    	Main.printNotify(buf);
+    }
     
     @UiHandler("lnkRenew")
     void onRenew(ClickEvent e) {
@@ -133,8 +178,8 @@ public class PanMain extends Composite {
 		@Override
 		public void onSelect(SelectEvent event) {
 			txtPickDay.setText("");
-			lstOwner.clear();
-			lstTenur.clear();
+			colOwner.clear();
+			colTenur.clear();
 			if(lstMeet==null){
 				return;
 			}
@@ -142,20 +187,45 @@ public class PanMain extends Composite {
 			if(idx==null){
 				return;
 			}
-			
-			//String txt = "";
 			int beg = grpHead.get(idx);
 			int end = grpTail.get(idx);
 			ItemMeeting itm = null;
 			for(int i=beg; i<=end; i++){
 				itm = lstMeet.get(i);
-				lstOwner.add(new CpiOwner(PanMain.this,itm));
+				colOwner.add(new CpiOwner(PanMain.this,itm));
 			}
 			if(itm!=null){
 				txtPickDay.setText(itm.getSDay());
 			}		
 		}
     };
+    
+    @SuppressWarnings("unchecked")
+	private <T> void gatherOneDay(ArrayList<T> lst){
+    	Integer idx = chrMeet.getSelection().get(0).getRow();
+		if(idx==null){
+			return;
+		}
+		int beg = grpHead.get(idx);
+		int end = grpTail.get(idx);
+		for(int i=beg; i<=end; i++){
+			lst.add(((T)lstMeet.get(i)));
+		}
+    }
+    
+    @SuppressWarnings("unchecked")
+	private <T> void gatherMonth(ArrayList<T> lst){
+    	Integer idx = chrMeet.getSelection().get(0).getRow();
+		if(idx==null){
+			return;
+		}
+		int beg = grpHead.get(idx);
+		int end = grpTail.get(idx);
+
+		for(int i=beg; i<=end; i++){
+			lst.add(((T)lstMeet.get(i)));
+		}
+    }
     
     private Calendar chrMeet;
     
@@ -196,8 +266,8 @@ public class PanMain extends Composite {
     }
     
     public void redraw(){
-    	lstOwner.clear();
-		lstTenur.clear();
+    	colOwner.clear();
+		colTenur.clear();
     	groupItem();
     	drawChart();
     }

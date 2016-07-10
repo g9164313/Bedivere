@@ -93,7 +93,6 @@ public class DlgItemOwner extends DlgItem {
 
 	public DlgItem appear(ItemOwner itm,Runnable event){
 		item = itm;
-		boxKey.setFocus(true);
 		//mapping variable to box~~~
 		
 		boxKey.setText(item.getKey());		

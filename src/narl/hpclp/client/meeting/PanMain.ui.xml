@@ -38,11 +38,11 @@
                     <m:MaterialLink iconPosition="NONE" tooltip="搜尋" tooltipPosition="BOTTOM" iconType="SEARCH" ui:field="lnkSearch" />
                     <m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="BOTTOM" iconType="PRINT" activates="dpPrint" >
                     	<m:MaterialDropDown activator="dpPrint" width="200px" belowOrigin="true" constrainWidth="false">
-                    		<m:MaterialLink text="排程表" iconType="FOLDER" textColor="grey darken-1"/>
-                    		<m:MaterialLink text="信封(日)" iconType="FOLDER" textColor="grey darken-1"/>                            
-                            <m:MaterialLink text="信封(月)" iconType="FOLDER" textColor="grey darken-1"/>
-                            <m:MaterialLink text="通知單(日)" iconType="FOLDER" textColor="grey darken-1"/>                        
-                            <m:MaterialLink text="通知單(月)" iconType="FOLDER" textColor="grey darken-1"/>                            
+                    		<m:MaterialLink text="排程表" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintSchedule" />
+                            <m:MaterialLink text="(單月)信封" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintLetter1" />                       
+                            <m:MaterialLink text="(單月)通知單" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintNotify1" />
+                            <m:MaterialLink text="(單日)信封" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintLetter2" /> 
+                            <m:MaterialLink text="(單日)通知單" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintNotify2" />                            
                     	</m:MaterialDropDown>
                     </m:MaterialLink>                    
                     <m:MaterialLink iconPosition="NONE" tooltip="重新整理" tooltipPosition="BOTTOM" iconType="AUTORENEW" ui:field="lnkRenew" />
@@ -57,6 +57,7 @@
 
         <!-- Container -->
         <m:MaterialContainer paddingTop="70" paddingLeft="7" paddingRight="7">
+        	<!-- put calendar chart -->
 			<m:MaterialPanel  
 				backgroundColor="white" 
 				layoutPosition="RELATIVE"
@@ -64,20 +65,19 @@
 				padding="7" 
 				ui:field="panArch1" />
 			
-				<!-- Put some special functions, here -->
-				<m:MaterialRow>					
-					<m:MaterialLabel ui:field="txtPickDay" truncate="true" marginTop="12" />	
-				</m:MaterialRow>
+			<!-- Put some special functions, here -->
+			<m:MaterialRow>					
+				<m:MaterialLabel ui:field="txtPickDay" truncate="true" marginTop="12" />	
+			</m:MaterialRow>
 				
 			<!-- two column information  -->
-			<m:MaterialPanel  
-				backgroundColor="white"> 				
+			<m:MaterialPanel backgroundColor="white"> 				
 				<m:MaterialRow>
 					<m:MaterialColumn>
-						<m:MaterialCollapsible ui:field="lstOwner" marginTop="20" padding="0"/>
+						<m:MaterialCollapsible marginTop="20" padding="0" ui:field="colOwner" />
 					</m:MaterialColumn>
 					<m:MaterialColumn>
-						<m:MaterialCollapsible ui:field="lstTenur" marginTop="20" padding="0"/>
+						<m:MaterialCollapsible marginTop="20" padding="0" ui:field="colTenur" />
 					</m:MaterialColumn>
 				</m:MaterialRow>
 			</m:MaterialPanel>

@@ -26,6 +26,8 @@ public class DSrcNotify implements JRDataSource {
 		
 		String txt, name = arg0.getName();
 		
+		System.out.println("field="+name);
+		
 		if(name.equals("owner_code")){
 			
 			return meet.getKey();
