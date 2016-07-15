@@ -3,6 +3,7 @@ package narl.hpclp.client;
 import java.util.ArrayList;
 import java.util.Date;
 
+import gwt.material.design.client.ui.MaterialListBox;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
 import narl.hpclp.shared.Const;
@@ -55,7 +56,7 @@ public class Main implements EntryPoint {
 	
 	public static DlgItemTenur dlgTenur = new DlgItemTenur();
 	
-	public static ItemParam param = null;
+	public static ItemParam param = null;//enviroment parameters
 	//----------------------------//
 	
 	public static void printLetter(ItemOwner itm){
@@ -99,9 +100,18 @@ public class Main implements EntryPoint {
 	}
 	//----------------------------//
 	
+	public static void initCombo(MaterialListBox box,String[] lst){
+		for(int i=0; i<lst.length; i++){
+			box.addItem(lst[i]);
+		}
+	}
+	
+	//----------------------------//
+	
 	private static narl.hpclp.client.meeting.PanMain meeting = new narl.hpclp.client.meeting.PanMain();
 	private static narl.hpclp.client.product.PanMain product = new  narl.hpclp.client.product.PanMain();
 	
+	private final static int PAN_DEFAULT=1;//Do we need to fix this? No~~~
 	private final static int PAN_MEETING=0;
 	private final static int PAN_PRODUCT=1;
 	private final static int PAN_ACCOUNT=2;
@@ -109,6 +119,7 @@ public class Main implements EntryPoint {
 	private static void switch_panel(int id){
 		RootPanel.get().clear();
 		switch(id){
+		default:
 		case PAN_MEETING:
 			RootPanel.get().add(meeting);
 			break;
@@ -116,12 +127,21 @@ public class Main implements EntryPoint {
 			RootPanel.get().add(product);
 			break;
 		case PAN_ACCOUNT:
+			RootPanel.get().add(new Label("//TODO:--------"));
 			break;
 		}
 	}
 		
-	public static void switchPanMeeting(){
-		switch_panel(PAN_MEETING);
+	public static void switchToMeeting(){
+		switch_panel(PAN_MEETING);		
+	}
+	
+	public static void switchToProduct(){
+		switch_panel(PAN_PRODUCT);
+	}
+	
+	public static void switchToAccount(){
+		switch_panel(PAN_ACCOUNT);
 	}
 	
 	@Override
@@ -130,7 +150,7 @@ public class Main implements EntryPoint {
 		rpc.initServer(new AsyncCallback<ItemParam>(){
 			@Override
 			public void onFailure(Throwable caught) {
-				switchPanMeeting();
+				switch_panel(PAN_DEFAULT);
 			}
 			@Override
 			public void onSuccess(ItemParam result) {
@@ -141,7 +161,7 @@ public class Main implements EntryPoint {
 				}
 				param = result;
 				dlgTenur.initDetectType();
-				switchPanMeeting();
+				switch_panel(PAN_DEFAULT);
 			}
 		});
 		

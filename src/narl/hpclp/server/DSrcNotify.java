@@ -26,7 +26,7 @@ public class DSrcNotify implements JRDataSource {
 		
 		String txt, name = arg0.getName();
 		
-		System.out.println("field="+name);
+		//System.out.println("field="+name);
 		
 		if(name.equals("owner_code")){
 			
@@ -104,8 +104,12 @@ public class DSrcNotify implements JRDataSource {
 		private int _idx = -1;
 		private ArrayList<ItemTenur> _lst = null;
 		
+		private final int MAX_TOTAL = 20;
+		private int mTotal = 0;
+		
 		public DrscTenure(ArrayList<ItemTenur> src){
 			_lst = src;
+			mTotal = _lst.size();
 		}
 		
 		@Override
@@ -114,17 +118,24 @@ public class DSrcNotify implements JRDataSource {
 			ItemTenur item = _lst.get(_idx);	
 			String name = arg0.getName();
 			
-			if (name.equals("tenure_vendor")) {	
-				
-				return item.getDeviceVendor();	
-				
-			}else if (name.equals("tenure_serial")) {
-				
-				return item.getDeviceSerial();
-				
-			}else if (name.equals("tenure_number")) {
-				
+			if (name.equals("device_vendor")) {					
+				return item.getDeviceVendor();					
+			}else if (name.equals("device_serial")) {				
+				return item.getDeviceSerial();				
+			}else if (name.equals("device_number")) {				
 				return item.getDeviceNumber();
+			}else if (name.equals("detect_type")) {				
+				return item.getDetectType();
+			}else if (name.equals("detect_serial")) {				
+				return item.getDetectSerial();
+			}else if (name.equals("detect_number")) {				
+				return item.getDetectNumber();				
+			}else if (name.equals("list_footer")) {
+				if(mTotal>MAX_TOTAL){
+					return "共"+mTotal+"部儀器，其餘未列出";
+				}else{
+					return "總共"+mTotal+"部儀器";
+				}			
 			}
 			return null;
 		}

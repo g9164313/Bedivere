@@ -31,18 +31,19 @@
             <!-- NavBar Component -->
             <m:MaterialNavBar ui:field="appNav" >            	
                 <m:MaterialNavSection float="LEFT" hideOn="NONE">
-                	<m:MaterialLink ui:field="lnkPanProdx" iconPosition="NONE" tooltip="報告" tooltipPosition="BOTTOM" iconType="DESCRIPTION"/>
-                	<m:MaterialLink ui:field="lnkPanAccnt" iconPosition="NONE" tooltip="會計" tooltipPosition="BOTTOM" iconType="ACCOUNT_BALANCE"/>
+                	<!-- <m:MaterialLink iconPosition="NONE" tooltip="排程" tooltipPosition="BOTTOM" iconType="CALENDAR_TEXT" ui:field="lnkPanMeet" />   -->
+                	<m:MaterialLink iconPosition="NONE" tooltip="報告" tooltipPosition="BOTTOM" iconType="DESCRIPTION" ui:field="lnkPanProdx" />
+                	<m:MaterialLink iconPosition="NONE" tooltip="會計" tooltipPosition="BOTTOM" iconType="ACCOUNT_BALANCE" ui:field="lnkPanAccnt" />
                 </m:MaterialNavSection>
                 <m:MaterialNavSection float="RIGHT" hideOn="NONE">
                     <m:MaterialLink iconPosition="NONE" tooltip="搜尋" tooltipPosition="BOTTOM" iconType="SEARCH" ui:field="lnkSearch" />
                     <m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="BOTTOM" iconType="PRINT" activates="dpPrint" >
                     	<m:MaterialDropDown activator="dpPrint" width="200px" belowOrigin="true" constrainWidth="false">
                     		<m:MaterialLink text="排程表" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintSchedule" />
-                            <m:MaterialLink text="(單月)信封" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintLetter1" />                       
-                            <m:MaterialLink text="(單月)通知單" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintNotify1" />
-                            <m:MaterialLink text="(單日)信封" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintLetter2" /> 
-                            <m:MaterialLink text="(單日)通知單" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintNotify2" />                            
+                            <m:MaterialLink text="信封" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintLetter1" />                       
+                            <m:MaterialLink text="通知單" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintNotify1" />
+                            <!-- <m:MaterialLink text="(單日)信封" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintLetter2" /> 
+                            <m:MaterialLink text="(單日)通知單" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintNotify2" />  -->                            
                     	</m:MaterialDropDown>
                     </m:MaterialLink>                    
                     <m:MaterialLink iconPosition="NONE" tooltip="重新整理" tooltipPosition="BOTTOM" iconType="AUTORENEW" ui:field="lnkRenew" />
@@ -50,8 +51,8 @@
             </m:MaterialNavBar>
                         
             <!-- Search Component -->
-            <m:MaterialNavBar ui:field="searchNav" backgroundColor="white" visible="false">
-                <m:MaterialSearch ui:field="search" placeholder="搜尋xxxx" active="true"/>
+            <m:MaterialNavBar backgroundColor="white" visible="false" ui:field="searchNav">
+                <m:MaterialSearch placeholder="搜尋xxxx" active="true" ui:field="search" />
             </m:MaterialNavBar>
         </m:MaterialHeader>
 

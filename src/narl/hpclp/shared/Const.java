@@ -63,5 +63,85 @@ public final class Const {
 		}		
 		return fac;
 	}
+	
+	private static double TableLength[][] = {
+		/*S\D      mm,    cm,     in*/
+		/*mm*/{  1f  , 10f  , 0.03937f },
+		/*cm*/{ 10f  , 1.f  , 0.393701f},
+		/*in*/{ 25.4f, 2.54f, 1f       }
+	};
+	
+	public static double exchange_area(String value, String u1, String u2){
+		double v = 1.f;
+		try{
+			v = Double.valueOf(value);
+		}catch(NumberFormatException e){
+			v = 1.f;
+		}
+		return convertArea(v,u1,u2);
+	}
+	
+	public static double convertArea(
+		double value, 
+		String srcUnit, 
+		String dstUnit
+	){
+		int src=-1, dst=-1;
+		
+		if(srcUnit.indexOf("mm")>=0){ src = 0; }
+		if(srcUnit.indexOf("cm")>=0){ src = 1; }
+		if(srcUnit.indexOf("in")>=0){ src = 2; }
+		
+		if(dstUnit.indexOf("mm")>=0){ dst = 0; }
+		if(dstUnit.indexOf("cm")>=0){ dst = 1; }
+		if(dstUnit.indexOf("in")>=0){ dst = 2; }
+		
+		if(src==-1 || dst==-1){
+			return value;
+		}
+		return value * TableLength[src][dst] * TableLength[src][dst];
+	}
+	
+	public static String getValOrUnit(String vals,boolean is_unit){		
+		String[] val = vals.split(",");		
+		if(val.length==0){
+			return "0";
+		}		
+		if(is_unit){
+			val[0] = TrimNumber(val[0]);
+		}else{
+			val[0] = TrimUnit(val[0]);
+		}
+		return val[0];
+	}
+	
+	public static String TrimUnit(String src){
+		src = src.replaceAll("\\s","");//trim space!!!
+		String dst = "";
+		char[] list = src.toCharArray();
+		for(char cc:list){
+			if( 
+				('0'<=cc && cc<='9') || cc=='.'
+			){
+				dst = dst + cc;
+			}
+		}		
+		return dst.trim();
+	}
+	
+	public static String TrimNumber(String src){
+		src = src.replaceAll("\\s","");//trim space!!!
+		String dst = "";
+		char[] list = src.toCharArray();
+		for(char cc:list){
+			if( 
+				('0'<=cc && cc<='9') || cc=='.'
+			){
+				continue;
+			}
+			dst = dst + cc;
+		}		
+		return dst.trim();
+	}
 }
 

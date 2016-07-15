@@ -3,8 +3,6 @@ package narl.hpclp.shared;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import org.apache.commons.lang3.ArrayUtils;
-
 public class ItemParam implements Serializable {
 
 	private static final long serialVersionUID = -672433658255729566L;

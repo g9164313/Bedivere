@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 
 import narl.hpclp.client.Main;
-import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemOwner;
 import gwt.material.design.client.ui.MaterialCollapsible;
@@ -27,7 +26,6 @@ import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
@@ -43,8 +41,7 @@ import com.googlecode.gwt.charts.client.event.SelectHandler;
 
 public class PanMain extends Composite {
 
-	private static PanMainUiBinder uiBinder = GWT
-			.create(PanMainUiBinder.class);
+	private static PanMainUiBinder uiBinder = GWT.create(PanMainUiBinder.class);
 
 	interface PanMainUiBinder extends UiBinder<Widget, PanMain> {
 	}
@@ -72,30 +69,11 @@ public class PanMain extends Composite {
 
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));		
-		addAttachHandler(new AttachEvent.Handler(){
-			@Override
-			public void onAttachOrDetach(AttachEvent event) {
-				if(event.isAttached()==true){
-					refresh();
-				}
-			}
-	    });
+		initSearch();
 		root.add(Main.dlgOwner);
-		root.add(Main.dlgTenur);
-		
-		search.addCloseHandler(new CloseHandler<String>() {
-            @Override
-            public void onClose(CloseEvent<String> event) {
-                appNav.setVisible(true);
-                searchNav.setVisible(false);
-            }
-        });
-		search.addChangeHandler(new ChangeHandler(){
-			@Override
-			public void onChange(ChangeEvent event) {				
-			}
-		});
-		
+		root.add(Main.dlgTenur);		
+		addAttachHandler(eventShowHide);
+
 		new ChartLoader(ChartPackage.CALENDAR).loadApi(new Runnable(){
 			@Override
 			public void run() {
@@ -107,18 +85,44 @@ public class PanMain extends Composite {
 		});
 	}
 
+	private AttachEvent.Handler eventShowHide = new AttachEvent.Handler(){
+		@Override
+		public void onAttachOrDetach(AttachEvent event) {
+			if(event.isAttached()==true){
+				refresh();
+			}
+		}
+	};
+		
 	@UiHandler("lnkPanProdx")
-	void onLnkProdx(ClickEvent e){
+	void onLnkPanProdx(ClickEvent e){
+		Main.switchToProduct();
 	}
 	
 	@UiHandler("lnkPanAccnt")
-	void onLnkAccnt(ClickEvent e){
+	void onLnkPanAccnt(ClickEvent e){
+		Main.switchToAccount();
 	}
 	
     @UiHandler("lnkSearch")
     void onSearch(ClickEvent e) {
         appNav.setVisible(false);
         searchNav.setVisible(true);
+    }
+    private final ChangeHandler eventSearch = new ChangeHandler(){
+		@Override
+		public void onChange(ChangeEvent event) {
+		}
+    };
+    private void initSearch(){
+		search.addCloseHandler(new CloseHandler<String>() {
+            @Override
+            public void onClose(CloseEvent<String> event) {
+                appNav.setVisible(true);
+                searchNav.setVisible(false);
+            }
+        });
+		search.addChangeHandler(eventSearch);
     }
     
     @UiHandler("lnkPrintSchedule")
@@ -137,6 +141,7 @@ public class PanMain extends Composite {
     	}
     	Main.printLetter(buf);
     }
+    
     @UiHandler("lnkPrintNotify1")
     void onPrintNotify1(ClickEvent e) {
     	ArrayList<ItemMeeting> buf = new ArrayList<ItemMeeting>();
@@ -148,7 +153,21 @@ public class PanMain extends Composite {
     	Main.printNotify(buf);
     }
     
-    @UiHandler("lnkPrintLetter2")
+    @SuppressWarnings("unchecked")
+	private <T> void gatherMonth(ArrayList<T> lst){
+    	Integer idx = chrMeet.getSelection().get(0).getRow();
+		if(idx==null){
+			return;
+		}
+		int beg = grpHead.get(idx);
+		int end = grpTail.get(idx);
+
+		for(int i=beg; i<=end; i++){
+			lst.add(((T)lstMeet.get(i)));
+		}
+    }
+    
+    /*@UiHandler("lnkPrintLetter2")
     void onPrintLetter2(ClickEvent e) {
     	ArrayList<ItemOwner> buf = new ArrayList<ItemOwner>();
     	gatherOneDay(buf);
@@ -168,6 +187,19 @@ public class PanMain extends Composite {
     	}
     	Main.printNotify(buf);
     }
+    
+    @SuppressWarnings("unchecked")
+	private <T> void gatherOneDay(ArrayList<T> lst){
+    	Integer idx = chrMeet.getSelection().get(0).getRow();
+		if(idx==null){
+			return;
+		}
+		int beg = grpHead.get(idx);
+		int end = grpTail.get(idx);
+		for(int i=beg; i<=end; i++){
+			lst.add(((T)lstMeet.get(i)));
+		}
+    }*/
     
     @UiHandler("lnkRenew")
     void onRenew(ClickEvent e) {
@@ -199,34 +231,7 @@ public class PanMain extends Composite {
 			}		
 		}
     };
-    
-    @SuppressWarnings("unchecked")
-	private <T> void gatherOneDay(ArrayList<T> lst){
-    	Integer idx = chrMeet.getSelection().get(0).getRow();
-		if(idx==null){
-			return;
-		}
-		int beg = grpHead.get(idx);
-		int end = grpTail.get(idx);
-		for(int i=beg; i<=end; i++){
-			lst.add(((T)lstMeet.get(i)));
-		}
-    }
-    
-    @SuppressWarnings("unchecked")
-	private <T> void gatherMonth(ArrayList<T> lst){
-    	Integer idx = chrMeet.getSelection().get(0).getRow();
-		if(idx==null){
-			return;
-		}
-		int beg = grpHead.get(idx);
-		int end = grpTail.get(idx);
 
-		for(int i=beg; i<=end; i++){
-			lst.add(((T)lstMeet.get(i)));
-		}
-    }
-    
     private Calendar chrMeet;
     
     public ArrayList<ItemMeeting> lstMeet = null;
