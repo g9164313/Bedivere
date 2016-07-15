@@ -37,9 +37,9 @@ public class CitProduct extends MaterialCollectionItem implements ClickHandler {
 		}
 		if(prodx.tenur!=null){
 			ItemTenur itm = prodx.tenur;
-			add_col(row,"7em",itm.getDeviceVendor());
-			add_col(row,"7em",itm.getDeviceSerial());
-			add_col(row,"7em",itm.getDeviceNumber());
+			add_col(row,"6em",itm.getDeviceVendor());
+			add_col(row,"10em",itm.getDeviceSerial());
+			add_col(row,"10em",itm.getDeviceNumber());
 		}
 		this.add(row);
 	}

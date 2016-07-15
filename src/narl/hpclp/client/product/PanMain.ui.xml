@@ -42,6 +42,7 @@
                     <m:MaterialLink iconPosition="NONE" tooltip="最近50筆資料" tooltipPosition="BOTTOM" iconType="AUTORENEW" ui:field="lnkRenew" />
                     <m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="BOTTOM" iconType="PRINT" ui:field="lnkPrint" />
                     <m:MaterialLink iconPosition="NONE" tooltip="上傳" tooltipPosition="BOTTOM" iconType="FILE_UPLOAD" ui:field="lnkUpload" />
+                    <m:MaterialLink iconPosition="NONE" tooltip="新增" tooltipPosition="BOTTOM" iconType="PLUS_ONE" ui:field="lnkCreate" />
                 </m:MaterialNavSection>
             </m:MaterialNavBar>
             <!-- Search Component -->
@@ -58,7 +59,7 @@
         		    <!-- 委託單位 -->
         			<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7">
         				<m:MaterialRow>
-        					<m:MaterialColumn> <m:MaterialTextBox placeholder="委託單位" iconType="ACCOUNT_CIRCLE" /> </m:MaterialColumn>
+        					<m:MaterialColumn> <m:MaterialTextBox placeholder="委託單位" iconType="ACCOUNT_CIRCLE" width="10em" ui:field="boxOKey" /> </m:MaterialColumn>
         					<m:MaterialColumn> 
         						<m:MaterialLabel ui:field="txtInfo1"/> 
         						<m:MaterialLabel ui:field="txtInfo2"/>
@@ -73,10 +74,18 @@
         			 <!-- 測試儀器 -->
 					<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7" >
 			     		<m:MaterialRow>
-        					<m:MaterialColumn> <m:MaterialTextBox placeholder="測試儀器" iconType="DEVELOPER_BOARD" /> </m:MaterialColumn>
-        					<m:MaterialColumn>
-        						<m:MaterialLabel ui:field="txtInfo3"/> 
-        						<m:MaterialLabel ui:field="txtInfo4"/>
+        					<m:MaterialColumn> <m:MaterialTextBox placeholder="測試儀器" iconType="DEVELOPER_BOARD" width="10em" ui:field="boxTKey" /> </m:MaterialColumn>
+        					<m:MaterialColumn>        					
+        						<m:MaterialLabel ui:field="txtInfoT1" /> 
+        						<m:MaterialLabel ui:field="txtInfoT4" />  						
+        					</m:MaterialColumn>
+        					<m:MaterialColumn>        					
+        						<m:MaterialLabel ui:field="txtInfoT2" /> 
+        						<m:MaterialLabel ui:field="txtInfoT5" />  						
+        					</m:MaterialColumn>
+        					<m:MaterialColumn>        					
+        						<m:MaterialLabel ui:field="txtInfoT3" /> 
+        						<m:MaterialLabel ui:field="txtInfoT6" />  						
         					</m:MaterialColumn>
         					<m:MaterialColumn float="RIGHT">
         						<m:MaterialIcon iconType="CREATE" waves="DEFAULT"  circle="true" ui:field="icoEdit2" />

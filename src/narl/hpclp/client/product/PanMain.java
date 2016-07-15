@@ -7,6 +7,7 @@ import narl.hpclp.client.Main;
 import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemProdx;
+import narl.hpclp.shared.ItemTenur;
 import narl.hpclp.shared.ParmEmitter;
 import gwt.material.design.client.ui.MaterialCheckBox;
 import gwt.material.design.client.ui.MaterialCollection;
@@ -56,7 +57,7 @@ public class PanMain extends Composite {
     MaterialLink lnkPanMeet,lnkPanAccnt;
     
     @UiField
-    MaterialTextBox boxKey,boxStmp,boxMemo;
+    MaterialTextBox boxOKey,boxTKey,boxKey,boxStmp,boxMemo;
 
     @UiField
     MaterialFloatBox boxTemp,boxPress,boxHumid;
@@ -68,7 +69,9 @@ public class PanMain extends Composite {
     MaterialCheckBox chkUseLogo;
     
     @UiField
-    MaterialLabel 
+    MaterialLabel txtInfo1,txtInfo2,
+    	txtInfoT1,txtInfoT2,txtInfoT3,
+    	txtInfoT4,txtInfoT5,txtInfoT6,
     	txtKindArea,txtStrength,txtSurface,
     	txtFactorK,txtFactorP,txtUncertain,
     	txtSerial,txtCriteron;
@@ -186,14 +189,20 @@ public class PanMain extends Composite {
     };
 
     @UiHandler("lnkPrint")
-    void onLnkPrint(ClickEvent e){
+    void onLnkPrintProdx(ClickEvent e){
     	
     }
     
     @UiHandler("lnkUpload")
-    void onLnkUpload(ClickEvent e){
+    void onLnkUploadProdx(ClickEvent e){
     	
     }
+    
+    @UiHandler("lnkCreate")
+    void onLnkCreateProdx(ClickEvent e){
+    	
+    }
+    
     
     @UiHandler("cmbFormat")
 	void onCmbFormat(ValueChangeEvent<String> event){
@@ -247,7 +256,8 @@ public class PanMain extends Composite {
     	Main.selectCombo(cmbUnitRef , curProdx.getUnitRef());
     	Main.selectCombo(cmbUnitMea, curProdx.getUnitMea());
     	Main.selectCombo(cmbEmitter, curProdx.getEmitterTxt(), null, true);
-    	emitt2box();
+    	emitt2box();//map information again!!!
+    	
     	boxKey.setText(curProdx.getKey());
     	boxStmp.setText(Main.fmtDate.format(curProdx.stmp));
     	boxMemo.setText(curProdx.getMemo());
@@ -255,6 +265,30 @@ public class PanMain extends Composite {
     	boxPress.setText(curProdx.getPressure());
     	boxHumid.setText(curProdx.getHumidity());
     	chkUseLogo.setValue(curProdx.useLogo);
+    	
+    	boxOKey.setText("");
+    	if(curProdx.owner!=null){
+    		boxOKey.setText(curProdx.owner.getKey());
+    		txtInfo1.setText(curProdx.owner.getName());
+    		txtInfo2.setText(curProdx.owner.getAddress());
+    	}else{
+    		txtInfo1.setText("");
+    		txtInfo2.setText("");
+    	}
+    	
+    	boxTKey.setText("");
+    	if(curProdx.tenur!=null){
+    		ItemTenur itm = curProdx.tenur;
+    		txtInfoT1.setText(itm.getDeviceVendor());
+    		txtInfoT2.setText(itm.getDeviceSerial());
+    		txtInfoT3.setText(itm.getDeviceNumber());
+    		txtInfoT4.setText(itm.getDetectType());
+    		txtInfoT5.setText(itm.getDetectSerial());
+    		txtInfoT6.setText(itm.getDetectNumber());
+    	}else{
+    		txtInfoT1.setText("");
+    		txtInfoT2.setText("");
+    	}
     }
     
     public void box2prodx(){
