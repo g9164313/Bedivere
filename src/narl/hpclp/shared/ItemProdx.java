@@ -1,6 +1,8 @@
 package narl.hpclp.shared;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 
 public class ItemProdx extends ItemBase implements Serializable {
@@ -23,7 +25,7 @@ public class ItemProdx extends ItemBase implements Serializable {
 	public static final int FMT_F2 = 2;
 	public static final int FMT_F3 = 3;//γ反應報告
 	public static final int FMT_F4 = 4;//污染報告
-	public static final int FMT_F5 = 5;//活度報告	
+	public static final int FMT_F5 = 5;//活度報告
 	public int format = FMT_F2;//default!!!
 	
 	public boolean useLogo = true;
@@ -32,10 +34,20 @@ public class ItemProdx extends ItemBase implements Serializable {
 	
 	public ItemTenur tenur = null;
 	
-	public LinkedList<String> scribble = new LinkedList<String>();
+	public ArrayList<String> scribble = new ArrayList<String>();
 	
 	public ItemProdx() {
 		super(INFO_MAX_COL);
+	}
+	
+	public ItemProdx(
+		String oid,
+		String[] info,
+		Date stmp,
+		Date last
+	){
+		super(INFO_MAX_COL);
+		map(oid,info,stmp,last);
 	}
 	
 	public String getKey(){
@@ -45,13 +57,13 @@ public class ItemProdx extends ItemBase implements Serializable {
 		info[INFO_PKEY]=val;
 	}
 	
-	public String getFmt(){
+	public String getFormat(){
 		return fmt2txt(format);
 	}
-	public void setFmt(String fmt){
-		format = txt2fmt(fmt);
+	public void setFormat(String fmt){
+		setFormat(txt2fmt(fmt));
 	}
-	public void setFmt(int fmt){
+	public void setFormat(int fmt){
 		format = fmt;
 	}
 
@@ -98,28 +110,34 @@ public class ItemProdx extends ItemBase implements Serializable {
 	public ParmEmitter getEmitter(){
 		return new ParmEmitter(info[INFO_EMITTER]);
 	}
+	public String getEmitterTxt(){
+		return info[INFO_EMITTER];
+	}
 	public void setEmitter(ParmEmitter parm){
 		info[INFO_EMITTER] = parm.toString();
 	}
+	public void setEmitter(String val){
+		info[INFO_EMITTER] = val;
+	}
 	
-	public String getRefUnit(){
+	public String getUnitRef(){
 		return info[INFO_UNIT_REF].trim();
 	}
-	public void setRefUnit(String val){
+	public void setUnitRef(String val){
 		info[INFO_UNIT_REF]=val;
 	}
 	
-	public String getMeaUnit(){
+	public String getUnitMea(){
 		return info[INFO_UNIT_MEA].trim();
 	}
-	public void setMeaUnit(String val){
+	public void setUnitMea(String val){
 		info[INFO_UNIT_MEA]=val;
 	}
 	
-	public String getMeaDistance(){
+	public String getDistance(){
 		return info[INFO_DISTANCE];
 	}
-	public void setMeaDistance(String val){
+	public void setDistance(String val){
 		info[INFO_DISTANCE]=val;
 	}
 		

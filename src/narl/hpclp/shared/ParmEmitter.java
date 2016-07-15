@@ -24,6 +24,10 @@ public class ParmEmitter implements Serializable {
 	public String[] info;
 	
 	public ParmEmitter(String txt){
+		setText(txt);
+	}
+	
+	public void setText(String txt){
 		info = txt.split("@");
 	}
 	

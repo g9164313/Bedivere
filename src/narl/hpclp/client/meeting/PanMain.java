@@ -109,11 +109,6 @@ public class PanMain extends Composite {
         appNav.setVisible(false);
         searchNav.setVisible(true);
     }
-    private final ChangeHandler eventSearch = new ChangeHandler(){
-		@Override
-		public void onChange(ChangeEvent event) {
-		}
-    };
     private void initSearch(){
 		search.addCloseHandler(new CloseHandler<String>() {
             @Override
@@ -124,6 +119,11 @@ public class PanMain extends Composite {
         });
 		search.addChangeHandler(eventSearch);
     }
+    private final ChangeHandler eventSearch = new ChangeHandler(){
+		@Override
+		public void onChange(ChangeEvent event) {
+		}
+    };
     
     @UiHandler("lnkPrintSchedule")
     void onPrintSchedule(ClickEvent e) {    	

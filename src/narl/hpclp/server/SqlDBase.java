@@ -3,8 +3,10 @@ package narl.hpclp.server;
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.UUID;
@@ -43,12 +45,86 @@ public class SqlDBase {
 		deleteAccnt = conn.prepareStatement("DELETE FROM "+Const.ACCNT+" WHERE id=?");
 		deleteProdx = conn.prepareStatement("DELETE FROM "+Const.PRODX+" WHERE id=?");
 	}
+	//--------------------------//
+	
+	public static ArrayList<ItemProdx> selectProdx(String postfix) {
+		ArrayList<ItemProdx> lst = new ArrayList<ItemProdx>();
+		try {			
+			String cmd = "SELECT "+
+				Const.PRODX+".id AS id, "+
+				Const.PRODX+".info AS info, "+
+				Const.PRODX+".stamp AS stamp, "+
+				Const.PRODX+".last AS last, "+
+				Const.PRODX+".format AS format, "+
+				Const.PRODX+".scribble AS scribble, "+				
+				Const.OWNER+".id AS oid, "+
+				Const.OWNER+".info AS oinfo, "+
+				Const.OWNER+".stamp AS ostamp, "+
+				Const.OWNER+".last AS olast, "+
+				Const.TENUR+".id AS tid, "+				
+				Const.TENUR+".info AS tinfo, "+
+				Const.TENUR+".stamp AS tstamp, "+
+				Const.TENUR+".last AS tlast "+
+				"FROM "+Const.PRODX+" "+		
+				"LEFT JOIN "+Const.OWNER+" ON "+Const.OWNER+".id="+Const.PRODX+".oid "+
+				"LEFT JOIN "+Const.TENUR+" ON "+Const.TENUR+".id="+Const.PRODX+".tid "+
+				postfix;		
+			ResultSet rs = RpcBridge.getResult(cmd);	
+			while(rs.next()){
+				lst.add(unpackProdx(rs));
+			}
+		} catch (SQLException e) {			
+			System.err.print(e.getMessage());
+		}
+		return lst;
+	}
+	
+	private static ItemProdx unpackProdx(ResultSet rs) throws SQLException {
+
+		ItemProdx item = new ItemProdx(
+			getUUID(rs,"id"), 
+			getTxtArray(rs,"info"), 
+			rs.getTimestamp("stamp"), 
+			rs.getTimestamp("last")
+		);
+		
+		item.setFormat(rs.getInt("format"));
+		
+		String[] val = getTxtArray(rs,"scribble");
+		if(val!=null){
+			for(String v:val){
+				item.scribble.add(v);
+			}
+		}
+				
+		String uuid = "";
+		uuid = getUUID(rs,"oid");
+		if(uuid.length()!=0){
+			item.owner = new ItemOwner(
+				uuid,
+				getTxtArray(rs,"oinfo"),
+				rs.getTimestamp("ostamp"),
+				rs.getTimestamp("olast")
+			);
+		}
+		uuid = getUUID(rs,"tid");		
+		if(uuid.length()!=0){
+			item.tenur = new ItemTenur(
+				uuid,
+				getTxtArray(rs,"tinfo"),
+				rs.getTimestamp("tstamp"),
+				rs.getTimestamp("tlast")
+			);
+		}
+		return item;
+	}
+	//--------------------------//
 	
 	public static ItemOwner modifyOwner(ItemOwner obj) throws IllegalArgumentException {
 		try {
 			if(obj.uuid.length()==0){
 				mapping(insertOwner,obj);//create a new one~~~
-			}else if(obj.deprecated==false){
+			}else if(obj.death==false){
 				mapping(updateOwner,obj);//modify it~~~
 			}else{
 				//delete it!!!
@@ -74,7 +150,7 @@ public class SqlDBase {
 		try {
 			if(obj.uuid.length()==0){
 				mapping(insertTenur,obj);//create a new one
-			}else if(obj.deprecated==false){
+			}else if(obj.death==false){
 				mapping(updateTenur,obj);//modify it~~~		
 			}else{
 				//delete it!!!
@@ -107,7 +183,7 @@ public class SqlDBase {
 		try {
 			if(obj.uuid.length()==0){
 				mapping(insertAccnt,obj);//create a new one
-			}else if(obj.deprecated==false){
+			}else if(obj.death==false){
 				mapping(updateAccnt,obj);//modify it~~~
 			}else{
 				//delete it!!!
@@ -140,7 +216,7 @@ public class SqlDBase {
 		try {
 			if(obj.uuid.length()==0){
 				//create a new one
-			}else if(obj.deprecated==false){
+			}else if(obj.death==false){
 				//modify it~~~
 				/*mapInfo(modifyOwner,1,obj.info);	
 				mapDate(modifyOwner,2,obj.stmp);
@@ -160,6 +236,29 @@ public class SqlDBase {
 	}
 	
 	//--------------------------//
+	
+	public static String getUUID(
+		ResultSet rs, 
+		String col
+	) throws SQLException {
+		UUID id = (UUID) rs.getObject(col);
+		if (id == null) {
+			return "";
+		}
+		return id.toString();
+	}
+		
+	public static String[] getTxtArray(
+		ResultSet rs, 
+		String col
+	) throws SQLException {
+		Array tmp = rs.getArray(col);
+		if (tmp == null) {
+			return null;
+		}
+		return (String[]) tmp.getArray();
+	}
+
 	
 	public static boolean mapUUID(
 		PreparedStatement stm, 

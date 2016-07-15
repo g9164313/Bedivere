@@ -20,7 +20,7 @@ public class ItemBase implements Serializable {
 	
 	public String[] info;
 	
-	public boolean deprecated = false;
+	public boolean death = false;
 	
 	public String error = "";
 	
@@ -44,6 +44,9 @@ public class ItemBase implements Serializable {
 	}
 	
 	public void map(String[] val){
+		if(val==null){
+			return;
+		}
 		for(int i=0; i<info.length; i++){
 			if(i>=val.length){
 				break;

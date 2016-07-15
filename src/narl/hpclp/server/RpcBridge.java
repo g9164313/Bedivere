@@ -177,6 +177,11 @@ public class RpcBridge extends RemoteServiceServlet
 	}
 
 	@Override
+	public ArrayList<ItemProdx> listProduct(String postfix) throws IllegalArgumentException {		
+		return SqlDBase.selectProdx(postfix);
+	}
+	
+	@Override
 	public ItemOwner modifyOwner(ItemOwner obj) throws IllegalArgumentException {
 		return SqlDBase.modifyOwner(obj);
 	}

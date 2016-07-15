@@ -104,8 +104,68 @@ public class Main implements EntryPoint {
 		for(int i=0; i<lst.length; i++){
 			box.addItem(lst[i]);
 		}
+		box.setSelectedIndex(0);
 	}
 	
+	public static void initComboEmitter(MaterialListBox box){
+		String[] opt = param.prodxEmitter;
+		for(int i=0; i<opt.length; i++){
+			combo_add_emitt(box,opt[i]);
+		}
+		box.setSelectedIndex(0);
+	}
+	
+	private static void combo_add_emitt(MaterialListBox box,String arg){
+		int pos = arg.indexOf('@');
+		if(pos<0){
+			box.addItem("???",arg);
+		}else{
+			String name = arg.substring(0,pos);
+			box.addItem(name,arg);
+		}
+	}
+	
+	public static int selectCombo(MaterialListBox box,String itm){
+		return selectCombo(box,itm,null,false);
+	}
+	
+	public static int selectCombo(
+		MaterialListBox box,
+		String itm,
+		String val
+	){
+		return selectCombo(box,itm,val,false);
+	}
+	
+	public static int selectCombo(
+		MaterialListBox box,
+		String itm,
+		String val,
+		boolean isEmitt
+	){
+		int cnt = box.getItemCount();
+		if(val==null){
+			val = itm;
+		}
+		for(int i=0; i<cnt; i++){
+			String _itm = box.getItemText(i);
+			String _val = box.getValue(i);
+			if(
+				itm.equalsIgnoreCase(_itm)==true||
+				val.equalsIgnoreCase(_val)==true
+			){
+				box.setSelectedIndex(i);
+				return i;
+			}
+		}
+		if(isEmitt==true){
+			combo_add_emitt(box,val);
+		}else{
+			box.addItem(itm,val);
+			box.setSelectedIndex(cnt);
+		}
+		return cnt+1;
+	}
 	//----------------------------//
 	
 	private static narl.hpclp.client.meeting.PanMain meeting = new narl.hpclp.client.meeting.PanMain();

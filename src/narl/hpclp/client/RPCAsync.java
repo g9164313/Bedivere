@@ -22,7 +22,12 @@ public interface RPCAsync {
 		String dayEnd,
 		AsyncCallback<ArrayList<ItemMeeting>> res
 	) throws IllegalArgumentException;
-		
+	
+	void listProduct(
+		String where,
+		AsyncCallback<ArrayList<ItemProdx>> res
+	) throws IllegalArgumentException;
+	
 	void modifyOwner(
 		ItemOwner obj,
 		AsyncCallback<ItemOwner> res
