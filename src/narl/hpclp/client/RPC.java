@@ -19,6 +19,10 @@ public interface RPC extends RemoteService {
 	
 	ArrayList<ItemMeeting> listMeeting(String dayFst, String dayEnd);
 
+	ArrayList<ItemOwner> listOwner(String postfix);
+	
+	ArrayList<ItemTenur> listTenure(String postfix);
+	
 	ArrayList<ItemProdx> listProduct(String postfix);
 	
 	ItemOwner modifyOwner(ItemOwner obj) throws IllegalArgumentException;

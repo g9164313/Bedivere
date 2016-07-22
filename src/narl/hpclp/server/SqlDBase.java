@@ -47,7 +47,53 @@ public class SqlDBase {
 	}
 	//--------------------------//
 	
-	public static ArrayList<ItemProdx> selectProdx(String postfix) {
+	public static ArrayList<ItemOwner> listOwner(String postfix) {
+		ArrayList<ItemOwner> lst = new ArrayList<ItemOwner>();
+		try {			
+			String cmd = "SELECT "+
+				Const.OWNER+".id AS id, "+
+				Const.OWNER+".info AS info, "+
+				Const.OWNER+".stamp AS stamp, "+
+				Const.OWNER+".last AS last "+
+				"FROM "+Const.OWNER+" "+		
+				postfix;		
+			ResultSet rs = RpcBridge.getResult(cmd);	
+			while(rs.next()){
+				lst.add(unpackOwner(rs));
+			}
+		} catch (SQLException e) {			
+			System.err.print(e.getMessage());
+		}
+		return lst;
+	}
+	
+	public static ArrayList<ItemTenur> listTenur(String postfix) {
+		ArrayList<ItemTenur> lst = new ArrayList<ItemTenur>();
+		try {			
+			String cmd = "SELECT "+
+				Const.TENUR+".id AS id, "+				
+				Const.TENUR+".info AS info, "+
+				Const.TENUR+".stamp AS stamp, "+
+				Const.TENUR+".last AS last "+
+				Const.TENUR+".meet AS meet "+
+				Const.OWNER+".id AS oid, "+
+				Const.OWNER+".info AS oinfo, "+
+				Const.OWNER+".stamp AS ostamp, "+
+				Const.OWNER+".last AS olast "+
+				"FROM "+Const.TENUR+" "+
+				"LEFT JOIN "+Const.OWNER+" ON "+Const.OWNER+".id="+Const.TENUR+".oid "+
+				postfix;		
+			ResultSet rs = RpcBridge.getResult(cmd);
+			while(rs.next()){
+				lst.add(unpackTenur(rs));
+			}
+		} catch (SQLException e) {			
+			System.err.print(e.getMessage());
+		}
+		return lst;
+	}
+	
+	public static ArrayList<ItemProdx> listProdx(String postfix) {
 		ArrayList<ItemProdx> lst = new ArrayList<ItemProdx>();
 		try {			
 			String cmd = "SELECT "+
@@ -77,6 +123,38 @@ public class SqlDBase {
 			System.err.print(e.getMessage());
 		}
 		return lst;
+	}
+	
+	private static ItemOwner unpackOwner(ResultSet rs) throws SQLException {
+		ItemOwner item = new ItemOwner(
+			getUUID(rs,"id"), 
+			getTxtArray(rs,"info"), 
+			rs.getTimestamp("stamp"), 
+			rs.getTimestamp("last")
+		);
+		return item;
+	}
+	
+	private static ItemTenur unpackTenur(ResultSet rs) throws SQLException {
+		ItemTenur item = new ItemTenur(
+			getUUID(rs,"id"), 
+			getTxtArray(rs,"info"), 
+			rs.getTimestamp("stamp"), 
+			rs.getTimestamp("last")
+		);
+		
+		item.setMeet(rs.getTimestamp("meet"));
+		
+		String uuid = getUUID(rs,"oid");
+		if(uuid.length()!=0){
+			item.owner = new ItemOwner(
+				uuid,
+				getTxtArray(rs,"oinfo"),
+				rs.getTimestamp("ostamp"),
+				rs.getTimestamp("olast")
+			);
+		}
+		return item;
 	}
 	
 	private static ItemProdx unpackProdx(ResultSet rs) throws SQLException {

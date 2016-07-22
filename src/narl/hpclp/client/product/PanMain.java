@@ -5,7 +5,6 @@ import java.util.Date;
 
 import narl.hpclp.client.Main;
 import narl.hpclp.shared.Const;
-import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
 import narl.hpclp.shared.ParmEmitter;
@@ -35,6 +34,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
+import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class PanMain extends Composite {
@@ -75,22 +75,28 @@ public class PanMain extends Composite {
     	txtKindArea,txtStrength,txtSurface,
     	txtFactorK,txtFactorP,txtUncertain,
     	txtSerial,txtCriteron;
-    
-    @UiField
-    MaterialLabel txtTotal;
-    
+        
     @UiField
     MaterialModal dlgSelect;
-    
     @UiField
-    MaterialCollection colSelect;    
+    MaterialLabel txtSelectorTotal;
+    @UiField
+    MaterialCollection colSelector;    
+    
+    @UiField 
+    SimplePanel panArch1;
+
+    private GrdScribe grdScrib = new GrdScribe();
     
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));
 		initSearch();		
 		root.add(Main.dlgOwner);
 		root.add(Main.dlgTenur);
-		addAttachHandler(eventShowHide);		
+		addAttachHandler(eventShowHide);
+		grdScrib.init(panArch1);
+		
+		onLnkCreateProdx(null);//create the first item!!!
 	}
 
 	private AttachEvent.Handler eventShowHide = new AttachEvent.Handler(){
@@ -141,11 +147,14 @@ public class PanMain extends Composite {
     };
     //-------------------//
     
-    private ArrayList<ItemProdx> lstProdx = new ArrayList<ItemProdx>();
+    /**
+     * this list keep the user data in local computer~~~
+     */
+    public ArrayList<ItemProdx> lstProdx = new ArrayList<ItemProdx>();
     
-    public ItemProdx curProdx = null;
+    public static ItemProdx curProdx = null;
     
-    private ParmEmitter emitt = null;
+    public ParmEmitter emitt = null;
 
     @UiHandler("lnkSelect")
     void onLnkSelect(ClickEvent e){
@@ -154,7 +163,7 @@ public class PanMain extends Composite {
     
     @UiHandler("lnkRenew")
 	void onLnkRenew(ClickEvent e){
-    	//TODO: how to keep old data???
+    	//TODO: ask user whether dropping the current list~~~
     	Main.rpc.listProduct("ORDER BY "+Const.PRODX+".last DESC LIMIT 50",eventList);
 	}
     private final AsyncCallback<ArrayList<ItemProdx>> eventList = 
@@ -164,32 +173,26 @@ public class PanMain extends Composite {
 			MaterialToast.fireToast("內部錯誤!!");
 		}
 		@Override
-		public void onSuccess(ArrayList<ItemProdx> result) {				
-			lstProdx = result;//override~~~
-			curProdx = null;//reset target~~~
-			clearBox();//reset all box~~~
-			colSelect.clear();
-			if(lstProdx.isEmpty()==true){
+		public void onSuccess(ArrayList<ItemProdx> result) {			
+			if(result.isEmpty()==true){
 				MaterialToast.fireToast("無資料!!");
 				return;
 			}
-			curProdx = lstProdx.get(0);
+			lstProdx = result; 
+			curProdx = result.get(0);
 			prodx2box();
-			int cnt = lstProdx.size();
-			txtTotal.setText("共"+cnt+"筆資料");
-			for(int idx=0; idx<cnt; idx++){
-				colSelect.add(new CitProduct(
-					PanMain.this,
-					idx+1,
-					lstProdx.get(idx)
-				));
-			}
+			refresh_selector();			
 			dlgSelect.openModal();
 		}
     };
 
-    @UiHandler("lnkPrint")
+    @UiHandler("lnkPrint1")
     void onLnkPrintProdx(ClickEvent e){
+    	
+    }
+    
+    @UiHandler("lnkPrint2")
+    void onLnkPrint2DTag(ClickEvent e){
     	
     }
     
@@ -200,9 +203,27 @@ public class PanMain extends Composite {
     
     @UiHandler("lnkCreate")
     void onLnkCreateProdx(ClickEvent e){
-    	
+    	curProdx = new ItemProdx();
+    	lstProdx.add(curProdx);
+    	prodx2box();
+    	refresh_selector();
     }
     
+    @UiHandler("boxOKey")
+    void onOwnerKey(ValueChangeEvent<String> event){
+    	String txt = event.getValue().trim();
+    	//Main.rpc.listOwner(postfix, res);
+    }
+    
+    @UiHandler("boxTKey")
+    void onTenurKey(ValueChangeEvent<String> event){
+    	
+    }
+
+    @UiHandler("boxScribFastAdd")
+    void onScribFastAdd(ValueChangeEvent<String> event){
+    	
+    }    
     
     @UiHandler("cmbFormat")
 	void onCmbFormat(ValueChangeEvent<String> event){
@@ -242,6 +263,18 @@ public class PanMain extends Composite {
     	txtCriteron.setText(emitt.getCriterion());
     }
     
+    private void refresh_selector(){
+    	int cnt = lstProdx.size();
+    	colSelector.clear();    	
+		txtSelectorTotal.setText("共"+cnt+"筆資料");		
+		for(int idx=0; idx<cnt; idx++){
+			colSelector.add(new CitProduct(
+				PanMain.this,
+				idx+1,
+				lstProdx.get(idx)
+			));
+		}
+    }
     private void clearBox(){
     	boxKey.setText("");
     	boxStmp.setText(Main.fmtDate.format(new Date()));
@@ -249,11 +282,13 @@ public class PanMain extends Composite {
     	boxTemp.setText("");
     	boxPress.setText("");
     	boxHumid.setText("");
+    	//TODO: clear grid~~~~
+    	//grdScrib.reload(null);
     }
     
     public void prodx2box(){
     	Main.selectCombo(cmbFormat, curProdx.getFormat());
-    	Main.selectCombo(cmbUnitRef , curProdx.getUnitRef());
+    	Main.selectCombo(cmbUnitRef, curProdx.getUnitRef());
     	Main.selectCombo(cmbUnitMea, curProdx.getUnitMea());
     	Main.selectCombo(cmbEmitter, curProdx.getEmitterTxt(), null, true);
     	emitt2box();//map information again!!!
@@ -289,6 +324,7 @@ public class PanMain extends Composite {
     		txtInfoT1.setText("");
     		txtInfoT2.setText("");
     	}
+    	grdScrib.reload(curProdx.scribble);
     }
     
     public void box2prodx(){
@@ -304,5 +340,6 @@ public class PanMain extends Composite {
     		boxHumid.getText()
     	);
     	curProdx.useLogo = chkUseLogo.getValue();
+    	grdScrib.refresh(curProdx.scribble);
     }
 }

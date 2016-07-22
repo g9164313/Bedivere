@@ -23,10 +23,21 @@ public interface RPCAsync {
 		AsyncCallback<ArrayList<ItemMeeting>> res
 	) throws IllegalArgumentException;
 	
+	void listOwner(
+		String postfix,
+		AsyncCallback<ArrayList<ItemOwner>> res
+	) throws IllegalArgumentException;
+	
+	void listTenure(
+		String postfix,
+		AsyncCallback<ArrayList<ItemTenur>> res
+	) throws IllegalArgumentException;
+	
 	void listProduct(
-		String where,
+		String postfix,
 		AsyncCallback<ArrayList<ItemProdx>> res
 	) throws IllegalArgumentException;
+	
 	
 	void modifyOwner(
 		ItemOwner obj,
