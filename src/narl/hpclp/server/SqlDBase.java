@@ -74,8 +74,8 @@ public class SqlDBase {
 				Const.TENUR+".id AS id, "+				
 				Const.TENUR+".info AS info, "+
 				Const.TENUR+".stamp AS stamp, "+
-				Const.TENUR+".last AS last "+
-				Const.TENUR+".meet AS meet "+
+				Const.TENUR+".last AS last, "+
+				Const.TENUR+".meet AS meet, "+
 				Const.OWNER+".id AS oid, "+
 				Const.OWNER+".info AS oinfo, "+
 				Const.OWNER+".stamp AS ostamp, "+

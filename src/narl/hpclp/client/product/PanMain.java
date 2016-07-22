@@ -1,11 +1,9 @@
 package narl.hpclp.client.product;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import narl.hpclp.client.Main;
 import narl.hpclp.shared.Const;
-import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
 import narl.hpclp.shared.ParmEmitter;
@@ -59,13 +57,13 @@ public class PanMain extends Composite {
     MaterialLink lnkPanMeet,lnkPanAccnt;
     
     @UiField
-    MaterialTextBox boxOKey,boxTKey,boxKey,boxStmp,boxMemo;
+    MaterialTextBox boxOKey,boxTKey,boxKey,boxStmp,boxMemo,boxScribe;
 
     @UiField
     MaterialFloatBox boxTemp,boxPress,boxHumid;
     
     @UiField
-    MaterialListBox cmbFormat,cmbUnitRef,cmbUnitMea,cmbEmitter,boxScribe;
+    MaterialListBox cmbFormat,cmbUnitRef,cmbUnitMea,cmbEmitter;
     
     @UiField
     MaterialCheckBox chkUseLogo;
@@ -169,27 +167,27 @@ public class PanMain extends Composite {
     @UiHandler("lnkRenew")
 	void onLnkRenew(ClickEvent e){
     	//TODO: ask user whether dropping the current list~~~
-    	Main.rpc.listProduct("ORDER BY "+Const.PRODX+".last DESC LIMIT 50",eventList);
+    	Main.rpc.listProduct(
+    		"ORDER BY "+Const.PRODX+".last DESC LIMIT 50",
+    		new AsyncCallback<ArrayList<ItemProdx>>(){
+    			@Override
+    			public void onFailure(Throwable caught) {
+    				MaterialToast.fireToast("內部錯誤!!");
+    			}
+    			@Override
+    			public void onSuccess(ArrayList<ItemProdx> result) {			
+    				if(result.isEmpty()==true){
+    					MaterialToast.fireToast("無資料!!");
+    					return;
+    				}
+    				lstProdx = result; 
+    				curProdx = result.get(0);
+    				prodx2box();
+    				refresh_selector();			
+    				dlgSelect.openModal();
+    			}
+    	});
 	}
-    private final AsyncCallback<ArrayList<ItemProdx>> eventList = 
-    new AsyncCallback<ArrayList<ItemProdx>>(){
-		@Override
-		public void onFailure(Throwable caught) {
-			MaterialToast.fireToast("內部錯誤!!");
-		}
-		@Override
-		public void onSuccess(ArrayList<ItemProdx> result) {			
-			if(result.isEmpty()==true){
-				MaterialToast.fireToast("無資料!!");
-				return;
-			}
-			lstProdx = result; 
-			curProdx = result.get(0);
-			prodx2box();
-			refresh_selector();			
-			dlgSelect.openModal();
-		}
-    };
 
     @UiHandler("lnkPrint1")
     void onLnkPrintProdx(ClickEvent e){
@@ -224,6 +222,7 @@ public class PanMain extends Composite {
     	post = post + "(info[2] SIMILAR TO '%"+txt+"%') OR ";
     	post = post + "(info[4] SIMILAR TO '%"+txt+"%') OR ";
     	post = post + "(info[6] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
+    	//Query feature???
     	Main.dlgPickOwner.appear(
     		post,new ClickHandler(){
 			@Override
@@ -239,7 +238,30 @@ public class PanMain extends Composite {
     }
     
     @UiHandler("boxTKey")
-    void onTenurKey(ValueChangeEvent<String> event){    	
+    void onTenurKey(ValueChangeEvent<String> event){
+    	String txt = event.getValue().trim().toLowerCase();
+    	String post = "WHERE ";
+    	post = post + "(tenure.info[1] SIMILAR TO '%"+txt+"%') OR ";
+    	post = post + "(tenure.info[2] SIMILAR TO '%"+txt+"%') OR ";
+    	post = post + "(tenure.info[3] SIMILAR TO '%"+txt+"%') OR ";
+    	post = post + "(tenure.info[4] SIMILAR TO '%"+txt+"%') OR ";
+    	post = post + "(tenure.info[6] SIMILAR TO '%"+txt+"%') OR ";
+    	post = post + "(tenure.info[7] SIMILAR TO '%"+txt+"%') OR ";
+    	post = post + "(tenure.info[11] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
+    	//Query feature???
+    	Main.dlgPickTenur.appear(
+        	post,new ClickHandler(){
+    		@Override
+    		public void onClick(ClickEvent event) {
+    			curProdx.tenur = Main.dlgPickTenur.getTarget();
+    			if(curProdx.tenur==null){
+    				return;
+    			}
+    			prodx2box();
+    			boxTKey.setText("");//just clear it~~~
+    			cmbFormat.setFocus(true);
+    		}
+        });
     }
 
     @UiHandler("cmbFormat")

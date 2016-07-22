@@ -37,6 +37,10 @@ public class ItemOwner extends ItemBase implements Serializable {
 		super.copyTo(dst);
 	}
 	
+	public String getFullName(){
+		return info[INFO_OKEY]+" "+info[INFO_NAME];
+	}
+	
 	public String getKey(){
 		return info[INFO_OKEY];
 	}

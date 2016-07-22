@@ -7,7 +7,72 @@
 	<ui:style>
 	</ui:style>
 	
-<m:MaterialModal type="DEFAULT" dismissable="true" inDuration="10" outDuration="10" width="65%" ui:field="root" >
+<m:MaterialModal type="DEFAULT" dismissable="true" inDuration="10" outDuration="10" width="90%" ui:field="root" >
+
+	<m:MaterialModalContent>		
+		<m:MaterialRow>
+			<!-- 清單 -->
+			<m:MaterialColumn>
+				<m:MaterialLabel ui:field="txtSelTitle"/>
+				<g:ScrollPanel width="30em" height="400px" >
+ 					<m:MaterialCollection ui:field="colSelector"/>
+ 				</g:ScrollPanel>
+			</m:MaterialColumn>
+			<!-- 資訊 -->		
+			<m:MaterialColumn>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="儀器廠牌：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo1" /> </m:MaterialColumn>
+				</m:MaterialRow>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="儀器型號：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo2" /> </m:MaterialColumn>
+				</m:MaterialRow>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="儀器序號：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo3" /> </m:MaterialColumn>
+				</m:MaterialRow>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="偵檢器類型：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo4" /> </m:MaterialColumn>
+				</m:MaterialRow>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="偵檢器型號：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo5" /> </m:MaterialColumn>
+				</m:MaterialRow>	
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="偵檢器序號：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo6" /> </m:MaterialColumn>
+				</m:MaterialRow>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="偵檢窗面積：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo7" /> </m:MaterialColumn>
+				</m:MaterialRow>	
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="方向修正值：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo8" /> </m:MaterialColumn>
+				</m:MaterialRow>	
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="廠商建議值：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo9" /> </m:MaterialColumn>
+				</m:MaterialRow>	
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="備註/預約：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo10" /> </m:MaterialColumn>
+				</m:MaterialRow>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="委託/所屬：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo11" /> </m:MaterialColumn>
+				</m:MaterialRow>					
+			</m:MaterialColumn>
+		</m:MaterialRow>
+	</m:MaterialModalContent>
+	
+	<!-- 確認/取消 -->
+	<m:MaterialModalFooter>		
+		<m:MaterialButton text="確認" type="FLAT" ui:field="btnAction" />
+		<m:MaterialButton text="取消" type="FLAT" ui:field="btnCancel" />
+	</m:MaterialModalFooter>
 
 </m:MaterialModal>
 	

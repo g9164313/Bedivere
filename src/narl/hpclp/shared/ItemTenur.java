@@ -22,7 +22,7 @@ public class ItemTenur extends ItemBase implements Serializable {
 	
 	public Date meet = new Date();
 	
-	public ItemBase owner = null;
+	public ItemOwner owner = null;
 	
 	public ItemTenur(){
 		super(INFO_MAX_COL);
@@ -70,6 +70,12 @@ public class ItemTenur extends ItemBase implements Serializable {
 		meet.setTime(d.getTime());
 	}
 	
+	
+	public String getName(){		
+		return info[INFO_DEV_SERIAL]+" "+info[INFO_DEV_NUMBER];
+	}
+	
+	
 	public String getDeviceVendor(){
 		return info[INFO_DEV_VENDOR];
 	}	
@@ -84,8 +90,8 @@ public class ItemTenur extends ItemBase implements Serializable {
 	public void setDeviceSerial(String val){
 		info[INFO_DEV_SERIAL]=val;
 		genkey();
-	}	
-	
+	}
+
 	public String getDeviceNumber(){
 		return info[INFO_DEV_NUMBER];
 	}	
