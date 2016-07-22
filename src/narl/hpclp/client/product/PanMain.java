@@ -5,6 +5,7 @@ import java.util.Date;
 
 import narl.hpclp.client.Main;
 import narl.hpclp.shared.Const;
+import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
 import narl.hpclp.shared.ParmEmitter;
@@ -25,6 +26,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
@@ -63,13 +65,14 @@ public class PanMain extends Composite {
     MaterialFloatBox boxTemp,boxPress,boxHumid;
     
     @UiField
-    MaterialListBox cmbFormat,cmbUnitRef,cmbUnitMea,cmbEmitter;
+    MaterialListBox cmbFormat,cmbUnitRef,cmbUnitMea,cmbEmitter,boxScribe;
     
     @UiField
     MaterialCheckBox chkUseLogo;
     
     @UiField
-    MaterialLabel txtInfo1,txtInfo2,
+    MaterialLabel 
+    	txtInfo1,txtInfo2,
     	txtInfoT1,txtInfoT2,txtInfoT3,
     	txtInfoT4,txtInfoT5,txtInfoT6,
     	txtKindArea,txtStrength,txtSurface,
@@ -91,12 +94,13 @@ public class PanMain extends Composite {
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));
 		initSearch();		
-		root.add(Main.dlgOwner);
-		root.add(Main.dlgTenur);
-		addAttachHandler(eventShowHide);
+		root.add(Main.dlgEditOwner);
+		root.add(Main.dlgEditTenur);
+		root.add(Main.dlgPickOwner);
+		root.add(Main.dlgPickTenur);
 		grdScrib.init(panArch1);
-		
-		onLnkCreateProdx(null);//create the first item!!!
+		addAttachHandler(eventShowHide);		
+		//Don't initialize data here!!!
 	}
 
 	private AttachEvent.Handler eventShowHide = new AttachEvent.Handler(){
@@ -108,9 +112,9 @@ public class PanMain extends Composite {
 				Main.initCombo(cmbUnitRef, Main.param.prodxUnit);
 				Main.initCombo(cmbUnitMea, Main.param.prodxUnit);
 				Main.initComboEmitter(cmbEmitter);
-				
 				emitt = new ParmEmitter(cmbEmitter.getSelectedValue());
 				emitt2box();
+				onLnkCreateProdx(null);//create the first item!!!
 			}
 		}
 	};
@@ -156,8 +160,9 @@ public class PanMain extends Composite {
     
     public ParmEmitter emitt = null;
 
-    @UiHandler("lnkSelect")
-    void onLnkSelect(ClickEvent e){
+    @UiHandler("lnkShowSelector")
+    void onLnkShowSelector(ClickEvent e){
+    	//TODO: refresh title again!!!
     	dlgSelect.openModal();
     }
     
@@ -204,6 +209,8 @@ public class PanMain extends Composite {
     @UiHandler("lnkCreate")
     void onLnkCreateProdx(ClickEvent e){
     	curProdx = new ItemProdx();
+    	//Remember to prepare emitter information, This is required
+    	curProdx.setEmitter(cmbEmitter.getSelectedValue());
     	lstProdx.add(curProdx);
     	prodx2box();
     	refresh_selector();
@@ -212,21 +219,31 @@ public class PanMain extends Composite {
     @UiHandler("boxOKey")
     void onOwnerKey(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim();
-    	//Main.rpc.listOwner(postfix, res);
+    	String post = "WHERE ";
+    	post = post + "(info[1] SIMILAR TO '%"+txt+"%') OR ";
+    	post = post + "(info[2] SIMILAR TO '%"+txt+"%') OR ";
+    	post = post + "(info[4] SIMILAR TO '%"+txt+"%') OR ";
+    	post = post + "(info[6] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
+    	Main.dlgPickOwner.appear(
+    		post,new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				curProdx.owner = Main.dlgPickOwner.getTarget();
+				if(curProdx.owner==null){
+					return;
+				}
+				prodx2box();
+				boxOKey.setText(curProdx.owner.getKey());
+			}
+    	});
     }
     
     @UiHandler("boxTKey")
-    void onTenurKey(ValueChangeEvent<String> event){
-    	
+    void onTenurKey(ValueChangeEvent<String> event){    	
     }
 
-    @UiHandler("boxScribFastAdd")
-    void onScribFastAdd(ValueChangeEvent<String> event){
-    	
-    }    
-    
     @UiHandler("cmbFormat")
-	void onCmbFormat(ValueChangeEvent<String> event){
+	void onChangeFormat(ValueChangeEvent<String> event){
     	int fmt = ItemProdx.txt2fmt(event.getValue());
     	switch(fmt){
  		case ItemProdx.FMT_F1V:
@@ -245,12 +262,64 @@ public class PanMain extends Composite {
  			break;				
  		}
 	}
+    @UiHandler("cmbUnitRef")
+    void onChangeUnitRef(ValueChangeEvent<String> event){
+    	curProdx.setUnitRef(cmbUnitRef.getSelectedValue());    	
+    }
+    @UiHandler("cmbUnitMea")
+    void onChangeUnitMea(ValueChangeEvent<String> event){    	
+    	curProdx.setUnitMea(cmbUnitMea.getSelectedValue());    	
+    }
+
+    @UiHandler("boxKey")
+    void onChangeKey(ChangeEvent event){
+    	curProdx.setKey(boxKey.getText());
+    	boxMemo.setFocus(true);
+    }
+    
+    @UiHandler("boxStmp")
+    void onChangeStamp(ChangeEvent event){
+    	String txt = boxStmp.getText();
+    	try{
+    		curProdx.setStmp(Main.fmtDate.parse(txt));
+    	}catch(IllegalArgumentException e){
+    		boxStmp.setText(txt);
+    	}
+    }
+    
+    @UiHandler("boxMemo")
+    void onChangeMemo(ChangeEvent event){
+    	curProdx.setMemo(boxMemo.getText());
+    }
+
+    @UiHandler("boxTemp")
+    void onChangeTemp(ChangeEvent event){
+    	curProdx.setAmbience(boxTemp.getText(),null,null);
+    	boxPress.setFocus(true);
+    }
+    
+    @UiHandler("boxPress")
+    void onChangePress(ChangeEvent event){
+    	curProdx.setAmbience(null, boxPress.getText(),null);
+    	boxHumid.setFocus(true);
+    }
+    
+    @UiHandler("boxHumid")
+    void onChangeHumid(ChangeEvent event){
+    	curProdx.setAmbience(null,null,boxHumid.getText());
+    	cmbEmitter.setFocus(true);
+    }
+
+    @UiHandler("chkUseLogo")
+    void onCheckLogo(ClickEvent e){
+    	curProdx.useLogo = chkUseLogo.getValue();
+    }
     
     @UiHandler("cmbEmitter")
-	void onCmbEmitter(ValueChangeEvent<String> event){
-    	emitt2box();    	
+	void onChangeEmitter(ValueChangeEvent<String> event){
+    	emitt2box();
+    	boxScribe.setFocus(true);
 	}
-    
     private void emitt2box(){
     	emitt.setText(cmbEmitter.getSelectedValue());
     	txtKindArea.setText(emitt.getKind()+" - "+emitt.getArea());
@@ -263,6 +332,45 @@ public class PanMain extends Composite {
     	txtCriteron.setText(emitt.getCriterion());
     }
     
+    @UiHandler("boxScribe")
+    void onChangeScribe(ValueChangeEvent<String> event){    	
+    	//replace space and translate format
+    	String vals = event.getValue()
+    		.trim()
+    		.replaceAll("\\s","")
+    		.replace('/', '@')
+    		.replace(';', '@')
+    		.replace('+', ',');
+    	if(vals.contains(Const.SPECIAL_PREFIX)==true){
+    		//It is the special keyword!!!
+    		vals=Const.SPECIAL_PREFIX +"@0@0";
+    	}else{
+    		String[] val = vals.split("@");
+    		if(val.length<=2){
+    			//we mist have 3 items
+    			MaterialToast.fireToast("格式錯誤");
+    			return;
+    		}
+    		String[] vvv = val[2].split(",");
+    		for(int i=0; i<vvv.length; i++){
+    			//check format is valid~~~~~
+    			try{
+    				Double.valueOf(vvv[i]);
+    			}catch(NumberFormatException e){
+    				MaterialToast.fireToast("格式錯誤 -"+vvv[i]);
+    				return;
+    			}
+    		}
+    		val[0] = val[0].replace('x', '×').replace('X', '×');//trick to fix typo!!!
+    		vals = val[0];
+    		for(int i=1; i<val.length; i++){
+    			vals = vals +"@" + val[i];
+    		}
+    	}
+    	curProdx.scribble.add(vals);
+    	boxScribe.clear();    	
+    }    
+
     private void refresh_selector(){
     	int cnt = lstProdx.size();
     	colSelector.clear();    	
@@ -274,16 +382,6 @@ public class PanMain extends Composite {
 				lstProdx.get(idx)
 			));
 		}
-    }
-    private void clearBox(){
-    	boxKey.setText("");
-    	boxStmp.setText(Main.fmtDate.format(new Date()));
-    	boxMemo.setText("");
-    	boxTemp.setText("");
-    	boxPress.setText("");
-    	boxHumid.setText("");
-    	//TODO: clear grid~~~~
-    	//grdScrib.reload(null);
     }
     
     public void prodx2box(){
@@ -325,21 +423,5 @@ public class PanMain extends Composite {
     		txtInfoT2.setText("");
     	}
     	grdScrib.reload(curProdx.scribble);
-    }
-    
-    public void box2prodx(){
-    	curProdx.setFormat(cmbFormat.getSelectedValue());
-    	curProdx.setUnitRef(cmbUnitRef.getSelectedValue());
-    	curProdx.setUnitMea(cmbUnitMea.getSelectedValue());
-    	curProdx.setEmitter(cmbEmitter.getSelectedValue());
-    	curProdx.setKey(boxKey.getText());
-    	curProdx.setMemo(boxMemo.getText());
-    	curProdx.setAmbience(
-    		boxTemp.getText(), 
-    		boxPress.getText(),
-    		boxHumid.getText()
-    	);
-    	curProdx.useLogo = chkUseLogo.getValue();
-    	grdScrib.refresh(curProdx.scribble);
     }
 }

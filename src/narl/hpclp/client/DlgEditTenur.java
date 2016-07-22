@@ -2,6 +2,7 @@ package narl.hpclp.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -18,21 +19,18 @@ import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
 import narl.hpclp.shared.ItemTenur;
 
-public class DlgItemTenur extends DlgItem {
+public class DlgEditTenur extends DlgBase<ItemTenur> {
 
-	private static DlgItemTenurUiBinder uiBinder = GWT.create(DlgItemTenurUiBinder.class);
+	private static DlgEditTenurUiBinder uiBinder = GWT.create(DlgEditTenurUiBinder.class);
 
-	interface DlgItemTenurUiBinder extends UiBinder<Widget, DlgItemTenur> {
+	interface DlgEditTenurUiBinder extends UiBinder<Widget, DlgEditTenur> {
 	}
 
 	@UiField
 	MaterialModal root;
 	
 	@UiField
-	MaterialButton btnAction;
-	
-	@UiField
-	MaterialButton btnCancel;
+	MaterialButton btnAction,btnCancel;
 	
 	@UiField
 	MaterialTextBox boxDevVendor,boxDevSerial,boxDevNumber;
@@ -51,7 +49,7 @@ public class DlgItemTenur extends DlgItem {
 	@UiField
 	MaterialTextBox boxArea,boxFactor,boxSteer;
 
-	public DlgItemTenur() {
+	public DlgEditTenur() {
 		initWidget(uiBinder.createAndBindUi(this));
 		refxWidget(root,btnAction,btnCancel);
 	}
@@ -74,6 +72,7 @@ public class DlgItemTenur extends DlgItem {
 	
 	@UiHandler("boxMeet")
 	public void onChangeMeet(ValueChangeEvent<String> event) {
+		ItemTenur item = target;
 		if(Main.text2stmp(boxMeet, item.meet)==true){
 			boxLast.setFocus(true);
 		}
@@ -81,6 +80,7 @@ public class DlgItemTenur extends DlgItem {
 	
 	@UiHandler("boxLast")
 	public void onChangeLast(ValueChangeEvent<String> event) {
+		ItemTenur item = target;
 		if(Main.text2stmp(boxLast, item.last)==true){
 			boxMemo.setFocus(true);
 		}
@@ -91,17 +91,13 @@ public class DlgItemTenur extends DlgItem {
 		boxMemo.setFocus(false);//end of chain~~~
 	}
 
-	private ItemTenur item = null;
-	
-	public DlgItem appear(ItemTenur itm,Runnable event){
-		item = itm;
-		//mapping variable to box~~~
-		
+	@Override
+	void eventAppear(ItemTenur item) {
 		boxDevVendor.setText(item.getDeviceVendor());
 		boxDevSerial.setText(item.getDeviceSerial());
 		boxDevNumber.setText(item.getDeviceNumber());		
 		
-		setDetectType(itm.getDetectType());		
+		setDetectType(item.getDetectType());		
 		boxDetSerial.setText(item.getDetectSerial());
 		boxDetNumber.setText(item.getDetectNumber());
 		
@@ -109,15 +105,14 @@ public class DlgItemTenur extends DlgItem {
 		boxFactor.setText(item.getFactor());
 		boxSteer.setText(item.getSteer());
 		
-		boxMeet.setText(Main.fmtStmpLast.format(itm.meet));
-		boxLast.setText(Main.fmtStmpLast.format(itm.last));
+		boxMeet.setText(Main.fmtStmpLast.format(item.meet));
+		boxLast.setText(Main.fmtStmpLast.format(item.last));
 		boxMemo.setText(item.getMemo());
-		
-		return appear(itm.uuid,event);
 	}
-
+	
 	@Override
 	void takeAction(ClickEvent event) {
+		ItemTenur item = target;
 		//mapping box to variable~~~
 		item.setDeviceVendor(boxDevVendor.getText());
 		item.setDeviceSerial(boxDevSerial.getText());
@@ -136,27 +131,33 @@ public class DlgItemTenur extends DlgItem {
 		item.setLast(Main.fmtStmpLast.parse(boxLast.getText()));		
 		item.setMemo(boxMemo.getText());
 		
+		btnAction.setText(add_or_edit(item.uuid));
+		
+		final AsyncCallback<ItemTenur> eventModify = 
+			new AsyncCallback<ItemTenur>()
+		{
+			@Override
+			public void onFailure(Throwable caught) {
+			}
+			@Override
+			public void onSuccess(ItemTenur result) {
+				if(result==null){
+					MaterialToast.fireToast("不明原因錯誤");
+					return;
+				}
+				MaterialToast.fireToast("已更新 "+result.getKey());
+				//TODO:result.copyTo(item);
+				root.closeModal();
+			}
+		};
 		Main.rpc.modifyTenur(item,eventModify);
 	}
 
-	private AsyncCallback<ItemTenur> eventModify = 
-		new AsyncCallback<ItemTenur>()
-	{
-		@Override
-		public void onFailure(Throwable caught) {
-		}
-		@Override
-		public void onSuccess(ItemTenur result) {
-			if(result==null){
-				MaterialToast.fireToast("不明原因錯誤");
-				return;
-			}
-			MaterialToast.fireToast("已更新 "+result.getKey());
-			result.copyTo(item);
-			dlgRoot.closeModal();
-			handleClose();
-		}
-	};
+	@Override
+	void takeCancel(ClickEvent event) {
+	}
+	
+	
 	
 	private void makeSpecialCharacter(MaterialTextBox box){
 		String txt = box.getText();
@@ -182,4 +183,5 @@ public class DlgItemTenur extends DlgItem {
 		}		
 		drpDetType.add(new MaterialLabel(val));
 	}
+
 }

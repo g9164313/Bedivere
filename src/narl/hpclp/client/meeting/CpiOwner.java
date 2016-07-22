@@ -17,8 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CpiOwner extends Composite {
 
-	private static CpiOwnerUiBinder uiBinder = GWT
-			.create(CpiOwnerUiBinder.class);
+	private static CpiOwnerUiBinder uiBinder = GWT.create(CpiOwnerUiBinder.class);
 
 	interface CpiOwnerUiBinder extends UiBinder<Widget, CpiOwner> {
 	}
@@ -49,7 +48,17 @@ public class CpiOwner extends Composite {
 		if(meet.isRestday()==true){
 			return;
 		}
-		Main.dlgOwner.appear(meet,eventEditDone);
+		Main.dlgEditOwner.appear(
+			meet,null,new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				//update again!!!
+				//because sorting depend on this text~~
+				mapping();
+				meet.setSDay(Main.fmtDate.format(meet.stmp),meet.stmp);
+				root.redraw();
+			}
+		});
 	}
 	
 	@UiHandler("icoPrint")
@@ -74,17 +83,6 @@ public class CpiOwner extends Composite {
 		}
 	};
 	
-	private Runnable eventEditDone = new Runnable(){
-		@Override
-		public void run() {
-			mapping();
-			//update again!!!
-			//because sorting depend on this text~~
-			meet.setSDay(Main.fmtDate.format(meet.stmp),meet.stmp);
-			root.redraw();
-		}
-	};
-
 	private void mapping(){		
 		//head title
 		if(meet.isRestday()==true){

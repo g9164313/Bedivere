@@ -5,12 +5,11 @@
 	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
 	xmlns:m="urn:import:gwt.material.design.client.ui" >
 	<ui:style>
-	
 	</ui:style>
 	
-<m:MaterialModal type="DEFAULT" dismissable="true" inDuration="10" outDuration="10" width="65%" ui:field="root" >
+<m:MaterialModal type="DEFAULT" dismissable="true" inDuration="10" outDuration="10" ui:field="root" >
+
 	<m:MaterialModalContent >
-	
 		<m:MaterialRow>
 			<m:MaterialColumn>
 				<m:MaterialTextBox placeholder="公司代號" width="5em" ui:field="boxKey"/>
@@ -43,18 +42,19 @@
 				<m:MaterialTextBox placeholder="聯絡(委託)人" width="8em" ui:field="boxPern"/>
 			</m:MaterialColumn>
 			<m:MaterialColumn>
-				<m:MaterialTextBox placeholder="E-mail" width="13em" ui:field="boxMail"/>
+				<m:MaterialTextBox placeholder="聯絡方式" width="13em" ui:field="boxMail"/>
 			</m:MaterialColumn>
 			<m:MaterialColumn>
 				<m:MaterialTextBox placeholder="備註" width="8em" ui:field="boxMemo" />
 			</m:MaterialColumn>
 		</m:MaterialRow>
-		
 	</m:MaterialModalContent>
+	<!-- 確認/取消 -->
 	<m:MaterialModalFooter>		
 		<m:MaterialButton text="確認" type="FLAT" ui:field="btnAction" />
 		<m:MaterialButton text="取消" type="FLAT" ui:field="btnCancel" />
 	</m:MaterialModalFooter>
+	
 </m:MaterialModal>
 
 </ui:UiBinder> 

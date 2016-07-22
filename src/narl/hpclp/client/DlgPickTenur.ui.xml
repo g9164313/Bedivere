@@ -1,0 +1,14 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
+	xmlns:m="urn:import:gwt.material.design.client.ui" >
+	<ui:style>
+	</ui:style>
+	
+<m:MaterialModal type="DEFAULT" dismissable="true" inDuration="10" outDuration="10" width="65%" ui:field="root" >
+
+</m:MaterialModal>
+	
+</ui:UiBinder> 

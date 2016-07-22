@@ -52,9 +52,11 @@ public class Main implements EntryPoint {
 	
 	public static RPCAsync rpc = GWT.create(RPC.class);
 	
-	public static DlgItemOwner dlgOwner = new DlgItemOwner();
+	public static DlgEditOwner dlgEditOwner = new DlgEditOwner();	
+	public static DlgEditTenur dlgEditTenur = new DlgEditTenur();
 	
-	public static DlgItemTenur dlgTenur = new DlgItemTenur();
+	public static DlgPickOwner dlgPickOwner = new DlgPickOwner();
+	public static DlgPickTenur dlgPickTenur = new DlgPickTenur();
 	
 	public static ItemParam param = null;//enviroment parameters
 	//----------------------------//
@@ -220,7 +222,7 @@ public class Main implements EntryPoint {
 					return;
 				}
 				param = result;
-				dlgTenur.initDetectType();
+				dlgEditTenur.initDetectType();
 				switch_panel(PAN_DEFAULT);
 			}
 		});

@@ -1,0 +1,63 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
+	xmlns:m="urn:import:gwt.material.design.client.ui" >
+	<ui:style>
+	</ui:style>
+	
+<m:MaterialModal type="DEFAULT" dismissable="true" inDuration="10" outDuration="10" width="90%" ui:field="root" >
+
+	<m:MaterialModalContent>		
+		<m:MaterialRow>
+			<!-- 清單 -->
+			<m:MaterialColumn>
+				<m:MaterialLabel ui:field="txtSelTitle"/>
+				<g:ScrollPanel width="30em" height="300px" >
+ 					<m:MaterialCollection ui:field="colSelector"/>
+ 				</g:ScrollPanel>
+			</m:MaterialColumn>
+			<!-- 資訊 -->		
+			<m:MaterialColumn>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="公司代號：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo1" /> </m:MaterialColumn>
+				</m:MaterialRow>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="公司名稱：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo2" /> </m:MaterialColumn>
+				</m:MaterialRow>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="預約日期：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo3" /> </m:MaterialColumn>
+				</m:MaterialRow>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="公司地址：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo4" /> </m:MaterialColumn>
+				</m:MaterialRow>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="聯絡(委託)人：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo5" /> </m:MaterialColumn>
+				</m:MaterialRow>	
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="聯絡方式-1：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo6" /> </m:MaterialColumn>
+				</m:MaterialRow>
+				<m:MaterialRow>
+					<m:MaterialColumn> <m:MaterialLabel text="聯絡方式-2：" /> </m:MaterialColumn>
+					<m:MaterialColumn>	<m:MaterialLabel ui:field="txtInfo7" /> </m:MaterialColumn>
+				</m:MaterialRow>							
+			</m:MaterialColumn>
+		</m:MaterialRow>
+	</m:MaterialModalContent>
+	
+	<!-- 確認/取消 -->
+	<m:MaterialModalFooter>		
+		<m:MaterialButton text="確認" type="FLAT" ui:field="btnAction" />
+		<m:MaterialButton text="取消" type="FLAT" ui:field="btnCancel" />
+	</m:MaterialModalFooter>
+
+</m:MaterialModal>
+
+</ui:UiBinder> 

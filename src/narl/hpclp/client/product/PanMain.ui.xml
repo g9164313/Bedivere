@@ -46,7 +46,7 @@
                     <m:MaterialLink iconPosition="NONE" tooltip="上傳" tooltipPosition="BOTTOM" iconType="FILE_UPLOAD" ui:field="lnkUpload" />                    
                     <m:MaterialLink iconPosition="NONE" tooltip="功能" tooltipPosition="BOTTOM" iconType="TUNE" activates="drpFunc">
                    		<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpFunc" >
-                   			<m:MaterialLink text="顯示清單"  textColor="grey darken-1" iconType="RECEIPT" ui:field="lnkSelect" />
+                   			<m:MaterialLink text="顯示清單"  textColor="grey darken-1" iconType="RECEIPT" ui:field="lnkShowSelector" />
                     		<m:MaterialLink text="最近50筆" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkRenew" />
                    			<m:MaterialLink text="新增報告"  textColor="grey darken-1" iconType="PLUS_ONE" ui:field="lnkCreate" />
                    		</m:MaterialDropDown>
@@ -155,7 +155,7 @@
 				<m:MaterialColumn><!-- the start of second column -->
 					<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7" >
 						<m:MaterialRow>	
-							<m:MaterialTextBox placeholder="快速輸入" ui:field="boxScribFastAdd" />
+							<m:MaterialTextBox placeholder="快速輸入" ui:field="boxScribe" />
 						</m:MaterialRow>
 						<m:MaterialRow>	
 							<g:SimplePanel width="47em" ui:field="panArch1" />

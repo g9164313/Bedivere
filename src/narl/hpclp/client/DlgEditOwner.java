@@ -2,6 +2,7 @@ package narl.hpclp.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -15,11 +16,11 @@ import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
 import narl.hpclp.shared.ItemOwner;
 
-public class DlgItemOwner extends DlgItem {
+public class DlgEditOwner extends DlgBase<ItemOwner> {
 
-	private static DlgItemOwnerUiBinder uiBinder = GWT.create(DlgItemOwnerUiBinder.class);
+	private static DlgEditOwnerUiBinder uiBinder = GWT.create(DlgEditOwnerUiBinder.class);
 
-	interface DlgItemOwnerUiBinder extends UiBinder<Widget, DlgItemOwner> {
+	interface DlgEditOwnerUiBinder extends UiBinder<Widget, DlgEditOwner> {
 	}
 
 	@UiField
@@ -37,7 +38,7 @@ public class DlgItemOwner extends DlgItem {
 	@UiField
 	MaterialTextBox boxDept,boxPern,boxMail,boxMemo;
 	
-	public DlgItemOwner() {
+	public DlgEditOwner() {
 		initWidget(uiBinder.createAndBindUi(this));
 		refxWidget(root,btnAction,btnCancel);		
 	}
@@ -54,6 +55,7 @@ public class DlgItemOwner extends DlgItem {
 	
 	@UiHandler("boxStmp")
 	public void onChangeMeet(ValueChangeEvent<String> event) {
+		ItemOwner item = target;
 		if(Main.text2stmp(boxStmp, item.stmp)==true){
 			boxZip.setFocus(true);
 		}
@@ -89,15 +91,11 @@ public class DlgItemOwner extends DlgItem {
 		boxMemo.setFocus(false);//end of chain~~~
 	}
 	
-	private ItemOwner item = null;
-
-	public DlgItem appear(ItemOwner itm,Runnable event){
-		item = itm;
-		//mapping variable to box~~~
-		
+	@Override
+	void eventAppear(ItemOwner item) {
 		boxKey.setText(item.getKey());		
 		boxName.setText(item.getName());
-		boxStmp.setText(Main.fmtStmpLast.format(itm.stmp));
+		boxStmp.setText(Main.fmtStmpLast.format(item.stmp));
 		
 		boxZip.setText(item.getZip());
 		boxAddr.setText(item.getAddress());
@@ -108,11 +106,12 @@ public class DlgItemOwner extends DlgItem {
 		boxMail.setText(item.getEMail());
 		boxMemo.setText(item.getMemo());
 		
-		return appear(itm.uuid,event);
+		btnAction.setText(add_or_edit(item.uuid));
 	}
 
 	@Override
 	void takeAction(ClickEvent event) {
+		ItemOwner item = target;
 		//mapping box to variable~~~
 		item.setKey(boxKey.getText());		
 		item.setName(boxName.getText());
@@ -125,27 +124,27 @@ public class DlgItemOwner extends DlgItem {
 		item.setPerson(boxPern.getText());
 		item.setEMail(boxMail.getText());
 		item.setMemo(boxMemo.getText());
-		
-		Main.rpc.modifyOwner(item,eventModify);
-	}
-	
-	private AsyncCallback<ItemOwner> eventModify = 
-		new AsyncCallback<ItemOwner>()
-	{
-		@Override
-		public void onFailure(Throwable caught) {
-			MaterialToast.fireToast("無法更新資料");
-		}
-		@Override
-		public void onSuccess(ItemOwner result) {
-			if(result==null){
-				MaterialToast.fireToast("不明原因錯誤");
-				return;
+				
+		Main.rpc.modifyOwner(
+			item,new AsyncCallback<ItemOwner>(){
+			@Override
+			public void onFailure(Throwable caught) {
+				MaterialToast.fireToast("無法更新資料");
 			}
-			MaterialToast.fireToast("已更新 "+result.getKey());
-			result.copyTo(item);
-			dlgRoot.closeModal();
-			handleClose();
-		}
-	};
+			@Override
+			public void onSuccess(ItemOwner result) {
+				if(result==null){
+					MaterialToast.fireToast("不明原因錯誤");
+					return;
+				}
+				MaterialToast.fireToast("已更新 "+result.getKey());
+				//TODO:result.copyTo(item);
+				root.closeModal();
+			}
+		});
+	}
+
+	@Override
+	void takeCancel(ClickEvent event) {
+	}
 }

@@ -18,7 +18,7 @@ public class CitProduct extends MaterialCollectionItem implements ClickHandler {
 	private ItemProdx prodx;
 	private PanMain root;
 
-	public CitProduct(PanMain root,int serial, ItemProdx item){
+	public CitProduct(PanMain root,int serial,ItemProdx item){
 		this.root = root;
 		this.prodx = item;
 		setType(CollectionType.CHECKBOX);

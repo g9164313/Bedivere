@@ -5,9 +5,13 @@ import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemTenur;
 import gwt.material.design.client.ui.MaterialCollapsibleItem;
 import gwt.material.design.client.ui.MaterialLabel;
+import gwt.material.design.client.ui.MaterialModal;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -48,17 +52,16 @@ public class CpiTenure extends Composite {
 	
 	@UiHandler("icoEdit")
 	void onEditItem(ClickEvent e){
-		Main.dlgTenur.appear(tenu,eventEditDone);
+		Main.dlgEditTenur.appear(
+			tenu, null, new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				mapping();			
+				arrange();
+				root.redraw();
+			}			
+		});
 	}
-	
-	private Runnable eventEditDone = new Runnable(){
-		@Override
-		public void run() {
-			mapping();			
-			arrange();
-			root.redraw();
-		}
-	};
 	
 	private void mapping(){
 		//head title
