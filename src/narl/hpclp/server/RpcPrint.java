@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import narl.hpclp.shared.Const;
+import narl.hpclp.shared.ItemProdx;
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRExporterParameter;
@@ -30,52 +31,81 @@ public class RpcPrint extends HttpServlet {
 		HttpServletResponse res
 	) throws ServletException, IOException {
 
-		String path = req.getServletPath().replace("/","");		
+		String path = req.getServletPath().replace("/","");
+		
 		int pos = path.lastIndexOf(".");
 		if(pos<0){
 			return;
 		}
 		
-		String name = path.substring(0,pos);
 		String appx = path.substring(pos+1);
 
 		if(appx.equalsIgnoreCase("pdf")==true){
 			
-			Map<String,Object> parm = mEmptyParm;
+			String name = "";
 			
 			JRDataSource dsrc = mEmptyDSrc;
 			
-			if(path.equalsIgnoreCase(Const.REPORT_LETTER)==true){
-					
+			if(path.equalsIgnoreCase(Const.PRINT_LETTER)==true){
+				name = "report_letter.jasper";
 				dsrc = new DSrcLetter();
-				
-			}else if(path.equalsIgnoreCase(Const.REPORT_NOTIFY)==true){
-				
-				dsrc = new DSrcNotify();
-				
-			}else if(
-				path.equalsIgnoreCase(Const.REPORT_SERVICE)==true ||
-				path.equalsIgnoreCase(Const.REPORT_DEMAND)==true 
-			){
-				//dsrc = new DsrcServAndDemand(uuid.split(","));//the filed are overlap~~~
-				
-			}else if(path.startsWith("prodx_")==true){
-				
-				//dsrc = new DsrcProduct(uuid.split(","));//they must be same~~~			
+			}else if(path.equalsIgnoreCase(Const.PRINT_SCHEDULE)==true){
+				name = "report_sched.jasper";
+				dsrc = new DSrcMeeting();
+			}else if(path.equalsIgnoreCase(Const.PRINT_NOTIFY)==true){
+				name = "report_notify.jasper";
+				dsrc = new DSrcMeeting();								
+			}else if(path.equalsIgnoreCase(Const.REPORT_PRODUCT)==true){
+				//we can determine jist one format :-(
+				ItemProdx itm = DSrcProduct.lst.get(0);
+				switch(itm.format){
+				default:
+				case ItemProdx.FMT_F2:
+					if(itm.tenur.isChamber()==true){
+						name="prodx_chamber.jasper";
+					}else{
+						name="prodx_other.jasper";
+					}
+					break;
+				case ItemProdx.FMT_F3:// γ反應報告
+					name="prodx_gamma.jasper";
+					break;
+				case ItemProdx.FMT_F4:// 污染效率報告
+					name="prodx_effect.jasper";
+					break;
+				case ItemProdx.FMT_F5:// 活度報告
+					name="prodx_activity.jasper";
+					break;
+				}
+				dsrc = new DSrcProduct();				
+			}else if(path.equalsIgnoreCase(Const.REPORT_SERVICE)==true){
+				name = "report_service.jasper";
+				dsrc = new DSrcAccount();				
+			}else if(path.equalsIgnoreCase(Const.REPORT_DEMAND)==true){
+				name = "report_demand.jasper";
+				dsrc = new DSrcAccount();
 			}
 			
-			FillPdfReport(res,name+".jasper",parm,dsrc);
+			FillPdfReport(
+				res,
+				name,
+				mEmptyParm,
+				dsrc
+			);
 			
 		}else if(path.equalsIgnoreCase("xls")==true){
 			
+			FillXlsReport(
+				res, 
+				"export_account.jasper", 
+				mEmptyParm, 
+				new DSrcAccount()
+			);
 		}
 	}
 	//----------------------------------------//
-	
-	
-	//----------------------------------------//
-	
-	public static String DOC_PATH = "./narl.hpclp.Jasper/";	
+
+	public static String DOC_PATH = "./narl.hpclp.Jasper";	
 
 	private static Map<String,Object> mEmptyParm = new HashMap<String,Object>();
 	
@@ -103,7 +133,7 @@ public class RpcPrint extends HttpServlet {
 			JRPdfExporter export = new JRPdfExporter();
 			export.setParameter(JRExporterParameter.OUTPUT_STREAM,stream);
 			JasperPrint print = JasperFillManager.fillReport(
-				DOC_PATH+temp,
+				DOC_PATH+"/"+temp,
 				parm,
 				dsrc
 			);

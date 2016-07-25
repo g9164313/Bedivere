@@ -8,13 +8,13 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
 
-public class DSrcNotify implements JRDataSource {
+public class DSrcMeeting implements JRDataSource {
 	
 	private int idx = -1;
 
 	public static ArrayList<ItemMeeting> lst = new ArrayList<ItemMeeting>();
 	
-	public DSrcNotify(){
+	public DSrcMeeting(){
 	}
 	
 	@Override
@@ -25,8 +25,6 @@ public class DSrcNotify implements JRDataSource {
 		ItemMeeting meet = lst.get(idx);
 		
 		String txt, name = arg0.getName();
-		
-		//System.out.println("field="+name);
 		
 		if(name.equals("owner_code")){
 			
@@ -46,7 +44,7 @@ public class DSrcNotify implements JRDataSource {
 			
 		}else if(name.equals("owner_addr")){
 			
-			txt =  meet.getAddress();
+			txt =  meet.getZip()+"  "+meet.getAddress();
 			if(txt.length()!=0){
 				txt = txt + "   ";
 			}
@@ -70,11 +68,11 @@ public class DSrcNotify implements JRDataSource {
 		
 		}else if(name.equals("meet_day")){	
 		
-			return RpcBridge.date2tw_d(meet.stmp);
+			return Utils.date2tw_d(meet.stmp);
 			
 		}else if(name.equals("meet_hour")){	
 			
-			return RpcBridge.fmtTime.format(meet.stmp);
+			return Utils.fmtTime.format(meet.stmp);
 			
 		}else if(name.equals("tenure_source")){	
 
@@ -102,6 +100,7 @@ public class DSrcNotify implements JRDataSource {
 	public class DrscTenure implements JRDataSource {
 		
 		private int _idx = -1;
+		
 		private ArrayList<ItemTenur> _lst = null;
 		
 		private final int MAX_TOTAL = 20;
@@ -118,19 +117,32 @@ public class DSrcNotify implements JRDataSource {
 			ItemTenur item = _lst.get(_idx);	
 			String name = arg0.getName();
 			
-			if (name.equals("device_vendor")) {					
-				return item.getDeviceVendor();					
-			}else if (name.equals("device_serial")) {				
-				return item.getDeviceSerial();				
-			}else if (name.equals("device_number")) {				
+			if (name.equals("device_vendor")) {
+				
+				return item.getDeviceVendor();
+				
+			}else if (name.equals("device_serial")) {
+				
+				return item.getDeviceSerial();
+				
+			}else if (name.equals("device_number")) {
+				
 				return item.getDeviceNumber();
-			}else if (name.equals("detect_type")) {				
+				
+			}else if (name.equals("detect_type")) {
+				
 				return item.getDetectType();
-			}else if (name.equals("detect_serial")) {				
+				
+			}else if (name.equals("detect_serial")) {
+				
 				return item.getDetectSerial();
-			}else if (name.equals("detect_number")) {				
-				return item.getDetectNumber();				
+				
+			}else if (name.equals("detect_number")) {
+				
+				return item.getDetectNumber();
+				
 			}else if (name.equals("list_footer")) {
+				
 				if(mTotal>MAX_TOTAL){
 					return "共"+mTotal+"部儀器，其餘未列出";
 				}else{

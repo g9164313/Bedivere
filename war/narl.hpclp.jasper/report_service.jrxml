@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_service" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="571" leftMargin="12" rightMargin="12" topMargin="11" bottomMargin="11" isFloatColumnFooter="true" uuid="a85d5df8-820f-4afb-b63d-ac7746095ef9">
 	<property name="ireport.zoom" value="2.0"/>
-	<property name="ireport.x" value="113"/>
-	<property name="ireport.y" value="60"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="78"/>
 	<style name="table">
 		<box>
 			<pen lineWidth="1.0" lineColor="#000000"/>
@@ -23,17 +23,14 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="SetFare" uuid="dc61955e-4a98-4563-9617-0d1064301027">
+	<subDataset name="FareSet" uuid="dc61955e-4a98-4563-9617-0d1064301027">
 		<field name="fare_name" class="java.lang.String"/>
 		<field name="fare_fee" class="java.lang.String"/>
 		<field name="fare_count" class="java.lang.String"/>
 		<field name="fare_cost" class="java.lang.String"/>
 		<field name="fare_memo" class="java.lang.String"/>
-		<field name="fare_total" class="java.lang.Integer"/>
+		<field name="fare_total" class="java.lang.String"/>
 	</subDataset>
-	<subDataset name="dataset1" uuid="4a21f6d1-eb28-40ae-bb08-74cf6fd2d6b8"/>
-	<subDataset name="dataset2" uuid="26495075-c0fb-43d2-a770-8d68f16afbf6"/>
-	<subDataset name="dataset3" uuid="530869e0-1288-42d7-b971-b39726b9cf75"/>
 	<field name="owner_key" class="java.lang.String"/>
 	<field name="owner_name" class="java.lang.String"/>
 	<field name="account_key" class="java.lang.String"/>
@@ -105,7 +102,7 @@
 			<componentElement>
 				<reportElement uuid="395c776d-92fa-43a3-b863-b3d90d0a62f2" key="table" style="table" x="2" y="50" width="569" height="87"/>
 				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd" whenNoDataType="AllSectionsNoDetail">
-					<datasetRun subDataset="SetFare" uuid="72d2fb23-412d-46d8-9e04-f43423bfad85">
+					<datasetRun subDataset="FareSet" uuid="72d2fb23-412d-46d8-9e04-f43423bfad85">
 						<dataSourceExpression><![CDATA[$F{fare_set}]]></dataSourceExpression>
 					</datasetRun>
 					<jr:column width="160" uuid="d7ce1c6a-91d8-41ce-9143-0bca575dc400">

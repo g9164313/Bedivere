@@ -10,22 +10,22 @@
 	<field name="owner_contact1" class="java.lang.String"/>
 	<field name="fare_set1_title" class="java.lang.String"/>
 	<field name="fare_set1_total" class="java.lang.String"/>
-	<field name="fare_set1_num" class="java.lang.Integer"/>
+	<field name="fare_set1_num" class="java.lang.String"/>
 	<field name="fare_set2_title" class="java.lang.String"/>
 	<field name="fare_set2_total" class="java.lang.String"/>
-	<field name="fare_set2_num" class="java.lang.Integer"/>
+	<field name="fare_set2_num" class="java.lang.String"/>
 	<field name="fare_set3_title" class="java.lang.String"/>
 	<field name="fare_set3_total" class="java.lang.String"/>
-	<field name="fare_set3_num" class="java.lang.Integer"/>
+	<field name="fare_set3_num" class="java.lang.String"/>
 	<field name="fare_set4_title" class="java.lang.String"/>
 	<field name="fare_set4_total" class="java.lang.String"/>
-	<field name="fare_set4_num" class="java.lang.Integer"/>
+	<field name="fare_set4_num" class="java.lang.String"/>
 	<field name="fare_set5_title" class="java.lang.String"/>
 	<field name="fare_set5_total" class="java.lang.String"/>
-	<field name="fare_set5_num" class="java.lang.Integer"/>
+	<field name="fare_set5_num" class="java.lang.String"/>
 	<field name="fare_set6_title" class="java.lang.String"/>
 	<field name="fare_set6_total" class="java.lang.String"/>
-	<field name="fare_set6_num" class="java.lang.Integer"/>
+	<field name="fare_set6_num" class="java.lang.String"/>
 	<title>
 		<band height="60">
 			<staticText>

@@ -124,35 +124,42 @@ public class PanMain extends Composite {
 		public void onChange(ChangeEvent event) {
 		}
     };
-    
-    @UiHandler("lnkPrintSchedule")
-    void onPrintSchedule(ClickEvent e) {    	
-    }
-    
+   
     private final String MSG1 = "請指定圖表裡的日期";
     
-    @UiHandler("lnkPrintLetter1")
-    void onPrintLetter1(ClickEvent e) {
-    	ArrayList<ItemOwner> buf = new ArrayList<ItemOwner>();
-    	gatherMonth(buf);
-    	if(buf.size()==0){
-    		MaterialToast.fireToast(MSG1);
-    		return;
-    	}
-    	Main.printLetter(buf);
-    }
-    
-    @UiHandler("lnkPrintNotify1")
-    void onPrintNotify1(ClickEvent e) {
+    @UiHandler("lnkPrintSchedule")
+    void onLnkPrintSchedule(ClickEvent e) {
     	ArrayList<ItemMeeting> buf = new ArrayList<ItemMeeting>();
     	gatherMonth(buf);
     	if(buf.size()==0){
     		MaterialToast.fireToast(MSG1);
-    		return;
+    	}else{
+    		Main.printSchedule(buf);
     	}
-    	Main.printNotify(buf);
     }
     
+    @UiHandler("lnkPrintNotify")
+    void onLnkPrintNotify(ClickEvent e) {
+    	ArrayList<ItemMeeting> buf = new ArrayList<ItemMeeting>();
+    	gatherMonth(buf);
+    	if(buf.size()==0){
+    		MaterialToast.fireToast(MSG1);    		
+    	}else{
+    		Main.printNotify(buf);
+    	}
+    }
+    
+    @UiHandler("lnkPrintLetter")
+    void onLnkPrintLetter(ClickEvent e) {
+		ArrayList<ItemOwner> buf = new ArrayList<ItemOwner>();
+		gatherMonth(buf);
+    	if(buf.size()==0){
+    		MaterialToast.fireToast(MSG1);    		
+    	}else{
+    		Main.printLetter(buf);
+    	}
+    }
+
     @SuppressWarnings("unchecked")
 	private <T> void gatherMonth(ArrayList<T> lst){
     	Integer idx = chrMeet.getSelection().get(0).getRow();
@@ -160,10 +167,30 @@ public class PanMain extends Composite {
 			return;
 		}
 		int beg = grpHead.get(idx);
+		ItemMeeting itm = lstMeet.get(beg);
+		String dd = itm.getSDay();
+		dd = dd.substring(0,dd.lastIndexOf('/'));
+		while(beg>0){
+			itm = (ItemMeeting)lstMeet.get(beg);
+			String txt = itm.getSDay();
+			if(txt.startsWith(dd)==true){
+				beg--;
+			}else{
+				break;
+			}			
+		}
 		int end = grpTail.get(idx);
-
-		for(int i=beg; i<=end; i++){
-			lst.add(((T)lstMeet.get(i)));
+		while(end<lstMeet.size()){
+			itm = (ItemMeeting)lstMeet.get(end);
+			String txt = itm.getSDay();
+			if(txt.startsWith(dd)==true){
+				end++;
+			}else{
+				break;
+			}
+		}
+		for(int i=beg; i<end; i++){			
+			lst.add((T)lstMeet.get(i));
 		}
     }
     
@@ -202,7 +229,7 @@ public class PanMain extends Composite {
     }*/
     
     @UiHandler("lnkRenew")
-    void onRenew(ClickEvent e) {
+    void onLnkRenew(ClickEvent e) {
     	refresh();
     }
  

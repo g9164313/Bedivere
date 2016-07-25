@@ -39,9 +39,9 @@
                     <m:MaterialLink iconPosition="NONE" tooltip="搜尋" tooltipPosition="BOTTOM" iconType="SEARCH" ui:field="lnkSearch" />
                     <m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="BOTTOM" iconType="PRINT" activates="dpPrint" >
                     	<m:MaterialDropDown activator="dpPrint" width="200px" belowOrigin="true" constrainWidth="false">
-                    		<m:MaterialLink text="排程表" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintSchedule" />
-                            <m:MaterialLink text="信封" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintLetter1" />                       
-                            <m:MaterialLink text="通知單" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintNotify1" />
+                    		<m:MaterialLink text="排程表" textColor="grey darken-1" ui:field="lnkPrintSchedule" />                                             
+                            <m:MaterialLink text="通知單" textColor="grey darken-1" ui:field="lnkPrintNotify" />
+                            <m:MaterialLink text="信封" textColor="grey darken-1" ui:field="lnkPrintLetter" />      
                             <!-- <m:MaterialLink text="(單日)信封" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintLetter2" /> 
                             <m:MaterialLink text="(單日)通知單" iconType="FOLDER" textColor="grey darken-1" ui:field="lnkPrintNotify2" />  -->                            
                     	</m:MaterialDropDown>

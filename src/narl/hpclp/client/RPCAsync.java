@@ -64,6 +64,16 @@ public interface RPCAsync {
 		AsyncCallback<Void> res
 	) throws IllegalArgumentException;
 	
+	void cacheProduct(
+		ArrayList<ItemProdx> lst,
+		AsyncCallback<Void> res
+	) throws IllegalArgumentException;
+	
+	void cacheDemandService(
+		ArrayList<ItemAccnt> lst,
+		AsyncCallback<Void> res
+	) throws IllegalArgumentException;
+	
 	void cacheMeeting(
 		ArrayList<ItemMeeting> lst,
 		AsyncCallback<Void> res

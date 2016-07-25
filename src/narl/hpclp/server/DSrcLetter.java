@@ -18,19 +18,33 @@ public class DSrcLetter implements JRDataSource {
 
 	@Override
 	public Object getFieldValue(JRField arg0) throws JRException {
+		
 		ItemOwner item = lst.get(idx);
+		
 		String name = arg0.getName();
+		
 		if (name.equals("owner_key")) {
+			
 			return item.getKey();
+			
 		} else if (name.equals("owner_name")) {
+			
 			return item.getName();
+			
 		} else if (name.equals("owner_zipcode")) {
+			
 			return item.getZip();
+			
 		} else if (name.equals("owner_name_key")) {
+			
 			return item.getName() + " （" + item.getKey() + "）";
+			
 		} else if (name.equals("owner_address")) {
+			
 			return item.getAddress();
+			
 		} else if (name.equals("owner_contact")) {
+			
 			String p1 = item.getPerson() + "   啟";
 			String p2 = item.getDepartment();
 			if (p2 == null) {

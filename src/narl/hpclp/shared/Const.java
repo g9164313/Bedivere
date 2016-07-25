@@ -16,10 +16,27 @@ public final class Const {
 	
 	public static final String SPECIAL_PREFIX = "調整";
 
-	public static final String REPORT_LETTER = "report_letter.pdf";
-	public static final String REPORT_NOTIFY = "report_notify.pdf";
-	public static final String REPORT_SERVICE= "report_service.pdf";
-	public static final String REPORT_DEMAND = "report_demand.pdf";
+	public static final String PRINT_SCHEDULE= "排定表.pdf";
+	public static final String PRINT_LETTER  = "信封.pdf";
+	public static final String PRINT_NOTIFY  = "校正通知單.pdf";	
+	public static final String REPORT_PRODUCT= "校正報告.pdf";
+	public static final String REPORT_DEMAND = "繳費通知單.pdf";
+	public static final String REPORT_SERVICE= "費用通知單.pdf";
+	
+	public static String int2note(int val){
+		char[] digi=String.valueOf(val).toCharArray();
+		String txt="";
+		txt = "";
+		int cnt = digi.length;
+		for(int i=cnt-1; i>=0; --i){
+			int idx = i - cnt + 1;
+			if(idx%3==0 && idx!=0){
+				txt = ","+txt;
+			}
+			txt = digi[i] + txt;
+		}
+		return txt;
+	}
 	
 	public static String insertSlash(String unit1, String unit2){
 		unit1 = invertSlash(unit1);

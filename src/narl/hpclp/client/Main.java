@@ -7,9 +7,11 @@ import gwt.material.design.client.ui.MaterialListBox;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
 import narl.hpclp.shared.Const;
+import narl.hpclp.shared.ItemAccnt;
 import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemParam;
+import narl.hpclp.shared.ItemProdx;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
@@ -74,9 +76,10 @@ public class Main implements EntryPoint {
 			}
 			@Override
 			public void onSuccess(Void result) {
-				String url = GWT.getHostPageBaseURL();
-		    	url = url + Const.REPORT_LETTER;
-		    	Window.open(url,"_blank","");
+		    	Window.open(
+		    		GWT.getHostPageBaseURL()+Const.PRINT_LETTER,
+		    		"_blank",""
+		    	);
 			}
 		});
 	}
@@ -84,9 +87,15 @@ public class Main implements EntryPoint {
 	public static void printNotify(ItemMeeting itm){
 		ArrayList<ItemMeeting> lst = new ArrayList<ItemMeeting>();
 		lst.add(itm);
-		printNotify(lst);
+		printMeeting(lst,Const.PRINT_NOTIFY);
 	}
 	public static void printNotify(ArrayList<ItemMeeting> buf){
+		printMeeting(buf,Const.PRINT_NOTIFY);
+	}
+	public static void printSchedule(ArrayList<ItemMeeting> buf){
+		printMeeting(buf,Const.PRINT_SCHEDULE);
+	}
+	private static void printMeeting(ArrayList<ItemMeeting> buf,final String type){
 		rpc.cacheMeeting(buf, new AsyncCallback<Void>(){
 			@Override
 			public void onFailure(Throwable caught) {
@@ -94,9 +103,64 @@ public class Main implements EntryPoint {
 			}
 			@Override
 			public void onSuccess(Void result) {
-				String url = GWT.getHostPageBaseURL();
-		    	url = url + Const.REPORT_NOTIFY;
-		    	Window.open(url,"_blank","");
+		    	Window.open(
+		    		GWT.getHostPageBaseURL()+type,
+		    		"_blank",""
+		    	);
+			}
+		});
+	}
+	
+	public static void printProduct(ItemProdx buf){
+		ArrayList<ItemProdx> lst = new ArrayList<ItemProdx>();
+		lst.add(buf);
+		printProduct(lst);
+	}
+	public static void printProduct(ArrayList<ItemProdx> buf){
+		//TODO:how to classify product???
+		rpc.cacheProduct(buf, new AsyncCallback<Void>(){
+			@Override
+			public void onFailure(Throwable caught) {
+				MaterialToast.fireToast("內部錯誤");
+			}
+			@Override
+			public void onSuccess(Void result) {				
+		    	Window.open(
+		    		GWT.getHostPageBaseURL()+Const.REPORT_PRODUCT,
+		    		"_blank",""
+		    	);
+			}
+		});
+	}
+	
+	public static void printDemand(ItemAccnt buf){
+		ArrayList<ItemAccnt> lst = new ArrayList<ItemAccnt>();
+		lst.add(buf);
+		printAccount(lst,Const.REPORT_DEMAND);
+	}
+	public static void printDemand(ArrayList<ItemAccnt> buf){
+		printAccount(buf,Const.REPORT_DEMAND);
+	}
+	public static void printService(ItemAccnt buf){
+		ArrayList<ItemAccnt> lst = new ArrayList<ItemAccnt>();
+		lst.add(buf);
+		printAccount(lst,Const.REPORT_SERVICE);
+	}
+	public static void printService(ArrayList<ItemAccnt> buf){
+		printAccount(buf,Const.REPORT_SERVICE);
+	}
+	private static void printAccount(ArrayList<ItemAccnt> buf,final String type){
+		rpc.cacheDemandService(buf, new AsyncCallback<Void>(){
+			@Override
+			public void onFailure(Throwable caught) {
+				MaterialToast.fireToast("內部錯誤");
+			}
+			@Override
+			public void onSuccess(Void result) {				
+		    	Window.open(
+		    		GWT.getHostPageBaseURL()+type,
+		    		"_blank",""
+		    	);
 			}
 		});
 	}

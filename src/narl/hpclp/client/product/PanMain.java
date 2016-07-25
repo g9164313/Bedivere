@@ -189,19 +189,24 @@ public class PanMain extends Composite {
     	});
 	}
 
-    @UiHandler("lnkPrint1")
-    void onLnkPrintProdx(ClickEvent e){
-    	
+    @UiHandler("lnkPrint2DTag")
+    void onLnkPrint2DTag(ClickEvent e){
+    	//How to print 2D-tag???
     }
     
-    @UiHandler("lnkPrint2")
-    void onLnkPrint2DTag(ClickEvent e){
-    	
+    @UiHandler("lnkPrintOneProdx")
+    void onLnkPrintOneProdx(ClickEvent e){
+    	Main.printProduct(curProdx);
+    }
+
+    @UiHandler("lnkPrintAllProdx")
+    void onLnkPrintAllProdx(ClickEvent e){
+    	Main.printProduct(lstProdx);
     }
     
     @UiHandler("lnkUpload")
     void onLnkUploadProdx(ClickEvent e){
-    	
+    	//update and modify database~~~~
     }
     
     @UiHandler("lnkCreate")

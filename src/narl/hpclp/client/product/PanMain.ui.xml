@@ -38,9 +38,10 @@
                 <m:MaterialNavSection float="RIGHT" hideOn="NONE">                	
                     <m:MaterialLink iconPosition="NONE" tooltip="搜尋" tooltipPosition="BOTTOM" iconType="SEARCH" ui:field="lnkSearch" />
                     <m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="BOTTOM" iconType="PRINT" activates="drpPrint">
-                    	<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpPrint" >
-                    		<m:MaterialLink text="報告"  textColor="grey darken-1" ui:field="lnkPrint1" />
-                    		<m:MaterialLink text="標籤"  textColor="grey darken-1" ui:field="lnkPrint2" />
+                    	<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpPrint" >                    		
+                    		<m:MaterialLink text="標籤"  textColor="grey darken-1" ui:field="lnkPrint2DTag" />
+                    		<m:MaterialLink text="報告"  textColor="grey darken-1" ui:field="lnkPrintOneProdx" />
+                    		<m:MaterialLink text="報告（全）"  textColor="grey darken-1" ui:field="lnkPrintAllProdx" />
                     	</m:MaterialDropDown>
                     </m:MaterialLink>
                     <m:MaterialLink iconPosition="NONE" tooltip="上傳" tooltipPosition="BOTTOM" iconType="FILE_UPLOAD" ui:field="lnkUpload" />                    
