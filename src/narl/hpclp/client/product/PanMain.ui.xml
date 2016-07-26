@@ -48,8 +48,9 @@
                     <m:MaterialLink iconPosition="NONE" tooltip="功能" tooltipPosition="BOTTOM" iconType="TUNE" activates="drpFunc">
                    		<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpFunc" >
                    			<m:MaterialLink text="顯示清單"  textColor="grey darken-1" iconType="RECEIPT" ui:field="lnkShowSelector" />
-                    		<m:MaterialLink text="最近50筆" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkRenew" />
-                   			<m:MaterialLink text="新增報告"  textColor="grey darken-1" iconType="PLUS_ONE" ui:field="lnkCreate" />
+                    		<m:MaterialLink text="最近50筆" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkRenewSelector" />
+                    		<m:MaterialLink text="清除清單" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkClearSelector" />
+                   			<m:MaterialLink text="新增報告"  textColor="grey darken-1" iconType="PLUS_ONE" ui:field="lnkCreate" />                   			
                    		</m:MaterialDropDown>
                    </m:MaterialLink>                    
                 </m:MaterialNavSection>
@@ -111,8 +112,8 @@
 							<m:MaterialColumn> <m:MaterialListBox width="9em" tooltip="器示值單位" ui:field="cmbUnitMea" /> </m:MaterialColumn>
 						</m:MaterialRow>
 						<m:MaterialRow>
-							<m:MaterialColumn> <m:MaterialTextBox width="9em" placeholder="報告編號" ui:field="boxKey" /> </m:MaterialColumn>
 							<m:MaterialColumn> <m:MaterialTextBox width="9em" placeholder="校正日期" ui:field="boxStmp" /> </m:MaterialColumn>
+							<m:MaterialColumn> <m:MaterialTextBox width="9em" placeholder="報告編號" ui:field="boxKey" /> </m:MaterialColumn>							
 							<m:MaterialColumn> <m:MaterialTextBox width="9em" placeholder="附註事項" ui:field="boxMemo" /> </m:MaterialColumn>								
 						</m:MaterialRow>
 						<m:MaterialRow>
@@ -155,17 +156,37 @@
 				
 				<m:MaterialColumn><!-- the start of second column -->
 					<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7" >
-						<m:MaterialRow>	
+						<m:MaterialRow >	
 							<m:MaterialTextBox placeholder="快速輸入" ui:field="boxScribe" />
 						</m:MaterialRow>
-						<m:MaterialRow>	
-							<g:SimplePanel width="47em" ui:field="panArch1" />
+						<m:MaterialRow>
+							<m:MaterialColumn> <m:MaterialLabel width="3em" text="刻度"              /> </m:MaterialColumn>
+							<m:MaterialColumn> <m:MaterialLabel width="9em" text="參考or背景值" ui:field="txtScribe2"/> </m:MaterialColumn>
+							<m:MaterialColumn> <m:MaterialLabel width="6em" text="器示值"           /> </m:MaterialColumn>
+							<m:MaterialColumn> <m:MaterialLabel width="4em" text="不確定度修剪" /> </m:MaterialColumn>
+							<m:MaterialColumn> <m:MaterialLabel width="3em" text="因子or效率"    ui:field="txtScribe5"/> </m:MaterialColumn>
 						</m:MaterialRow>
+						<m:MaterialRow>	
+							<m:MaterialCollection ui:field="colScribe"/>
+						</m:MaterialRow>
+						<m:MaterialModal dismissable="true" ui:field="dlgScribe">
+							<m:MaterialModalContent >
+								<m:MaterialRow> <m:MaterialTextBox placeholder="刻度" ui:field="boxScribe0"/> </m:MaterialRow>
+								<m:MaterialRow> <m:MaterialTextBox placeholder="參考or背景值" ui:field="boxScribe1"/> </m:MaterialRow>
+								<m:MaterialRow> <m:MaterialTextBox placeholder="器示值" ui:field="boxScribe2"/> </m:MaterialRow>
+							</m:MaterialModalContent>
+							<m:MaterialModalFooter>									
+								<m:MaterialButton text="確認" type="FLAT" ui:field="btnScribeEdit" />								
+								<m:MaterialButton text="取消" type="FLAT" ui:field="btnScribeCancel"/>
+								<m:MaterialButton text="刪除" type="FLAT" ui:field="btnScribeDelete" />
+							</m:MaterialModalFooter>
+ 						</m:MaterialModal>
 					</m:MaterialPanel>
 				</m:MaterialColumn><!-- the end of second column -->
+				
 			</m:MaterialRow>
 			
-    	 	<m:MaterialModal type="BOTTOM_SHEET" dismissable="true" inDuration="10" outDuration="10" height="25%" ui:field="dlgSelect">
+    	 	<m:MaterialModal type="BOTTOM_SHEET" dismissable="true" inDuration="10" outDuration="10" height="25%" ui:field="dlgSelector">
     	 		<m:MaterialLabel ui:field="txtSelectorTotal"/>
  				<m:MaterialCollection ui:field="colSelector"/>
  			</m:MaterialModal>

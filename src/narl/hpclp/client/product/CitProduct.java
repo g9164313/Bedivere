@@ -16,6 +16,7 @@ import gwt.material.design.client.ui.MaterialRow;
 public class CitProduct extends MaterialCollectionItem implements ClickHandler {
 
 	private ItemProdx prodx;
+	
 	private PanMain root;
 
 	public CitProduct(PanMain root,int serial,ItemProdx item){
@@ -23,23 +24,35 @@ public class CitProduct extends MaterialCollectionItem implements ClickHandler {
 		this.prodx = item;
 		setType(CollectionType.CHECKBOX);
 		setWaves(WavesType.DEFAULT);
-		setTitle(serial);
+		initLayout(serial);
 		addClickHandler(this);		
 	}
 
-	private void setTitle(int serial){
+	private void initLayout(int serial){
 		MaterialRow row = new MaterialRow();
 		add_col(row,"5em","第"+serial+"筆");
-		add_col(row,"7em",prodx.getKey());
+		
+		String key = prodx.getKey();
+		if(key.length()!=0){
+			add_col(row,"7em",key);			
+		}else{
+			add_col(row,"7em","???");
+		}
+		
 		if(prodx.owner!=null){			
 			ItemOwner itm = prodx.owner;
 			add_col(row,"18em",itm.getName());
+		}else{
+			add_col(row,"18em","???");
 		}
+		
 		if(prodx.tenur!=null){
 			ItemTenur itm = prodx.tenur;
 			add_col(row,"6em",itm.getDeviceVendor());
 			add_col(row,"10em",itm.getDeviceSerial());
 			add_col(row,"10em",itm.getDeviceNumber());
+		}else{
+			add_col(row,"26em","???");
 		}
 		this.add(row);
 	}
@@ -55,8 +68,7 @@ public class CitProduct extends MaterialCollectionItem implements ClickHandler {
 	}
 	
 	@Override
-	public void onClick(ClickEvent event) {
-		root.curProdx = prodx;
-		root.prodx2box();
+	public void onClick(ClickEvent event) {		
+		root.prodx2box(prodx);
 	}
 }

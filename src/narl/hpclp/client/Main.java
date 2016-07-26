@@ -15,7 +15,11 @@ import narl.hpclp.shared.ItemProdx;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
@@ -36,6 +40,20 @@ public class Main implements EntryPoint {
 	public final static DateTimeFormat fmtMeeting = DateTimeFormat.getFormat("MM/dd EEE H");
 	
 	public final static DateTimeFormat fmtSQLDay = DateTimeFormat.getFormat("yyyy-M-d");
+	
+	public final static String date2tw_y(Date stamp){		
+		String year = fmtYear.format(stamp);		
+		int yy = Integer.valueOf(year);		
+		if(yy>1911){
+			yy = yy - 1911;
+		}else{
+			yy = 0;
+		}		
+		return ""+yy;
+	}	
+	public final static String date2tw_y(){
+		return date2tw_y(new Date());
+	}
 	
 	public static boolean text2stmp(MaterialTextBox box,Date stmp){
 		String tmp = fmtStmpLast.format(stmp);
@@ -251,6 +269,14 @@ public class Main implements EntryPoint {
 			break;
 		case PAN_PRODUCT:
 			RootPanel.get().add(product);
+			RootPanel.get().addHandler(new KeyDownHandler(){
+				@Override
+				public void onKeyDown(KeyDownEvent event) {
+					GWT.log("onKeyDown charCode=" + event.getNativeKeyCode()); 
+				}
+				},
+			KeyDownEvent.getType()
+			);			
 			break;
 		case PAN_ACCOUNT:
 			RootPanel.get().add(new Label("//TODO:--------"));
@@ -270,9 +296,28 @@ public class Main implements EntryPoint {
 		switch_panel(PAN_ACCOUNT);
 	}
 	
+	/*private Event.NativePreviewHandler eventHook = new Event.NativePreviewHandler(){
+		@Override
+		public void onPreviewNativeEvent(NativePreviewEvent event) {
+			switch (event.getTypeInt()) {
+			case Event.ONKEYDOWN:
+				int keyCode = event.getNativeEvent().getKeyCode();
+				GWT.log("key="+keyCode);
+				//if(keyCode==KeyCodes.KEY_F1){
+				//	GWT.log("press="+keyCode);
+				//}
+				break;
+			}
+		}
+	};*/
+	
 	@Override
 	public void onModuleLoad() {
+		
 		//MaterialLoader.showLoading(true);
+		
+		//Event.addNativePreviewHandler(eventHook);
+		
 		rpc.initServer(new AsyncCallback<ItemParam>(){
 			@Override
 			public void onFailure(Throwable caught) {

@@ -18,7 +18,6 @@
 	
 		<!-- Header component for custome layouts -->
 		<m:MaterialCollapsibleHeader  addStyleNames="{style.colapsHeader}">
-			
 			<m:MaterialRow margin="0">
 				<m:MaterialColumn>
 					<m:MaterialLabel ui:field="txtTotal" />
@@ -31,8 +30,7 @@
 				</m:MaterialColumn>
 				<m:MaterialIcon iconType="PRINT" waves="DEFAULT" float="RIGHT" circle="true" ui:field="icoPrint" />
 				<m:MaterialIcon iconType="CREATE" waves="DEFAULT" float="RIGHT" circle="true" ui:field="icoEdit" />						
-			</m:MaterialRow>
-			
+			</m:MaterialRow>	
 		</m:MaterialCollapsibleHeader>
 		
 		<m:MaterialCollapsibleBody>

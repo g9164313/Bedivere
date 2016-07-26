@@ -24,7 +24,7 @@ public final class FormulaSet {
 	public static String avg(String lst,int round,double esti) {
 		double[] val = lst2val(lst);
 		if(val==null){
-			return "???";
+			return "無資料";
 		}
 		if(val.length==1){
 			return lst;
@@ -53,18 +53,37 @@ public final class FormulaSet {
 	public static String dev(String lst,int round,double esti) {
 		double[] val = lst2val(lst);
 		if(val==null){
-			return "";
+			return "無資料";
 		}
 		if(val.length<=1){
-			return "";
+			return "---";
 		}
 		return trimVal(_var(val),round,esti);
 	}
 	
+	public static String AvgDev(String lst) {
+		double[] val = lst2val(lst);
+		if(val==null){
+			return "無資料";
+		}
+		double avg,dev;
+		String txt;
+		if(val.length==1){
+			avg = _avg(val);
+			txt = trimVal(avg,0,0.);//default is 3 digital
+		}else{
+			avg = _avg(val);
+			dev = _var(val);
+			//default is 3 digital
+			txt = trimVal(avg,0,0.)+" ±"+trimVal(dev,0,0.);
+		}
+		return txt;
+	}
+		
 	public static String xxx(String lst,int round,double esti) {
 		double[] val = lst2val(lst);
 		if(val==null){
-			return "???";
+			return "無資料";
 		}
 		if(val.length<=1){
 			return "---";

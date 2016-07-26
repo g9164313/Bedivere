@@ -7,6 +7,7 @@ import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
 import narl.hpclp.shared.ParmEmitter;
+import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialCheckBox;
 import gwt.material.design.client.ui.MaterialCollection;
 import gwt.material.design.client.ui.MaterialFloatBox;
@@ -34,7 +35,6 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.SimplePanel;
 import com.google.gwt.user.client.ui.Widget;
 
 public class PanMain extends Composite {
@@ -78,16 +78,22 @@ public class PanMain extends Composite {
     	txtSerial,txtCriteron;
         
     @UiField
-    MaterialModal dlgSelect;
+    MaterialModal dlgSelector;
     @UiField
     MaterialLabel txtSelectorTotal;
     @UiField
     MaterialCollection colSelector;    
     
-    @UiField 
-    SimplePanel panArch1;
-
-    private GrdScribe grdScrib = new GrdScribe();
+    @UiField
+    static MaterialLabel txtScribe2,txtScribe5;
+    @UiField
+    static MaterialCollection colScribe;
+    @UiField
+    static MaterialModal dlgScribe;
+    @UiField
+    static MaterialTextBox boxScribe0,boxScribe1,boxScribe2;
+    @UiField
+    static MaterialButton btnScribeEdit,btnScribeCancel,btnScribeDelete;
     
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));
@@ -96,8 +102,10 @@ public class PanMain extends Composite {
 		root.add(Main.dlgEditTenur);
 		root.add(Main.dlgPickOwner);
 		root.add(Main.dlgPickTenur);
-		grdScrib.init(panArch1);
 		addAttachHandler(eventShowHide);		
+		btnScribeEdit.addClickHandler(CitScribe.eventEdit);
+		btnScribeCancel.addClickHandler(CitScribe.eventCancel);
+		btnScribeDelete.addClickHandler(CitScribe.eventDelete);
 		//Don't initialize data here!!!
 	}
 
@@ -148,24 +156,23 @@ public class PanMain extends Composite {
 		}
     };
     //-------------------//
-    
     /**
      * this list keep the user data in local computer~~~
      */
-    public ArrayList<ItemProdx> lstProdx = new ArrayList<ItemProdx>();
+    private static ArrayList<ItemProdx> lstProdx = new ArrayList<ItemProdx>();
     
-    public static ItemProdx curProdx = null;
+    private static ItemProdx curProdx = null;
     
-    public ParmEmitter emitt = null;
+    private static ParmEmitter emitt = null;
 
     @UiHandler("lnkShowSelector")
     void onLnkShowSelector(ClickEvent e){
-    	//TODO: refresh title again!!!
-    	dlgSelect.openModal();
+    	refresh_selector();
+    	dlgSelector.openModal();
     }
     
-    @UiHandler("lnkRenew")
-	void onLnkRenew(ClickEvent e){
+    @UiHandler("lnkRenewSelector")
+	void onLnkRenewSelector(ClickEvent e){
     	//TODO: ask user whether dropping the current list~~~
     	Main.rpc.listProduct(
     		"ORDER BY "+Const.PRODX+".last DESC LIMIT 50",
@@ -184,14 +191,31 @@ public class PanMain extends Composite {
     				curProdx = result.get(0);
     				prodx2box();
     				refresh_selector();			
-    				dlgSelect.openModal();
+    				dlgSelector.openModal();
     			}
     	});
 	}
 
+    @UiHandler("lnkClearSelector")
+	void onLnkClearSelector(ClickEvent e){
+    	lstProdx.clear();    	
+    	MaterialToast.fireToast("已清除...",100);
+    	onLnkCreateProdx(e);
+    }
+    
+    @UiHandler("lnkCreate")
+    void onLnkCreateProdx(ClickEvent e){
+    	curProdx = new ItemProdx();
+    	//Remember to prepare emitter information, This is required!!!
+    	curProdx.setEmitter(cmbEmitter.getSelectedValue());
+    	lstProdx.add(curProdx);
+    	prodx2box();
+    	MaterialToast.fireToast("新增報告",100);
+    }
+   
     @UiHandler("lnkPrint2DTag")
     void onLnkPrint2DTag(ClickEvent e){
-    	//How to print 2D-tag???
+    	//TODO:How to print 2D-tag???
     }
     
     @UiHandler("lnkPrintOneProdx")
@@ -207,20 +231,11 @@ public class PanMain extends Composite {
     @UiHandler("lnkUpload")
     void onLnkUploadProdx(ClickEvent e){
     	//update and modify database~~~~
+    	
     }
-    
-    @UiHandler("lnkCreate")
-    void onLnkCreateProdx(ClickEvent e){
-    	curProdx = new ItemProdx();
-    	//Remember to prepare emitter information, This is required
-    	curProdx.setEmitter(cmbEmitter.getSelectedValue());
-    	lstProdx.add(curProdx);
-    	prodx2box();
-    	refresh_selector();
-    }
-    
+ 
     @UiHandler("boxOKey")
-    void onOwnerKey(ValueChangeEvent<String> event){
+    void onChangeOwnerKey(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim();
     	String post = "WHERE ";
     	post = post + "(info[1] SIMILAR TO '%"+txt+"%') OR ";
@@ -238,12 +253,13 @@ public class PanMain extends Composite {
 				}
 				prodx2box();
 				boxOKey.setText(curProdx.owner.getKey());
+				boxTKey.setFocus(true);
 			}
     	});
     }
     
     @UiHandler("boxTKey")
-    void onTenurKey(ValueChangeEvent<String> event){
+    void onChangeTenurKey(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim().toLowerCase();
     	String post = "WHERE ";
     	post = post + "(tenure.info[1] SIMILAR TO '%"+txt+"%') OR ";
@@ -263,8 +279,8 @@ public class PanMain extends Composite {
     				return;
     			}
     			prodx2box();
-    			boxTKey.setText("");//just clear it~~~
-    			cmbFormat.setFocus(true);
+    			boxTKey.setText("");//just clear for next turn~~~
+    			boxStmp.setFocus(true);
     		}
         });
     }
@@ -280,6 +296,7 @@ public class PanMain extends Composite {
  			chkUseLogo.setValue(true);
  			Main.selectCombo(cmbUnitRef,"μSv·h⁻¹");
  			Main.selectCombo(cmbUnitMea,"μSv·h⁻¹");
+ 			//TODO: how to select emitter???
  			break;
  		case ItemProdx.FMT_F4:
  		case ItemProdx.FMT_F5:
@@ -298,25 +315,51 @@ public class PanMain extends Composite {
     	curProdx.setUnitMea(cmbUnitMea.getSelectedValue());    	
     }
 
-    @UiHandler("boxKey")
-    void onChangeKey(ChangeEvent event){
-    	curProdx.setKey(boxKey.getText());
-    	boxMemo.setFocus(true);
-    }
-    
     @UiHandler("boxStmp")
     void onChangeStamp(ChangeEvent event){
-    	String txt = boxStmp.getText();
+    	String txt = boxStmp.getText().trim();
     	try{
     		curProdx.setStmp(Main.fmtDate.parse(txt));
+    		boxKey.setFocus(true);
     	}catch(IllegalArgumentException e){
-    		boxStmp.setText(txt);
+    		boxStmp.setText(txt);//restore the original value~~~~
     	}
+    }
+    
+    @UiHandler("boxKey")
+    void onChangeKey(ChangeEvent event){
+    	String txt = boxKey.getText().trim();
+    	if(txt.length()==0 || txt.equalsIgnoreCase("+")==true){
+    		if(curProdx.owner==null){
+    			MaterialToast.fireToast("無委託廠商");
+    			return;
+    		}
+    		String arg1 = Main.date2tw_y(curProdx.stmp);
+    		String arg2 = curProdx.owner.getKey();
+    		Main.rpc.genKey(
+    			Const.PRODX+"@"+arg1+","+arg2,
+    			new AsyncCallback<String>(){
+    				@Override
+    				public void onFailure(Throwable caught) {
+    					MaterialToast.fireToast(caught.getMessage());
+    				}
+    				@Override
+    				public void onSuccess(String result) {					
+    					curProdx.setKey(result);
+						boxKey.setText(result);
+    				}
+    		});    		
+    	}else{
+    		curProdx.setKey(txt);
+    		boxKey.setText(txt);
+    	}
+    	boxMemo.setFocus(true);
     }
     
     @UiHandler("boxMemo")
     void onChangeMemo(ChangeEvent event){
     	curProdx.setMemo(boxMemo.getText());
+    	boxTemp.setFocus(true);
     }
 
     @UiHandler("boxTemp")
@@ -334,7 +377,7 @@ public class PanMain extends Composite {
     @UiHandler("boxHumid")
     void onChangeHumid(ChangeEvent event){
     	curProdx.setAmbience(null,null,boxHumid.getText());
-    	cmbEmitter.setFocus(true);
+    	boxScribe.setFocus(true);
     }
 
     @UiHandler("chkUseLogo")
@@ -362,23 +405,26 @@ public class PanMain extends Composite {
     @UiHandler("boxScribe")
     void onChangeScribe(ValueChangeEvent<String> event){    	
     	//replace space and translate format
-    	String vals = event.getValue()
+    	String abbrev = event.getValue()
     		.trim()
     		.replaceAll("\\s","")
     		.replace('/', '@')
     		.replace(';', '@')
-    		.replace('+', ',');
-    	if(vals.contains(Const.SPECIAL_PREFIX)==true){
+    		.replace('+', ',')
+    		.replace('x', '×')
+    		.replace('X', '×');//trick to fix all typo!!!
+    	
+    	if(abbrev.contains(Const.SPECIAL_PREFIX)==true){
     		//It is the special keyword!!!
-    		vals=Const.SPECIAL_PREFIX +"@0@0";
+    		abbrev=Const.SPECIAL_PREFIX +"@0@0";
     	}else{
-    		String[] val = vals.split("@");
-    		if(val.length<=2){
-    			//we mist have 3 items
+    		String[] arg = abbrev.split("@");
+    		if(arg.length<=2){
+    			//we should have 3 items
     			MaterialToast.fireToast("格式錯誤");
     			return;
     		}
-    		String[] vvv = val[2].split(",");
+    		String[] vvv = arg[2].split(",");
     		for(int i=0; i<vvv.length; i++){
     			//check format is valid~~~~~
     			try{
@@ -388,29 +434,21 @@ public class PanMain extends Composite {
     				return;
     			}
     		}
-    		val[0] = val[0].replace('x', '×').replace('X', '×');//trick to fix typo!!!
-    		vals = val[0];
-    		for(int i=1; i<val.length; i++){
-    			vals = vals +"@" + val[i];
+    		//combine all arguments~~~~
+    		abbrev = arg[0];
+    		for(int i=1; i<arg.length; i++){
+    			abbrev = abbrev +"@" + arg[i];
     		}
-    	}
-    	curProdx.scribble.add(vals);
-    	boxScribe.clear();    	
+    	}    	
+    	curProdx.scribble.add(abbrev);//add item as soon as possible
+    	colScribe.add(new CitScribe(curProdx));
+    	boxScribe.setText("");//for next turn~~~~
     }    
 
-    private void refresh_selector(){
-    	int cnt = lstProdx.size();
-    	colSelector.clear();    	
-		txtSelectorTotal.setText("共"+cnt+"筆資料");		
-		for(int idx=0; idx<cnt; idx++){
-			colSelector.add(new CitProduct(
-				PanMain.this,
-				idx+1,
-				lstProdx.get(idx)
-			));
-		}
+    public void prodx2box(ItemProdx itm){
+    	curProdx = itm;
+    	prodx2box();    	
     }
-    
     public void prodx2box(){
     	Main.selectCombo(cmbFormat, curProdx.getFormat());
     	Main.selectCombo(cmbUnitRef, curProdx.getUnitRef());
@@ -448,7 +486,50 @@ public class PanMain extends Composite {
     	}else{
     		txtInfoT1.setText("");
     		txtInfoT2.setText("");
+    		txtInfoT3.setText("");
+    		txtInfoT4.setText("");
+    		txtInfoT5.setText("");
+    		txtInfoT6.setText("");
     	}
-    	grdScrib.reload(curProdx.scribble);
+    	
+    	refresh_scribe();
+    }
+    
+    public static void refresh_scribe(){
+    	colScribe.clear();
+    	ArrayList<String> lst = curProdx.scribble;
+		for(int idx=0; idx<lst.size(); idx++){
+			colScribe.add(new CitScribe(curProdx,idx));
+		}
+		switch(curProdx.format){
+		case ItemProdx.FMT_F1V:
+		case ItemProdx.FMT_F1W:
+		case ItemProdx.FMT_F2:
+			txtScribe2.setText("參考值");
+			txtScribe5.setText("因子");
+			break;
+		case ItemProdx.FMT_F3:
+			txtScribe2.setText("背景值");
+			txtScribe5.setText("反應");
+			break;
+		case ItemProdx.FMT_F5:
+		case ItemProdx.FMT_F4:
+			txtScribe2.setText("參考值");
+			txtScribe5.setText("效率");
+			break;
+		}
+    }
+    
+    private void refresh_selector(){
+    	int cnt = lstProdx.size();
+    	colSelector.clear();    	
+		txtSelectorTotal.setText("共"+cnt+"筆資料");		
+		for(int idx=0; idx<cnt; idx++){
+			colSelector.add(new CitProduct(
+				PanMain.this,
+				idx+1,
+				lstProdx.get(idx)
+			));
+		}
     }
 }

@@ -17,6 +17,8 @@ public interface RPC extends RemoteService {
 	
 	ItemParam initServer() throws IllegalArgumentException;
 	
+	String genKey(String args) throws IllegalArgumentException;
+	
 	ArrayList<ItemMeeting> listMeeting(String dayFst, String dayEnd);
 
 	ArrayList<ItemOwner> listOwner(String postfix);
@@ -31,7 +33,7 @@ public interface RPC extends RemoteService {
 	ItemProdx modifyProdx(ItemProdx obj) throws IllegalArgumentException;
 	
 	void cacheOwner(ArrayList<ItemOwner> lst) throws IllegalArgumentException;	
-	void cacheProduct(ArrayList<ItemProdx> lst) throws IllegalArgumentException;
-	void cacheDemandService(ArrayList<ItemAccnt> lst) throws IllegalArgumentException;
+	void cacheProduct(ArrayList<ItemProdx> lst) throws IllegalArgumentException;	
 	void cacheMeeting(ArrayList<ItemMeeting> lst) throws IllegalArgumentException;
+	void cacheDemandService(ArrayList<ItemAccnt> lst) throws IllegalArgumentException;
 }

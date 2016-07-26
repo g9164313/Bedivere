@@ -20,8 +20,7 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class CpiTenure extends Composite {
 
-	private static CpiTenureUiBinder uiBinder = GWT
-			.create(CpiTenureUiBinder.class);
+	private static CpiTenureUiBinder uiBinder = GWT.create(CpiTenureUiBinder.class);
 
 	interface CpiTenureUiBinder extends UiBinder<Widget, CpiTenure> {
 	}

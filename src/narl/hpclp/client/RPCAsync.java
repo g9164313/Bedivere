@@ -17,6 +17,11 @@ public interface RPCAsync {
 		AsyncCallback<ItemParam> res
 	) throws IllegalArgumentException;
 	
+	void genKey(
+		String args,
+		AsyncCallback<String> res
+	) throws IllegalArgumentException;
+	
 	void listMeeting(
 		String dayFst,
 		String dayEnd,
@@ -59,6 +64,7 @@ public interface RPCAsync {
 		AsyncCallback<ItemProdx> res
 	) throws IllegalArgumentException;
 	
+	
 	void cacheOwner(
 		ArrayList<ItemOwner> lst,
 		AsyncCallback<Void> res
@@ -69,13 +75,13 @@ public interface RPCAsync {
 		AsyncCallback<Void> res
 	) throws IllegalArgumentException;
 	
-	void cacheDemandService(
-		ArrayList<ItemAccnt> lst,
+	void cacheMeeting(
+		ArrayList<ItemMeeting> lst,
 		AsyncCallback<Void> res
 	) throws IllegalArgumentException;
 	
-	void cacheMeeting(
-		ArrayList<ItemMeeting> lst,
+	void cacheDemandService(
+		ArrayList<ItemAccnt> lst,
 		AsyncCallback<Void> res
 	) throws IllegalArgumentException;
 }

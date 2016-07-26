@@ -3,7 +3,6 @@ package narl.hpclp.shared;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 
 public class ItemProdx extends ItemBase implements Serializable {
 
@@ -88,14 +87,29 @@ public class ItemProdx extends ItemBase implements Serializable {
 		String temp,
 		String press,
 		String humid
-	){
-		String[] col = info[INFO_AMBIENCE].split("@");
+	){		
+		String[] tmp = info[INFO_AMBIENCE].split("@");
+		String[] col;
+		switch(tmp.length){
+		case 0:
+			col = new String[]{"","",""};
+			break;
+		case 1:
+			col = new String[]{tmp[0],"",""};
+			break;
+		case 2:
+			col = new String[]{tmp[0],tmp[1],""};
+			break;
+		default:
+			col = tmp;
+			break;
+		}
 		if(temp !=null){ col[0] = temp.trim(); }
 		if(press!=null){ col[1] = press.trim(); }
-		if(humid!=null){ col[2] = humid.trim(); }
+		if(humid!=null){ col[2] = humid.trim(); }	
 		info[INFO_AMBIENCE] = col[0] + "@" + col[1] + "@" + col[2];
 	}
-	public void setAmbience(
+	/*public void setAmbience(
 		Double temp,
 		Double press,
 		Double humid
@@ -105,7 +119,7 @@ public class ItemProdx extends ItemBase implements Serializable {
 		if(press!=null){ col[1] = press.toString(); }
 		if(humid!=null){ col[2] = humid.toString(); }
 		info[INFO_AMBIENCE] = col[0] + "@" + col[1] + "@" + col[2];
-	}
+	}*/
 	
 	public ParmEmitter getEmitter(){
 		return new ParmEmitter(info[INFO_EMITTER]);

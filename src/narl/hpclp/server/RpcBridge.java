@@ -72,7 +72,7 @@ public class RpcBridge extends RemoteServiceServlet
 				Const.DATABASE_USER,
 				Const.DATABASE_PASS
 			);
-			SqlDBase.prepare(conn);
+			SqlDataBase.prepare(conn);
 		} catch(ClassNotFoundException e){
 			return res.appendError(e.getMessage());
 		} catch (SQLException e) {			
@@ -84,6 +84,18 @@ public class RpcBridge extends RemoteServiceServlet
 		checkJasperPath(res);
 
 		return res;
+	}
+	
+	@Override
+	public String genKey(String args) throws IllegalArgumentException {
+		if(args.startsWith(Const.ACCNT)==true){
+			args = args.substring(Const.ACCNT.length()+1);
+			return SqlDataMisc.genAKey(args);
+		}else if(args.startsWith(Const.PRODX)==true){
+			args = args.substring(Const.PRODX.length()+1);
+			return SqlDataMisc.genPKey(args.split(","));
+		}
+		return "";
 	}
 	
 	private void checkParamData(ItemParam res){
@@ -146,39 +158,40 @@ public class RpcBridge extends RemoteServiceServlet
 
 	@Override
 	public ArrayList<ItemOwner> listOwner(String postfix) throws IllegalArgumentException {
-		return SqlDBase.listOwner(postfix);
+		return SqlDataBase.listOwner(postfix);
 	}
 	
 	@Override
 	public ArrayList<ItemTenur> listTenure(String postfix) throws IllegalArgumentException {
-		return SqlDBase.listTenur(postfix);
+		return SqlDataBase.listTenur(postfix);
 	}
 	
 	@Override
 	public ArrayList<ItemProdx> listProduct(String postfix) throws IllegalArgumentException {		
-		return SqlDBase.listProdx(postfix);
+		return SqlDataBase.listProdx(postfix);
 	}
 	//---------------------------------//
 	
 	@Override
 	public ItemOwner modifyOwner(ItemOwner obj) throws IllegalArgumentException {
-		return SqlDBase.modifyOwner(obj);
+		return SqlDataBase.modifyOwner(obj);
 	}
 
 	@Override
 	public ItemTenur modifyTenur(ItemTenur obj) throws IllegalArgumentException {
-		return SqlDBase.modifyTenur(obj);
+		return SqlDataBase.modifyTenur(obj);
 	}
 
 	@Override
 	public ItemAccnt modifyAccnt(ItemAccnt obj) throws IllegalArgumentException {
-		return SqlDBase.modifyAccnt(obj);
+		return SqlDataBase.modifyAccnt(obj);
 	}
 
 	@Override
 	public ItemProdx modifyProdx(ItemProdx obj) throws IllegalArgumentException {
-		return SqlDBase.modifyProdx(obj);
+		return SqlDataBase.modifyProdx(obj);
 	}
+	
 	
 	@Override
 	public void cacheOwner(ArrayList<ItemOwner> lst) throws IllegalArgumentException {
@@ -189,14 +202,16 @@ public class RpcBridge extends RemoteServiceServlet
 	public void cacheProduct(ArrayList<ItemProdx> lst) throws IllegalArgumentException {
 		DSrcProduct.lst = lst;
 	}
+
+	@Override	
+	public void cacheMeeting(ArrayList<ItemMeeting> lst) throws IllegalArgumentException {
+		DSrcMeeting.lst = lst;
+	}
 	
 	@Override
 	public void cacheDemandService(ArrayList<ItemAccnt> lst) throws IllegalArgumentException {
 		DSrcAccount.lst = lst;
 	}
-	
-	@Override	
-	public void cacheMeeting(ArrayList<ItemMeeting> lst) throws IllegalArgumentException {
-		DSrcMeeting.lst = lst;
-	}
 }
+
+

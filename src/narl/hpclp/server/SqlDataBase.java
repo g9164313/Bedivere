@@ -22,7 +22,7 @@ import narl.hpclp.shared.ItemTenur;
  * @author qq
  *
  */
-public class SqlDBase {
+public class SqlDataBase {
 
 	public static PreparedStatement insertOwner,insertTenur,insertAccnt,insertProdx;	
 	public static PreparedStatement updateOwner,updateTenur,updateAccnt,updateProdx;	
@@ -123,7 +123,8 @@ public class SqlDBase {
 			System.err.print(e.getMessage());
 		}
 		return lst;
-	}
+	}	
+	//---------------------------------------//
 	
 	private static ItemOwner unpackOwner(ResultSet rs) throws SQLException {
 		ItemOwner item = new ItemOwner(
