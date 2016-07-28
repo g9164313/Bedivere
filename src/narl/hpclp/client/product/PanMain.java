@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import narl.hpclp.client.Main;
 import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemProdx;
-import narl.hpclp.shared.ItemTenur;
 import narl.hpclp.shared.ParmEmitter;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialCheckBox;
@@ -14,6 +13,7 @@ import gwt.material.design.client.ui.MaterialFloatBox;
 import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialListBox;
+import gwt.material.design.client.ui.MaterialLoader;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialPanel;
@@ -57,7 +57,7 @@ public class PanMain extends Composite {
     MaterialLink lnkPanMeet,lnkPanAccnt;
     
     @UiField
-    MaterialTextBox boxOKey,boxTKey,boxKey,boxStmp,boxMemo,boxScribe;
+    MaterialTextBox boxOKey,boxTKey,boxPKey,boxStmp,boxMemo,boxScribe;
 
     @UiField
     MaterialFloatBox boxTemp,boxPress,boxHumid;
@@ -70,7 +70,7 @@ public class PanMain extends Composite {
     
     @UiField
     MaterialLabel 
-    	txtInfo1,txtInfo2,
+    	txtInfoO1,txtInfoO2,txtInfoO3,
     	txtInfoT1,txtInfoT2,txtInfoT3,
     	txtInfoT4,txtInfoT5,txtInfoT6,
     	txtKindArea,txtStrength,txtSurface,
@@ -102,6 +102,7 @@ public class PanMain extends Composite {
 		root.add(Main.dlgEditTenur);
 		root.add(Main.dlgPickOwner);
 		root.add(Main.dlgPickTenur);
+		root.add(Main.dlgApprove);
 		addAttachHandler(eventShowHide);		
 		btnScribeEdit.addClickHandler(CitScribe.eventEdit);
 		btnScribeCancel.addClickHandler(CitScribe.eventCancel);
@@ -188,9 +189,9 @@ public class PanMain extends Composite {
     					return;
     				}
     				lstProdx = result; 
+    				refresh_selector();	
     				curProdx = result.get(0);
-    				prodx2box();
-    				refresh_selector();			
+    				prodx2box();    						
     				dlgSelector.openModal();
     			}
     	});
@@ -230,10 +231,53 @@ public class PanMain extends Composite {
     
     @UiHandler("lnkUpload")
     void onLnkUploadProdx(ClickEvent e){
-    	//update and modify database~~~~
-    	
+    	if(lstProdx.isEmpty()==true){
+    		MaterialToast.fireToast("清單內無報告");
+    		return;
+    	}
+    	MaterialLoader.showLoading(true);
+    	Main.rpc.cacheProduct(lstProdx,new AsyncCallback<ArrayList<ItemProdx>>(){
+			@Override
+			public void onFailure(Throwable caught) {
+				MaterialLoader.showLoading(false);
+				MaterialToast.fireToast("內部錯誤");
+			}
+			@Override
+			public void onSuccess(ArrayList<ItemProdx> result) {
+				MaterialLoader.showLoading(false);
+				MaterialToast.fireToast("更新清單內容");
+				lstProdx = result;
+			}
+    	});    	
     }
  
+    @UiHandler("icoDelete")
+    void onIcoDeleteProdx(ClickEvent e){
+    	if(curProdx.uuid.length()==0){
+    		return;
+    	}
+    	final ClickHandler event = new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				curProdx.death = true;//important!!!!
+		    	Main.rpc.modifyProdx(curProdx, new AsyncCallback<ItemProdx>(){
+					@Override
+					public void onFailure(Throwable caught) {
+					}
+					@Override
+					public void onSuccess(ItemProdx result) {
+						MaterialToast.fireToast("已刪除資料");
+						lstProdx.remove(curProdx);
+						refresh_selector();	
+						curProdx = lstProdx.get(0);
+						prodx2box(); 
+					}
+		    	});
+			}
+    	};
+    	Main.dlgApprove.appear("確認刪除??",event);    	
+    }
+    
     @UiHandler("boxOKey")
     void onChangeOwnerKey(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim();
@@ -243,8 +287,7 @@ public class PanMain extends Composite {
     	post = post + "(info[4] SIMILAR TO '%"+txt+"%') OR ";
     	post = post + "(info[6] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
     	//Query feature???
-    	Main.dlgPickOwner.appear(
-    		post,new ClickHandler(){
+    	final ClickHandler eventPick = new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
 				curProdx.owner = Main.dlgPickOwner.getTarget();
@@ -252,14 +295,15 @@ public class PanMain extends Composite {
 					return;
 				}
 				prodx2box();
-				boxOKey.setText(curProdx.owner.getKey());
+				boxOKey.setText("");
 				boxTKey.setFocus(true);
 			}
-    	});
+    	};
+    	Main.dlgPickOwner.appear(post,eventPick);
     }
     
     @UiHandler("boxTKey")
-    void onChangeTenurKey(ValueChangeEvent<String> event){
+    void onChangeKeyTenur(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim().toLowerCase();
     	String post = "WHERE ";
     	post = post + "(tenure.info[1] SIMILAR TO '%"+txt+"%') OR ";
@@ -270,19 +314,19 @@ public class PanMain extends Composite {
     	post = post + "(tenure.info[7] SIMILAR TO '%"+txt+"%') OR ";
     	post = post + "(tenure.info[11] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
     	//Query feature???
-    	Main.dlgPickTenur.appear(
-        	post,new ClickHandler(){
-    		@Override
-    		public void onClick(ClickEvent event) {
-    			curProdx.tenur = Main.dlgPickTenur.getTarget();
+    	final ClickHandler eventPick = new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				curProdx.tenur = Main.dlgPickTenur.getTarget();
     			if(curProdx.tenur==null){
     				return;
     			}
     			prodx2box();
     			boxTKey.setText("");//just clear for next turn~~~
     			boxStmp.setFocus(true);
-    		}
-        });
+			}
+    	};
+    	Main.dlgPickTenur.appear(post,eventPick);
     }
 
     @UiHandler("cmbFormat")
@@ -320,15 +364,15 @@ public class PanMain extends Composite {
     	String txt = boxStmp.getText().trim();
     	try{
     		curProdx.setStmp(Main.fmtDate.parse(txt));
-    		boxKey.setFocus(true);
+    		boxPKey.setFocus(true);
     	}catch(IllegalArgumentException e){
     		boxStmp.setText(txt);//restore the original value~~~~
     	}
     }
     
-    @UiHandler("boxKey")
-    void onChangeKey(ChangeEvent event){
-    	String txt = boxKey.getText().trim();
+    @UiHandler("boxPKey")
+    void onChangeProductKey(ChangeEvent event){
+    	String txt = boxPKey.getText().trim();
     	if(txt.length()==0 || txt.equalsIgnoreCase("+")==true){
     		if(curProdx.owner==null){
     			MaterialToast.fireToast("無委託廠商");
@@ -346,12 +390,12 @@ public class PanMain extends Composite {
     				@Override
     				public void onSuccess(String result) {					
     					curProdx.setKey(result);
-						boxKey.setText(result);
+    					boxPKey.setText(result);
     				}
     		});    		
     	}else{
     		curProdx.setKey(txt);
-    		boxKey.setText(txt);
+    		boxPKey.setText(txt);
     	}
     	boxMemo.setFocus(true);
     }
@@ -456,7 +500,7 @@ public class PanMain extends Composite {
     	Main.selectCombo(cmbEmitter, curProdx.getEmitterTxt(), null, true);
     	emitt2box();//map information again!!!
     	
-    	boxKey.setText(curProdx.getKey());
+    	boxPKey.setText(curProdx.getKey());
     	boxStmp.setText(Main.fmtDate.format(curProdx.stmp));
     	boxMemo.setText(curProdx.getMemo());
     	boxTemp.setText(curProdx.getTemperature());
@@ -466,23 +510,23 @@ public class PanMain extends Composite {
     	
     	boxOKey.setText("");
     	if(curProdx.owner!=null){
-    		boxOKey.setText(curProdx.owner.getKey());
-    		txtInfo1.setText(curProdx.owner.getName());
-    		txtInfo2.setText(curProdx.owner.getAddress());
+    		txtInfoO1.setText(curProdx.owner.getKey());
+    		txtInfoO2.setText(curProdx.owner.getName());
+    		txtInfoO3.setText(curProdx.owner.getAddress());
     	}else{
-    		txtInfo1.setText("");
-    		txtInfo2.setText("");
+    		txtInfoO1.setText("");
+    		txtInfoO2.setText("");
+    		txtInfoO3.setText("");
     	}
     	
     	boxTKey.setText("");
     	if(curProdx.tenur!=null){
-    		ItemTenur itm = curProdx.tenur;
-    		txtInfoT1.setText(itm.getDeviceVendor());
-    		txtInfoT2.setText(itm.getDeviceSerial());
-    		txtInfoT3.setText(itm.getDeviceNumber());
-    		txtInfoT4.setText(itm.getDetectType());
-    		txtInfoT5.setText(itm.getDetectSerial());
-    		txtInfoT6.setText(itm.getDetectNumber());
+    		txtInfoT1.setText(curProdx.tenur.getDeviceVendor());
+    		txtInfoT2.setText(curProdx.tenur.getDeviceSerial());
+    		txtInfoT3.setText(curProdx.tenur.getDeviceNumber());
+    		txtInfoT4.setText(curProdx.tenur.getDetectType());
+    		txtInfoT5.setText(curProdx.tenur.getDetectSerial());
+    		txtInfoT6.setText(curProdx.tenur.getDetectNumber());
     	}else{
     		txtInfoT1.setText("");
     		txtInfoT2.setText("");

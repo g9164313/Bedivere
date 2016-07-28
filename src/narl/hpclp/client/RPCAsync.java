@@ -67,21 +67,26 @@ public interface RPCAsync {
 	
 	void cacheOwner(
 		ArrayList<ItemOwner> lst,
-		AsyncCallback<Void> res
+		AsyncCallback<ArrayList<ItemOwner>> res
+	) throws IllegalArgumentException;
+	
+	void cacheTenure(
+		ArrayList<ItemTenur> lst,
+		AsyncCallback<ArrayList<ItemTenur>> res
+	) throws IllegalArgumentException;
+	
+	void cacheAccount(
+		ArrayList<ItemAccnt> lst,
+		AsyncCallback<ArrayList<ItemAccnt>> res
 	) throws IllegalArgumentException;
 	
 	void cacheProduct(
 		ArrayList<ItemProdx> lst,
-		AsyncCallback<Void> res
+		AsyncCallback<ArrayList<ItemProdx>> res
 	) throws IllegalArgumentException;
 	
 	void cacheMeeting(
 		ArrayList<ItemMeeting> lst,
-		AsyncCallback<Void> res
-	) throws IllegalArgumentException;
-	
-	void cacheDemandService(
-		ArrayList<ItemAccnt> lst,
 		AsyncCallback<Void> res
 	) throws IllegalArgumentException;
 }

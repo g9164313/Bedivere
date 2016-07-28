@@ -7,13 +7,13 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
 
-public class DSrcLetter implements JRDataSource {
+public class DSrcOwner implements JRDataSource {
 	
 	public int idx = -1;
 	
 	public static ArrayList<ItemOwner> lst = new ArrayList<ItemOwner>();
 
-	public DSrcLetter() {
+	public DSrcOwner() {
 	}
 
 	@Override

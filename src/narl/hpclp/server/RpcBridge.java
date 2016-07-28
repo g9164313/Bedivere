@@ -192,25 +192,57 @@ public class RpcBridge extends RemoteServiceServlet
 		return SqlDataBase.modifyProdx(obj);
 	}
 	
-	
 	@Override
-	public void cacheOwner(ArrayList<ItemOwner> lst) throws IllegalArgumentException {
-		DSrcLetter.lst = lst;
+	public ArrayList<ItemOwner> cacheOwner(ArrayList<ItemOwner> lst) throws IllegalArgumentException {
+		DSrcOwner.lst = new ArrayList<ItemOwner>();
+		for(ItemOwner itm:lst){
+			itm = SqlDataBase.modifyOwner(itm);
+			if(itm.death==false){
+				DSrcOwner.lst.add(itm);
+			}
+		}
+		return DSrcOwner.lst;
 	}
 	
 	@Override
-	public void cacheProduct(ArrayList<ItemProdx> lst) throws IllegalArgumentException {
-		DSrcProduct.lst = lst;
+	public ArrayList<ItemTenur> cacheTenure(ArrayList<ItemTenur> lst) throws IllegalArgumentException {
+		ArrayList<ItemTenur> tmp = new ArrayList<ItemTenur>();
+		for(ItemTenur itm:lst){
+			itm = SqlDataBase.modifyTenur(itm);
+			if(itm.death==false){
+				tmp.add(itm);
+			}
+		}
+		return tmp;
+	}
+	
+	@Override
+	public ArrayList<ItemAccnt> cacheAccount(ArrayList<ItemAccnt> lst) throws IllegalArgumentException {
+		DSrcAccount.lst = new ArrayList<ItemAccnt>();
+		for(ItemAccnt itm:lst){
+			itm = SqlDataBase.modifyAccnt(itm);
+			if(itm.death==false){
+				DSrcAccount.lst.add(itm);
+			}
+		}
+		return DSrcAccount.lst;
+	}
+	
+	@Override
+	public ArrayList<ItemProdx> cacheProduct(ArrayList<ItemProdx> lst) throws IllegalArgumentException {
+		DSrcProduct.lst = new ArrayList<ItemProdx>();
+		for(ItemProdx itm:lst){
+			itm = SqlDataBase.modifyProdx(itm);
+			if(itm.death==false){
+				DSrcProduct.lst.add(itm);
+			}
+		}
+		return DSrcProduct.lst;
 	}
 
 	@Override	
 	public void cacheMeeting(ArrayList<ItemMeeting> lst) throws IllegalArgumentException {
 		DSrcMeeting.lst = lst;
-	}
-	
-	@Override
-	public void cacheDemandService(ArrayList<ItemAccnt> lst) throws IllegalArgumentException {
-		DSrcAccount.lst = lst;
 	}
 }
 

@@ -48,7 +48,7 @@ public class RpcPrint extends HttpServlet {
 			
 			if(path.equalsIgnoreCase(Const.PRINT_LETTER)==true){
 				name = "report_letter.jasper";
-				dsrc = new DSrcLetter();
+				dsrc = new DSrcOwner();
 			}else if(path.equalsIgnoreCase(Const.PRINT_SCHEDULE)==true){
 				name = "report_sched.jasper";
 				dsrc = new DSrcMeeting();

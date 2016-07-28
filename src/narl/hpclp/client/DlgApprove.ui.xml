@@ -1,0 +1,29 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
+	xmlns:m="urn:import:gwt.material.design.client.ui" >
+	<ui:style>
+	</ui:style>
+	
+<m:MaterialModal type="DEFAULT" width="20em" dismissable="true" inDuration="10" outDuration="10" ui:field="root" >
+	
+	<!-- 訊息 or 抬頭-->
+	<m:MaterialModalContent>
+		<m:MaterialRow>
+			<m:MaterialColumn> <m:MaterialIcon iconType="WARNING" ui:field="icon" /> </m:MaterialColumn>
+			<m:MaterialColumn> <m:MaterialLabel text="Message" ui:field="text" /> </m:MaterialColumn>
+		</m:MaterialRow>
+	</m:MaterialModalContent>
+	
+	<!-- 確認/取消 -->
+	<m:MaterialModalFooter>		
+		<m:MaterialButton text="取消" type="FLAT" ui:field="btnCancel" />
+		<m:MaterialButton text="確認" type="FLAT" ui:field="btnAction" />		
+	</m:MaterialModalFooter>
+	
+</m:MaterialModal>
+
+</ui:UiBinder> 
+

@@ -71,7 +71,13 @@ public class DlgPickTenur extends DlgBase<ItemTenur> {
 				if(result.isEmpty()==true){
 					MaterialToast.fireToast("查無資料");
 					return;
-				}		
+				}
+				if(result.size()==1){
+					//just one result, so pick up this item~~~
+					target = result.get(0);
+					hook.onClick(null);
+					return;
+				}
 				refresh_selector(result);
 				appear(null,null,hook);
 			}

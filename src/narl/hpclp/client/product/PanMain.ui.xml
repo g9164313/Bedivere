@@ -49,7 +49,7 @@
                    		<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpFunc" >
                    			<m:MaterialLink text="顯示清單"  textColor="grey darken-1" iconType="RECEIPT" ui:field="lnkShowSelector" />
                     		<m:MaterialLink text="最近50筆" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkRenewSelector" />
-                    		<m:MaterialLink text="清除清單" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkClearSelector" />
+                    		<m:MaterialLink text="清除清單"  textColor="grey darken-1" iconType="CLEAR_ALL" ui:field="lnkClearSelector" />
                    			<m:MaterialLink text="新增報告"  textColor="grey darken-1" iconType="PLUS_ONE" ui:field="lnkCreate" />                   			
                    		</m:MaterialDropDown>
                    </m:MaterialLink>                    
@@ -70,9 +70,10 @@
         			<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7">
         				<m:MaterialRow>
         					<m:MaterialColumn> <m:MaterialTextBox placeholder="委託單位" iconType="ACCOUNT_CIRCLE" width="10em" ui:field="boxOKey" /> </m:MaterialColumn>
-        					<m:MaterialColumn> 
-        						<m:MaterialLabel ui:field="txtInfo1"/> 
-        						<m:MaterialLabel ui:field="txtInfo2"/>
+        					<m:MaterialColumn>
+        						<m:MaterialLabel ui:field="txtInfoO1"/>
+        						<m:MaterialLabel ui:field="txtInfoO2"/> 
+        						<m:MaterialLabel ui:field="txtInfoO3"/>
         					</m:MaterialColumn>
         					<m:MaterialColumn float="RIGHT">
         						<m:MaterialIcon iconType="CREATE" waves="DEFAULT"  circle="true" ui:field="icoEdit1" />
@@ -113,7 +114,7 @@
 						</m:MaterialRow>
 						<m:MaterialRow>
 							<m:MaterialColumn> <m:MaterialTextBox width="9em" placeholder="校正日期" ui:field="boxStmp" /> </m:MaterialColumn>
-							<m:MaterialColumn> <m:MaterialTextBox width="9em" placeholder="報告編號" ui:field="boxKey" /> </m:MaterialColumn>							
+							<m:MaterialColumn> <m:MaterialTextBox width="9em" placeholder="報告編號" ui:field="boxPKey" /> </m:MaterialColumn>							
 							<m:MaterialColumn> <m:MaterialTextBox width="9em" placeholder="附註事項" ui:field="boxMemo" /> </m:MaterialColumn>								
 						</m:MaterialRow>
 						<m:MaterialRow>
@@ -124,6 +125,7 @@
 						<m:MaterialRow>							
 							<m:MaterialColumn> <m:MaterialListBox width="9em" ui:field="cmbEmitter"/> </m:MaterialColumn>
 							<m:MaterialColumn> <m:MaterialCheckBox text="使用Logo" value="true" ui:field="chkUseLogo" /> </m:MaterialColumn> 
+							<m:MaterialColumn> <m:MaterialLink text="刪除報告" iconType="DELETE" ui:field="icoDelete" /> </m:MaterialColumn>
 						</m:MaterialRow>
 					</m:MaterialPanel>
 

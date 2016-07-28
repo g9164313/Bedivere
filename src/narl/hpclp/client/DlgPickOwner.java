@@ -67,11 +67,17 @@ public class DlgPickOwner extends DlgBase<ItemOwner> {
 				MaterialToast.fireToast("內部錯誤\n"+caught.getMessage());
 			}
 			@Override
-			public void onSuccess(ArrayList<ItemOwner> result) {
+			public void onSuccess(ArrayList<ItemOwner> result) {				
 				if(result.isEmpty()==true){
 					MaterialToast.fireToast("查無資料");
 					return;
-				}		
+				}
+				if(result.size()==1){
+					//just one result, so pick up this item~~~
+					target = result.get(0);
+					hook.onClick(null);
+					return;
+				}
 				refresh_selector(result);
 				appear(null,null,hook);
 			}

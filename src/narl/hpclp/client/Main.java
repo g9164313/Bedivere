@@ -18,8 +18,6 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
@@ -78,6 +76,8 @@ public class Main implements EntryPoint {
 	public static DlgPickOwner dlgPickOwner = new DlgPickOwner();
 	public static DlgPickTenur dlgPickTenur = new DlgPickTenur();
 	
+	public static DlgApprove dlgApprove = new DlgApprove();
+	
 	public static ItemParam param = null;//enviroment parameters
 	//----------------------------//
 	
@@ -87,13 +87,13 @@ public class Main implements EntryPoint {
 		printLetter(lst);
 	}
 	public static void printLetter(ArrayList<ItemOwner> buf){
-		rpc.cacheOwner(buf, new AsyncCallback<Void>(){
+		rpc.cacheOwner(buf, new AsyncCallback<ArrayList<ItemOwner>>(){
 			@Override
 			public void onFailure(Throwable caught) {
 				MaterialToast.fireToast("內部錯誤");
 			}
 			@Override
-			public void onSuccess(Void result) {
+			public void onSuccess(ArrayList<ItemOwner> result) {
 		    	Window.open(
 		    		GWT.getHostPageBaseURL()+Const.PRINT_LETTER,
 		    		"_blank",""
@@ -101,34 +101,7 @@ public class Main implements EntryPoint {
 			}
 		});
 	}
-	
-	public static void printNotify(ItemMeeting itm){
-		ArrayList<ItemMeeting> lst = new ArrayList<ItemMeeting>();
-		lst.add(itm);
-		printMeeting(lst,Const.PRINT_NOTIFY);
-	}
-	public static void printNotify(ArrayList<ItemMeeting> buf){
-		printMeeting(buf,Const.PRINT_NOTIFY);
-	}
-	public static void printSchedule(ArrayList<ItemMeeting> buf){
-		printMeeting(buf,Const.PRINT_SCHEDULE);
-	}
-	private static void printMeeting(ArrayList<ItemMeeting> buf,final String type){
-		rpc.cacheMeeting(buf, new AsyncCallback<Void>(){
-			@Override
-			public void onFailure(Throwable caught) {
-				MaterialToast.fireToast("內部錯誤");
-			}
-			@Override
-			public void onSuccess(Void result) {
-		    	Window.open(
-		    		GWT.getHostPageBaseURL()+type,
-		    		"_blank",""
-		    	);
-			}
-		});
-	}
-	
+
 	public static void printProduct(ItemProdx buf){
 		ArrayList<ItemProdx> lst = new ArrayList<ItemProdx>();
 		lst.add(buf);
@@ -136,13 +109,13 @@ public class Main implements EntryPoint {
 	}
 	public static void printProduct(ArrayList<ItemProdx> buf){
 		//TODO:how to classify product???
-		rpc.cacheProduct(buf, new AsyncCallback<Void>(){
+		rpc.cacheProduct(buf, new AsyncCallback<ArrayList<ItemProdx>>(){
 			@Override
 			public void onFailure(Throwable caught) {
 				MaterialToast.fireToast("內部錯誤");
 			}
 			@Override
-			public void onSuccess(Void result) {				
+			public void onSuccess(ArrayList<ItemProdx> result) {				
 		    	Window.open(
 		    		GWT.getHostPageBaseURL()+Const.REPORT_PRODUCT,
 		    		"_blank",""
@@ -168,13 +141,41 @@ public class Main implements EntryPoint {
 		printAccount(buf,Const.REPORT_SERVICE);
 	}
 	private static void printAccount(ArrayList<ItemAccnt> buf,final String type){
-		rpc.cacheDemandService(buf, new AsyncCallback<Void>(){
+		rpc.cacheAccount(buf, new AsyncCallback<ArrayList<ItemAccnt>>(){
 			@Override
 			public void onFailure(Throwable caught) {
 				MaterialToast.fireToast("內部錯誤");
 			}
 			@Override
-			public void onSuccess(Void result) {				
+			public void onSuccess(ArrayList<ItemAccnt> result) {				
+		    	Window.open(
+		    		GWT.getHostPageBaseURL()+type,
+		    		"_blank",""
+		    	);
+			}
+		});
+	}
+	
+	
+	public static void printNotify(ItemMeeting itm){
+		ArrayList<ItemMeeting> lst = new ArrayList<ItemMeeting>();
+		lst.add(itm);
+		printMeeting(lst,Const.PRINT_NOTIFY);
+	}
+	public static void printNotify(ArrayList<ItemMeeting> buf){
+		printMeeting(buf,Const.PRINT_NOTIFY);
+	}
+	public static void printSchedule(ArrayList<ItemMeeting> buf){
+		printMeeting(buf,Const.PRINT_SCHEDULE);
+	}
+	private static void printMeeting(ArrayList<ItemMeeting> buf,final String type){
+		rpc.cacheMeeting(buf, new AsyncCallback<Void>(){
+			@Override
+			public void onFailure(Throwable caught) {
+				MaterialToast.fireToast("內部錯誤");
+			}
+			@Override
+			public void onSuccess(Void result) {
 		    	Window.open(
 		    		GWT.getHostPageBaseURL()+type,
 		    		"_blank",""

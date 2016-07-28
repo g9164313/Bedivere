@@ -18,22 +18,21 @@ public interface RPC extends RemoteService {
 	ItemParam initServer() throws IllegalArgumentException;
 	
 	String genKey(String args) throws IllegalArgumentException;
-	
-	ArrayList<ItemMeeting> listMeeting(String dayFst, String dayEnd);
-
+		
 	ArrayList<ItemOwner> listOwner(String postfix);
-	
 	ArrayList<ItemTenur> listTenure(String postfix);
-	
 	ArrayList<ItemProdx> listProduct(String postfix);
+	ArrayList<ItemMeeting> listMeeting(String dayFst, String dayEnd);
 	
 	ItemOwner modifyOwner(ItemOwner obj) throws IllegalArgumentException;
 	ItemTenur modifyTenur(ItemTenur obj) throws IllegalArgumentException;
 	ItemAccnt modifyAccnt(ItemAccnt obj) throws IllegalArgumentException;
 	ItemProdx modifyProdx(ItemProdx obj) throws IllegalArgumentException;
 	
-	void cacheOwner(ArrayList<ItemOwner> lst) throws IllegalArgumentException;	
-	void cacheProduct(ArrayList<ItemProdx> lst) throws IllegalArgumentException;	
+	ArrayList<ItemOwner> cacheOwner(ArrayList<ItemOwner> lst) throws IllegalArgumentException;
+	ArrayList<ItemTenur> cacheTenure(ArrayList<ItemTenur> lst) throws IllegalArgumentException;	
+	ArrayList<ItemProdx> cacheProduct(ArrayList<ItemProdx> lst) throws IllegalArgumentException;
+	ArrayList<ItemAccnt> cacheAccount(ArrayList<ItemAccnt> lst) throws IllegalArgumentException;
 	void cacheMeeting(ArrayList<ItemMeeting> lst) throws IllegalArgumentException;
-	void cacheDemandService(ArrayList<ItemAccnt> lst) throws IllegalArgumentException;
+	
 }

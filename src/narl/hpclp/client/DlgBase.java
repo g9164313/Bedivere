@@ -50,12 +50,12 @@ public abstract class DlgBase<T> extends Composite {
 		return this;
 	}
 
-	public T getTarget(){
-		return target;
-	}
-	
 	public DlgBase<T> appear(T item){
 		return appear(item,null,null);
+	}
+	
+	public T getTarget(){
+		return target;
 	}
 	
 	private ClickHandler hookAction = null;
