@@ -107,5 +107,47 @@ public class ItemMeeting extends ItemOwner implements Serializable {
 		}else{
 			memo = txt;
 		}
-	}	
+	}
+	
+	public static int ArriveHour(String addr){
+		int hh = 9;
+		if(addr==null){
+			return hh;
+		}
+		if(addr.length()==0){
+			return hh;
+		}
+		if( addr.indexOf("台北")!=-1 || 
+			addr.indexOf("臺北")!=-1 ||
+			addr.indexOf("苗栗")!=-1 ||
+			addr.indexOf("桃園")!=-1 ||
+			addr.indexOf("新竹")!=-1 ||
+			addr.indexOf("新北")!=-1
+		){		
+			hh = 9;
+		}else if(
+			addr.indexOf("台中")!=-1 || 
+			addr.indexOf("臺中")!=-1 || 
+			addr.indexOf("基隆")!=-1 ||
+			addr.indexOf("南投")!=-1 ||
+			addr.indexOf("彰化")!=-1 ||
+			addr.indexOf("雲林")!=-1				
+		){
+			hh = 10;
+		}else if(
+			addr.indexOf("嘉義")!=-1 || 
+			addr.indexOf("台南")!=-1 || 
+			addr.indexOf("臺南")!=-1 ||
+			addr.indexOf("台東")!=-1 || 
+			addr.indexOf("臺東")!=-1 ||
+			addr.indexOf("高雄")!=-1 ||
+			addr.indexOf("屏東")!=-1 ||
+			addr.indexOf("花蓮")!=-1			
+		){
+			hh = 11;		
+		}else{
+			hh = 11;
+		}
+		return hh;
+	}
 }

@@ -12,6 +12,7 @@ import java.util.UUID;
 
 import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemAccnt;
+import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
@@ -210,9 +211,9 @@ public class SqlDataBase {
 		try {
 			if(obj.uuid.length()==0){
 				obj.uuid = UUID.randomUUID().toString();
-				mapping(insertOwner,obj);//create a new one~~~
+				setter(insertOwner,obj);//create a new one~~~
 			}else if(obj.death==false){
-				mapping(updateOwner,obj);//modify it~~~
+				setter(updateOwner,obj);//modify it~~~
 			}else{
 				//delete it!!!
 				deleteOwner.setObject(1,UUID.fromString(obj.uuid));
@@ -224,7 +225,7 @@ public class SqlDataBase {
 		}
 		return obj;
 	}
-	private static void mapping(PreparedStatement sta, ItemOwner obj) throws SQLException{
+	private static void setter(PreparedStatement sta, ItemOwner obj) throws SQLException{
 		mapInfo(sta,1,obj.info);
 		mapDate(sta,2,obj.stmp);
 		mapDate(sta,3,obj.last);
@@ -245,9 +246,9 @@ public class SqlDataBase {
 		try {
 			if(obj.uuid.length()==0){
 				obj.uuid = UUID.randomUUID().toString();
-				mapping(insertTenur,obj);//create a new one
+				setter(insertTenur,obj);//create a new one
 			}else if(obj.death==false){
-				mapping(updateTenur,obj);//modify it~~~		
+				setter(updateTenur,obj);//modify it~~~		
 			}else{
 				//delete it!!!
 				deleteTenue.setObject(1,UUID.fromString(obj.uuid));
@@ -259,7 +260,7 @@ public class SqlDataBase {
 		}
 		return obj;
 	}
-	private static void mapping(PreparedStatement sta, ItemTenur obj) throws SQLException{
+	private static void setter(PreparedStatement sta, ItemTenur obj) throws SQLException{
 		mapInfo(sta,1,obj.info);	
 		mapDate(sta,2,obj.stmp);	
 		mapDate(sta,3,obj.last);
@@ -286,11 +287,10 @@ public class SqlDataBase {
 		try {
 			if(obj.uuid.length()==0){
 				obj.uuid = UUID.randomUUID().toString();
-				mapping(insertAccnt,obj);//create a new one
+				setter(insertAccnt,obj);//create a new one
 				//TODO:synchonize relationship
 			}else if(obj.death==false){
-				mapping(updateAccnt,obj);//modify it~~~
-				//TODO:synchonize relationship
+				setter(updateAccnt,obj);
 			}else{
 				//delete it!!!
 				deleteAccnt.setObject(1,UUID.fromString(obj.uuid));
@@ -302,7 +302,7 @@ public class SqlDataBase {
 		}
 		return obj;
 	}
-	private static void mapping(PreparedStatement sta, ItemAccnt obj) throws SQLException{
+	private static void setter(PreparedStatement sta, ItemAccnt obj) throws SQLException{
 		mapInfo(sta,1,obj.info);	
 		mapDate(sta,2,obj.stmp);	
 		mapDate(sta,3,obj.last);
@@ -330,9 +330,11 @@ public class SqlDataBase {
 		try {
 			if(obj.uuid.length()==0){
 				obj.uuid = UUID.randomUUID().toString();
-				mapping(insertProdx,obj);//create a new one
+				setter(insertProdx,obj);//create a new one
+				cementRelation(obj);
 			}else if(obj.death==false){
-				mapping(updateProdx,obj);//modify it~~~
+				setter(updateProdx,obj);//modify it~~~
+				cementRelation(obj);
 			}else{
 				//delete it!!!
 				deleteProdx.setObject(1,UUID.fromString(obj.uuid));
@@ -344,7 +346,7 @@ public class SqlDataBase {
 		}
 		return obj;
 	}
-	private static void mapping(PreparedStatement sta, ItemProdx obj) throws SQLException{
+	private static void setter(PreparedStatement sta, ItemProdx obj) throws SQLException{
 		mapInfo(sta,1,obj.info);	
 		mapDate(sta,2,obj.stmp);	
 		mapDate(sta,3,obj.last);
@@ -363,6 +365,62 @@ public class SqlDataBase {
 		mapUUID(sta,8,obj.uuid);
 		sta.execute();
 	}
+	
+	private static void cementRelation(ItemProdx obj) throws SQLException{
+		if(obj.tenur==null){
+			return;
+		}
+		
+		String addr = "";
+		if(obj.owner!=null){
+			addr = obj.owner.getAddress();
+		}
+		
+		Date day = checkPeriod(obj.stmp,addr);
+		
+		RpcBridge.getResult(
+			"UPDATE "+Const.TENUR+
+			" SET stamp='"+day.toString()+"',"+
+			" meet='"+day.toString()+"'"+			
+			" WHERE id='"+obj.tenur.uuid+"'"
+		);
+	}
+	
+	public static Date checkPeriod(Date stamp, String addr) throws SQLException {
+		
+		String day = Utils.fmtDate.format(stamp);
+		String txt = Utils.fmtYear.format(stamp);	
+
+		txt = String.valueOf(Integer.valueOf(txt)+1)+" "+
+			Utils.fmtMonth.format(stamp)+"/"+
+			Utils.fmtDayId.format(stamp)+" "+
+			ItemMeeting.ArriveHour(addr);
+		
+		Date stmp = Utils.fmtMeet.parse(txt);//default time stamp!!
+		
+		for(;;){
+			txt = Utils.fmtWeek.format(stmp).toLowerCase();
+			//first, check whether it is weekend
+			if(txt.startsWith("sun")==true){
+				UtilsCalendar.addDaysToDate(stmp,-2);
+				continue;
+			}else if(txt.startsWith("sat")==true){
+				UtilsCalendar.addDaysToDate(stmp,-1);
+				continue;
+			}
+			//second, check whether it is rest day
+			txt = "SELECT * FROM param WHERE val SIMILAR TO '%"+day+"%'";
+			ResultSet rs = RpcBridge.getResult(txt);
+			rs.next();
+			if(rs.getRow()>=1){
+				continue;
+			}			
+			//it is not at all, all right~~~
+			break;
+		}
+		return stmp;
+	}
+	
 	//--------------------------//
 	
 	public static String getUUID(

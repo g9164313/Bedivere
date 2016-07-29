@@ -139,6 +139,9 @@ public class CitScribe extends MaterialCollectionItem implements ClickHandler {
 				return;
 			}			
 			String t1 = PanMain.boxScribe0.getText();
+			t1 = t1.trim()
+				.replace('x', '×')
+				.replace('X', '×');
 			String t2 = PanMain.boxScribe1.getText();
 			String t3 = PanMain.boxScribe2.getText();
 			GWT.log("change text --> "+t1+"@"+t2+"@"+t3);

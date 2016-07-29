@@ -318,7 +318,7 @@ public class Main implements EntryPoint {
 		//MaterialLoader.showLoading(true);
 		
 		//Event.addNativePreviewHandler(eventHook);
-		
+
 		rpc.initServer(new AsyncCallback<ItemParam>(){
 			@Override
 			public void onFailure(Throwable caught) {

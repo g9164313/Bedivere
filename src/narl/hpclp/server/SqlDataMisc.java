@@ -25,17 +25,13 @@ public class SqlDataMisc {
 		
 		try {
 			ResultSet rs = RpcBridge.getResult(cmd);
-			
+			rs.next();
 			if(rs.getRow()==0){
 				arg = arg+"CL"+Pad0(1,6);
 			}else{
-				
 				String txt = rs.getString(1);
-				
 				txt = txt.substring(txt.indexOf("CL")+2);//TODO:check this method~~~~
-				
 				int idx = Integer.valueOf(txt) + 1;
-
 				arg = arg+"CL"+Pad0(idx,6);
 			}
 			

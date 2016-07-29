@@ -10,9 +10,9 @@ import gwt.material.design.client.ui.MaterialModal;
 
 public abstract class DlgBase<T> extends Composite {
 
-	private MaterialModal dlgRoot;
+	protected MaterialModal dlgRoot;
 	
-	private MaterialButton btnAction,btnCancel;
+	protected MaterialButton btnAction,btnCancel;
 	
 	protected T target;
 	

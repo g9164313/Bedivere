@@ -117,6 +117,9 @@ public class RpcBridge extends RemoteServiceServlet
 			while(rs.next()){ res.gather(rs.getString(1)); }
 			res.mapping("prodxEmitter");
 			
+			rs = getResult("SELECT val FROM param WHERE key SIMILAR TO '%REST%' ORDER BY val");			
+			while(rs.next()){ res.gather(rs.getString(1)); }
+						
 		} catch (SQLException e) {			
 			res.appendError(e.getMessage());
 		}

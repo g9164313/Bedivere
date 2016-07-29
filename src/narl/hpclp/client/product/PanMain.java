@@ -6,6 +6,10 @@ import narl.hpclp.client.Main;
 import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ParmEmitter;
+import gwt.material.design.client.base.SearchObject;
+import gwt.material.design.client.constants.IconType;
+import gwt.material.design.client.events.SearchFinishEvent;
+import gwt.material.design.client.events.SearchFinishEvent.SearchFinishHandler;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialCheckBox;
 import gwt.material.design.client.ui.MaterialCollection;
@@ -22,10 +26,14 @@ import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.dom.client.KeyCodes;
+import com.google.gwt.event.dom.client.KeyDownEvent;
+import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
@@ -48,10 +56,10 @@ public class PanMain extends Composite {
 	MaterialPanel root;
 			
     @UiField
-    MaterialNavBar appNav, searchNav;
+    MaterialNavBar navApp, navSearch;
 
     @UiField
-    MaterialSearch search;
+    MaterialSearch boxSearch;
 	
     @UiField
     MaterialLink lnkPanMeet,lnkPanAccnt;
@@ -96,8 +104,7 @@ public class PanMain extends Composite {
     static MaterialButton btnScribeEdit,btnScribeCancel,btnScribeDelete;
     
 	public PanMain() {
-		initWidget(uiBinder.createAndBindUi(this));
-		initSearch();		
+		initWidget(uiBinder.createAndBindUi(this));		
 		root.add(Main.dlgEditOwner);
 		root.add(Main.dlgEditTenur);
 		root.add(Main.dlgPickOwner);
@@ -121,42 +128,51 @@ public class PanMain extends Composite {
 				Main.initComboEmitter(cmbEmitter);
 				emitt = new ParmEmitter(cmbEmitter.getSelectedValue());
 				emitt2box();
-				onLnkCreateProdx(null);//create the first item!!!
+				onCreateProdx(null);//create the first item!!!
 			}
 		}
 	};
 	
 	@UiHandler("lnkPanMeet")
-	void onLnkPanMeet(ClickEvent e){
+	void onPanMeet(ClickEvent e){
 		Main.switchToMeeting();
 	}
 	
 	@UiHandler("lnkPanAccnt")
-	void onLnkPanAccnt(ClickEvent e){
+	void onPanAccnt(ClickEvent e){
 		Main.switchToAccount();
 	}
 	
     @UiHandler("lnkSearch")
-    void onSearch(ClickEvent e) {
-        appNav.setVisible(false);
-        searchNav.setVisible(true);
+    void onStartSearch(ClickEvent e) {
+        navApp.setVisible(false);
+        navSearch.setVisible(true);  
+        boxSearch.setFocus(true);
     }
-    private void initSearch(){
-		search.addCloseHandler(new CloseHandler<String>() {
-            @Override
-            public void onClose(CloseEvent<String> event) {
-                appNav.setVisible(true);
-                searchNav.setVisible(false);
-            }
-        });
-		search.addChangeHandler(eventSearch);
+    @UiHandler("boxSearch")
+    void onCloseSearch(CloseEvent<String> event){
+    	navApp.setVisible(true);
+        navSearch.setVisible(false);
     }
-    private final ChangeHandler eventSearch = new ChangeHandler(){
-		@Override
-		public void onChange(ChangeEvent event) {
-		}
-    };
+    @UiHandler("boxSearch")
+    void onKeyDown(KeyDownEvent event) {
+    	int code = event.getNativeKeyCode();
+    	if(code!=KeyCodes.KEY_ENTER){
+    		return;
+    	}
+    	String val = boxSearch.getText().trim();
+    	String cmd = "WHERE "+
+    		Const.PRODX+".info[1] SIMILAR TO '%"+val+"%' OR "+
+    		Const.PRODX+".info[8] SIMILAR TO '%"+val+"%' OR "+
+    		Const.OWNER+".info[2] SIMILAR TO '%"+val+"%' OR "+
+    		Const.OWNER+".info[6] SIMILAR TO '%"+val+"%' OR "+
+    		Const.TENUR+".info[1] SIMILAR TO '%"+val+"%' "+
+    		"ORDER BY "+Const.PRODX+".last DESC";
+    	renewSelector(cmd);
+    	boxSearch.setText("");    	
+    }
     //-------------------//
+    
     /**
      * this list keep the user data in local computer~~~
      */
@@ -167,45 +183,52 @@ public class PanMain extends Composite {
     private static ParmEmitter emitt = null;
 
     @UiHandler("lnkShowSelector")
-    void onLnkShowSelector(ClickEvent e){
+    void onShowSelector(ClickEvent e){
     	refresh_selector();
     	dlgSelector.openModal();
     }
     
     @UiHandler("lnkRenewSelector")
 	void onLnkRenewSelector(ClickEvent e){
-    	//TODO: ask user whether dropping the current list~~~
-    	Main.rpc.listProduct(
-    		"ORDER BY "+Const.PRODX+".last DESC LIMIT 50",
-    		new AsyncCallback<ArrayList<ItemProdx>>(){
-    			@Override
-    			public void onFailure(Throwable caught) {
-    				MaterialToast.fireToast("內部錯誤!!");
-    			}
-    			@Override
-    			public void onSuccess(ArrayList<ItemProdx> result) {			
-    				if(result.isEmpty()==true){
-    					MaterialToast.fireToast("無資料!!");
-    					return;
-    				}
-    				lstProdx = result; 
-    				refresh_selector();	
-    				curProdx = result.get(0);
-    				prodx2box();    						
-    				dlgSelector.openModal();
-    			}
-    	});
+    	//TODO: remind user that we dropping the current list~~~
+    	renewSelector("ORDER BY "+Const.PRODX+".last DESC LIMIT 50");
 	}
+    
+    private void renewSelector(final String postfix){
+    	MaterialLoader.showLoading(true);
+    	Main.rpc.listProduct(
+        	postfix,
+        	new AsyncCallback<ArrayList<ItemProdx>>(){
+        	@Override
+        	public void onFailure(Throwable caught) {
+        		MaterialToast.fireToast("內部錯誤!!");
+        	}
+        	@Override
+        	public void onSuccess(ArrayList<ItemProdx> result) {
+        		MaterialLoader.showLoading(false);
+        		if(result.isEmpty()==true){
+        			MaterialToast.fireToast("無資料!!");
+        			return;
+        		}
+        		lstProdx = result; 
+        		refresh_selector();	
+        		curProdx = result.get(0);
+        		prodx2box();    						
+        		dlgSelector.openModal();
+        	}
+        });
+    }
+    
 
     @UiHandler("lnkClearSelector")
-	void onLnkClearSelector(ClickEvent e){
+	void onClearSelector(ClickEvent e){
     	lstProdx.clear();    	
     	MaterialToast.fireToast("已清除...",100);
-    	onLnkCreateProdx(e);
+    	onCreateProdx(e);
     }
     
     @UiHandler("lnkCreate")
-    void onLnkCreateProdx(ClickEvent e){
+    void onCreateProdx(ClickEvent e){
     	curProdx = new ItemProdx();
     	//Remember to prepare emitter information, This is required!!!
     	curProdx.setEmitter(cmbEmitter.getSelectedValue());
@@ -215,22 +238,22 @@ public class PanMain extends Composite {
     }
    
     @UiHandler("lnkPrint2DTag")
-    void onLnkPrint2DTag(ClickEvent e){
+    void onPrint2DTag(ClickEvent e){
     	//TODO:How to print 2D-tag???
     }
     
     @UiHandler("lnkPrintOneProdx")
-    void onLnkPrintOneProdx(ClickEvent e){
+    void onPrintOneProdx(ClickEvent e){
     	Main.printProduct(curProdx);
     }
 
     @UiHandler("lnkPrintAllProdx")
-    void onLnkPrintAllProdx(ClickEvent e){
+    void onPrintAllProdx(ClickEvent e){
     	Main.printProduct(lstProdx);
     }
     
     @UiHandler("lnkUpload")
-    void onLnkUploadProdx(ClickEvent e){
+    void onUploadProdx(ClickEvent e){
     	if(lstProdx.isEmpty()==true){
     		MaterialToast.fireToast("清單內無報告");
     		return;
@@ -251,8 +274,8 @@ public class PanMain extends Composite {
     	});    	
     }
  
-    @UiHandler("icoDelete")
-    void onIcoDeleteProdx(ClickEvent e){
+    @UiHandler("lnkDeleteProdx")
+    void onDeleteProdx(ClickEvent e){
     	if(curProdx.uuid.length()==0){
     		return;
     	}
@@ -295,11 +318,33 @@ public class PanMain extends Composite {
 					return;
 				}
 				prodx2box();
-				boxOKey.setText("");
 				boxTKey.setFocus(true);
 			}
     	};
     	Main.dlgPickOwner.appear(post,eventPick);
+    }
+    
+    @UiHandler("icoEditOwner")
+    void onEditOwner(ClickEvent e){
+    	if(curProdx.owner==null){
+    		MaterialToast.fireToast("請新增或選取委託單位");
+    		return;
+    	}
+    	Main.dlgEditOwner.appear(
+    		curProdx.owner,null,
+    		new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				prodx2box();
+			}
+    	});
+    } 
+    
+    @UiHandler("icoClearOwner")
+    void onClearOwner(ClickEvent e){
+    	curProdx.owner = null;
+    	prodx2box();
+    	boxOKey.setFocus(true);
     }
     
     @UiHandler("boxTKey")
@@ -314,7 +359,7 @@ public class PanMain extends Composite {
     	post = post + "(tenure.info[7] SIMILAR TO '%"+txt+"%') OR ";
     	post = post + "(tenure.info[11] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
     	//Query feature???
-    	final ClickHandler eventPick = new ClickHandler(){
+    	final ClickHandler eventDone = new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
 				curProdx.tenur = Main.dlgPickTenur.getTarget();
@@ -322,13 +367,35 @@ public class PanMain extends Composite {
     				return;
     			}
     			prodx2box();
-    			boxTKey.setText("");//just clear for next turn~~~
     			boxStmp.setFocus(true);
 			}
     	};
-    	Main.dlgPickTenur.appear(post,eventPick);
+    	Main.dlgPickTenur.appear(post,eventDone);
     }
 
+    @UiHandler("icoEditTenur")
+    void onEditTenur(ClickEvent e){
+    	if(curProdx.tenur==null){
+    		MaterialToast.fireToast("請新增或選取儀器");
+    		return;
+    	}
+    	Main.dlgEditTenur.appear(
+    		curProdx.tenur,null,
+    		new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				prodx2box();
+			}
+    	});
+    }
+    
+    @UiHandler("icoClearTenur")
+    void onClearTenur(ClickEvent e){
+    	curProdx.tenur = null;
+    	prodx2box();
+    	boxTKey.setFocus(true);
+    }
+    
     @UiHandler("cmbFormat")
 	void onChangeFormat(ValueChangeEvent<String> event){
     	int fmt = ItemProdx.txt2fmt(event.getValue());
@@ -402,25 +469,25 @@ public class PanMain extends Composite {
     
     @UiHandler("boxMemo")
     void onChangeMemo(ChangeEvent event){
-    	curProdx.setMemo(boxMemo.getText());
+    	curProdx.setMemo(boxMemo.getText().trim());
     	boxTemp.setFocus(true);
     }
 
     @UiHandler("boxTemp")
     void onChangeTemp(ChangeEvent event){
-    	curProdx.setAmbience(boxTemp.getText(),null,null);
+    	curProdx.setAmbience(boxTemp.getText().trim(),null,null);
     	boxPress.setFocus(true);
     }
     
     @UiHandler("boxPress")
     void onChangePress(ChangeEvent event){
-    	curProdx.setAmbience(null, boxPress.getText(),null);
+    	curProdx.setAmbience(null, boxPress.getText().trim(),null);
     	boxHumid.setFocus(true);
     }
     
     @UiHandler("boxHumid")
     void onChangeHumid(ChangeEvent event){
-    	curProdx.setAmbience(null,null,boxHumid.getText());
+    	curProdx.setAmbience(null,null,boxHumid.getText().trim());
     	boxScribe.setFocus(true);
     }
 
@@ -449,9 +516,14 @@ public class PanMain extends Composite {
     @UiHandler("boxScribe")
     void onChangeScribe(ValueChangeEvent<String> event){    	
     	//replace space and translate format
-    	String abbrev = event.getValue()
-    		.trim()
-    		.replaceAll("\\s","")
+    	String val = event.getValue().trim();
+    	if(val.length()==0){
+    		return;
+    	}
+    	if(val.charAt(0)=='*'){    		
+    		val = "×"+val.substring(1);//star symbol can presents scale one
+    	}
+    	String abbrev = val.replaceAll("\\s","")
     		.replace('/', '@')
     		.replace(';', '@')
     		.replace('+', ',')

@@ -86,7 +86,7 @@ public class DSrcAccount implements JRDataSource {
 		}else if (name.equals("deadline_stamp")) {	
 			//used for demand report~~
 			Date today = new Date();
-			CalUtil.addDaysToDate(today,15);
+			UtilsCalendar.addDaysToDate(today,15);
 			return Utils.date2tw_ch(today);
 			
 		}else if (name.equals("account_season")) {				

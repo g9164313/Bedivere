@@ -2,7 +2,6 @@ package narl.hpclp.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -139,7 +138,7 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 				}
 				MaterialToast.fireToast("已更新 "+result.getKey());
 				//TODO:result.copyTo(item);
-				root.closeModal();
+				dlgRoot.closeModal();
 			}
 		});
 	}

@@ -21,7 +21,7 @@ import java.util.Date;
 /**
  * Useful utilities for creating views of a calendar.
  */
-public class CalUtil {
+public class UtilsCalendar {
 
   //static DateTimeConstants intlConstants;
 

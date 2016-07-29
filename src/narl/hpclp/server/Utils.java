@@ -13,7 +13,11 @@ public class Utils {
 	public static FmtDate fmtDayId = FmtDate.getFormat("d"); 
 	public static FmtDate fmtDay = FmtDate.getFormat("MM/dd");
 	
+	public static FmtDate fmtWeek = FmtDate.getFormat("E");
+	
 	public static FmtDate fmtTime = FmtDate.getFormat("HH:mm");
+	
+	public static FmtDate fmtMeet = FmtDate.getFormat("yyyy MM/dd H");
 	
 	public static String date2tw_y(Date stamp){		
 		String year = fmtYear.format(stamp);		
@@ -42,5 +46,5 @@ public class Utils {
 		String mm = fmtMonth.format(stamp);
 		String dd = fmtDayId.format(stamp);
 		return yy+"年"+mm+"月"+dd+"日";		
-	}
+	}	
 }

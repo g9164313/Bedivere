@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns="http://java.sun.com/xml/ns/javaee"
+xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
+
+	<servlet>
+		<servlet-name>hpclp_calling</servlet-name>
+		<servlet-class>narl.hpclp.server.RpcBridge</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>hpclp_calling</servlet-name>
+		<url-pattern>/narl.hpclp.main/calling</url-pattern>
+	</servlet-mapping>
+	
+	<servlet>
+		<servlet-name>hpclp_print</servlet-name>
+		<servlet-class>narl.hpclp.server.RpcPrint</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>hpclp_print</servlet-name>
+		<url-pattern>/排定表.pdf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>hpclp_print</servlet-name>
+		<url-pattern>/信封.pdf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>hpclp_print</servlet-name>
+		<url-pattern>/校正通知單.pdf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>hpclp_print</servlet-name>
+		<url-pattern>/校正報告.pdf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>hpclp_print</servlet-name>
+		<url-pattern>/繳費通知單.pdf</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>hpclp_print</servlet-name>
+		<url-pattern>/費用通知單.pdf</url-pattern>
+	</servlet-mapping>
+
+	<welcome-file-list>
+	    <welcome-file>hpclp.html</welcome-file>
+	</welcome-file-list>
+	
+	<security-constraint>
+		<web-resource-collection>
+			<url-pattern>/*</url-pattern>
+			<http-method>GET</http-method>
+			<http-method>POST</http-method>
+		</web-resource-collection>
+		<auth-constraint>
+			<role-name>adjuster</role-name>
+		</auth-constraint>
+		<user-data-constraint>
+			<transport-guarantee>NONE</transport-guarantee>
+		</user-data-constraint>
+	</security-constraint>
+	<login-config>
+		<auth-method>BASIC</auth-method>
+	</login-config>
+	
+</web-app>
+
+
