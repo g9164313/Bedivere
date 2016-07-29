@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import narl.hpclp.client.Main;
 import narl.hpclp.shared.Const;
+import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ParmEmitter;
 import gwt.material.design.client.base.SearchObject;
@@ -155,7 +156,7 @@ public class PanMain extends Composite {
         navSearch.setVisible(false);
     }
     @UiHandler("boxSearch")
-    void onKeyDown(KeyDownEvent event) {
+    void onSearching(KeyDownEvent event) {
     	int code = event.getNativeKeyCode();
     	if(code!=KeyCodes.KEY_ENTER){
     		return;
@@ -213,13 +214,14 @@ public class PanMain extends Composite {
         		lstProdx = result; 
         		refresh_selector();	
         		curProdx = result.get(0);
-        		prodx2box();    						
-        		dlgSelector.openModal();
+        		prodx2box();
+        		if(result.size()>1){
+        			dlgSelector.openModal();
+        		}        		
         	}
         });
     }
     
-
     @UiHandler("lnkClearSelector")
 	void onClearSelector(ClickEvent e){
     	lstProdx.clear();    	
@@ -304,21 +306,25 @@ public class PanMain extends Composite {
     @UiHandler("boxOKey")
     void onChangeOwnerKey(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim();
-    	String post = "WHERE ";
-    	post = post + "(info[1] SIMILAR TO '%"+txt+"%') OR ";
-    	post = post + "(info[2] SIMILAR TO '%"+txt+"%') OR ";
-    	post = post + "(info[4] SIMILAR TO '%"+txt+"%') OR ";
-    	post = post + "(info[6] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
+    	if(txt.equalsIgnoreCase("+")==true){
+    		curProdx.owner = null;
+    		onEditOwner(null);
+    		return;
+    	}    	
+    	String post = "WHERE "+
+    		"(info[1] SIMILAR TO '%"+txt+"%') OR "+
+    		"(info[2] SIMILAR TO '%"+txt+"%') OR "+
+    		"(info[4] SIMILAR TO '%"+txt+"%') OR "+
+    		"(info[6] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
     	//Query feature???
     	final ClickHandler eventPick = new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
 				curProdx.owner = Main.dlgPickOwner.getTarget();
-				if(curProdx.owner==null){
-					return;
-				}
 				prodx2box();
-				boxTKey.setFocus(true);
+				if(curProdx.owner!=null){
+					boxTKey.setFocus(true);
+				}				
 			}
     	};
     	Main.dlgPickOwner.appear(post,eventPick);
@@ -327,8 +333,8 @@ public class PanMain extends Composite {
     @UiHandler("icoEditOwner")
     void onEditOwner(ClickEvent e){
     	if(curProdx.owner==null){
-    		MaterialToast.fireToast("請新增或選取委託單位");
-    		return;
+    		MaterialToast.fireToast("新增委託單位");
+    		curProdx.owner = new ItemOwner();
     	}
     	Main.dlgEditOwner.appear(
     		curProdx.owner,null,
@@ -350,24 +356,27 @@ public class PanMain extends Composite {
     @UiHandler("boxTKey")
     void onChangeKeyTenur(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim().toLowerCase();
-    	String post = "WHERE ";
-    	post = post + "(tenure.info[1] SIMILAR TO '%"+txt+"%') OR ";
-    	post = post + "(tenure.info[2] SIMILAR TO '%"+txt+"%') OR ";
-    	post = post + "(tenure.info[3] SIMILAR TO '%"+txt+"%') OR ";
-    	post = post + "(tenure.info[4] SIMILAR TO '%"+txt+"%') OR ";
-    	post = post + "(tenure.info[6] SIMILAR TO '%"+txt+"%') OR ";
-    	post = post + "(tenure.info[7] SIMILAR TO '%"+txt+"%') OR ";
-    	post = post + "(tenure.info[11] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
+    	if(txt.equalsIgnoreCase("+")==true){
+    		//special case we must create tenure
+    		return;
+    	}    	
+    	String post = "WHERE "+
+    		"(tenure.info[1] SIMILAR TO '%"+txt+"%') OR "+
+    		"(tenure.info[2] SIMILAR TO '%"+txt+"%') OR "+
+    		"(tenure.info[3] SIMILAR TO '%"+txt+"%') OR "+
+    		"(tenure.info[4] SIMILAR TO '%"+txt+"%') OR "+
+    		"(tenure.info[6] SIMILAR TO '%"+txt+"%') OR "+
+    		"(tenure.info[7] SIMILAR TO '%"+txt+"%') OR "+
+    		"(tenure.info[11] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
     	//Query feature???
     	final ClickHandler eventDone = new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
 				curProdx.tenur = Main.dlgPickTenur.getTarget();
-    			if(curProdx.tenur==null){
-    				return;
-    			}
-    			prodx2box();
-    			boxStmp.setFocus(true);
+				prodx2box();
+				if(curProdx.tenur==null){
+	    			boxStmp.setFocus(true);
+    			}    			
 			}
     	};
     	Main.dlgPickTenur.appear(post,eventDone);
