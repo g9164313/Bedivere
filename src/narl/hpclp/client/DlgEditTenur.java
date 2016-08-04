@@ -2,7 +2,7 @@ package narl.hpclp.client;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
@@ -17,6 +17,7 @@ import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
+import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemTenur;
 
 public class DlgEditTenur extends DlgBase<ItemTenur> {
@@ -49,6 +50,11 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	@UiField
 	MaterialTextBox boxArea,boxFactor,boxSteer;
 
+	@UiField
+	MaterialTextBox boxOKey;
+	@UiField
+	MaterialLabel txtOwner;
+		
 	public DlgEditTenur() {
 		initWidget(uiBinder.createAndBindUi(this));
 		refxWidget(root,btnAction,btnCancel);
@@ -108,6 +114,16 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 		boxMeet.setText(Main.fmtStmpLast.format(item.meet));
 		boxLast.setText(Main.fmtStmpLast.format(item.last));
 		boxMemo.setText(item.getMemo());
+		
+		if(item.owner!=null){
+			txtOwner.setText(
+				item.owner.getKey()+" "+
+				item.owner.getName()
+			);
+		}else{
+			txtOwner.setText("");
+		}
+		btnAction.setText(add_or_edit(item.uuid));
 	}
 	
 	@Override
@@ -131,8 +147,6 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 		item.setLast(Main.fmtStmpLast.parse(boxLast.getText()));		
 		item.setMemo(boxMemo.getText());
 		
-		btnAction.setText(add_or_edit(item.uuid));
-		
 		final AsyncCallback<ItemTenur> eventModify = 
 			new AsyncCallback<ItemTenur>()
 		{
@@ -145,9 +159,9 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 					MaterialToast.fireToast("不明原因錯誤");
 					return;
 				}
+				target = result;
 				MaterialToast.fireToast("已更新 "+result.getKey());
-				//TODO:result.copyTo(item);
-				root.closeModal();
+				dialog_done();
 			}
 		};
 		Main.rpc.modifyTenur(item,eventModify);
@@ -157,7 +171,32 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	void takeCancel(ClickEvent event) {
 	}
 	
-	
+	@UiHandler("boxOKey")
+    void onChangeKeyOwner(ValueChangeEvent<String> event){
+		String txt = event.getValue().trim();
+		String post = "WHERE "+
+	    	"(info[1] SIMILAR TO '%"+txt+"%') OR "+
+	    	"(info[2] SIMILAR TO '%"+txt+"%') OR "+
+	    	"(info[4] SIMILAR TO '%"+txt+"%') OR "+
+	    	"(info[6] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
+	    //Query feature???
+	    final ClickHandler eventPick = new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				ItemOwner item = Main.dlgPickOwner.getTarget();
+				if(item==null){
+					return;
+				}
+				target.owner = item;
+				txtOwner.setText(
+					item.getKey()+" "+
+					item.getName()
+				);
+				boxOKey.setText("");
+			}
+	    };
+	    Main.dlgPickOwner.appear(post,eventPick);
+	}
 	
 	private void makeSpecialCharacter(MaterialTextBox box){
 		String txt = box.getText();
@@ -183,5 +222,6 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 		}		
 		drpDetType.add(new MaterialLabel(val));
 	}
-
 }
+
+

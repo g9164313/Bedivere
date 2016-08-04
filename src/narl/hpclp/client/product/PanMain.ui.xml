@@ -132,32 +132,6 @@
 							<m:MaterialColumn> <m:MaterialLink text="刪除報告" iconType="DELETE" ui:field="lnkDeleteProdx" /> </m:MaterialColumn>
 						</m:MaterialRow>
 					</m:MaterialPanel>
-
-        			<!-- 射源資訊 -->
-					<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7" >
-						<m:MaterialRow>
-							<m:MaterialColumn> 
-								<m:MaterialLabel text="種類大小："/>
-								<m:MaterialLabel text="射源活度："/>
-								<m:MaterialLabel text="表面大小："/>
-								<m:MaterialLabel text="涵蓋因子："/>
-								<m:MaterialLabel text="涵蓋機率："/>
-								<m:MaterialLabel text="不確定度："/>
-								<m:MaterialLabel text="射源序號："/>
-								<m:MaterialLabel text="射源認證："/>
-							</m:MaterialColumn>
-							<m:MaterialColumn>
-								<m:MaterialLabel ui:field="txtKindArea"/>
-								<m:MaterialLabel ui:field="txtStrength"/>
-								<m:MaterialLabel ui:field="txtSurface"/>
-								<m:MaterialLabel ui:field="txtFactorK"/>
-								<m:MaterialLabel ui:field="txtFactorP"/>
-								<m:MaterialLabel ui:field="txtUncertain"/>
-								<m:MaterialLabel ui:field="txtSerial"/>
-								<m:MaterialLabel ui:field="txtCriteron"/>
-							</m:MaterialColumn>
-						</m:MaterialRow>
-					</m:MaterialPanel>
 				</m:MaterialColumn><!-- the end of first column -->
 				
 				<m:MaterialColumn><!-- the start of second column -->
@@ -188,8 +162,46 @@
 							</m:MaterialModalFooter>
  						</m:MaterialModal>
 					</m:MaterialPanel>
-				</m:MaterialColumn><!-- the end of second column -->
-				
+										
+        			<!-- 射源資訊 -->
+					<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7" >
+						<m:MaterialRow>
+							<m:MaterialColumn> 
+								<m:MaterialLabel text="種類大小："/>
+								<m:MaterialLabel text="表面大小："/>								
+							</m:MaterialColumn>
+							<m:MaterialColumn>
+								<m:MaterialLabel ui:field="txtKindArea"/>
+								<m:MaterialLabel ui:field="txtSurface"/>
+							</m:MaterialColumn>
+							
+							<m:MaterialColumn>
+								<m:MaterialLabel text="涵蓋因子："/>
+								<m:MaterialLabel text="涵蓋機率："/>
+								<m:MaterialLabel text="不確定度："/>
+							</m:MaterialColumn>
+							<m:MaterialColumn>
+								<m:MaterialLabel ui:field="txtFactorK"/>
+								<m:MaterialLabel ui:field="txtFactorP"/>
+								<m:MaterialLabel ui:field="txtUncertain"/>
+							</m:MaterialColumn>
+						</m:MaterialRow>
+							
+						<m:MaterialRow>
+							<m:MaterialColumn>
+								<m:MaterialLabel text="射源活度："/>
+								<m:MaterialLabel text="射源序號："/>
+								<m:MaterialLabel text="射源認證："/>
+							</m:MaterialColumn>
+							<m:MaterialColumn>
+								<m:MaterialLabel ui:field="txtStrength"/>
+								<m:MaterialLabel ui:field="txtSerial"/>
+								<m:MaterialLabel ui:field="txtCriteron"/>
+							</m:MaterialColumn>
+						</m:MaterialRow>
+						
+					</m:MaterialPanel>
+				</m:MaterialColumn><!-- the end of second column -->				
 			</m:MaterialRow>
 			
     	 	<m:MaterialModal type="BOTTOM_SHEET" dismissable="true" inDuration="10" outDuration="10" height="25%" ui:field="dlgSelector">

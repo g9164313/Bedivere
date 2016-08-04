@@ -70,22 +70,22 @@ public abstract class DlgBase<T> extends Composite {
 			if(hookAction!=null){
 				hookAction.onClick(event);
 			}
-			dlgRoot.closeModal();
-			if(hookClose!=null){
-				hookClose.onClick(event);
-			}
 		}		
 	};
+	
+	protected void dialog_done(){
+		dlgRoot.closeModal();
+		if(hookClose!=null){
+			hookClose.onClick(null);
+		}
+	}
 	
 	abstract void takeCancel(ClickEvent event);
 	
 	private ClickHandler eventCancel = new ClickHandler(){
 		@Override
 		public void onClick(ClickEvent event) {
-			dlgRoot.closeModal();
-			if(hookClose!=null){
-				hookClose.onClick(event);
-			}
+			dialog_done();
 		}		
 	};
 

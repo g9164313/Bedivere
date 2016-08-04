@@ -24,10 +24,19 @@ public class ItemTenur extends ItemBase implements Serializable {
 	
 	public ItemOwner owner = null;
 	
+	private static final String DEF_DET_TYPE = "游離腔";
+	
 	public ItemTenur(){
 		super(INFO_MAX_COL);
+		info[INFO_DET_TYPE] = DEF_DET_TYPE;
 	}
 
+	public ItemTenur(ItemOwner own){
+		super(INFO_MAX_COL);
+		info[INFO_DET_TYPE] = DEF_DET_TYPE;
+		owner = own;		
+	}
+	
 	public ItemTenur(
 		String id,
 		String[] info,

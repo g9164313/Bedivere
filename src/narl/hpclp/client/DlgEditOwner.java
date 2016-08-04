@@ -136,9 +136,9 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 					MaterialToast.fireToast("不明原因錯誤");
 					return;
 				}
+				target = result;
 				MaterialToast.fireToast("已更新 "+result.getKey());
-				//TODO:result.copyTo(item);
-				dlgRoot.closeModal();
+				dialog_done();
 			}
 		});
 	}
@@ -147,3 +147,4 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 	void takeCancel(ClickEvent event) {
 	}
 }
+

@@ -60,6 +60,18 @@ public class RpcBridge extends RemoteServiceServlet
 		}
 		return id.toString();
 	}
+		
+	@Override
+	public String genKey(String args) throws IllegalArgumentException {
+		if(args.startsWith(Const.ACCNT)==true){
+			args = args.substring(Const.ACCNT.length()+1);
+			return SqlDataMisc.genAKey(args);
+		}else if(args.startsWith(Const.PRODX)==true){
+			args = args.substring(Const.PRODX.length()+1);
+			return SqlDataMisc.genPKey(args.split(","));
+		}
+		return "";
+	}	
 	//---------------------------------//
 	
 	@Override
@@ -82,22 +94,10 @@ public class RpcBridge extends RemoteServiceServlet
 		checkParamData(res);
 		
 		checkJasperPath(res);
-
+		
 		return res;
 	}
-	
-	@Override
-	public String genKey(String args) throws IllegalArgumentException {
-		if(args.startsWith(Const.ACCNT)==true){
-			args = args.substring(Const.ACCNT.length()+1);
-			return SqlDataMisc.genAKey(args);
-		}else if(args.startsWith(Const.PRODX)==true){
-			args = args.substring(Const.PRODX.length()+1);
-			return SqlDataMisc.genPKey(args.split(","));
-		}
-		return "";
-	}
-	
+
 	private void checkParamData(ItemParam res){
 		try {
 			ResultSet rs;
@@ -127,7 +127,7 @@ public class RpcBridge extends RemoteServiceServlet
 	
 	private void checkJasperPath(ItemParam res){
 		final String name = "/narl.hpclp.jasper";
-		String path = new File(".").getAbsolutePath();
+		String path = new File(".").getAbsolutePath();		
 		//Try every possible path~~~
 		if(new File(path+name).exists()==true){
 			RpcPrint.DOC_PATH = path + name;			
@@ -142,7 +142,7 @@ public class RpcBridge extends RemoteServiceServlet
 		}else if(new File(path+"/Bedivere"+name).exists()==true){
 			RpcPrint.DOC_PATH = path+"/Bedivere"+name;
 		}else{
-			res.appendError("FAIL: path is undetermined."+path);
+			res.appendError("FAIL: the unknown paht - \'"+path+"\'");
 		}
 	}
 	//---------------------------------//

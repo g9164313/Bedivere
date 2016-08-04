@@ -6,11 +6,8 @@ import narl.hpclp.client.Main;
 import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemProdx;
+import narl.hpclp.shared.ItemTenur;
 import narl.hpclp.shared.ParmEmitter;
-import gwt.material.design.client.base.SearchObject;
-import gwt.material.design.client.constants.IconType;
-import gwt.material.design.client.events.SearchFinishEvent;
-import gwt.material.design.client.events.SearchFinishEvent.SearchFinishHandler;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialCheckBox;
 import gwt.material.design.client.ui.MaterialCollection;
@@ -27,26 +24,21 @@ import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.event.logical.shared.CloseEvent;
-import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PanMain extends Composite {
+public class PanMain extends CtlMain {
 
 	private static PanMainUiBinder uiBinder = GWT.create(PanMainUiBinder.class);
 
@@ -161,27 +153,11 @@ public class PanMain extends Composite {
     	if(code!=KeyCodes.KEY_ENTER){
     		return;
     	}
-    	String val = boxSearch.getText().trim();
-    	String cmd = "WHERE "+
-    		Const.PRODX+".info[1] SIMILAR TO '%"+val+"%' OR "+
-    		Const.PRODX+".info[8] SIMILAR TO '%"+val+"%' OR "+
-    		Const.OWNER+".info[2] SIMILAR TO '%"+val+"%' OR "+
-    		Const.OWNER+".info[6] SIMILAR TO '%"+val+"%' OR "+
-    		Const.TENUR+".info[1] SIMILAR TO '%"+val+"%' "+
-    		"ORDER BY "+Const.PRODX+".last DESC";
-    	renewSelector(cmd);
-    	boxSearch.setText("");    	
+    	renewSelector(query(boxSearch.getText().trim()));
+    	boxSearch.setText("");
+    	boxSearch.setFocus(true);
     }
     //-------------------//
-    
-    /**
-     * this list keep the user data in local computer~~~
-     */
-    private static ArrayList<ItemProdx> lstProdx = new ArrayList<ItemProdx>();
-    
-    private static ItemProdx curProdx = null;
-    
-    private static ParmEmitter emitt = null;
 
     @UiHandler("lnkShowSelector")
     void onShowSelector(ClickEvent e){
@@ -304,10 +280,9 @@ public class PanMain extends Composite {
     }
     
     @UiHandler("boxOKey")
-    void onChangeOwnerKey(ValueChangeEvent<String> event){
+    void onChangeKeyOwner(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim();
     	if(txt.equalsIgnoreCase("+")==true){
-    		curProdx.owner = null;
     		onEditOwner(null);
     		return;
     	}    	
@@ -332,7 +307,7 @@ public class PanMain extends Composite {
     
     @UiHandler("icoEditOwner")
     void onEditOwner(ClickEvent e){
-    	if(curProdx.owner==null){
+    	if(e==null){
     		MaterialToast.fireToast("新增委託單位");
     		curProdx.owner = new ItemOwner();
     	}
@@ -341,6 +316,7 @@ public class PanMain extends Composite {
     		new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
+				curProdx.owner = Main.dlgEditOwner.getTarget();
 				prodx2box();
 			}
     	});
@@ -354,10 +330,10 @@ public class PanMain extends Composite {
     }
     
     @UiHandler("boxTKey")
-    void onChangeKeyTenur(ValueChangeEvent<String> event){
+    void onChangeKeyTenure(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim().toLowerCase();
     	if(txt.equalsIgnoreCase("+")==true){
-    		//special case we must create tenure
+    		onEditTenur(null);
     		return;
     	}    	
     	String post = "WHERE "+
@@ -384,15 +360,17 @@ public class PanMain extends Composite {
 
     @UiHandler("icoEditTenur")
     void onEditTenur(ClickEvent e){
-    	if(curProdx.tenur==null){
-    		MaterialToast.fireToast("請新增或選取儀器");
-    		return;
+    	if(e==null){
+    		MaterialToast.fireToast("新增儀器資料");
+    		curProdx.tenur = new ItemTenur(curProdx.owner);
+    		curProdx.tenur.owner = curProdx.owner;
     	}
     	Main.dlgEditTenur.appear(
     		curProdx.tenur,null,
     		new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
+				curProdx.tenur = Main.dlgEditTenur.getTarget();
 				prodx2box();
 			}
     	});
@@ -447,7 +425,7 @@ public class PanMain extends Composite {
     }
     
     @UiHandler("boxPKey")
-    void onChangeProductKey(ChangeEvent event){
+    void onChangeKeyProduct(ChangeEvent event){
     	String txt = boxPKey.getText().trim();
     	if(txt.length()==0 || txt.equalsIgnoreCase("+")==true){
     		if(curProdx.owner==null){

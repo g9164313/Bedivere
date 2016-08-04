@@ -61,6 +61,15 @@
 			</m:MaterialColumn>
 		</m:MaterialRow>
 
+		<m:MaterialRow>
+			<m:MaterialColumn>
+				<m:MaterialTextBox ui:field="boxOKey" placeholder="委託單位" width="11em"/>
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialLabel ui:field="txtOwner" width="22em" />
+			</m:MaterialColumn>
+		</m:MaterialRow>
+
 	</m:MaterialModalContent>
 	<!-- 確認/取消 -->
 	<m:MaterialModalFooter>		

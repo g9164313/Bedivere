@@ -110,7 +110,8 @@ public class SqlDataBase {
 				Const.TENUR+".id AS tid, "+				
 				Const.TENUR+".info AS tinfo, "+
 				Const.TENUR+".stamp AS tstamp, "+
-				Const.TENUR+".last AS tlast "+
+				Const.TENUR+".last AS tlast, "+
+				Const.TENUR+".oid AS towner "+
 				"FROM "+Const.PRODX+" "+		
 				"LEFT JOIN "+Const.OWNER+" ON "+Const.OWNER+".id="+Const.PRODX+".oid "+
 				"LEFT JOIN "+Const.TENUR+" ON "+Const.TENUR+".id="+Const.PRODX+".tid "+
@@ -186,6 +187,7 @@ public class SqlDataBase {
 				rs.getTimestamp("olast")
 			);
 		}
+		
 		uuid = getUUID(rs,"tid");		
 		if(uuid.length()!=0){
 			item.tenur = new ItemTenur(
@@ -194,6 +196,26 @@ public class SqlDataBase {
 				rs.getTimestamp("tstamp"),
 				rs.getTimestamp("tlast")
 			);
+			uuid = getUUID(rs,"towner");
+			if(uuid.length()!=0){
+				if(item.owner!=null){
+					if(uuid.equalsIgnoreCase(item.owner.uuid)==true){
+						item.tenur.owner = item.owner;
+						return item;
+					}
+				}
+				//TODO:search owner again!!!
+				String cmd = "SELECT "+
+					Const.OWNER+".id AS id, "+
+					Const.OWNER+".info AS info, "+
+					Const.OWNER+".stamp AS stamp, "+
+					Const.OWNER+".last AS last "+
+					"FROM "+Const.OWNER+" "+		
+					"WHERE id='"+uuid+"'";		
+				ResultSet tmp = RpcBridge.getResult(cmd);	
+				tmp.next();
+				item.tenur.owner = unpackOwner(tmp);				
+			}
 		}
 		return item;
 	}
