@@ -1,14 +1,15 @@
 package narl.hpclp.client;
 
+import narl.itrc.client.ExComposite;
+
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.user.client.ui.Composite;
 
 import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialModal;
 
-public abstract class DlgBase<T> extends Composite {
+public abstract class DlgBase<T> extends ExComposite {
 
 	protected MaterialModal dlgRoot;
 	
@@ -31,7 +32,7 @@ public abstract class DlgBase<T> extends Composite {
 		btnCancel = (MaterialButton)(arg[2]);
 		btnCancel.addClickHandler(eventCancel);		
 	}
-	
+
 	abstract void eventAppear(T item);
 	
 	/**

@@ -7,7 +7,7 @@
 	<ui:style>
 	</ui:style>
 	
-<m:MaterialModal type="DEFAULT" dismissable="true" inDuration="10" outDuration="10" ui:field="root">
+<m:MaterialModal type="DEFAULT"  width="80%" dismissable="true" inDuration="10" outDuration="10" ui:field="root">
 	
 	<m:MaterialModalContent>
 
@@ -36,19 +36,7 @@
 				<m:MaterialTextBox ui:field="boxDetNumber" placeholder="偵檢器序號" width="11em"/>
 			</m:MaterialColumn>
 		</m:MaterialRow>
-		
-		<m:MaterialRow>
-			<m:MaterialColumn>
-				<m:MaterialTextBox placeholder="預約日期" width="11em" ui:field="boxMeet" />
-			</m:MaterialColumn>
-			<m:MaterialColumn>
-				<m:MaterialTextBox placeholder="更新日期" width="11em" ui:field="boxLast" />
-			</m:MaterialColumn>
-			<m:MaterialColumn>
-				<m:MaterialTextBox placeholder="備註" width="11em" ui:field="boxMemo" />				
-			</m:MaterialColumn>
-		</m:MaterialRow>
-		
+				
 		<m:MaterialRow>
 			<m:MaterialColumn>
 				<m:MaterialTextBox ui:field="boxArea" placeholder="偵檢窗面積" width="11em"/>
@@ -70,6 +58,18 @@
 			</m:MaterialColumn>
 		</m:MaterialRow>
 
+		<m:MaterialRow>
+			<m:MaterialColumn>
+				<m:MaterialTextBox placeholder="備註" width="11em" ui:field="boxMemo" />				
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialTextBox placeholder="預約日期" width="11em" ui:field="boxMeet" />
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<m:MaterialTextBox placeholder="更新日期" width="11em" ui:field="boxLast" />
+			</m:MaterialColumn>
+		</m:MaterialRow>
+		
 	</m:MaterialModalContent>
 	<!-- 確認/取消 -->
 	<m:MaterialModalFooter>		

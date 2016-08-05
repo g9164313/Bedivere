@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemAccnt;
+import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemProdx;
 
 /**
@@ -14,6 +15,45 @@ import narl.hpclp.shared.ItemProdx;
  */
 public class SqlDataMisc {
 
+	public static String genOKey(String arg) {		
+		
+		if(Const.isAllDigit(arg)==false){
+			return arg;
+		}
+		
+		if(arg.length()<4){
+			for(int i=arg.length(); i<4; i++){
+				arg = arg+"%";
+			}
+		}
+		
+		String rng0 = arg.replace('%', '0');
+		String rng9 = arg.replace('%', '9');
+		
+		final int idx=ItemOwner.INFO_OKEY+1;//SQL is 1-base.....
+		
+		String cmd = 
+			"SELECT generate_series("+rng0+","+rng9+",1) AS key " +
+			"EXCEPT "+
+			"(SELECT DISTINCT to_number(info["+idx+"],'9999') AS key "+ 
+			"FROM "+Const.OWNER+" "+
+			"WHERE info["+idx+"] SIMILAR TO '"+arg+"') "+ 
+			"ORDER BY key";
+		try {
+			ResultSet rs = RpcBridge.getResult(cmd);
+			rs.next();
+			if(rs.getRow()==0){
+				return "????";
+			}else{
+				arg = rs.getString(1);
+			}
+		} catch (SQLException e) {			
+			e.printStackTrace();
+			return "";
+		}		
+		return arg;
+	}
+	
 	public static String genAKey(String arg) {		
 
 		final int pkey = ItemAccnt.INFO_AKEY+1;//SQL is one-base;		
@@ -33,8 +73,7 @@ public class SqlDataMisc {
 				txt = txt.substring(txt.indexOf("CL")+2);//TODO:check this method~~~~
 				int idx = Integer.valueOf(txt) + 1;
 				arg = arg+"CL"+Pad0(idx,6);
-			}
-			
+			}			
 		} catch (SQLException e) {			
 			e.printStackTrace();
 			return "";

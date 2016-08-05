@@ -58,6 +58,12 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	public DlgEditTenur() {
 		initWidget(uiBinder.createAndBindUi(this));
 		refxWidget(root,btnAction,btnCancel);
+		chainBox(
+			boxDevVendor,boxDevSerial,boxDevNumber,
+			boxDetSerial,boxDetNumber,			
+			boxArea,boxFactor,boxSteer,
+			boxOKey,boxMemo
+		);
 	}
 
 	@UiHandler("drpDetType")
@@ -78,27 +84,18 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	
 	@UiHandler("boxMeet")
 	public void onChangeMeet(ValueChangeEvent<String> event) {
-		ItemTenur item = target;
-		if(Main.text2stmp(boxMeet, item.meet)==true){
-			boxLast.setFocus(true);
-		}
+		Main.text2stmp(boxMeet,target.meet);
 	}
 	
 	@UiHandler("boxLast")
 	public void onChangeLast(ValueChangeEvent<String> event) {
-		ItemTenur item = target;
-		if(Main.text2stmp(boxLast, item.last)==true){
-			boxMemo.setFocus(true);
-		}
+		Main.text2stmp(boxLast, target.last);
 	}
 	
-	@UiHandler("boxMemo")
-	public void onChangeMemo(ValueChangeEvent<String> event) {
-		boxMemo.setFocus(false);//end of chain~~~
-	}
-
 	@Override
 	void eventAppear(ItemTenur item) {
+		boxDevVendor.setFocus(true);
+		
 		boxDevVendor.setText(item.getDeviceVendor());
 		boxDevSerial.setText(item.getDeviceSerial());
 		boxDevNumber.setText(item.getDeviceNumber());		
@@ -199,8 +196,15 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	}
 	
 	private void makeSpecialCharacter(MaterialTextBox box){
-		String txt = box.getText();
-		txt = txt.replace("^2","²").replace("^3","³");
+		String txt = box.getText()
+			.replace("^u","μ")
+			.replace("^.","·")
+			.replace("^^","⁻")
+			.replace("^-1","⁻¹")
+			.replace("^-2","⁻²")
+			.replace("^-2","⁻³")
+			.replace("^2","²")
+			.replace("^3","³");
 		box.setText(txt);
 	}
 	

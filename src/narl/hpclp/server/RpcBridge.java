@@ -63,11 +63,14 @@ public class RpcBridge extends RemoteServiceServlet
 		
 	@Override
 	public String genKey(String args) throws IllegalArgumentException {
-		if(args.startsWith(Const.ACCNT)==true){
+		if(args.startsWith(Const.OWNER)==true){
+			args = args.substring(Const.OWNER.length()+1);//there is a 'plus' sign
+			return SqlDataMisc.genOKey(args);
+		}if(args.startsWith(Const.ACCNT)==true){
 			args = args.substring(Const.ACCNT.length()+1);
 			return SqlDataMisc.genAKey(args);
 		}else if(args.startsWith(Const.PRODX)==true){
-			args = args.substring(Const.PRODX.length()+1);
+			args = args.substring(Const.PRODX.length()+1);//there is a 'star' sign
 			return SqlDataMisc.genPKey(args.split(","));
 		}
 		return "";

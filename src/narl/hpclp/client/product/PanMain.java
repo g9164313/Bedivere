@@ -307,7 +307,7 @@ public class PanMain extends CtlMain {
     
     @UiHandler("icoEditOwner")
     void onEditOwner(ClickEvent e){
-    	if(e==null){
+    	if(curProdx.owner==null){
     		MaterialToast.fireToast("新增委託單位");
     		curProdx.owner = new ItemOwner();
     	}
@@ -360,7 +360,7 @@ public class PanMain extends CtlMain {
 
     @UiHandler("icoEditTenur")
     void onEditTenur(ClickEvent e){
-    	if(e==null){
+    	if(curProdx.tenur==null){
     		MaterialToast.fireToast("新增儀器資料");
     		curProdx.tenur = new ItemTenur(curProdx.owner);
     		curProdx.tenur.owner = curProdx.owner;

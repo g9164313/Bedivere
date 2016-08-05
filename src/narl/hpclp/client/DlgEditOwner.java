@@ -13,6 +13,7 @@ import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
+import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemOwner;
 
 public class DlgEditOwner extends DlgBase<ItemOwner> {
@@ -39,59 +40,45 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 	
 	public DlgEditOwner() {
 		initWidget(uiBinder.createAndBindUi(this));
-		refxWidget(root,btnAction,btnCancel);		
+		refxWidget(root,btnAction,btnCancel);
+		chainBox(
+			boxKey,boxName,boxStmp,
+			boxZip,boxAddr,boxPhon,
+			boxDept,boxPern,boxMail,
+			boxMemo
+		);
 	}
 
 	@UiHandler("boxKey")
 	public void onChangeKey(ValueChangeEvent<String> event) {
-		boxName.setFocus(true);
-	}
-	
-	@UiHandler("boxName")
-	public void onChangeName(ValueChangeEvent<String> event) {
-		boxStmp.setFocus(true);
+		String val = event.getValue();		
+		if(val.charAt(0)!='+'){
+			return;
+		}
+		//plus sign is a special operation, we will ask server
+		Main.rpc.genKey(
+			Const.OWNER+val, new AsyncCallback<String>(){
+			@Override
+			public void onFailure(Throwable caught) {
+				MaterialToast.fireToast("內部錯誤");
+			}
+			@Override
+			public void onSuccess(String result) {
+				boxKey.setText(result);
+			}				
+		});		
 	}
 	
 	@UiHandler("boxStmp")
 	public void onChangeMeet(ValueChangeEvent<String> event) {
-		ItemOwner item = target;
-		if(Main.text2stmp(boxStmp, item.stmp)==true){
-			boxZip.setFocus(true);
-		}
-	}
-	
-	@UiHandler("boxZip")
-	public void onChangeZip(ValueChangeEvent<String> event) {
-		boxAddr.setFocus(true);
-	}
-	
-	@UiHandler("boxAddr")
-	public void onChangeAddr(ValueChangeEvent<String> event) {
-		boxPhon.setFocus(true);
-	}
-
-	@UiHandler("boxPhon")
-	public void onChangePhon(ValueChangeEvent<String> event) {
-		boxPern.setFocus(true);
-	}
-	
-	@UiHandler("boxPern")
-	public void onChangePern(ValueChangeEvent<String> event) {
-		boxMail.setFocus(true);
-	}
-	
-	@UiHandler("boxMail")
-	public void onChangeMail(ValueChangeEvent<String> event) {
-		boxMemo.setFocus(true);
-	}
-	
-	@UiHandler("boxMemo")
-	public void onChangeMemo(ValueChangeEvent<String> event) {
-		boxMemo.setFocus(false);//end of chain~~~
+		//check ths stamp is valid~~~~
+		Main.text2stmp(boxStmp,target.stmp);
 	}
 	
 	@Override
 	void eventAppear(ItemOwner item) {
+		boxKey.setFocus(true);
+		
 		boxKey.setText(item.getKey());		
 		boxName.setText(item.getName());
 		boxStmp.setText(Main.fmtStmpLast.format(item.stmp));

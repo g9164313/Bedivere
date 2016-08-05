@@ -7,7 +7,7 @@
 	<ui:style>
 	</ui:style>
 	
-<m:MaterialModal type="DEFAULT" dismissable="true" inDuration="10" outDuration="10" ui:field="root" >
+<m:MaterialModal type="DEFAULT" width="80%" dismissable="true" inDuration="10" outDuration="10" ui:field="root" >
 
 	<m:MaterialModalContent >
 		<m:MaterialRow>

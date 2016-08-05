@@ -146,6 +146,16 @@ public final class Const {
 		return dst.trim();
 	}
 	
+	public static boolean isAllDigit(String txt){
+		char[] buf = txt.toCharArray();
+		for(int i=0; i<buf.length; i++){
+			if(buf[i]<'0' || '9'<buf[i]){
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public static String TrimNumber(String src){
 		src = src.replaceAll("\\s","");//trim space!!!
 		String dst = "";
