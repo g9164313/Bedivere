@@ -43,6 +43,14 @@
  
         <!-- Container -->
         <m:MaterialContainer paddingTop="70" paddingLeft="7" paddingRight="7">
+        <m:MaterialRow>
+        	<m:MaterialColumn>
+        		<g:HTMLPanel ui:field="arch1" />
+        	</m:MaterialColumn>
+        	<m:MaterialColumn>
+        		<g:HTMLPanel ui:field="arch2" />
+        	</m:MaterialColumn>
+        </m:MaterialRow>        
 	    </m:MaterialContainer>
 </m:MaterialPanel>
 
