@@ -2,7 +2,7 @@ package narl.hpclp.server;
 
 import java.util.Date;
 
-public class Utils {
+public class UtilsMisc {
 	
 	public static FmtDate fmtDate = FmtDate.getFormat("yyyy/M/d"); 
 	public static FmtDate fmtSql1 = FmtDate.getFormat("yyyy-M-d");

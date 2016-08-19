@@ -81,17 +81,17 @@ public class DSrcAccount implements JRDataSource {
 			
 		}else if (name.equals("account_stamp")) {
 			
-			return Utils.date2tw_ch(item.stmp);
+			return UtilsMisc.date2tw_ch(item.stmp);
 			
 		}else if (name.equals("deadline_stamp")) {	
 			//used for demand report~~
 			Date today = new Date();
 			UtilsCalendar.addDaysToDate(today,15);
-			return Utils.date2tw_ch(today);
+			return UtilsMisc.date2tw_ch(today);
 			
 		}else if (name.equals("account_season")) {				
 			
-			return Utils.date2tw_ch(item.stmp);
+			return UtilsMisc.date2tw_ch(item.stmp);
 
 		}else if (name.equals("fare_set")) {
 			

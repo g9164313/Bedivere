@@ -9,7 +9,7 @@ import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemOwner;
 import gwt.material.design.client.ui.MaterialCollapsible;
 import gwt.material.design.client.ui.MaterialLabel;
-import gwt.material.design.client.ui.MaterialLink;
+
 import gwt.material.design.client.ui.MaterialLoader;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialPanel;
@@ -54,10 +54,7 @@ public class PanMain extends Composite {
 
     @UiField
     MaterialSearch search;
-    
-    @UiField
-    MaterialLink lnkPanProdx,lnkPanAccnt;
-    
+ 
     @UiField
     MaterialLabel txtPickDay;
     		
@@ -102,6 +99,11 @@ public class PanMain extends Composite {
 	@UiHandler("lnkPanAccnt")
 	void onLnkPanAccnt(ClickEvent e){
 		Main.switchToAccount();
+	}
+	
+	@UiHandler("lnkPanStorage")
+	void onPanStorage(ClickEvent e){
+		Main.switchToStorage();
 	}
 	
     @UiHandler("lnkSearch")

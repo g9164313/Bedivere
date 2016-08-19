@@ -79,7 +79,7 @@ public class DSrcProduct implements JRDataSource {
 		if(name.equals("agreement1")){ return prodx.owner.getKey(); }// 單位代號
 		if(name.equals("agreement2")){ return prodx.owner.getAddress(); }// 單位地址
 		if(name.equals("expert0")  ){ return prodx.getKey(); }// 報告編號
-		if(name.equals("expert1")  ){ return Utils.date2tw_d(prodx.stmp); }// 校正日期	
+		if(name.equals("expert1")  ){ return UtilsMisc.date2tw_d(prodx.stmp); }// 校正日期	
 		if(name.equals("material0")){ return prodx.tenur.getDeviceVendor(); }//儀器廠牌
 		if(name.equals("material1")){ return prodx.tenur.getDeviceSerial(); }//儀器型號
 		if(name.equals("material2")){ return prodx.tenur.getDeviceNumber(); }//儀器序號
@@ -108,7 +108,7 @@ public class DSrcProduct implements JRDataSource {
 		if(name.equals("expert2")  ){ return prodx.getTemperature()+"  ℃"; }
 		if(name.equals("expert3")  ){ return prodx.getPressure()+"  kPa"; }
 		if(name.equals("expert4")  ){ return prodx.getHumidity()+"  %RH";	}		
-		if(name.equals("print_day")){ return Utils.twToday(); }
+		if(name.equals("print_day")){ return UtilsMisc.twToday(); }
 		if(name.equals("use_logo") ){ return prodx.useLogo; }
 		return null;
 	}

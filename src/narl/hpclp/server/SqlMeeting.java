@@ -18,8 +18,8 @@ public class SqlMeeting {
 		String dayEnd
 	) throws SQLException {
 		
-		long tickFst = Utils.fmtSql2.parse(dayFst).getTime();
-		long tickEnd = Utils.fmtSql2.parse(dayEnd).getTime();
+		long tickFst = UtilsMisc.fmtSql2.parse(dayFst).getTime();
+		long tickEnd = UtilsMisc.fmtSql2.parse(dayEnd).getTime();
 		
 		HashMap<String,String> lst = new HashMap<String,String>();
 		
@@ -39,7 +39,7 @@ public class SqlMeeting {
 			}else{
 				continue;
 			}
-			long tickCur = Utils.fmtDate.parse(_day).getTime();
+			long tickCur = UtilsMisc.fmtDate.parse(_day).getTime();
 			if(tickFst<=tickCur && tickCur<=tickEnd){
 				if(arg[1].length()==0){
 					lst.put(arg[0], "假日");
@@ -99,7 +99,7 @@ public class SqlMeeting {
 						
 			String   oid = RpcBridge.uuid2flat(rs,"oid");				
 			String[] info = RpcBridge.info2flat(rs,"o_info"); 
-			String   t_t3 = Utils.fmtDate.format(t3);
+			String   t_t3 = UtilsMisc.fmtDate.format(t3);
 			if(meet.getKey().equalsIgnoreCase(info[ItemOwner.INFO_OKEY])==false){
 				//same owner but different meeting day (different tenure)
 				meet = new ItemMeeting(oid,info,t_t3,t3,t0);
@@ -132,7 +132,7 @@ public class SqlMeeting {
 			meet = new ItemMeeting(
 				RpcBridge.uuid2flat(rs,"id"),
 				RpcBridge.info2flat(rs,"info"),
-				Utils.fmtDate.format(stmp),
+				UtilsMisc.fmtDate.format(stmp),
 				stmp,last
 			);
 			lst.add(meet);
@@ -154,7 +154,7 @@ public class SqlMeeting {
 			meet = new ItemMeeting(
 				rday,
 				restday.get(rday),
-				Utils.fmtDate.parse(rday)
+				UtilsMisc.fmtDate.parse(rday)
 			);
 			lst.add(meet);
 		}

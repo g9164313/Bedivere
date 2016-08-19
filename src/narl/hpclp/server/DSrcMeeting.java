@@ -68,11 +68,11 @@ public class DSrcMeeting implements JRDataSource {
 		
 		}else if(name.equals("meet_day")){	
 		
-			return Utils.date2tw_d(meet.stmp);
+			return UtilsMisc.date2tw_d(meet.stmp);
 			
 		}else if(name.equals("meet_hour")){	
 			
-			return Utils.fmtTime.format(meet.stmp);
+			return UtilsMisc.fmtTime.format(meet.stmp);
 			
 		}else if(name.equals("tenure_source")){	
 

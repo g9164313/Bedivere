@@ -13,7 +13,7 @@ import gwt.material.design.client.ui.MaterialCheckBox;
 import gwt.material.design.client.ui.MaterialCollection;
 import gwt.material.design.client.ui.MaterialFloatBox;
 import gwt.material.design.client.ui.MaterialLabel;
-import gwt.material.design.client.ui.MaterialLink;
+
 import gwt.material.design.client.ui.MaterialListBox;
 import gwt.material.design.client.ui.MaterialLoader;
 import gwt.material.design.client.ui.MaterialModal;
@@ -54,9 +54,6 @@ public class PanMain extends CtlMain {
     @UiField
     MaterialSearch boxSearch;
 	
-    @UiField
-    MaterialLink lnkPanMeet,lnkPanAccnt;
-    
     @UiField
     MaterialTextBox boxOKey,boxTKey,boxPKey,boxStmp,boxMemo,boxScribe;
 
@@ -134,6 +131,11 @@ public class PanMain extends CtlMain {
 	@UiHandler("lnkPanAccnt")
 	void onPanAccnt(ClickEvent e){
 		Main.switchToAccount();
+	}
+	
+	@UiHandler("lnkPanStorage")
+	void onPanStorage(ClickEvent e){
+		Main.switchToStorage();
 	}
 	
     @UiHandler("lnkSearch")

@@ -410,18 +410,18 @@ public class SqlDataBase {
 	
 	public static Date checkPeriod(Date stamp, String addr) throws SQLException {
 		
-		String day = Utils.fmtDate.format(stamp);
-		String txt = Utils.fmtYear.format(stamp);	
+		String day = UtilsMisc.fmtDate.format(stamp);
+		String txt = UtilsMisc.fmtYear.format(stamp);	
 
 		txt = String.valueOf(Integer.valueOf(txt)+1)+" "+
-			Utils.fmtMonth.format(stamp)+"/"+
-			Utils.fmtDayId.format(stamp)+" "+
+			UtilsMisc.fmtMonth.format(stamp)+"/"+
+			UtilsMisc.fmtDayId.format(stamp)+" "+
 			ItemMeeting.ArriveHour(addr);
 		
-		Date stmp = Utils.fmtMeet.parse(txt);//default time stamp!!
+		Date stmp = UtilsMisc.fmtMeet.parse(txt);//default time stamp!!
 		
 		for(;;){
-			txt = Utils.fmtWeek.format(stmp).toLowerCase();
+			txt = UtilsMisc.fmtWeek.format(stmp).toLowerCase();
 			//first, check whether it is weekend
 			if(txt.startsWith("sun")==true){
 				UtilsCalendar.addDaysToDate(stmp,-2);

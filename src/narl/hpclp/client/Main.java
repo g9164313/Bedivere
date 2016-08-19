@@ -255,11 +255,13 @@ public class Main implements EntryPoint {
 	
 	private static narl.hpclp.client.meeting.PanMain meeting = new narl.hpclp.client.meeting.PanMain();
 	private static narl.hpclp.client.product.PanMain product = new  narl.hpclp.client.product.PanMain();
+	private static narl.hpclp.client.storage.PanMain storage = new  narl.hpclp.client.storage.PanMain();
 	
 	private final static int PAN_DEFAULT=1;//Do we need to fix this? No~~~
 	private final static int PAN_MEETING=0;
 	private final static int PAN_PRODUCT=1;
 	private final static int PAN_ACCOUNT=2;
+	private final static int PAN_STORAGE=3;
 	
 	private static void switch_panel(int id){
 		RootPanel.get().clear();
@@ -269,18 +271,13 @@ public class Main implements EntryPoint {
 			RootPanel.get().add(meeting);
 			break;
 		case PAN_PRODUCT:
-			RootPanel.get().add(product);
-			RootPanel.get().addHandler(new KeyDownHandler(){
-				@Override
-				public void onKeyDown(KeyDownEvent event) {
-					GWT.log("onKeyDown charCode=" + event.getNativeKeyCode()); 
-				}
-				},
-			KeyDownEvent.getType()
-			);			
+			RootPanel.get().add(product);			
 			break;
 		case PAN_ACCOUNT:
 			RootPanel.get().add(new Label("//TODO:--------"));
+			break;
+		case PAN_STORAGE:
+			RootPanel.get().add(storage);
 			break;
 		}
 	}
@@ -295,6 +292,10 @@ public class Main implements EntryPoint {
 	
 	public static void switchToAccount(){
 		switch_panel(PAN_ACCOUNT);
+	}
+	
+	public static void switchToStorage(){
+		switch_panel(PAN_STORAGE);
 	}
 	
 	/*private Event.NativePreviewHandler eventHook = new Event.NativePreviewHandler(){
