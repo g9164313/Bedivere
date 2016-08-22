@@ -257,7 +257,7 @@ public class Main implements EntryPoint {
 	private static narl.hpclp.client.product.PanMain product = new  narl.hpclp.client.product.PanMain();
 	private static narl.hpclp.client.storage.PanMain storage = new  narl.hpclp.client.storage.PanMain();
 	
-	private final static int PAN_DEFAULT=1;//Do we need to fix this? No~~~
+	private final static int PAN_DEFAULT=3;//Do we need to fix this? No~~~
 	private final static int PAN_MEETING=0;
 	private final static int PAN_PRODUCT=1;
 	private final static int PAN_ACCOUNT=2;
@@ -337,6 +337,5 @@ public class Main implements EntryPoint {
 				switch_panel(PAN_DEFAULT);
 			}
 		});
-		
 	}
 }

@@ -49,6 +49,14 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 		);
 	}
 
+	@Override
+	public void onEventShow() {
+	}
+
+	@Override
+	public void onEventHide() {
+	}
+	
 	@UiHandler("boxKey")
 	public void onChangeKey(ValueChangeEvent<String> event) {
 		String val = event.getValue();		

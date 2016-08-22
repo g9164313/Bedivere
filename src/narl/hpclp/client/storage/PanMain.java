@@ -26,6 +26,14 @@ public class PanMain extends ExComposite {
 		arch1.add(new PanTimeMachine());
 	}
 
+	@Override
+	public void onEventShow() {
+	}
+
+	@Override
+	public void onEventHide() {
+	}
+	
 	@UiHandler("lnkPanMeet")
 	void onPanMeet(ClickEvent e){
 		Main.switchToMeeting();
@@ -40,5 +48,4 @@ public class PanMain extends ExComposite {
 	void onPanProdx(ClickEvent e){
 		Main.switchToProduct();
 	}
-
 }

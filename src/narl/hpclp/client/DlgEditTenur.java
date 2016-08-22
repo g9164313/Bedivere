@@ -66,6 +66,15 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 		);
 	}
 
+	@Override
+	public void onEventShow() {
+	}
+
+	@Override
+	public void onEventHide() {
+	}
+	
+	
 	@UiHandler("drpDetType")
 	void onDropdown(SelectionEvent<Widget> event){
 		MaterialLabel txt = (MaterialLabel) event.getSelectedItem();

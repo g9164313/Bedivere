@@ -2,16 +2,41 @@ package narl.itrc.client;
 
 import java.util.ArrayList;
 
+import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialTextBox;
 
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
+import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextBox;
 
 public abstract class ExComposite extends Composite {
+	
+	protected DlgNotify dlgNotify = new DlgNotify();
+		
+	protected void initAddins(MaterialPanel root){
+		root.add(dlgNotify);
+		addAttachHandler(eventShowHide);
+	}
+	
+	public abstract void onEventShow();
+	public abstract void onEventHide();
 
+	private AttachEvent.Handler eventShowHide = new AttachEvent.Handler(){
+		@Override
+		public void onAttachOrDetach(AttachEvent event) {
+			if(event.isAttached()==true){
+				//At this time, we can prepare enviroment paramters
+				onEventShow();
+			}else{
+				onEventHide();
+			}
+		}
+	};	
+	//------------------//
+	
 	private ArrayList<MaterialTextBox> lstBox = new ArrayList<MaterialTextBox>();
 	
 	private boolean isChainBack = true;

@@ -71,8 +71,9 @@
 		</m:MaterialRow>
 		
 	</m:MaterialModalContent>
+	
 	<!-- 確認/取消 -->
-	<m:MaterialModalFooter>		
+	<m:MaterialModalFooter width="95%">		
 		<m:MaterialButton text="確認" type="FLAT" ui:field="btnAction" />
 		<m:MaterialButton text="取消" type="FLAT" ui:field="btnCancel" />
 	</m:MaterialModalFooter>

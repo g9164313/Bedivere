@@ -3,7 +3,6 @@ package narl.hpclp.client;
 import java.util.ArrayList;
 
 import narl.hpclp.shared.ItemOwner;
-
 import gwt.material.design.client.constants.CollectionType;
 import gwt.material.design.client.constants.WavesType;
 import gwt.material.design.client.ui.MaterialButton;
@@ -30,6 +29,19 @@ public class DlgPickOwner extends DlgBase<ItemOwner> {
 	interface DlgPickOwnerUiBinder extends UiBinder<Widget, DlgPickOwner> {
 	}
 
+	public DlgPickOwner() {
+		initWidget(uiBinder.createAndBindUi(this));
+		refxWidget(root,btnAction,btnCancel);
+	}
+
+	@Override
+	public void onEventShow() {
+	}
+
+	@Override
+	public void onEventHide() {
+	}
+	
 	@UiField
 	MaterialModal root;
 	
@@ -48,11 +60,6 @@ public class DlgPickOwner extends DlgBase<ItemOwner> {
 		txtInfo4,txtInfo5,txtInfo6,
 		txtInfo7;
 	
-	public DlgPickOwner() {
-		initWidget(uiBinder.createAndBindUi(this));
-		refxWidget(root,btnAction,btnCancel);
-	}
-
 	public void appear(final String postfix,final ClickHandler hook){
 		txtInfo1.setText("");
 		txtInfo2.setText("");

@@ -26,13 +26,17 @@
 </ui:style>
 
 <m:MaterialPanel ui:field="root">
-	<m:MaterialLabel text="還原點" />
-	<g:ListBox width="70em" height="100em" ui:field="tickList" />
+	
+	<g:SimplePanel ui:field="arch1"/>
+	<g:SimplePanel ui:field="arch2"/>
+	
 	<m:MaterialRow>
-		<m:MaterialColumn> <m:MaterialButton ui:field="tickBackup" /> </m:MaterialColumn>
-		<m:MaterialColumn> <m:MaterialButton ui:field="tickRestore" /> </m:MaterialColumn>
-		<m:MaterialColumn> <m:MaterialButton ui:field="tickSynchr" /> </m:MaterialColumn>
+		<m:MaterialColumn> <m:MaterialButton text="同步" waves="DEFAULT" ui:field="btnSynchr" /> </m:MaterialColumn>
+		<m:MaterialColumn> <m:MaterialButton text="備份" waves="DEFAULT" ui:field="btnBackup" /> </m:MaterialColumn>		
+		<m:MaterialColumn> <m:MaterialButton text="回存" waves="DEFAULT" ui:field="btnRestore" /> </m:MaterialColumn>
 	</m:MaterialRow>
+	
 </m:MaterialPanel>
 	
 </ui:UiBinder> 
+

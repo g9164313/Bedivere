@@ -18,6 +18,7 @@ import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemParam;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
+import narl.itrc.server.Utils;
 
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
@@ -76,7 +77,7 @@ public class RpcBridge extends RemoteServiceServlet
 		return "";
 	}	
 	//---------------------------------//
-	
+
 	@Override
 	public ItemParam initServer() throws IllegalArgumentException {
 		ItemParam res = new ItemParam();
@@ -249,6 +250,19 @@ public class RpcBridge extends RemoteServiceServlet
 	@Override	
 	public void cacheMeeting(ArrayList<ItemMeeting> lst) throws IllegalArgumentException {
 		DSrcMeeting.lst = lst;
+	}
+	//-------------------------//
+
+	@Override
+	public String[] getSPoint() throws IllegalArgumentException {
+		File fs = new File("."); 
+		//String path = new File(".").getAbsolutePath();
+		return fs.list();
+	}
+	
+	@Override
+	public String runScript(String txt) throws IllegalArgumentException {		
+		return Utils.Exec(txt);
 	}
 }
 

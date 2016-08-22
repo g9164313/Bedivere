@@ -24,6 +24,15 @@ public class DlgApprove extends DlgBase<String> {
 		refxWidget(root,btnAction,btnCancel);
 	}
 
+	@Override
+	public void onEventShow() {
+	}
+
+	@Override
+	public void onEventHide() {
+	}
+	
+	
 	@UiField
 	MaterialModal root;
 	

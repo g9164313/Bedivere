@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
+	xmlns:m="urn:import:gwt.material.design.client.ui" >
+	<ui:style>
+	</ui:style>
+
+<m:MaterialModal type="DEFAULT" dismissable="true" ui:field="root" >
+
+	<m:MaterialModalContent>		
+		<m:MaterialRow>
+			<m:MaterialColumn> <m:MaterialIcon ui:field="panIcon" /> </m:MaterialColumn>
+			<m:MaterialColumn> <g:HTMLPanel ui:field="panText" /></m:MaterialColumn>
+		</m:MaterialRow>
+	</m:MaterialModalContent>
+
+	<m:MaterialModalFooter width="95%">		
+		<m:MaterialButton text="了解" type="FLAT" ui:field="btnRoger" />
+	</m:MaterialModalFooter>
+
+</m:MaterialModal>
+	
+</ui:UiBinder> 

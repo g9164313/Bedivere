@@ -29,6 +29,19 @@ public class DlgPickTenur extends DlgBase<ItemTenur> {
 	interface DlgPickTenurUiBinder extends UiBinder<Widget, DlgPickTenur> {
 	}
 
+	public DlgPickTenur() {
+		initWidget(uiBinder.createAndBindUi(this));
+		refxWidget(root,btnAction,btnCancel);
+	}
+
+	@Override
+	public void onEventShow() {
+	}
+
+	@Override
+	public void onEventHide() {
+	}
+	
 	@UiField
 	MaterialModal root;
 	
@@ -48,11 +61,6 @@ public class DlgPickTenur extends DlgBase<ItemTenur> {
 		txtInfo7,txtInfo8,txtInfo9,
 		txtInfo10,txtInfo11;
 	
-	public DlgPickTenur() {
-		initWidget(uiBinder.createAndBindUi(this));
-		refxWidget(root,btnAction,btnCancel);
-	}
-
 	public void appear(final String postfix,final ClickHandler hook){
 		txtInfo1.setText("");
 		txtInfo2.setText("");

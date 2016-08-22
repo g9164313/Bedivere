@@ -111,7 +111,7 @@ public class PanMain extends CtlMain {
 		@Override
 		public void onAttachOrDetach(AttachEvent event) {
 			if(event.isAttached()==true){
-				//At this time, web just prepare enviroment paramters
+				//At this time, we can prepare enviroment paramters
 				Main.initCombo(cmbFormat, ItemProdx.USED_TXT_FMT);
 				Main.initCombo(cmbUnitRef, Main.param.prodxUnit);
 				Main.initCombo(cmbUnitMea, Main.param.prodxUnit);

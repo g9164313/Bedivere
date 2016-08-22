@@ -44,10 +44,10 @@
         <!-- Container -->
         <m:MaterialContainer paddingTop="70" paddingLeft="7" paddingRight="7">
         <m:MaterialRow>
-        	<m:MaterialColumn>
+        	<m:MaterialColumn backgroundColor="white" shadow="1">
         		<g:HTMLPanel ui:field="arch1" />
         	</m:MaterialColumn>
-        	<m:MaterialColumn>
+        	<m:MaterialColumn backgroundColor="white" shadow="1">
         		<g:HTMLPanel ui:field="arch2" />
         	</m:MaterialColumn>
         </m:MaterialRow>        
