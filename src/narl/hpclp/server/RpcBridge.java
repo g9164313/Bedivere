@@ -253,16 +253,33 @@ public class RpcBridge extends RemoteServiceServlet
 	}
 	//-------------------------//
 
+	private static String pathSPoint = ".";
+	
 	@Override
-	public String[] getSPoint() throws IllegalArgumentException {
-		File fs = new File("."); 
-		//String path = new File(".").getAbsolutePath();
-		return fs.list();
+	public String[] listSPoint() throws IllegalArgumentException {
+		final String name="shared/SPoint";
+		final String[] path = {"./","../","../../"};
+		File fs;
+		for(int i=0; i<path.length; i++){
+			String full = path[i]+name;
+			fs = new File(full);
+			if(fs.exists()==true){
+				pathSPoint = fs.getAbsolutePath();
+				System.out.println("SPoint path="+pathSPoint);
+				return fs.list();
+			}
+		}		
+		return null;
 	}
 	
 	@Override
-	public String runScript(String txt) throws IllegalArgumentException {		
-		return Utils.Exec(txt);
+	public String saveSPoint() throws IllegalArgumentException {		
+		return Utils.Exec("save-base");
+	}
+	
+	@Override
+	public String loadSPoint(String name) throws IllegalArgumentException {		
+		return Utils.Exec("load-base @ "+name);
 	}
 }
 

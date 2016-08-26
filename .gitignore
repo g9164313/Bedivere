@@ -12,6 +12,9 @@ jsr107cache-*.jar
 jta-1.1.jar
 
 *.war
+*.gz
+save-base
+load-base
 
 # gwt caches and compiled units #
 war/gwt_bree/

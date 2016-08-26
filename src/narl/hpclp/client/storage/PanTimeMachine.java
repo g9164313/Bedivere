@@ -71,18 +71,22 @@ public class PanTimeMachine extends ExComposite {
 	
 	@Override
 	public void onEventShow() {
-		/*final AsyncCallback<String[]> event = new AsyncCallback<String[]>(){
+		final AsyncCallback<String[]> event = new AsyncCallback<String[]>(){
 			@Override
 			public void onFailure(Throwable caught) {
-				MaterialToast.fireToast("內部錯誤：無法檢查目錄",5000);
+				MaterialToast.fireToast("內部錯誤："+caught.getMessage(),5000);
 			}
 			@Override
 			public void onSuccess(String[] result) {
+				if(result==null){
+					MaterialToast.fireToast("內部錯誤：無法取得資料夾",5000);
+					return;
+				}
 				lstSPoint.setList(Arrays.asList(result));
 				lstSPoint.refresh();
 			}
 		};
-		Main.rpc.getSPoint(event);*/
+		Main.rpc.listSPoint(event);
 	}
 
 	@Override
@@ -93,20 +97,17 @@ public class PanTimeMachine extends ExComposite {
 	void onSynchr(ClickEvent e){
 		//check whether data in each database are same 
 		MaterialLoader.showLoading(true);	
-		Main.rpc.runScript(
+		/*Main.rpc.runScript(
 			"cmd @ arg1 @ arg2",
 			eventRunDone
-		);
+		);*/
 	}
 	
 	@UiHandler("btnBackup")
 	void onBackup(ClickEvent e){
 		//save current database
 		MaterialLoader.showLoading(true);	
-		Main.rpc.runScript(
-			"save-base",
-			eventRunDone
-		);
+		Main.rpc.saveSPoint(eventRunDone);
 	}
 
 	@UiHandler("btnRestore")
@@ -118,17 +119,14 @@ public class PanTimeMachine extends ExComposite {
 			return;
 		}
 		MaterialLoader.showLoading(true);	
-		Main.rpc.runScript(
-			"load-base @ "+name,
-			eventRunDone
-		);
+		Main.rpc.loadSPoint(name,eventRunDone);
 	}
 	
 	private final AsyncCallback<String> eventRunDone = new AsyncCallback<String>(){
 		@Override
 		public void onFailure(Throwable caught) {			
 			MaterialLoader.showLoading(false);
-			MaterialToast.fireToast("內部錯誤：無法執行命令",5000);			
+			MaterialToast.fireToast("內部錯誤："+caught.getMessage(),5000);			
 		}
 		@Override
 		public void onSuccess(String result) {

@@ -22,12 +22,16 @@ public interface RPCAsync {
 		AsyncCallback<String> res
 	) throws IllegalArgumentException;
 	
-	void getSPoint(
+	void listSPoint(
 		AsyncCallback<String[]> res
 	) throws IllegalArgumentException;
 	
-	void runScript(
-		String txt,
+	void saveSPoint(
+		AsyncCallback<String> res
+	) throws IllegalArgumentException;
+	
+	void loadSPoint(
+		String name,
 		AsyncCallback<String> res
 	) throws IllegalArgumentException;
 	
