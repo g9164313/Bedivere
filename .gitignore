@@ -11,11 +11,6 @@ jdo-api-*.jar
 jsr107cache-*.jar
 jta-1.1.jar
 
-*.war
-*.gz
-save-base
-load-base
-
 # gwt caches and compiled units #
 war/gwt_bree/
 gwt-unitCache/
@@ -28,7 +23,11 @@ war/WEB-INF/web.xml
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
 war/narl.hpclp.main/
+war/narl.itrc.main/
 deploy-*
+*.war
+*.gz
+
 
 #compilation logs
 .gwt/
