@@ -15,7 +15,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("calling")
 public interface RPC extends RemoteService {
 	
-	ItemParam initServer() throws IllegalArgumentException;
+	ItemParam initServer(ItemParam hub) throws IllegalArgumentException;
 	
 	String genKey(String args) throws IllegalArgumentException;
 	

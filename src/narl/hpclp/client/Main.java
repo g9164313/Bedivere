@@ -15,8 +15,6 @@ import narl.hpclp.shared.ItemProdx;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.KeyDownEvent;
-import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
@@ -78,7 +76,7 @@ public class Main implements EntryPoint {
 	
 	public static DlgApprove dlgApprove = new DlgApprove();
 	
-	public static ItemParam param = null;//enviroment parameters
+	public static ItemParam param = new ItemParam();//enviroment parameters
 	//----------------------------//
 	
 	public static void printLetter(ItemOwner itm){
@@ -193,9 +191,11 @@ public class Main implements EntryPoint {
 	}
 	
 	public static void initComboEmitter(MaterialListBox box){
-		String[] opt = param.prodxEmitter;
-		for(int i=0; i<opt.length; i++){
-			combo_add_emitt(box,opt[i]);
+		box.clear();
+		for(ItemParam.TxtPair pair:param.prodxEmitter){
+			String val = pair.val;
+			//select the last emitter, it is special!!!
+			combo_add_emitt(box,val);
 		}
 		box.setSelectedIndex(0);
 	}
@@ -222,6 +222,7 @@ public class Main implements EntryPoint {
 		return selectCombo(box,itm,val,false);
 	}
 	
+	//TODO: deprecate this, if combo has no item, just disable it~~~
 	public static int selectCombo(
 		MaterialListBox box,
 		String itm,
@@ -320,7 +321,9 @@ public class Main implements EntryPoint {
 		
 		//Event.addNativePreviewHandler(eventHook);
 
-		rpc.initServer(new AsyncCallback<ItemParam>(){
+		rpc.initServer(
+			param,
+			new AsyncCallback<ItemParam>(){
 			@Override
 			public void onFailure(Throwable caught) {
 				switch_panel(PAN_DEFAULT);

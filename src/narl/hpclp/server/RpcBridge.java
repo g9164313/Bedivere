@@ -16,6 +16,7 @@ import narl.hpclp.shared.ItemAccnt;
 import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemParam;
+import narl.hpclp.shared.ItemParam.TxtPair;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
 import narl.itrc.server.Utils;
@@ -79,8 +80,7 @@ public class RpcBridge extends RemoteServiceServlet
 	//---------------------------------//
 
 	@Override
-	public ItemParam initServer() throws IllegalArgumentException {
-		ItemParam res = new ItemParam();
+	public ItemParam initServer(ItemParam hub) throws IllegalArgumentException {
 		try {		
 			Class.forName("org.postgresql.Driver");					
 			conn = DriverManager.getConnection(
@@ -90,42 +90,43 @@ public class RpcBridge extends RemoteServiceServlet
 			);
 			SqlDataBase.prepare(conn);
 		} catch(ClassNotFoundException e){
-			return res.appendError(e.getMessage());
+			return hub.appendError(e.getMessage());
 		} catch (SQLException e) {			
-			return res.appendError(e.getMessage());
+			return hub.appendError(e.getMessage());
 		}
 
-		checkParamData(res);
+		checkParamValue(hub,hub.prodxDetType,"'%DETTYPE%'");
+		checkParamValue(hub,hub.prodxRadUnit,"'%UNIT%'");
+		checkParamValue(hub,hub.prodxEmitter,"'%EMITTER%'");
+		checkParamValue(hub,hub.accntService,"'%SERVICE%'");
+		checkParamValue(hub,hub.otherRestDay,"'%REST%'");
 		
-		checkJasperPath(res);
+		checkJasperPath(hub);
 		
-		return res;
+		return hub;
 	}
 
-	private void checkParamData(ItemParam res){
+	private void checkParamValue(
+		ItemParam hub,
+		ArrayList<TxtPair> lst,
+		final String type
+	){
 		try {
 			ResultSet rs;
-			rs = getResult("SELECT val FROM param WHERE key SIMILAR TO '%UNIT%' ORDER BY val");			
-			while(rs.next()){ res.gather(rs.getString(1)); }
-			res.mapping("prodxUnit");
-			
-			rs = getResult("SELECT val FROM param WHERE key SIMILAR TO '%DETTYPE%' ORDER BY key");			
-			while(rs.next()){ res.gather(rs.getString(1)); }
-			res.mapping("detectType");
-			
-			rs = getResult("SELECT val FROM param WHERE key SIMILAR TO '%SERVICE%' ORDER BY val");			
-			while(rs.next()){ res.gather(rs.getString(1)); }
-			res.mapping("accntService");
-			
-			rs = getResult("SELECT val FROM param WHERE key SIMILAR TO '%EMITTER%' ORDER BY val");			
-			while(rs.next()){ res.gather(rs.getString(1)); }
-			res.mapping("prodxEmitter");
-			
-			rs = getResult("SELECT val FROM param WHERE key SIMILAR TO '%REST%' ORDER BY val");			
-			while(rs.next()){ res.gather(rs.getString(1)); }
-						
+			rs = getResult(
+				"SELECT key,val FROM param "+
+				"WHERE key SIMILAR TO "+type+" "+
+				"ORDER BY val"
+			);			
+			while(rs.next()){ 
+				hub.gather(
+					lst,
+					rs.getString(1),
+					rs.getString(2)
+				);
+			}					
 		} catch (SQLException e) {			
-			res.appendError(e.getMessage());
+			hub.appendError(e.getMessage());
 		}
 	}
 	

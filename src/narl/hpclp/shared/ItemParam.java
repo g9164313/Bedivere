@@ -3,6 +3,11 @@ package narl.hpclp.shared;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * Hub for enviroment parameter.<p>
+ * @author qq
+ *
+ */
 public class ItemParam implements Serializable {
 
 	private static final long serialVersionUID = -672433658255729566L;
@@ -10,38 +15,34 @@ public class ItemParam implements Serializable {
 	public ItemParam(){		
 	}
 	
-	public String[] prodxUnit;
-	public String[] detectType;
-	public String[] accntService;
-	public String[] prodxEmitter;
-			
-	private ArrayList<String> tmp = new ArrayList<String>();
+	public static class TxtPair{
+		public String key;
+		public String val;
+		public TxtPair(String k, String v){
+			key = k;
+			val = v;
+		}
+	};
 	
-	public void gather(String val){
-		tmp.add(val);
+	public ArrayList<TxtPair> prodxDetType = new ArrayList<TxtPair>();
+	public ArrayList<TxtPair> prodxRadUnit = new ArrayList<TxtPair>();
+	public ArrayList<TxtPair> prodxEmitter = new ArrayList<TxtPair>();
+	
+	public ArrayList<TxtPair> accntService = new ArrayList<TxtPair>();
+	
+	public ArrayList<TxtPair> otherRestDay = new ArrayList<TxtPair>();
+
+	public void gather(ArrayList<TxtPair> lst,String key,String val){
+		lst.add(new TxtPair(key,val));
 	}
 	
-	public void mapping(String name){
-		if(name.equalsIgnoreCase("prodxUnit")==true){
-			prodxUnit = tmp.toArray(new String[0]);
-		}else if(name.equalsIgnoreCase("detectType")==true){
-			detectType = tmp.toArray(new String[0]);
-		}else if(name.equalsIgnoreCase("accntService")==true){
-			accntService = tmp.toArray(new String[0]);
-		}else if(name.equalsIgnoreCase("prodxEmitter")==true){
-			prodxEmitter = tmp.toArray(new String[0]);
-		}
-		tmp.clear();
-	}
+	/**
+	 * Server can put error message here~~~
+	 */
+	public String error = "";
 	
-	public String error = null;
-	
-	public ItemParam appendError(String txt){
-		if(error==null){
-			error = txt;
-		}else{
-			error = error+"\n========\n"+txt;
-		}
+	public ItemParam appendError(String msg){
+		error = error + msg +"\n";
 		return this;
 	}
 }

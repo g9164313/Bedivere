@@ -46,11 +46,17 @@
         <m:MaterialRow>
         	<m:MaterialColumn backgroundColor="white" shadow="1">
         		<g:HTMLPanel ui:field="arch1" />
-        	</m:MaterialColumn>
-        	<m:MaterialColumn backgroundColor="white" shadow="1">
         		<g:HTMLPanel ui:field="arch2" />
         	</m:MaterialColumn>
-        </m:MaterialRow>        
+        	<m:MaterialColumn backgroundColor="white" shadow="1">
+        		<g:HTMLPanel ui:field="arch3" />
+        		<g:HTMLPanel ui:field="arch4" />
+        	</m:MaterialColumn>
+        	<m:MaterialColumn backgroundColor="white" shadow="1">
+        		<g:HTMLPanel ui:field="arch5" />
+        		<g:HTMLPanel ui:field="arch6" />
+        	</m:MaterialColumn>
+        </m:MaterialRow>
 	    </m:MaterialContainer>
 </m:MaterialPanel>
 

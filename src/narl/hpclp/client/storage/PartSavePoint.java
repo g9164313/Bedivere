@@ -22,12 +22,12 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 
-public class PanTimeMachine extends ExComposite {
+public class PartSavePoint extends ExComposite {
 
-	private static PanTimeMachineUiBinder uiBinder = GWT
-		.create(PanTimeMachineUiBinder.class);
+	private static PartSavePointUiBinder uiBinder = GWT
+		.create(PartSavePointUiBinder.class);
 
-	interface PanTimeMachineUiBinder extends UiBinder<Widget, PanTimeMachine> {
+	interface PartSavePointUiBinder extends UiBinder<Widget, PartSavePoint> {
 	}
 	
 	@UiField
@@ -42,7 +42,7 @@ public class PanTimeMachine extends ExComposite {
 	
 	private SingleSelectionModel<String> modSName = new SingleSelectionModel<String>();
 	
-	public PanTimeMachine() {
+	public PartSavePoint() {
 		initWidget(uiBinder.createAndBindUi(this));		
 		initAddins(root);
 		initSelector();
@@ -57,7 +57,7 @@ public class PanTimeMachine extends ExComposite {
 			}
 		};
 		grdSName.setSelectionModel(modSName);
-		grdSName.setSize("100%","77vh");
+		grdSName.setSize("100%","50vh");
 		grdSName.addColumn(col,"還原點");
 		//control part
 		SimplePager pager = new SimplePager();

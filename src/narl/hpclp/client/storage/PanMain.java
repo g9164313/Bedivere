@@ -13,17 +13,18 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class PanMain extends ExComposite {
 
-	private static PanMainUiBinder uiBinder = GWT.create(PanMainUiBinder.class);
+	private static PanMainUiBinder uiBinder = GWT
+		.create(PanMainUiBinder.class);
 
 	interface PanMainUiBinder extends UiBinder<Widget, PanMain> {
 	}
 
 	@UiField
-	HTMLPanel arch1,arch2;
+	HTMLPanel arch1,arch2,arch3,arch4,arch5,arch6;
 	
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));
-		arch1.add(new PanTimeMachine());
+		arch1.add(new PartSavePoint());
 	}
 
 	@Override

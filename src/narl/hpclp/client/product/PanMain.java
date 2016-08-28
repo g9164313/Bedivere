@@ -113,8 +113,8 @@ public class PanMain extends CtlMain {
 			if(event.isAttached()==true){
 				//At this time, we can prepare enviroment paramters
 				Main.initCombo(cmbFormat, ItemProdx.USED_TXT_FMT);
-				Main.initCombo(cmbUnitRef, Main.param.prodxUnit);
-				Main.initCombo(cmbUnitMea, Main.param.prodxUnit);
+				//TODO:Main.initCombo(cmbUnitRef, Main.param.prodxUnit);
+				//TODO:Main.initCombo(cmbUnitMea, Main.param.prodxUnit);
 				Main.initComboEmitter(cmbEmitter);
 				emitt = new ParmEmitter(cmbEmitter.getSelectedValue());
 				emitt2box();

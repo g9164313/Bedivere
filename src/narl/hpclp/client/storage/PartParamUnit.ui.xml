@@ -24,19 +24,18 @@
         -moz-transition: 0.4s all;
     }
 </ui:style>
-
+	
 <m:MaterialPanel ui:field="root">
-	
-	<g:SimplePanel ui:field="arch1"/>
-	<g:SimplePanel ui:field="arch2"/>
-	
 	<m:MaterialRow>
-		<m:MaterialColumn> <m:MaterialButton text="同步" waves="DEFAULT" ui:field="btnSynchr" /> </m:MaterialColumn>
-		<m:MaterialColumn> <m:MaterialButton text="備份" waves="DEFAULT" ui:field="btnBackup" /> </m:MaterialColumn>		
-		<m:MaterialColumn> <m:MaterialButton text="回存" waves="DEFAULT" ui:field="btnRestore" /> </m:MaterialColumn>
+		<m:MaterialColumn> 
+			<g:SimplePanel ui:field="arch1"/>
+			<g:SimplePanel ui:field="arch2"/>
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialButton text="新增" waves="DEFAULT" ui:field="btnCreate" /> 
+			<m:MaterialButton text="刪除" waves="DEFAULT" ui:field="btnDelete" />
+		</m:MaterialColumn>
 	</m:MaterialRow>
-	
 </m:MaterialPanel>
 	
 </ui:UiBinder> 
-

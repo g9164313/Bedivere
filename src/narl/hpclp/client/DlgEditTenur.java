@@ -219,10 +219,11 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	
 	public void initDetectType(){
 		drpDetType.clear();
-		String[] val = Main.param.detectType;
+		//TODO:how to display??
+		/*String[] val = Main.param.detectType;
 		for(int i=0; i<val.length; i++){
 			drpDetType.add(new MaterialLabel(val[i]));
-		}
+		}*/
 	}
 	
 	private void setDetectType(String val){

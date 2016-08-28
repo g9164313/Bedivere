@@ -14,6 +14,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface RPCAsync {
 	
 	void initServer(
+		ItemParam hub,
 		AsyncCallback<ItemParam> res
 	) throws IllegalArgumentException;
 	
