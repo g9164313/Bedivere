@@ -133,9 +133,9 @@ public class PanMain extends CtlMain {
 		Main.switchToAccount();
 	}
 	
-	@UiHandler("lnkPanStorage")
+	@UiHandler("lnkPanSetting")
 	void onPanStorage(ClickEvent e){
-		Main.switchToStorage();
+		Main.switchToSetting();
 	}
 	
     @UiHandler("lnkSearch")

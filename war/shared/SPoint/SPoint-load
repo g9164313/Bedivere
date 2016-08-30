@@ -1,0 +1,15 @@
+#/bin/bash
+
+BASE_NAME=bookkeeping
+
+BASE_PORT=8765
+
+cp $1 tmp_file.gz 
+
+gunzip tmp_file.gz 
+
+psql $BASE_NAME -p $BASE_PORT < tmp_file 
+
+vacuumdb -a -z 
+
+rm -f tmp_file

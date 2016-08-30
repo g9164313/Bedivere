@@ -6,6 +6,7 @@ import narl.hpclp.shared.ItemAccnt;
 import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemParam;
+import narl.hpclp.shared.ParamHub;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
 
@@ -15,7 +16,7 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 @RemoteServiceRelativePath("calling")
 public interface RPC extends RemoteService {
 	
-	ItemParam initServer(ItemParam hub) throws IllegalArgumentException;
+	ParamHub initServer(ParamHub hub) throws IllegalArgumentException;
 	
 	String genKey(String args) throws IllegalArgumentException;
 	
@@ -32,6 +33,7 @@ public interface RPC extends RemoteService {
 	ItemTenur modifyTenur(ItemTenur obj) throws IllegalArgumentException;
 	ItemAccnt modifyAccnt(ItemAccnt obj) throws IllegalArgumentException;
 	ItemProdx modifyProdx(ItemProdx obj) throws IllegalArgumentException;
+	ItemParam modifyParam(ItemParam obj) throws IllegalArgumentException;
 	
 	ArrayList<ItemOwner> cacheOwner(ArrayList<ItemOwner> lst) throws IllegalArgumentException;
 	ArrayList<ItemTenur> cacheTenure(ArrayList<ItemTenur> lst) throws IllegalArgumentException;	

@@ -1,4 +1,4 @@
-package narl.hpclp.client.storage;
+package narl.hpclp.client.setting;
 
 import java.util.Arrays;
 
@@ -22,12 +22,12 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 
-public class PartSavePoint extends ExComposite {
+public class PartSPoint extends ExComposite {
 
-	private static PartSavePointUiBinder uiBinder = GWT
-		.create(PartSavePointUiBinder.class);
+	private static PartSPointUiBinder uiBinder = GWT
+		.create(PartSPointUiBinder.class);
 
-	interface PartSavePointUiBinder extends UiBinder<Widget, PartSavePoint> {
+	interface PartSPointUiBinder extends UiBinder<Widget, PartSPoint> {
 	}
 	
 	@UiField
@@ -42,7 +42,7 @@ public class PartSavePoint extends ExComposite {
 	
 	private SingleSelectionModel<String> modSName = new SingleSelectionModel<String>();
 	
-	public PartSavePoint() {
+	public PartSPoint() {
 		initWidget(uiBinder.createAndBindUi(this));		
 		initAddins(root);
 		initSelector();
@@ -57,7 +57,7 @@ public class PartSavePoint extends ExComposite {
 			}
 		};
 		grdSName.setSelectionModel(modSName);
-		grdSName.setSize("100%","50vh");
+		grdSName.setSize("100%","43vh");
 		grdSName.addColumn(col,"還原點");
 		//control part
 		SimplePager pager = new SimplePager();
@@ -81,7 +81,7 @@ public class PartSavePoint extends ExComposite {
 				if(result==null){
 					MaterialToast.fireToast("內部錯誤：無法取得資料夾",5000);
 					return;
-				}
+				}				
 				lstSPoint.setList(Arrays.asList(result));
 				lstSPoint.refresh();
 			}

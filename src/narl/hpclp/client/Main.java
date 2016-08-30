@@ -11,6 +11,7 @@ import narl.hpclp.shared.ItemAccnt;
 import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemParam;
+import narl.hpclp.shared.ParamHub;
 import narl.hpclp.shared.ItemProdx;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -76,7 +77,7 @@ public class Main implements EntryPoint {
 	
 	public static DlgApprove dlgApprove = new DlgApprove();
 	
-	public static ItemParam param = new ItemParam();//enviroment parameters
+	public static ParamHub param = new ParamHub();//enviroment parameters
 	//----------------------------//
 	
 	public static void printLetter(ItemOwner itm){
@@ -192,8 +193,8 @@ public class Main implements EntryPoint {
 	
 	public static void initComboEmitter(MaterialListBox box){
 		box.clear();
-		for(ItemParam.TxtPair pair:param.prodxEmitter){
-			String val = pair.val;
+		for(ItemParam pair:param.prodxEmitter){
+			String val = pair.getVal();
 			//select the last emitter, it is special!!!
 			combo_add_emitt(box,val);
 		}
@@ -256,13 +257,13 @@ public class Main implements EntryPoint {
 	
 	private static narl.hpclp.client.meeting.PanMain meeting = new narl.hpclp.client.meeting.PanMain();
 	private static narl.hpclp.client.product.PanMain product = new  narl.hpclp.client.product.PanMain();
-	private static narl.hpclp.client.storage.PanMain storage = new  narl.hpclp.client.storage.PanMain();
+	private static narl.hpclp.client.setting.PanMain setting = new  narl.hpclp.client.setting.PanMain();
 	
 	private final static int PAN_DEFAULT=3;//Do we need to fix this? No~~~
 	private final static int PAN_MEETING=0;
 	private final static int PAN_PRODUCT=1;
 	private final static int PAN_ACCOUNT=2;
-	private final static int PAN_STORAGE=3;
+	private final static int PAN_SETTING=3;
 	
 	private static void switch_panel(int id){
 		RootPanel.get().clear();
@@ -277,8 +278,8 @@ public class Main implements EntryPoint {
 		case PAN_ACCOUNT:
 			RootPanel.get().add(new Label("//TODO:--------"));
 			break;
-		case PAN_STORAGE:
-			RootPanel.get().add(storage);
+		case PAN_SETTING:
+			RootPanel.get().add(setting);
 			break;
 		}
 	}
@@ -295,8 +296,8 @@ public class Main implements EntryPoint {
 		switch_panel(PAN_ACCOUNT);
 	}
 	
-	public static void switchToStorage(){
-		switch_panel(PAN_STORAGE);
+	public static void switchToSetting(){
+		switch_panel(PAN_SETTING);
 	}
 	
 	/*private Event.NativePreviewHandler eventHook = new Event.NativePreviewHandler(){
@@ -323,13 +324,13 @@ public class Main implements EntryPoint {
 
 		rpc.initServer(
 			param,
-			new AsyncCallback<ItemParam>(){
+			new AsyncCallback<ParamHub>(){
 			@Override
 			public void onFailure(Throwable caught) {
 				switch_panel(PAN_DEFAULT);
 			}
 			@Override
-			public void onSuccess(ItemParam result) {
+			public void onSuccess(ParamHub result) {
 				if(result.error!=null){
 					//just post a error message~~~~
 					RootPanel.get().add(new Label(result.error));

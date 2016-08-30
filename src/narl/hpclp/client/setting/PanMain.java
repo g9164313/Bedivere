@@ -1,4 +1,4 @@
-package narl.hpclp.client.storage;
+package narl.hpclp.client.setting;
 
 import narl.hpclp.client.Main;
 import narl.itrc.client.ExComposite;
@@ -24,7 +24,14 @@ public class PanMain extends ExComposite {
 	
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));
-		arch1.add(new PartSavePoint());
+		
+		arch1.add(new PartParamService());
+		arch3.add(new PartParamRestday());
+		arch5.add(new PartSPoint());
+		
+		arch2.add(new PartParamDetType());
+		arch4.add(new PartParamUnit());
+		arch6.add(new PartParamEmitter());
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import narl.hpclp.shared.ItemAccnt;
 import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemParam;
+import narl.hpclp.shared.ParamHub;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
 
@@ -14,8 +15,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 public interface RPCAsync {
 	
 	void initServer(
-		ItemParam hub,
-		AsyncCallback<ItemParam> res
+		ParamHub hub,
+		AsyncCallback<ParamHub> res
 	) throws IllegalArgumentException;
 	
 	void genKey(
@@ -76,6 +77,11 @@ public interface RPCAsync {
 	void modifyProdx(
 		ItemProdx obj,
 		AsyncCallback<ItemProdx> res
+	) throws IllegalArgumentException;
+	
+	void modifyParam(
+		ItemParam obj,
+		AsyncCallback<ItemParam> res
 	) throws IllegalArgumentException;
 	
 	

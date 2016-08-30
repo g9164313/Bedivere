@@ -15,10 +15,13 @@ import com.google.gwt.user.client.ui.TextBox;
 public abstract class ExComposite extends Composite {
 	
 	protected DlgNotify dlgNotify = new DlgNotify();
-		
+	
+	public ExComposite(){
+		addAttachHandler(eventShowHide);//default~~~
+	}
+	
 	protected void initAddins(MaterialPanel root){
-		root.add(dlgNotify);
-		addAttachHandler(eventShowHide);
+		root.add(dlgNotify);		
 	}
 	
 	public abstract void onEventShow();

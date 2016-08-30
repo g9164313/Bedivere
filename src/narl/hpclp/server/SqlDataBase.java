@@ -14,6 +14,7 @@ import narl.hpclp.shared.Const;
 import narl.hpclp.shared.ItemAccnt;
 import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemOwner;
+import narl.hpclp.shared.ItemParam;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
 
@@ -24,9 +25,9 @@ import narl.hpclp.shared.ItemTenur;
  */
 public class SqlDataBase {
 
-	public static PreparedStatement insertOwner,insertTenur,insertAccnt,insertProdx;	
-	public static PreparedStatement updateOwner,updateTenur,updateAccnt,updateProdx;	
-	public static PreparedStatement deleteOwner,deleteTenue,deleteAccnt,deleteProdx;
+	public static PreparedStatement insertOwner,insertTenur,insertAccnt,insertProdx,insertParam;	
+	public static PreparedStatement updateOwner,updateTenur,updateAccnt,updateProdx,updateParam;	
+	public static PreparedStatement deleteOwner,deleteTenue,deleteAccnt,deleteProdx,deleteParam;
 	
 	public static void prepare(Connection conn) throws SQLException{
 		
@@ -34,16 +35,19 @@ public class SqlDataBase {
 		insertTenur = conn.prepareStatement(SQL_INSERT_TENUR);
 		insertAccnt = conn.prepareStatement(SQL_INSERT_ACCNT);
 		insertProdx = conn.prepareStatement(SQL_INSERT_PRODX);
+		insertParam = conn.prepareStatement(SQL_INSERT_PARAM);
 		//---------------------------//
 		updateOwner = conn.prepareStatement(SQL_UPDATE_OWNER);	
 		updateTenur = conn.prepareStatement(SQL_UPDATE_TENUR);
 		updateAccnt = conn.prepareStatement(SQL_UPDATE_ACCNT);
 		updateProdx = conn.prepareStatement(SQL_UPDATE_PRODX);
+		updateParam = conn.prepareStatement(SQL_UPDATE_PARAM);
 		//---------------------------//
 		deleteOwner = conn.prepareStatement(SQL_DELETE_OWNER);
 		deleteTenue = conn.prepareStatement(SQL_DELETE_TENUR);
 		deleteAccnt = conn.prepareStatement(SQL_DELETE_ACCNT);
 		deleteProdx = conn.prepareStatement(SQL_DELETE_PRODX);
+		deleteParam = conn.prepareStatement(SQL_DELETE_PARAM);
 	}
 	//--------------------------//
 	
@@ -443,6 +447,42 @@ public class SqlDataBase {
 		return stmp;
 	}
 	
+	private static final String SQL_INSERT_PARAM = "INSERT INTO "+Const.PARAM+" (key,val) VALUES(?,?)";
+		
+	private static final String SQL_UPDATE_PARAM = "UPDATE "+Const.PARAM+" SET val=? WHERE key=?";
+		
+	private static final String SQL_DELETE_PARAM = "DELETE FROM "+Const.PARAM+" WHERE key=?";
+		
+	public static ItemParam modifyParam(ItemParam obj) throws IllegalArgumentException {
+		try {
+			switch(obj.getState()){
+			case ItemParam.STA_CREATE:
+				insertParam.setString(1,obj.getKey());
+				insertParam.setString(2,obj.getVal());
+				insertParam.execute();
+				obj.setState(ItemParam.STA_IDLE);
+				break;
+			
+			case ItemParam.STA_UPDATE:				
+				updateParam.setString(1,obj.getVal());
+				updateParam.setString(2,obj.getKey());
+				updateParam.execute();
+				obj.setState(ItemParam.STA_IDLE);
+				break;
+			
+			case ItemParam.STA_DELETE:			
+				deleteParam.setString(1,obj.getKey());
+				deleteParam.execute();
+				break;
+			}
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+			
+			obj.appendError(e.getMessage());
+		}
+		return obj;
+	}	
 	//--------------------------//
 	
 	public static String getUUID(

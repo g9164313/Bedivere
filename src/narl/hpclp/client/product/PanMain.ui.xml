@@ -34,7 +34,7 @@
                 	<m:MaterialLink iconPosition="NONE" tooltip="排程" tooltipPosition="BOTTOM" iconType="EVENT" ui:field="lnkPanMeet" />
                 	<!-- <m:MaterialLink iconPosition="NONE" tooltip="報告" tooltipPosition="BOTTOM" iconType="DESCRIPTION" ui:field="lnkPanProdx" /> -->
                 	<m:MaterialLink iconPosition="NONE" tooltip="會計" tooltipPosition="BOTTOM" iconType="ACCOUNT_BALANCE" ui:field="lnkPanAccnt" />
-                	<m:MaterialLink iconPosition="NONE" tooltip="資料" tooltipPosition="BOTTOM" iconType="CLOUD_QUEUE" ui:field="lnkPanStorage" />
+                	<m:MaterialLink iconPosition="NONE" tooltip="設定" tooltipPosition="BOTTOM" iconType="CLOUD_QUEUE" ui:field="lnkPanSetting" />
                 </m:MaterialNavSection>
                 <m:MaterialNavSection float="RIGHT" hideOn="NONE">                	
                     <m:MaterialLink iconPosition="NONE" tooltip="搜尋" tooltipPosition="BOTTOM" iconType="SEARCH" ui:field="lnkSearch" />

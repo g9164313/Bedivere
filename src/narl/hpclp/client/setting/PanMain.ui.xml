@@ -34,7 +34,7 @@
                 	<m:MaterialLink iconPosition="NONE" tooltip="排程" tooltipPosition="BOTTOM" iconType="EVENT" ui:field="lnkPanMeet" />
                 	<m:MaterialLink iconPosition="NONE" tooltip="報告" tooltipPosition="BOTTOM" iconType="DESCRIPTION" ui:field="lnkPanProdx" />
                 	<m:MaterialLink iconPosition="NONE" tooltip="會計" tooltipPosition="BOTTOM" iconType="ACCOUNT_BALANCE" ui:field="lnkPanAccnt" />
-                	<!-- <m:MaterialLink iconPosition="NONE" tooltip="資料" tooltipPosition="BOTTOM" iconType="CLOUD_QUEUE" ui:field="lnkPanStorage" /> -->
+                	<!-- <m:MaterialLink iconPosition="NONE" tooltip="設定" tooltipPosition="BOTTOM" iconType="CLOUD_QUEUE" ui:field="lnkPanSetting" /> -->
                 </m:MaterialNavSection>
                 <m:MaterialNavSection float="RIGHT" hideOn="NONE">   
                 </m:MaterialNavSection>
@@ -44,19 +44,29 @@
         <!-- Container -->
         <m:MaterialContainer paddingTop="70" paddingLeft="7" paddingRight="7">
         <m:MaterialRow>
-        	<m:MaterialColumn backgroundColor="white" shadow="1">
+        	<m:MaterialColumn marginLeft="13" backgroundColor="white" shadow="1">
         		<g:HTMLPanel ui:field="arch1" />
-        		<g:HTMLPanel ui:field="arch2" />
         	</m:MaterialColumn>
-        	<m:MaterialColumn backgroundColor="white" shadow="1">
+        	<m:MaterialColumn marginLeft="13" backgroundColor="white" shadow="1">
         		<g:HTMLPanel ui:field="arch3" />
-        		<g:HTMLPanel ui:field="arch4" />
         	</m:MaterialColumn>
-        	<m:MaterialColumn backgroundColor="white" shadow="1">
+        	<m:MaterialColumn marginLeft="13" backgroundColor="white" shadow="1">
         		<g:HTMLPanel ui:field="arch5" />
-        		<g:HTMLPanel ui:field="arch6" />
         	</m:MaterialColumn>
         </m:MaterialRow>
+        
+        <m:MaterialRow marginTop="13">
+        	<m:MaterialColumn marginLeft="13" backgroundColor="white" shadow="1">
+        		<g:HTMLPanel ui:field="arch2" />
+        	</m:MaterialColumn>
+        	<m:MaterialColumn marginLeft="13" backgroundColor="white" shadow="1">
+        		 <g:HTMLPanel ui:field="arch4" />
+        	</m:MaterialColumn>
+        	<m:MaterialColumn marginLeft="13" backgroundColor="white" shadow="1">
+				<g:HTMLPanel ui:field="arch6" />
+        	</m:MaterialColumn>
+        </m:MaterialRow>
+        
 	    </m:MaterialContainer>
 </m:MaterialPanel>
 

@@ -23,19 +23,24 @@
         -webkit-transition: 0.4s all;
         -moz-transition: 0.4s all;
     }
+    .padTop {
+    	padding-top: 20px;
+	}
 </ui:style>
-	
+
 <m:MaterialPanel ui:field="root">
 	<m:MaterialRow>
 		<m:MaterialColumn> 
 			<g:SimplePanel ui:field="arch1"/>
 			<g:SimplePanel ui:field="arch2"/>
 		</m:MaterialColumn>
-		<m:MaterialColumn>
-			<m:MaterialButton text="新增" waves="DEFAULT" ui:field="btnCreate" /> 
-			<m:MaterialButton text="刪除" waves="DEFAULT" ui:field="btnDelete" />
+		<m:MaterialColumn marginTop="13" >
+			<m:MaterialRow> <m:MaterialButton text="同步" waves="DEFAULT" ui:field="btnSynchr" /> </m:MaterialRow>
+			<m:MaterialRow> <m:MaterialButton text="備份" waves="DEFAULT" ui:field="btnBackup" /> </m:MaterialRow>
+			<m:MaterialRow> <m:MaterialButton text="回存" waves="DEFAULT" ui:field="btnRestore"/> </m:MaterialRow>			
 		</m:MaterialColumn>
 	</m:MaterialRow>
 </m:MaterialPanel>
-	
+
 </ui:UiBinder> 
+

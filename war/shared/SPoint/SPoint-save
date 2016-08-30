@@ -1,0 +1,25 @@
+#/bin/sh
+
+BASE_NAME=bookkeeping
+BASE_PORT=8765
+
+FILE_NAME=base-$(date +%Y-%m-%d-%H)
+
+vacuumdb -a -z
+
+echo 'start to dump....'
+
+pg_dump $BASE_NAME -p $BASE_PORT > $FILE_NAME
+
+sed -i '1s/^/DROP TABLE owner;\n/' $FILE_NAME
+sed -i '1s/^/DROP TABLE tenure;\n/' $FILE_NAME
+sed -i '1s/^/DROP TABLE account;\n/' $FILE_NAME
+sed -i '1s/^/DROP TABLE product;\n/' $FILE_NAME
+sed -i '1s/^/DROP TABLE zipcode;\n/' $FILE_NAME
+sed -i '1s/^/DROP TABLE param;\n/' $FILE_NAME
+
+gzip -f $FILE_NAME
+
+
+
+

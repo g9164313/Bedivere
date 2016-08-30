@@ -1,6 +1,7 @@
 package narl.hpclp.server;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.sql.Array;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 
 import narl.hpclp.client.RPC;
@@ -16,11 +19,12 @@ import narl.hpclp.shared.ItemAccnt;
 import narl.hpclp.shared.ItemMeeting;
 import narl.hpclp.shared.ItemOwner;
 import narl.hpclp.shared.ItemParam;
-import narl.hpclp.shared.ItemParam.TxtPair;
 import narl.hpclp.shared.ItemProdx;
 import narl.hpclp.shared.ItemTenur;
+import narl.hpclp.shared.ParamHub;
 import narl.itrc.server.Utils;
 
+import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
@@ -80,7 +84,7 @@ public class RpcBridge extends RemoteServiceServlet
 	//---------------------------------//
 
 	@Override
-	public ItemParam initServer(ItemParam hub) throws IllegalArgumentException {
+	public ParamHub initServer(ParamHub hub) throws IllegalArgumentException {
 		try {		
 			Class.forName("org.postgresql.Driver");					
 			conn = DriverManager.getConnection(
@@ -95,11 +99,11 @@ public class RpcBridge extends RemoteServiceServlet
 			return hub.appendError(e.getMessage());
 		}
 
-		checkParamValue(hub,hub.prodxDetType,"'%DETTYPE%'");
-		checkParamValue(hub,hub.prodxRadUnit,"'%UNIT%'");
-		checkParamValue(hub,hub.prodxEmitter,"'%EMITTER%'");
-		checkParamValue(hub,hub.accntService,"'%SERVICE%'");
-		checkParamValue(hub,hub.otherRestDay,"'%REST%'");
+		checkParamValue(hub,hub.prodxDetType,"'DETTYPE%'");
+		checkParamValue(hub,hub.prodxRadUnit,"'UNIT%'");
+		checkParamValue(hub,hub.prodxEmitter,"'EMITTER%'");
+		checkParamValue(hub,hub.accntService,"'SERVICE%'");
+		checkParamValue(hub,hub.otherRestDay,"'RESTDAY%'");
 		
 		checkJasperPath(hub);
 		
@@ -107,8 +111,8 @@ public class RpcBridge extends RemoteServiceServlet
 	}
 
 	private void checkParamValue(
-		ItemParam hub,
-		ArrayList<TxtPair> lst,
+		ParamHub hub,
+		ArrayList<ItemParam> lst,
 		final String type
 	){
 		try {
@@ -116,7 +120,7 @@ public class RpcBridge extends RemoteServiceServlet
 			rs = getResult(
 				"SELECT key,val FROM param "+
 				"WHERE key SIMILAR TO "+type+" "+
-				"ORDER BY val"
+				"ORDER BY val DESC"
 			);			
 			while(rs.next()){ 
 				hub.gather(
@@ -130,7 +134,7 @@ public class RpcBridge extends RemoteServiceServlet
 		}
 	}
 	
-	private void checkJasperPath(ItemParam res){
+	private void checkJasperPath(ParamHub res){
 		final String name = "/narl.hpclp.jasper";
 		String path = new File(".").getAbsolutePath();		
 		//Try every possible path~~~
@@ -201,6 +205,12 @@ public class RpcBridge extends RemoteServiceServlet
 	}
 	
 	@Override
+	public ItemParam modifyParam(ItemParam obj) throws IllegalArgumentException {
+		return SqlDataBase.modifyParam(obj);
+	}
+	//---------------------------------//
+	
+	@Override
 	public ArrayList<ItemOwner> cacheOwner(ArrayList<ItemOwner> lst) throws IllegalArgumentException {
 		DSrcOwner.lst = new ArrayList<ItemOwner>();
 		for(ItemOwner itm:lst){
@@ -258,16 +268,35 @@ public class RpcBridge extends RemoteServiceServlet
 	
 	@Override
 	public String[] listSPoint() throws IllegalArgumentException {
+		
 		final String name="shared/SPoint";
 		final String[] path = {"./","../","../../"};
+		
 		File fs;
 		for(int i=0; i<path.length; i++){
+			
 			String full = path[i]+name;
+			
 			fs = new File(full);
+			
 			if(fs.exists()==true){
+				
 				pathSPoint = fs.getAbsolutePath();
-				System.out.println("SPoint path="+pathSPoint);
-				return fs.list();
+				
+				GWT.log("SPoint path="+pathSPoint);
+				
+				final FilenameFilter flt = new FilenameFilter(){
+					@Override
+					public boolean accept(File dir, String name) {
+						if(name.contains("SPoint")==true){
+							return false;
+						}
+						return true;
+					}
+				};
+				String[] lst = fs.list(flt);
+				Arrays.sort(lst,Collections.reverseOrder());
+				return lst;
 			}
 		}		
 		return null;
@@ -275,12 +304,12 @@ public class RpcBridge extends RemoteServiceServlet
 	
 	@Override
 	public String saveSPoint() throws IllegalArgumentException {		
-		return Utils.Exec("save-base");
+		return Utils.Exec("SPoint-save");
 	}
 	
 	@Override
 	public String loadSPoint(String name) throws IllegalArgumentException {		
-		return Utils.Exec("load-base @ "+name);
+		return Utils.Exec("SPoint-load @ "+name);
 	}
 }
 
