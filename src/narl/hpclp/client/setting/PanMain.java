@@ -13,15 +13,11 @@ import com.google.gwt.user.client.ui.Widget;
 
 public class PanMain extends ExComposite {
 
-	private static PanMainUiBinder uiBinder = GWT
-		.create(PanMainUiBinder.class);
+	private static PanMainUiBinder uiBinder = GWT.create(PanMainUiBinder.class);
 
 	interface PanMainUiBinder extends UiBinder<Widget, PanMain> {
 	}
 
-	@UiField
-	HTMLPanel arch1,arch2,arch3,arch4,arch5,arch6;
-	
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));
 		
@@ -34,6 +30,9 @@ public class PanMain extends ExComposite {
 		arch6.add(new PartParamEmitter());
 	}
 
+	@UiField
+	HTMLPanel arch1,arch2,arch3,arch4,arch5,arch6;
+	
 	@Override
 	public void onEventShow() {
 	}
