@@ -74,7 +74,9 @@ public class PartSPoint extends ExComposite {
 		final AsyncCallback<String[]> event = new AsyncCallback<String[]>(){
 			@Override
 			public void onFailure(Throwable caught) {
-				MaterialToast.fireToast("內部錯誤："+caught.getMessage(),5000);
+				String msg = caught.getMessage();
+				MaterialToast.fireToast("內部錯誤："+msg,5000);
+				System.out.println(msg);
 			}
 			@Override
 			public void onSuccess(String[] result) {
@@ -125,8 +127,9 @@ public class PartSPoint extends ExComposite {
 	private final AsyncCallback<String> eventRunDone = new AsyncCallback<String>(){
 		@Override
 		public void onFailure(Throwable caught) {			
-			MaterialLoader.showLoading(false);
-			MaterialToast.fireToast("內部錯誤："+caught.getMessage(),5000);			
+			String msg = caught.getMessage();
+			MaterialToast.fireToast("內部錯誤："+msg,5000);
+			System.out.println(msg);	
 		}
 		@Override
 		public void onSuccess(String result) {

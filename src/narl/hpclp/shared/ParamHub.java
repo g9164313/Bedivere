@@ -3,6 +3,8 @@ package narl.hpclp.shared;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+import com.google.gwt.core.shared.GWT;
+
 /**
  * Hub for enviroment parameter.<p>
  * @author qq
@@ -38,6 +40,8 @@ public class ParamHub implements Serializable {
 		}else{
 			error = error + msg +"\n";
 		}
+		GWT.log(msg);
+		System.out.println(msg);
 		return this;
 	}
 }

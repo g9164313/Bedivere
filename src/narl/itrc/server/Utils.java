@@ -40,26 +40,25 @@ public class Utils {
 	 * @return standard/screen output
 	 */
 	public static String Exec(List<String> cmd_arg){		
-		String stdout;
+		String stdout,stderr;
 		try {
 			ProcessBuilder pb = new ProcessBuilder(cmd_arg);
 			pb.redirectOutput();
 			pb.redirectError();
 			Process p = pb.start();
 			p.waitFor();
+			
 			byte[] buf = new byte[1024*10];
+			
 			p.getInputStream().read(buf);
 			stdout = new String(buf);
-			//try standard error stream~~~
-			/*if(stdout.length()==0){				
-				p.getErrorStream().read(buf);
-				for(byte bb:buf){							
-					if(bb==0){
-						break;
-					}
-					stdout = stdout + (char)bb;
-				}
-			}*/
+			
+			/*p.getErrorStream().read(buf);
+			stderr = new String(buf);
+			
+			if(stderr.length()!=0){
+				stdout = stdout + "\n[ERROR]:\n" + stderr;
+			}*/			
 			p.destroy();
 		} catch (IOException e) {
 			stdout = "[ERROR]: "+e.getMessage();

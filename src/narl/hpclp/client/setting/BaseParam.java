@@ -65,7 +65,9 @@ public abstract class BaseParam extends ExComposite {
 				final AsyncCallback<ItemParam> event = new AsyncCallback<ItemParam>(){
 					@Override
 					public void onFailure(Throwable caught) {
-						MaterialToast.fireToast(caught.getMessage(),5000);
+						String msg = caught.getMessage();
+						MaterialToast.fireToast("內部錯誤："+msg,5000);
+						System.out.println(msg);
 					}
 					@Override
 					public void onSuccess(ItemParam result) {		
@@ -88,21 +90,26 @@ public abstract class BaseParam extends ExComposite {
 	};
 
 	protected void createParam(){
-		String tmp_val = "新增項目";
-		for(int i=1; i<toalColumn; i++){
-			tmp_val = tmp_val + "@新增項目";
-		}
+
 		ItemParam obj = new ItemParam(
 			k_prefix+"_"+RandUtil.uuid(7,10),
-			tmp_val
-		);
+			toalColumn
+		);		
+		ItemParam src = model.getSelectedObject();
+		if(src!=null){
+			obj.copyFrom(src);
+			obj.setVal(0,"新增項目");
+		}		
 		obj.setState(ItemParam.STA_CREATE);
+		
 		GWT.log("obj{"+obj.getKey()+", "+obj.getVal()+"}");
 		
 		final AsyncCallback<ItemParam> event = new AsyncCallback<ItemParam>(){
 			@Override
 			public void onFailure(Throwable caught) {
-				MaterialToast.fireToast(caught.getMessage());
+				String msg = caught.getMessage();
+				MaterialToast.fireToast("內部錯誤："+msg,5000);
+				System.out.println(msg);
 			}
 			@Override
 			public void onSuccess(ItemParam result) {
@@ -127,7 +134,9 @@ public abstract class BaseParam extends ExComposite {
 		final AsyncCallback<ItemParam> event = new AsyncCallback<ItemParam>(){
 			@Override
 			public void onFailure(Throwable caught) {
-				MaterialToast.fireToast(caught.getMessage());
+				String msg = caught.getMessage();
+				MaterialToast.fireToast("內部錯誤："+msg,5000);
+				System.out.println(msg);
 			}
 			@Override
 			public void onSuccess(ItemParam result) {

@@ -18,12 +18,25 @@ public class ItemParam implements Serializable {
 	public ItemParam(){
 	}
 	
+	/**
+	 * Special constructor, the value item has separator 
+	 * @param k - key
+	 * @param col - column number
+	 */
+	public ItemParam(String k,int col){
+		setKey(k);		
+		String val = "新增項目";
+		for(int i=1; i<col; i++){
+			val = val + "@新增項目";
+		}
+	}
+	
 	public ItemParam(String k, String v){
 		setKey(k);
 		setVal(v);
 	}
 	
-	public void set(ItemParam src){
+	public void copyFrom(ItemParam src){
 		key = src.key;
 		val = src.val;
 		sta = src.sta;

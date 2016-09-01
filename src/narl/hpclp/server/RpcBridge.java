@@ -24,7 +24,6 @@ import narl.hpclp.shared.ItemTenur;
 import narl.hpclp.shared.ParamHub;
 import narl.itrc.server.Utils;
 
-import com.google.gwt.core.shared.GWT;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
 @SuppressWarnings("serial")
@@ -281,9 +280,10 @@ public class RpcBridge extends RemoteServiceServlet
 			
 			if(fs.exists()==true){
 				
-				pathSPoint = fs.getAbsolutePath();
+				pathSPoint = fs.getAbsolutePath()+"/";
 				
-				GWT.log("SPoint path="+pathSPoint);
+				//GWT.log("SPoint path="+pathSPoint);
+				//System.out.println("SPoint path="+pathSPoint);
 				
 				final FilenameFilter flt = new FilenameFilter(){
 					@Override
@@ -304,12 +304,12 @@ public class RpcBridge extends RemoteServiceServlet
 	
 	@Override
 	public String saveSPoint() throws IllegalArgumentException {		
-		return Utils.Exec("SPoint-save");
+		return Utils.Exec(pathSPoint+"SPoint-save");
 	}
 	
 	@Override
 	public String loadSPoint(String name) throws IllegalArgumentException {		
-		return Utils.Exec("SPoint-load @ "+name);
+		return Utils.Exec(pathSPoint+"SPoint-load @ "+name);
 	}
 }
 
