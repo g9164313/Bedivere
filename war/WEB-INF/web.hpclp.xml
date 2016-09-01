@@ -8,16 +8,16 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" version="2.5">
 
 	<servlet>
 		<servlet-name>hpclp_calling</servlet-name>
-		<servlet-class>narl.hpclp.server.RpcBridge</servlet-class>
+		<servlet-class>nthu.hpclp.server.RpcBridge</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>hpclp_calling</servlet-name>
-		<url-pattern>/narl.hpclp.main/calling</url-pattern>
+		<url-pattern>/nthu.hpclp.main/calling</url-pattern>
 	</servlet-mapping>
 	
 	<servlet>
 		<servlet-name>hpclp_print</servlet-name>
-		<servlet-class>narl.hpclp.server.RpcPrint</servlet-class>
+		<servlet-class>nthu.hpclp.server.RpcPrint</servlet-class>
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>hpclp_print</servlet-name>

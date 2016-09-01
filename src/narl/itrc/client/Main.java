@@ -8,6 +8,6 @@ public class Main implements EntryPoint {
 
 	@Override
 	public void onModuleLoad() {
-		RootPanel.get().add(new Label("You can't pass it!!!!"));
+		RootPanel.get().add(new Label("You can't see me, this is dummy page~~~"));
 	}
 }

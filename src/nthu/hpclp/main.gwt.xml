@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE module PUBLIC "-//Google Inc.//DTD Google Web Toolkit 2.7.0//EN" "http://google-web-toolkit.googlecode.com/svn/tags/2.7.0/distro-source/core/src/gwt-module.dtd">
-<module rename-to='narl.itrc.main'>
+<module rename-to='nthu.hpclp.main'>
 	<inherits name="com.google.gwt.user.User" />	
 	<inherits name="gwt.material.design.GwtMaterialWithJQuery" />
 	<inherits name="gwt.material.design.GwtMaterialDesignBasic" />
 	<inherits name="gwt.material.design.themes.GwtMaterialThemeBlue"/>
 	<inherits name="gwt.material.design.addins.GwtMaterialAddins" />	
 	<inherits name="com.googlecode.gwt.charts.Charts" />
-
+	
+	<inherits name="narl.itrc.main" />
+	
 	<source path="client" />
-
-	<!-- allow Super Dev Mode -->
-	<add-linker name="xsiframe" />
-
-	<entry-point class="narl.itrc.client.Main" />
+	<source path="shared" />
+	
+    <!-- allow Super Dev Mode -->
+    <add-linker name="xsiframe" />
+    
+    <entry-point class="nthu.hpclp.client.Main" />
 </module>
