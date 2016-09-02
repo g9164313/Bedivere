@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_notify" language="groovy" pageWidth="595" pageHeight="842" whenNoDataType="AllSectionsNoDetail" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="17cbd7b9-0264-4a0f-9e50-4dff042eb7b9">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="50"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="tenure_source" uuid="f67cb897-1045-44e0-9908-d8f6edeaf321">
+		<field name="device_vendor" class="java.lang.String"/>
+		<field name="device_serial" class="java.lang.String"/>
+		<field name="device_number" class="java.lang.String"/>
+		<field name="detect_type" class="java.lang.String"/>
+		<field name="detect_serial" class="java.lang.String"/>
+		<field name="detect_number" class="java.lang.String"/>
+		<field name="list_footer" class="java.lang.String"/>
+	</subDataset>
+	<field name="owner_name" class="java.lang.String"/>
+	<field name="owner_code" class="java.lang.String"/>
+	<field name="owner_zip" class="java.lang.String"/>
+	<field name="owner_addr" class="java.lang.String"/>
+	<field name="owner_dept" class="java.lang.String"/>
+	<field name="owner_contact" class="java.lang.String"/>
+	<field name="owner_phone" class="java.lang.String"/>
+	<field name="tenure_source" class="java.lang.Object"/>
+	<field name="meet_day" class="java.lang.String"/>
+	<field name="meet_hour" class="java.lang.String"/>
+	<detail>
+		<band height="510">
+			<staticText>
+				<reportElement uuid="ec9f1982-33f3-461f-a662-3b7c381cc7a3" x="0" y="252" width="292" height="20"/>
+				<textElement>
+					<font fontName="標楷體" size="12" isBold="true"/>
+					<paragraph leftIndent="7" tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[相關資訊及實驗室位置地圖請參考本實驗室網頁：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="0d9876ba-36d7-4c20-a32d-b19b9fe0c00f" x="0" y="172" width="282" height="30"/>
+				<textElement>
+					<font fontName="標楷體" size="12"/>
+					<paragraph leftIndent="7" tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[地點	：本校反應爐西側，輻射偵檢儀校正實驗室。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e0e13c4c-b928-4867-bee4-6c9dbc75ccc5" x="13" y="329" width="279" height="52"/>
+				<textElement>
+					<font fontName="標楷體" size="12" isBold="true"/>
+					<paragraph tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[考量偵檢儀多為精密且須細心照料儀器，無法保證在寄送過程中不受損壞或改變其特性，故本實驗室不接受以郵寄方式寄送校正服務。]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="21fcb52a-cb4b-4e97-8f6f-ee1afc7bd99b" x="0" y="202" width="200" height="20"/>
+				<textElement>
+					<font fontName="標楷體" size="12"/>
+					<paragraph leftIndent="7" tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[辦公室電話：( 03 ) 5745157]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="70d91557-80f6-45b7-b8de-d20d6665f5ba" x="0" y="132" width="58" height="20"/>
+				<textElement>
+					<font fontName="標楷體" size="12"/>
+					<paragraph leftIndent="7" tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[日期	：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="33bca965-7f57-4902-b889-5ee7e91ade2c" x="157" y="0" width="260" height="34"/>
+				<textElement textAlignment="Center" verticalAlignment="Top">
+					<font fontName="標楷體" size="24"/>
+				</textElement>
+				<text><![CDATA[輻射偵檢儀校正通知單]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="e8e64310-32e1-4706-bec2-f53cf4149730" x="417" y="52" width="138" height="20"/>
+				<textElement>
+					<font fontName="標楷體" size="12"/>
+					<paragraph tabStopWidth="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["單位代號	："+$F{owner_code}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="bff4379b-9d03-434c-8084-a484d6dd50ef" x="0" y="52" width="292" height="20"/>
+				<textElement>
+					<font fontName="標楷體" size="12"/>
+					<paragraph leftIndent="7" tabStopWidth="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA["委辦單位	："+$F{owner_name}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="925d2d80-486a-4381-a53a-a8a201ead321" x="0" y="85" width="292" height="47"/>
+				<textElement>
+					<font fontName="標楷體" size="12"/>
+					<paragraph leftIndent="7" tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[貴單位輻射偵檢儀校驗，經安排校驗時間如下，屆時請派員將儀器送至校正實驗室校驗。]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="08ba7d24-c34b-47f7-90fe-e590e35728e8" x="58" y="152" width="115" height="20"/>
+				<textElement>
+					<font fontName="標楷體" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{meet_hour}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="adb56290-248a-4202-a039-08620dcce0aa" x="0" y="329" width="13" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+					<paragraph leftIndent="7" tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[*]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ec5480b4-4275-417a-a238-e885579a9cc9" x="58" y="132" width="115" height="20"/>
+				<textElement>
+					<font fontName="標楷體" size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{meet_day}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement uuid="a9f1093a-0a7b-4a97-9908-595c12a45420" x="0" y="272" width="292" height="20"/>
+				<textElement>
+					<font fontName="DejaVu Serif" size="11"/>
+					<paragraph leftIndent="20" tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[http://goo.gl/GmkrrP]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="79de84c4-53d2-46e3-b41d-7c54256709a2" x="0" y="152" width="58" height="20"/>
+				<textElement>
+					<font fontName="標楷體" size="12"/>
+					<paragraph leftIndent="7" tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[時間	：]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="4cbfeece-b1b9-46fa-b72d-c995cd1f8adf" x="0" y="222" width="200" height="20"/>
+				<textElement>
+					<font fontName="標楷體" size="12"/>
+					<paragraph leftIndent="7" tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[實驗室電話：( 03 ) 5742895]]></text>
+			</staticText>
+			<componentElement>
+				<reportElement uuid="8d74d45c-5500-477e-9064-ec8ad3555f4d" key="table 8" x="302" y="85" width="253" height="425"/>
+				<jr:table xmlns:jr="http://jasperreports.sourceforge.net/jasperreports/components" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports/components http://jasperreports.sourceforge.net/xsd/components.xsd">
+					<datasetRun subDataset="tenure_source" uuid="b2b23129-d43a-4f7b-b002-b5dd9b8eab71">
+						<dataSourceExpression><![CDATA[$F{tenure_source}]]></dataSourceExpression>
+					</datasetRun>
+					<jr:columnGroup width="270" uuid="cf8abd1f-5949-4654-9a8b-3766408e0d81">
+						<jr:tableHeader height="20" rowSpan="1">
+							<staticText>
+								<reportElement uuid="22372355-3335-43b6-8d19-d60660645fff" x="0" y="0" width="270" height="20"/>
+								<textElement verticalAlignment="Top">
+									<font fontName="標楷體" size="12"/>
+									<paragraph leftIndent="7"/>
+								</textElement>
+								<text><![CDATA[去年同期送校設備]]></text>
+							</staticText>
+						</jr:tableHeader>
+						<jr:tableFooter height="20" rowSpan="1">
+							<textField>
+								<reportElement uuid="6154bd50-2c16-49ef-b7d0-34eeb1185ae0" x="0" y="0" width="270" height="20"/>
+								<textElement verticalAlignment="Middle">
+									<font fontName="標楷體" size="12"/>
+									<paragraph leftIndent="7"/>
+								</textElement>
+								<textFieldExpression><![CDATA[$F{list_footer}]]></textFieldExpression>
+							</textField>
+						</jr:tableFooter>
+						<jr:column width="90" uuid="03e5cdbc-3b3e-493c-88b3-cb99f419a984">
+							<jr:columnHeader style="table_TD" height="20" rowSpan="1">
+								<staticText>
+									<reportElement uuid="4d38aab4-4448-427f-a6f1-facad3d9b03f" x="0" y="0" width="90" height="20"/>
+									<textElement>
+										<font fontName="標楷體" size="12"/>
+										<paragraph leftIndent="7"/>
+									</textElement>
+									<text><![CDATA[儀器廠牌]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement uuid="133c3aa1-6b3c-449a-be9e-07a9d786a1a8" x="0" y="0" width="90" height="20"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="標楷體" size="12"/>
+										<paragraph leftIndent="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{device_vendor}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="8af6a4d1-ad45-44b4-a940-6d50bf3f6cc3">
+							<jr:columnHeader style="table_TD" height="20" rowSpan="1">
+								<staticText>
+									<reportElement uuid="ad1f1fd0-eef0-4bdc-a691-8769e80b8816" x="0" y="0" width="90" height="20"/>
+									<textElement>
+										<font fontName="標楷體" size="12"/>
+										<paragraph leftIndent="7"/>
+									</textElement>
+									<text><![CDATA[儀器型號]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement uuid="0c83236a-3480-421e-9d4b-ca7067ac0944" x="0" y="0" width="90" height="20"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="標楷體" size="12"/>
+										<paragraph leftIndent="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{device_serial}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+						<jr:column width="90" uuid="6de9024f-b3d6-4016-b1d8-70374440e0ee">
+							<jr:columnHeader style="table_TD" height="20" rowSpan="1">
+								<staticText>
+									<reportElement uuid="a561fee5-b5bd-43e1-bb64-4e27d66aeb8c" x="0" y="0" width="90" height="20"/>
+									<textElement>
+										<font fontName="標楷體" size="12"/>
+										<paragraph leftIndent="7"/>
+									</textElement>
+									<text><![CDATA[儀器序號]]></text>
+								</staticText>
+							</jr:columnHeader>
+							<jr:detailCell style="table_TD" height="20" rowSpan="1">
+								<textField>
+									<reportElement uuid="11baf1ea-0843-4ce8-b449-d1e9696dac4e" x="0" y="0" width="90" height="20"/>
+									<textElement verticalAlignment="Middle">
+										<font fontName="標楷體" size="12"/>
+										<paragraph leftIndent="7"/>
+									</textElement>
+									<textFieldExpression><![CDATA[$F{device_number}]]></textFieldExpression>
+								</textField>
+							</jr:detailCell>
+						</jr:column>
+					</jr:columnGroup>
+				</jr:table>
+			</componentElement>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="270">
+			<line>
+				<reportElement uuid="988037b4-7e6a-474b-9d68-096b2b146c9f" x="0" y="2" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="1.25" lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement uuid="82cf34e1-6ad9-4f2b-8a94-0507e8c899bb" x="0" y="41" width="186" height="15"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+					<paragraph tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[30013  新竹市光復路二段 101 號]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c84e6147-964f-48dc-8ef3-db046180d26a" x="0" y="55" width="186" height="15"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="10"/>
+					<paragraph tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[清華大學  原子科學技術發展中心]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="d6317a64-4b1f-4ab3-a696-e72c40ec0778" x="0" y="68" width="186" height="15"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="SansSerif" size="8"/>
+					<paragraph tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[TEL: ( 03) 5745157    FAX: ( 03) 5722660]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5a7b8b60-aa81-463d-a223-a4d78f2ada1d" x="331" y="10" width="224" height="30"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="14" isUnderline="true"/>
+					<paragraph tabStopWidth="10"/>
+				</textElement>
+				<text><![CDATA[輻射偵檢儀校正通知，請即拆閱]]></text>
+			</staticText>
+			<textField>
+				<reportElement uuid="ca86ec07-f82d-4f72-b4bf-e0e98e686e24" x="86" y="136" width="469" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="14"/>
+					<paragraph tabStopWidth="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{owner_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="11461e7a-a948-4a79-b258-1574be257858" x="86" y="165" width="469" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="14"/>
+					<paragraph tabStopWidth="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{owner_zip}+$F{owner_addr}+$F{owner_dept}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e8e5bd3d-5973-4d79-a375-f4af3ac648cc" x="173" y="197" width="382" height="20"/>
+				<textElement verticalAlignment="Top">
+					<font fontName="標楷體" size="14"/>
+					<paragraph tabStopWidth="10"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{owner_contact}+" 先生 /  小姐    收"]]></textFieldExpression>
+			</textField>
+			<elementGroup>
+				<rectangle>
+					<reportElement uuid="5a3e30e8-9daf-434c-9e87-708a3cf7e1ba" mode="Transparent" x="508" y="47" width="47" height="19"/>
+				</rectangle>
+				<staticText>
+					<reportElement uuid="f12eaac8-f33d-47cf-9923-5961b3129c37" x="508" y="43" width="47" height="27"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font size="14" isBold="false"/>
+						<paragraph tabStopWidth="10"/>
+					</textElement>
+					<text><![CDATA[印刷品]]></text>
+				</staticText>
+			</elementGroup>
+		</band>
+	</pageFooter>
+</jasperReport>

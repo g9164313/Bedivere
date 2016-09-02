@@ -317,11 +317,8 @@ public class Main implements EntryPoint {
 	
 	@Override
 	public void onModuleLoad() {
-		
 		//MaterialLoader.showLoading(true);
-		
 		//Event.addNativePreviewHandler(eventHook);
-
 		rpc.initServer(
 			param,
 			new AsyncCallback<ParamHub>(){

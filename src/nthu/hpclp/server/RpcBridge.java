@@ -13,6 +13,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.UUID;
 
+import javax.naming.InitialContext;
+import javax.naming.NamingException;
+import javax.sql.DataSource;
+
 import narl.itrc.server.Utils;
 import nthu.hpclp.client.RPC;
 import nthu.hpclp.shared.Const;
@@ -84,18 +88,27 @@ public class RpcBridge extends RemoteServiceServlet
 
 	@Override
 	public ParamHub initServer(ParamHub hub) throws IllegalArgumentException {
-		try {		
-			Class.forName("org.postgresql.Driver");					
+		
+		try {
+			Class.forName("org.postgresql.Driver");
 			conn = DriverManager.getConnection(
 				Const.DATABASE_URL, 
 				Const.DATABASE_USER,
 				Const.DATABASE_PASS
 			);
-			SqlDataBase.prepare(conn);
-		} catch(ClassNotFoundException e){
-			return hub.appendError(e.getMessage());
-		} catch (SQLException e) {			
-			return hub.appendError(e.getMessage());
+			SqlDataBase.prepare(conn);			
+		} catch(ClassNotFoundException e1){
+			try {
+				InitialContext cxt = new InitialContext();
+				DataSource ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/postgres" );
+				conn = ds.getConnection();
+			} catch (NamingException e2) {
+				return hub.appendError(e1.getMessage() + "\n" + e2.getMessage());
+			} catch (SQLException e2) {
+				return hub.appendError(e1.getMessage() + "\n" + e2.getMessage());
+			}
+		} catch (SQLException e1) {			
+			return hub.appendError(e1.getMessage());
 		}
 
 		checkParamValue(hub,hub.prodxDetType,"'DETTYPE%'");
@@ -105,10 +118,9 @@ public class RpcBridge extends RemoteServiceServlet
 		checkParamValue(hub,hub.otherRestDay,"'RESTDAY%'");
 		
 		checkJasperPath(hub);
-		
 		return hub;
 	}
-
+	
 	private void checkParamValue(
 		ParamHub hub,
 		ArrayList<ItemParam> lst,
@@ -134,24 +146,28 @@ public class RpcBridge extends RemoteServiceServlet
 	}
 	
 	private void checkJasperPath(ParamHub res){
-		final String name = "/narl.hpclp.jasper";
-		String path = new File(".").getAbsolutePath();		
-		//Try every possible path~~~
-		if(new File(path+name).exists()==true){
-			RpcPrint.DOC_PATH = path + name;			
-		}else if(new File(path+"/webapps/bedivere"+name).exists()==true){
-			//If user deploy package in Apache-Tomcat, the default location may be his root path.
-			RpcPrint.DOC_PATH = path +"/webapps/bedivere"+name;
-		}else if(new File(path+"/bedivere"+name).exists()==true){
-			//Is this possible???	
-			RpcPrint.DOC_PATH = path+"/bedivere"+name;
-		}else if(new File(path+"/webapps/Bedivere"+name).exists()==true){
-			RpcPrint.DOC_PATH = path +"/webapps/Bedivere"+name;
-		}else if(new File(path+"/Bedivere"+name).exists()==true){
-			RpcPrint.DOC_PATH = path+"/Bedivere"+name;
-		}else{
-			res.appendError("FAIL: the unknown path - \'"+path+"\'"+name);
+		
+		final String[] path = {
+			"./",
+			"./webapps/bedivere/",
+			"../webapps/bedivere/",
+			"../../webapps/bedivere/"			
+		};
+		
+		final String name = "nthu.hpclp.jasper";		
+		
+		for(int i=0; i<path.length; i++){
+			File fs = new File(path[i]+name);
+			if(fs.exists()==true){
+				RpcPrint.DOC_PATH = path[i]+name;
+				return;
+			}
 		}
+		//we can't locate JASPER files, report it!!!!
+		res.appendError(
+			"FAIL: the unknown path - "+
+			new File(".").getAbsolutePath()
+		);
 	}
 	//---------------------------------//
 	
@@ -268,22 +284,17 @@ public class RpcBridge extends RemoteServiceServlet
 	@Override
 	public String[] listSPoint() throws IllegalArgumentException {
 		
-		final String name="shared/SPoint";
-		final String[] path = {"./","../","../../"};
+		final String name="work/SPoint";
 		
-		File fs;
+		final String[] path = {"./","../","../../"};
+
 		for(int i=0; i<path.length; i++){
 			
-			String full = path[i]+name;
-			
-			fs = new File(full);
+			File fs = new File(path[i]+name);
 			
 			if(fs.exists()==true){
 				
 				pathSPoint = fs.getAbsolutePath()+"/";
-				
-				//GWT.log("SPoint path="+pathSPoint);
-				//System.out.println("SPoint path="+pathSPoint);
 				
 				final FilenameFilter flt = new FilenameFilter(){
 					@Override
@@ -304,12 +315,17 @@ public class RpcBridge extends RemoteServiceServlet
 	
 	@Override
 	public String saveSPoint() throws IllegalArgumentException {		
-		return Utils.Exec(pathSPoint+"SPoint-save");
+		return Utils.Exec(pathSPoint+"SPoint-save @ "+pathSPoint);
 	}
 	
 	@Override
 	public String loadSPoint(String name) throws IllegalArgumentException {		
-		return Utils.Exec(pathSPoint+"SPoint-load @ "+name);
+		return Utils.Exec(pathSPoint+"SPoint-load @ "+pathSPoint+"/"+name);
+	}
+
+	@Override
+	public String tearSPoint(String name) throws IllegalArgumentException {		
+		return Utils.Exec("rm @ -r @ "+pathSPoint+"/"+name);
 	}
 }
 

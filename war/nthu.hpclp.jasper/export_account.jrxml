@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="export_account" language="groovy" pageWidth="4500" pageHeight="270" whenNoDataType="AllSectionsNoDetail" columnWidth="4500" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0" whenResourceMissingType="Empty" uuid="ac3e9264-6858-45af-ba2d-4df54ac5e0e6">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="2276"/>
+	<property name="ireport.y" value="0"/>
+	<field name="account_key" class="java.lang.String"/>
+	<field name="owner_key" class="java.lang.String"/>
+	<field name="owner_name" class="java.lang.String"/>
+	<field name="owner_full_address" class="java.lang.String"/>
+	<field name="owner_contact1" class="java.lang.String"/>
+	<field name="fare_set1_title" class="java.lang.String"/>
+	<field name="fare_set1_total" class="java.lang.String"/>
+	<field name="fare_set1_num" class="java.lang.String"/>
+	<field name="fare_set2_title" class="java.lang.String"/>
+	<field name="fare_set2_total" class="java.lang.String"/>
+	<field name="fare_set2_num" class="java.lang.String"/>
+	<field name="fare_set3_title" class="java.lang.String"/>
+	<field name="fare_set3_total" class="java.lang.String"/>
+	<field name="fare_set3_num" class="java.lang.String"/>
+	<field name="fare_set4_title" class="java.lang.String"/>
+	<field name="fare_set4_total" class="java.lang.String"/>
+	<field name="fare_set4_num" class="java.lang.String"/>
+	<field name="fare_set5_title" class="java.lang.String"/>
+	<field name="fare_set5_total" class="java.lang.String"/>
+	<field name="fare_set5_num" class="java.lang.String"/>
+	<field name="fare_set6_title" class="java.lang.String"/>
+	<field name="fare_set6_total" class="java.lang.String"/>
+	<field name="fare_set6_num" class="java.lang.String"/>
+	<title>
+		<band height="60">
+			<staticText>
+				<reportElement uuid="a716b91f-5d75-4670-b213-6529cfdd4e7b" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[繳款單號次]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e5ed5826-3eba-4805-9e21-417823acfe43" x="100" y="0" width="78" height="20"/>
+				<textElement/>
+				<text><![CDATA[單位代碼]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="c8611717-142d-4539-a8b0-92b1b190f464" x="178" y="0" width="243" height="20"/>
+				<textElement/>
+				<text><![CDATA[客戶名稱]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="5b23a98c-fcf6-42f9-84d8-960549147bce" positionType="Float" x="421" y="0" width="457" height="20"/>
+				<textElement/>
+				<text><![CDATA[收件人地址]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="8a9aae44-6a4a-4044-b5dd-3bbaca10dc23" x="878" y="0" width="175" height="20"/>
+				<textElement/>
+				<text><![CDATA[收件人]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="00cec7a3-9690-4452-a550-d60cd844cada" x="1053" y="0" width="300" height="20"/>
+				<textElement/>
+				<text><![CDATA[服務項目一]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="280966be-3e93-4725-b6fa-b4982c067cd0" x="1353" y="0" width="112" height="20"/>
+				<textElement/>
+				<text><![CDATA[項目一金額字]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f878178e-1184-4208-936a-f66ec6428af6" x="1465" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[項目一金額數]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="7c4813e7-d76d-45df-a9a7-1e52785b30e4" x="1565" y="0" width="298" height="20"/>
+				<textElement/>
+				<text><![CDATA[服務項目二]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="dbc7d812-1f56-4ec4-b18b-34b493fcfc3d" x="1863" y="0" width="112" height="20"/>
+				<textElement/>
+				<text><![CDATA[項目二金額字]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="52774ddd-150f-439e-8d91-5b49ff825d83" x="1975" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[項目二金額數]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="332421c0-1e53-4798-96b9-4f759af8d618" x="2075" y="0" width="300" height="20"/>
+				<textElement/>
+				<text><![CDATA[服務項目三]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="671c80b9-7ee1-4e2f-86ae-c516fcf3b81f" x="2375" y="0" width="112" height="20"/>
+				<textElement/>
+				<text><![CDATA[項目三金額字]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="da4ed379-3e3b-4c61-ab98-85435ddf9172" x="2487" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[項目三金額數]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="dc6cb5b8-b390-4e6c-bc01-a829ffa785d7" x="2587" y="0" width="300" height="20"/>
+				<textElement/>
+				<text><![CDATA[服務項目四]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="92a41def-54b4-483b-8ff9-1335e00ff4dc" x="2887" y="0" width="112" height="20"/>
+				<textElement/>
+				<text><![CDATA[項目四金額字]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="fd402b3d-4a6b-446a-bb5b-8218192cfbec" x="2999" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[項目四金額數]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="54a95580-636f-4ce6-9500-06f48d9ca8ca" x="3099" y="0" width="300" height="20"/>
+				<textElement/>
+				<text><![CDATA[服務項目五]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="18fcac18-a5a1-4497-8886-123e8a826e69" x="3511" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[項目五金額數]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="aa1b5451-2808-42b9-91b3-e76e2d594e64" x="3399" y="0" width="112" height="20"/>
+				<textElement/>
+				<text><![CDATA[項目五金額字]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="47111ab6-4426-4919-9d3b-d7f5f12d435e" x="3911" y="0" width="112" height="20"/>
+				<textElement/>
+				<text><![CDATA[項目六金額字]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="f2b39e87-ecf2-45d5-93c9-fbc3552b1f57" x="3611" y="0" width="300" height="20"/>
+				<textElement/>
+				<text><![CDATA[服務項目六]]></text>
+			</staticText>
+			<staticText>
+				<reportElement uuid="e5402067-45a4-4464-b5d9-da9a807feb05" x="4023" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[項目六金額數]]></text>
+			</staticText>
+		</band>
+	</title>
+	<detail>
+		<band height="77" splitType="Stretch">
+			<textField>
+				<reportElement uuid="04c640e2-6449-4ab9-be18-3e1f64508288" x="0" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{account_key}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="c3f2c9dd-2c5c-49c2-8498-6a27994ccc55" x="100" y="0" width="78" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{owner_key}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="ce82a8c0-e09e-4fc2-8ff0-8df973690434" x="178" y="0" width="243" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{owner_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="547b291f-13f1-4d1d-8bee-da0ed1df53f0" x="421" y="0" width="457" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{owner_full_address}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4230ade7-c550-4d44-b751-3bcd9649f966" x="878" y="0" width="175" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{owner_contact1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4c59ef39-c17f-4049-a7f6-163789011000" x="1053" y="0" width="300" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set1_title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="4f88e448-372a-4e67-83bd-b003dfa702ea" x="1353" y="0" width="112" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set1_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e74625c6-132f-49c2-acc8-bfe4c1fda638" x="1465" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set1_num}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="2b452b26-a6d4-4fdf-8012-0fc222eb15ae" x="1565" y="0" width="298" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set2_title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="e9af9155-ef1a-4e65-b5dc-3a871c49efcd" x="1863" y="0" width="112" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set2_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="41a1fd69-ce3a-4d34-8e80-74f7c9458107" x="1975" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set2_num}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="6be8327f-b725-48db-8fb5-c43fd7de5e68" x="2375" y="0" width="112" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set3_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="9b996e21-2d41-46e3-94db-85da3711bcca" x="2075" y="0" width="300" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set3_title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="84023850-386b-4a5c-9c03-9bff8409a45b" x="2487" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set3_num}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="d646653c-0ba1-460a-a399-9b34d8b0616b" x="2587" y="0" width="300" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set4_title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="7b40a628-36fd-474d-912c-b11cc0a6eb30" x="2887" y="0" width="112" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set4_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="315bde88-c925-4cbc-ad49-9da7a22e3686" x="2999" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set4_num}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="8dba5640-f7f3-45cd-9aff-8e414b44782c" x="3099" y="0" width="300" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set5_title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="af2f27a3-4b41-4de1-86ea-13f1a4052288" x="3399" y="0" width="112" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set5_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="767de7b3-be8e-46fc-8288-cae6d20960f8" x="3511" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set5_num}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="52e00af4-2569-4494-b0cc-68b65d6d7f00" x="3611" y="0" width="300" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set6_title}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="0a25b701-823a-409e-a4ff-045207d4c498" x="3911" y="0" width="112" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set6_total}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement uuid="14779c3d-c814-4f90-96a1-9e31f58dee62" x="4023" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{fare_set6_num}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

@@ -21,8 +21,9 @@ public interface RPC extends RemoteService {
 	String genKey(String args) throws IllegalArgumentException;
 	
 	String[] listSPoint() throws IllegalArgumentException;	
-	String saveSPoint() throws IllegalArgumentException;
+	String saveSPoint() throws IllegalArgumentException;	
 	String loadSPoint(String name) throws IllegalArgumentException;
+	String tearSPoint(String name) throws IllegalArgumentException;
 	
 	ArrayList<ItemOwner> listOwner(String postfix);
 	ArrayList<ItemTenur> listTenure(String postfix);
