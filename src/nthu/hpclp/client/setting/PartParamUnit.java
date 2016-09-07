@@ -24,6 +24,7 @@ public class PartParamUnit extends BaseParam {
 			"UNIT",
 			"輻射單位",null
 		);
+		grid.setSize("40vw","43vh");
 	}
 
 	@UiField(provided=true) 

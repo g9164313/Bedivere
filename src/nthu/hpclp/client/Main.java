@@ -255,6 +255,7 @@ public class Main implements EntryPoint {
 	}
 	//----------------------------//
 	
+	private static nthu.hpclp.client.account.PanMain account = new  nthu.hpclp.client.account.PanMain();
 	private static nthu.hpclp.client.meeting.PanMain meeting = new nthu.hpclp.client.meeting.PanMain();
 	private static nthu.hpclp.client.product.PanMain product = new  nthu.hpclp.client.product.PanMain();
 	private static nthu.hpclp.client.setting.PanMain setting = new  nthu.hpclp.client.setting.PanMain();
@@ -276,7 +277,7 @@ public class Main implements EntryPoint {
 			RootPanel.get().add(product);			
 			break;
 		case PAN_ACCOUNT:
-			RootPanel.get().add(new Label("//TODO:--------"));
+			RootPanel.get().add(account);
 			break;
 		case PAN_SETTING:
 			RootPanel.get().add(setting);

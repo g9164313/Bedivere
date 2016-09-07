@@ -1,0 +1,32 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
+	xmlns:m="urn:import:gwt.material.design.client.ui">
+
+<ui:style>
+	
+</ui:style>
+
+<m:MaterialPanel ui:field="root">
+	<!-- Header Section -->
+	<m:MaterialHeader depth="996" layoutPosition="FIXED" width="100%">
+		<!-- NavBar Component -->
+		<m:MaterialNavBar ui:field="navApp">
+			<m:MaterialNavSection float="LEFT" hideOn="NONE">
+				<m:MaterialLink iconPosition="NONE" tooltip="排程" tooltipPosition="BOTTOM" iconType="EVENT" ui:field="lnkPanMeet" />
+				<m:MaterialLink iconPosition="NONE" tooltip="報告" tooltipPosition="BOTTOM" 	iconType="DESCRIPTION" ui:field="lnkPanProdx" />
+				<!-- <m:MaterialLink iconPosition="NONE" tooltip="會計" tooltipPosition="BOTTOM" iconType="ACCOUNT_BALANCE" ui:field="lnkPanAccnt" />  -->
+				<m:MaterialLink iconPosition="NONE" tooltip="設定" tooltipPosition="BOTTOM" iconType="SETTINGS" ui:field="lnkPanSetting" />
+			</m:MaterialNavSection>				
+		</m:MaterialNavBar>
+		<!-- Search Component -->
+		<m:MaterialNavBar ui:field="navSearch" backgroundColor="white" visible="false"> 
+			<m:MaterialSearch ui:field="boxSearch" placeholder="搜尋xxxx" active="true" />
+		</m:MaterialNavBar>
+		</m:MaterialHeader>
+	</m:MaterialPanel>
+
+</ui:UiBinder> 
+

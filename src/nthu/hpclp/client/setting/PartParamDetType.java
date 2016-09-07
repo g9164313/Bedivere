@@ -22,7 +22,8 @@ public class PartParamDetType extends BaseParam {
 		initPartByStyle(
 			"DETTYPE",
 			"偵檢儀類型",null
-		);		
+		);
+		grid.setSize("40vw","43vh");
 	}
 	
 	@Override

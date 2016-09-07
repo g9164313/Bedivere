@@ -24,7 +24,7 @@ public class PartParamService extends BaseParam {
 			"服務名稱","15em",
 			"費用","7em"
 		);
-		grid.setWidth("23em");
+		grid.setSize("90vw","43vh");
 	}
 	
 	@Override

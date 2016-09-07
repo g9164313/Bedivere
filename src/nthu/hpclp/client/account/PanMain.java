@@ -1,15 +1,16 @@
-package nthu.hpclp.client.setting;
-
-import narl.itrc.client.ExComposite;
-import nthu.hpclp.client.Main;
+package nthu.hpclp.client.account;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.HTMLPanel;
+import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
+
+import gwt.material.design.client.ui.MaterialPanel;
+import narl.itrc.client.ExComposite;
+import nthu.hpclp.client.Main;
 
 public class PanMain extends ExComposite {
 
@@ -20,21 +21,11 @@ public class PanMain extends ExComposite {
 
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));
-		
-		
-		arch1.add(new PartParamService());
-		
-		arch2.add(new PartParamRestday());		
-		arch3.add(new PartSPoint());
-		
-		arch4.add(new PartParamEmitter());
-		
-		arch5.add(new PartParamDetType());
-		arch6.add(new PartParamUnit());
+		initAddins(root);//prepare some basic dialogs
 	}
 
 	@UiField
-	HTMLPanel arch1,arch2,arch3,arch4,arch5,arch6;
+	MaterialPanel root;
 	
 	@Override
 	public void onEventShow() {
@@ -43,19 +34,20 @@ public class PanMain extends ExComposite {
 	@Override
 	public void onEventHide() {
 	}
-	
+
 	@UiHandler("lnkPanMeet")
 	void onPanMeet(ClickEvent e){
 		Main.switchToMeeting();
 	}
 	
-	@UiHandler("lnkPanAccnt")
-	void onPanAccnt(ClickEvent e){
-		Main.switchToAccount();
-	}
-	
 	@UiHandler("lnkPanProdx")
-	void onPanProdx(ClickEvent e){
+	void onPanAccnt(ClickEvent e){
 		Main.switchToProduct();
 	}
+	
+	@UiHandler("lnkPanSetting")
+	void onPanStorage(ClickEvent e){
+		Main.switchToSetting();
+	}
+	
 }

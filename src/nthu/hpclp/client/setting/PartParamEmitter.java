@@ -31,8 +31,8 @@ public class PartParamEmitter extends BaseParam {
 			"涵蓋因子","7em",
 			"涵蓋機率","7em",
 			"不確定度","10em"
-		);		
-		grid.setWidth("30em");		
+		);			
+		grid.setSize("90vw","50vh");
 	}
 	
 	@Override

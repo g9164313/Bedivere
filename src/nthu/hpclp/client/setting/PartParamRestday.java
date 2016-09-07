@@ -24,7 +24,7 @@ public class PartParamRestday extends BaseParam {
 			"休假日期","6em",
 			"事由","11em"
 		);
-		grid.setWidth("18em");
+		grid.setSize("43vw","43vh");
 	}
 	
 	@Override

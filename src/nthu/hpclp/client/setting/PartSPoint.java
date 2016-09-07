@@ -57,7 +57,7 @@ public class PartSPoint extends ExComposite {
 			}
 		};
 		grdSName.setSelectionModel(modSName);
-		grdSName.setSize("100%","43vh");
+		grdSName.setSize("40vw","43vh");
 		grdSName.addColumn(col,"還原點");
 		//control part
 		SimplePager pager = new SimplePager();
