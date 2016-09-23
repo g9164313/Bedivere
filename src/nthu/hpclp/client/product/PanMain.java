@@ -38,43 +38,39 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 
-public class PanMain extends CtlMain {
+public class PanMain extends PanBase {
 
 	private static PanMainUiBinder uiBinder = GWT.create(PanMainUiBinder.class);
 
 	interface PanMainUiBinder extends UiBinder<Widget, PanMain> {
 	}
+    
+	public PanMain() {
+		initWidget(uiBinder.createAndBindUi(this));
+		root.add(Main.dlgApprove);
+		btnScribeEdit.addClickHandler(CitScribe.eventEdit);
+		btnScribeCancel.addClickHandler(CitScribe.eventCancel);
+		btnScribeDelete.addClickHandler(CitScribe.eventDelete);
+		//Don't initialize data here!!!
+	}
 
 	@UiField
 	MaterialPanel root;
-			
+	
     @UiField
     MaterialNavBar navApp, navSearch;
-
     @UiField
     MaterialSearch boxSearch;
 	
     @UiField
-    MaterialTextBox boxOKey,boxTKey,boxPKey,boxStmp,boxMemo,boxScribe;
-
+    MaterialTextBox boxPKey,boxStmp,boxMemo,boxScribe;
     @UiField
     MaterialFloatBox boxTemp,boxPress,boxHumid;
-    
     @UiField
     MaterialListBox cmbFormat,cmbUnitRef,cmbUnitMea,cmbEmitter;
-    
     @UiField
     MaterialCheckBox chkUseLogo;
-    
-    @UiField
-    MaterialLabel 
-    	txtInfoO1,txtInfoO2,txtInfoO3,
-    	txtInfoT1,txtInfoT2,txtInfoT3,
-    	txtInfoT4,txtInfoT5,txtInfoT6,
-    	txtKindArea,txtStrength,txtSurface,
-    	txtFactorK,txtFactorP,txtUncertain,
-    	txtSerial,txtCriteron;
-        
+
     @UiField
     MaterialModal dlgSelector;
     @UiField
@@ -83,61 +79,16 @@ public class PanMain extends CtlMain {
     MaterialCollection colSelector;    
     
     @UiField
-    static MaterialLabel txtScribe2,txtScribe5;
+    MaterialLabel txtScribe2,txtScribe5;
     @UiField
-    static MaterialCollection colScribe;
+    MaterialCollection colScribe;
     @UiField
-    static MaterialModal dlgScribe;
+    MaterialModal dlgScribe;
     @UiField
-    static MaterialTextBox boxScribe0,boxScribe1,boxScribe2;
+    MaterialTextBox boxScribe0,boxScribe1,boxScribe2;
     @UiField
-    static MaterialButton btnScribeEdit,btnScribeCancel,btnScribeDelete;
-    
-	public PanMain() {
-		initWidget(uiBinder.createAndBindUi(this));		
-		root.add(Main.dlgEditOwner);
-		root.add(Main.dlgEditTenur);
-		root.add(Main.dlgPickOwner);
-		root.add(Main.dlgPickTenur);
-		root.add(Main.dlgApprove);
-		addAttachHandler(eventShowHide);		
-		btnScribeEdit.addClickHandler(CitScribe.eventEdit);
-		btnScribeCancel.addClickHandler(CitScribe.eventCancel);
-		btnScribeDelete.addClickHandler(CitScribe.eventDelete);
-		//Don't initialize data here!!!
-	}
+    MaterialButton btnScribeEdit,btnScribeCancel,btnScribeDelete;
 
-	private AttachEvent.Handler eventShowHide = new AttachEvent.Handler(){
-		@Override
-		public void onAttachOrDetach(AttachEvent event) {
-			if(event.isAttached()==true){
-				//At this time, we can prepare enviroment paramters
-				Main.initCombo(cmbFormat, ItemProdx.USED_TXT_FMT);
-				//TODO:Main.initCombo(cmbUnitRef, Main.param.prodxUnit);
-				//TODO:Main.initCombo(cmbUnitMea, Main.param.prodxUnit);
-				Main.initComboEmitter(cmbEmitter);
-				emitt = new ParmEmitter(cmbEmitter.getSelectedValue());
-				emitt2box();
-				onCreateProdx(null);//create the first item!!!
-			}
-		}
-	};
-	
-	@UiHandler("lnkPanMeet")
-	void onPanMeet(ClickEvent e){
-		Main.switchToMeeting();
-	}
-	
-	@UiHandler("lnkPanAccnt")
-	void onPanAccnt(ClickEvent e){
-		Main.switchToAccount();
-	}
-	
-	@UiHandler("lnkPanSetting")
-	void onPanStorage(ClickEvent e){
-		Main.switchToSetting();
-	}
-	
     @UiHandler("lnkSearch")
     void onStartSearch(ClickEvent e) {
         navApp.setVisible(false);
@@ -169,7 +120,7 @@ public class PanMain extends CtlMain {
     
     @UiHandler("lnkRenewSelector")
 	void onLnkRenewSelector(ClickEvent e){
-    	//TODO: remind user that we dropping the current list~~~
+    	//TODO: how to remind user that we dropping the current list~~~
     	renewSelector("ORDER BY "+Const.PRODX+".last DESC LIMIT 50");
 	}
     
@@ -280,111 +231,7 @@ public class PanMain extends CtlMain {
     	};
     	Main.dlgApprove.appear("確認刪除??",event);    	
     }
-    
-    @UiHandler("boxOKey")
-    void onChangeKeyOwner(ValueChangeEvent<String> event){
-    	String txt = event.getValue().trim();
-    	if(txt.equalsIgnoreCase("+")==true){
-    		onEditOwner(null);
-    		return;
-    	}    	
-    	String post = "WHERE "+
-    		"(info[1] SIMILAR TO '%"+txt+"%') OR "+
-    		"(info[2] SIMILAR TO '%"+txt+"%') OR "+
-    		"(info[4] SIMILAR TO '%"+txt+"%') OR "+
-    		"(info[6] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
-    	//Query feature???
-    	final ClickHandler eventPick = new ClickHandler(){
-			@Override
-			public void onClick(ClickEvent event) {
-				curProdx.owner = Main.dlgPickOwner.getTarget();
-				prodx2box();
-				if(curProdx.owner!=null){
-					boxTKey.setFocus(true);
-				}				
-			}
-    	};
-    	Main.dlgPickOwner.appear(post,eventPick);
-    }
-    
-    @UiHandler("icoEditOwner")
-    void onEditOwner(ClickEvent e){
-    	if(curProdx.owner==null){
-    		MaterialToast.fireToast("新增委託單位");
-    		curProdx.owner = new ItemOwner();
-    	}
-    	Main.dlgEditOwner.appear(
-    		curProdx.owner,null,
-    		new ClickHandler(){
-			@Override
-			public void onClick(ClickEvent event) {
-				curProdx.owner = Main.dlgEditOwner.getTarget();
-				prodx2box();
-			}
-    	});
-    } 
-    
-    @UiHandler("icoClearOwner")
-    void onClearOwner(ClickEvent e){
-    	curProdx.owner = null;
-    	prodx2box();
-    	boxOKey.setFocus(true);
-    }
-    
-    @UiHandler("boxTKey")
-    void onChangeKeyTenure(ValueChangeEvent<String> event){
-    	String txt = event.getValue().trim().toLowerCase();
-    	if(txt.equalsIgnoreCase("+")==true){
-    		onEditTenur(null);
-    		return;
-    	}    	
-    	String post = "WHERE "+
-    		"(tenure.info[1] SIMILAR TO '%"+txt+"%') OR "+
-    		"(tenure.info[2] SIMILAR TO '%"+txt+"%') OR "+
-    		"(tenure.info[3] SIMILAR TO '%"+txt+"%') OR "+
-    		"(tenure.info[4] SIMILAR TO '%"+txt+"%') OR "+
-    		"(tenure.info[6] SIMILAR TO '%"+txt+"%') OR "+
-    		"(tenure.info[7] SIMILAR TO '%"+txt+"%') OR "+
-    		"(tenure.info[11] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
-    	//Query feature???
-    	final ClickHandler eventDone = new ClickHandler(){
-			@Override
-			public void onClick(ClickEvent event) {
-				curProdx.tenur = Main.dlgPickTenur.getTarget();
-				prodx2box();
-				if(curProdx.tenur==null){
-	    			boxStmp.setFocus(true);
-    			}    			
-			}
-    	};
-    	Main.dlgPickTenur.appear(post,eventDone);
-    }
 
-    @UiHandler("icoEditTenur")
-    void onEditTenur(ClickEvent e){
-    	if(curProdx.tenur==null){
-    		MaterialToast.fireToast("新增儀器資料");
-    		curProdx.tenur = new ItemTenur(curProdx.owner);
-    		curProdx.tenur.owner = curProdx.owner;
-    	}
-    	Main.dlgEditTenur.appear(
-    		curProdx.tenur,null,
-    		new ClickHandler(){
-			@Override
-			public void onClick(ClickEvent event) {
-				curProdx.tenur = Main.dlgEditTenur.getTarget();
-				prodx2box();
-			}
-    	});
-    }
-    
-    @UiHandler("icoClearTenur")
-    void onClearTenur(ClickEvent e){
-    	curProdx.tenur = null;
-    	prodx2box();
-    	boxTKey.setFocus(true);
-    }
-    
     @UiHandler("cmbFormat")
 	void onChangeFormat(ValueChangeEvent<String> event){
     	int fmt = ItemProdx.txt2fmt(event.getValue());
@@ -487,10 +334,10 @@ public class PanMain extends CtlMain {
     
     @UiHandler("cmbEmitter")
 	void onChangeEmitter(ValueChangeEvent<String> event){
-    	emitt2box();
+    	//emitt2box();
     	boxScribe.setFocus(true);
 	}
-    private void emitt2box(){
+    /*private void emitt2box(){
     	emitt.setText(cmbEmitter.getSelectedValue());
     	txtKindArea.setText(emitt.getKind()+" - "+emitt.getArea());
     	txtStrength.setText(emitt.getStrength());
@@ -500,7 +347,7 @@ public class PanMain extends CtlMain {
     	txtUncertain.setText(emitt.getUncertain());
     	txtSerial.setText(emitt.getSerial());
     	txtCriteron.setText(emitt.getCriterion());
-    }
+    }*/
     
     @UiHandler("boxScribe")
     void onChangeScribe(ValueChangeEvent<String> event){    	
@@ -559,7 +406,7 @@ public class PanMain extends CtlMain {
     	Main.selectCombo(cmbUnitRef, curProdx.getUnitRef());
     	Main.selectCombo(cmbUnitMea, curProdx.getUnitMea());
     	Main.selectCombo(cmbEmitter, curProdx.getEmitterTxt(), null, true);
-    	emitt2box();//map information again!!!
+    	//emitt2box();//map information again!!!
     	
     	boxPKey.setText(curProdx.getKey());
     	boxStmp.setText(Main.fmtDate.format(curProdx.stmp));
@@ -568,39 +415,11 @@ public class PanMain extends CtlMain {
     	boxPress.setText(curProdx.getPressure());
     	boxHumid.setText(curProdx.getHumidity());
     	chkUseLogo.setValue(curProdx.useLogo);
-    	
-    	boxOKey.setText("");
-    	if(curProdx.owner!=null){
-    		txtInfoO1.setText(curProdx.owner.getKey());
-    		txtInfoO2.setText(curProdx.owner.getName());
-    		txtInfoO3.setText(curProdx.owner.getAddress());
-    	}else{
-    		txtInfoO1.setText("");
-    		txtInfoO2.setText("");
-    		txtInfoO3.setText("");
-    	}
-    	
-    	boxTKey.setText("");
-    	if(curProdx.tenur!=null){
-    		txtInfoT1.setText(curProdx.tenur.getDeviceVendor());
-    		txtInfoT2.setText(curProdx.tenur.getDeviceSerial());
-    		txtInfoT3.setText(curProdx.tenur.getDeviceNumber());
-    		txtInfoT4.setText(curProdx.tenur.getDetectType());
-    		txtInfoT5.setText(curProdx.tenur.getDetectSerial());
-    		txtInfoT6.setText(curProdx.tenur.getDetectNumber());
-    	}else{
-    		txtInfoT1.setText("");
-    		txtInfoT2.setText("");
-    		txtInfoT3.setText("");
-    		txtInfoT4.setText("");
-    		txtInfoT5.setText("");
-    		txtInfoT6.setText("");
-    	}
-    	
-    	refresh_scribe();
+
+    	//refresh_scribe();
     }
     
-    public static void refresh_scribe(){
+    /*public static void refresh_scribe(){
     	colScribe.clear();
     	ArrayList<String> lst = curProdx.scribble;
 		for(int idx=0; idx<lst.size(); idx++){
@@ -623,7 +442,7 @@ public class PanMain extends CtlMain {
 			txtScribe5.setText("效率");
 			break;
 		}
-    }
+    }*/
     
     private void refresh_selector(){
     	int cnt = lstProdx.size();

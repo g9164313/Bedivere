@@ -1,0 +1,39 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:p1="urn:import:com.google.gwt.user.cellview.client"
+	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
+	xmlns:m="urn:import:gwt.material.design.client.ui">
+<ui:style>	
+</ui:style>
+
+<m:MaterialPanel backgroundColor="white" layoutPosition="RELATIVE" marginTop="20" padding="7" ui:field="root">
+	<m:MaterialRow>
+		<m:MaterialColumn>
+			<m:MaterialTextBox placeholder="測試儀器" iconType="DEVELOPER_BOARD" width="10em" ui:field="boxTKey" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialLabel ui:field="txtInfoT1" />
+			<m:MaterialLabel ui:field="txtInfoT4" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialLabel ui:field="txtInfoT2" />
+			<m:MaterialLabel ui:field="txtInfoT5" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialLabel ui:field="txtInfoT3" />
+			<m:MaterialLabel ui:field="txtInfoT6" />
+		</m:MaterialColumn>
+		<m:MaterialColumn float="RIGHT">
+			<m:MaterialRow>
+				<m:MaterialIcon iconType="CREATE" waves="DEFAULT" circle="true" ui:field="icoEditTenur" />
+			</m:MaterialRow>
+			<m:MaterialRow>
+				<m:MaterialIcon iconType="CLEAR" waves="DEFAULT" circle="true" ui:field="icoClearTenur" />
+			</m:MaterialRow>
+		</m:MaterialColumn>
+	</m:MaterialRow>
+</m:MaterialPanel>
+
+</ui:UiBinder>

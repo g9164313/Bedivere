@@ -111,7 +111,7 @@ public class CitScribe extends MaterialCollectionItem implements ClickHandler {
 	public void onClick(ClickEvent event) {
 		target = CitScribe.this;//current target~~~
 		String[] val = lst.get(idx).split("@");		
-		PanMain.boxScribe0.setText(val[0]);
+		/*PanMain.boxScribe0.setText(val[0]);
 		PanMain.boxScribe1.setText(val[1]);
 		PanMain.boxScribe2.setText(val[2]);
 		switch(fmt){
@@ -126,7 +126,7 @@ public class CitScribe extends MaterialCollectionItem implements ClickHandler {
 			PanMain.boxScribe1.setPlaceholder("背景值");
 			break;
 		}		
-		PanMain.dlgScribe.openModal();
+		PanMain.dlgScribe.openModal();*/
 	}
 	
 
@@ -138,7 +138,7 @@ public class CitScribe extends MaterialCollectionItem implements ClickHandler {
 			if(target==null){
 				return;
 			}			
-			String t1 = PanMain.boxScribe0.getText();
+			/*String t1 = PanMain.boxScribe0.getText();
 			t1 = t1.trim()
 				.replace('x', '×')
 				.replace('X', '×');
@@ -148,7 +148,7 @@ public class CitScribe extends MaterialCollectionItem implements ClickHandler {
 			//how to check ???
 			target.lst.set(target.idx,t1+"@"+t2+"@"+t3);
 			target.refresh_data();
-			PanMain.dlgScribe.closeModal();
+			PanMain.dlgScribe.closeModal();*/
 		}
 	};
 
@@ -156,15 +156,15 @@ public class CitScribe extends MaterialCollectionItem implements ClickHandler {
 		@Override
 		public void onClick(ClickEvent event) {
 			target.lst.remove(target.idx);
-			PanMain.refresh_scribe();
-			PanMain.dlgScribe.closeModal();
+			//PanMain.refresh_scribe();
+			//PanMain.dlgScribe.closeModal();
 		}
 	};
 	
 	public static final ClickHandler eventCancel = new ClickHandler(){
 		@Override
 		public void onClick(ClickEvent event) {
-			PanMain.dlgScribe.closeModal();
+			//PanMain.dlgScribe.closeModal();
 		}
 	};
 }

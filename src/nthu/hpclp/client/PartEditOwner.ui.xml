@@ -1,0 +1,32 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:p1="urn:import:com.google.gwt.user.cellview.client"
+	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
+	xmlns:m="urn:import:gwt.material.design.client.ui">
+<ui:style>	
+</ui:style>
+	
+<m:MaterialPanel backgroundColor="white" layoutPosition="RELATIVE" marginTop="20" padding="7" ui:field="root">
+	<m:MaterialRow>
+		<m:MaterialColumn>
+			<m:MaterialTextBox placeholder="委託單位" iconType="ACCOUNT_CIRCLE" width="10em" ui:field="boxOKey" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialLabel ui:field="txtInfoO1" />
+			<m:MaterialLabel ui:field="txtInfoO2" />
+			<m:MaterialLabel ui:field="txtInfoO3" />
+		</m:MaterialColumn>
+		<m:MaterialColumn float="RIGHT">
+			<m:MaterialRow>
+				<m:MaterialIcon iconType="CREATE" waves="DEFAULT" circle="true" ui:field="icoEditOwner" />
+			</m:MaterialRow>
+			<m:MaterialRow>
+				<m:MaterialIcon iconType="CLEAR" waves="DEFAULT" circle="true" ui:field="icoClearOwner" />
+			</m:MaterialRow>
+		</m:MaterialColumn>
+	</m:MaterialRow>
+</m:MaterialPanel>
+
+</ui:UiBinder> 

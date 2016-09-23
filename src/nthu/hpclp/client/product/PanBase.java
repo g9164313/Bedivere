@@ -2,16 +2,45 @@ package nthu.hpclp.client.product;
 
 import java.util.ArrayList;
 
-import com.google.gwt.user.client.ui.Composite;
-
+import narl.itrc.client.ExComposite;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemProdx;
 import nthu.hpclp.shared.ParmEmitter;
 
-public class CtlMain extends Composite {
+public class PanBase extends ExComposite {
 
-	public CtlMain(){
+	public PanBase(){		
 	}
+		
+	@Override
+	public void onEventShow() {
+		//At this time, we can prepare enviroment paramters
+		//Main.initCombo(cmbFormat, ItemProdx.USED_TXT_FMT);
+		//TODO:Main.initCombo(cmbUnitRef, Main.param.prodxUnit);
+		//TODO:Main.initCombo(cmbUnitMea, Main.param.prodxUnit);
+		//Main.initComboEmitter(cmbEmitter);
+		//emitt = new ParmEmitter(cmbEmitter.getSelectedValue());
+		//emitt2box();
+		//onCreateProdx(null);//create the first item!!!
+	}
+
+	@Override
+	public void onEventHide() {
+	}
+	//--------------------------//
+	
+    /**
+     * this variable keeps the user data in local computer~~~
+     */
+    protected ArrayList<ItemProdx> lstProdx = new ArrayList<ItemProdx>();
+    
+    protected ItemProdx curProdx = null;
+    
+    protected ParmEmitter emitt = null;
+    
+    
+    
+	//--------------------------//
 	
 	protected String query(String txt){
 		//identify whether this is 2D-label
@@ -70,14 +99,4 @@ public class CtlMain extends Composite {
 		}
 		return true;
 	}
-
-	
-    /**
-     * this list keep the user data in local computer~~~
-     */
-    protected static ArrayList<ItemProdx> lstProdx = new ArrayList<ItemProdx>();
-    
-    protected static ItemProdx curProdx = null;
-    
-    protected static ParmEmitter emitt = null;
 }

@@ -25,12 +25,11 @@
 </ui:style>
 
 <m:MaterialPanel ui:field="root">
-
-        <!-- Header Section -->
-        <m:MaterialHeader depth="996" layoutPosition="FIXED" width="100%">
-            <!-- NavBar Component -->
-            <m:MaterialNavBar ui:field="navApp" >            	
-                <m:MaterialNavSection float="LEFT" hideOn="NONE">
+	<!-- Header Section -->
+    <m:MaterialHeader depth="996" layoutPosition="FIXED" width="100%">
+    	<!-- NavBar Component -->
+    	<m:MaterialNavBar ui:field="navApp" >            	
+        	<m:MaterialNavSection float="LEFT" hideOn="NONE">
                 	<m:MaterialLink iconPosition="NONE" tooltip="排程" tooltipPosition="BOTTOM" iconType="EVENT" ui:field="lnkPanMeet" />
                 	<!-- <m:MaterialLink iconPosition="NONE" tooltip="報告" tooltipPosition="BOTTOM" iconType="DESCRIPTION" ui:field="lnkPanProdx" /> -->
                 	<m:MaterialLink iconPosition="NONE" tooltip="會計" tooltipPosition="BOTTOM" iconType="ACCOUNT_BALANCE" ui:field="lnkPanAccnt" />
@@ -53,7 +52,7 @@
                     		<m:MaterialLink text="清除清單"  textColor="grey darken-1" iconType="CLEAR_ALL" ui:field="lnkClearSelector" />
                    			<m:MaterialLink text="新增報告"  textColor="grey darken-1" iconType="PLUS_ONE" ui:field="lnkCreate" />                   			
                    		</m:MaterialDropDown>
-                   </m:MaterialLink>                    
+                   </m:MaterialLink>                  
                 </m:MaterialNavSection>
             </m:MaterialNavBar>
             <!-- Search Component -->
@@ -66,50 +65,11 @@
         <m:MaterialContainer paddingTop="70" paddingLeft="7" paddingRight="7">
         
         	<m:MaterialRow>
-        		<m:MaterialColumn><!-- the start of first column -->
+        		<m:MaterialColumn>
         		    <!-- 委託單位 -->
-        			<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7">
-        				<m:MaterialRow>
-        					<m:MaterialColumn>
-        						<m:MaterialTextBox placeholder="委託單位" iconType="ACCOUNT_CIRCLE" width="10em" ui:field="boxOKey" />
-        					</m:MaterialColumn>        					
-        					<m:MaterialColumn>
-        						<m:MaterialLabel ui:field="txtInfoO1"/>
-        						<m:MaterialLabel ui:field="txtInfoO2"/> 
-        						<m:MaterialLabel ui:field="txtInfoO3"/>
-        					</m:MaterialColumn>
-        					<m:MaterialColumn float="RIGHT">
-        						<m:MaterialRow> <m:MaterialIcon iconType="CREATE" waves="DEFAULT"  circle="true" ui:field="icoEditOwner" /> </m:MaterialRow>        						
-        						<m:MaterialRow> <m:MaterialIcon iconType="CLEAR" waves="DEFAULT"  circle="true" ui:field="icoClearOwner" /> </m:MaterialRow>
-        					</m:MaterialColumn>
-        				</m:MaterialRow>
-        			</m:MaterialPanel>
-        			
-        			 <!-- 測試儀器 -->
-					<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7" >
-			     		<m:MaterialRow>
-        					<m:MaterialColumn>
-        						<m:MaterialTextBox placeholder="測試儀器" iconType="DEVELOPER_BOARD" width="10em" ui:field="boxTKey" />
-        					</m:MaterialColumn>
-        					<m:MaterialColumn>        					
-        						<m:MaterialLabel ui:field="txtInfoT1" /> 
-        						<m:MaterialLabel ui:field="txtInfoT4" />  						
-        					</m:MaterialColumn>
-        					<m:MaterialColumn>        					
-        						<m:MaterialLabel ui:field="txtInfoT2" /> 
-        						<m:MaterialLabel ui:field="txtInfoT5" />  						
-        					</m:MaterialColumn>
-        					<m:MaterialColumn>        					
-        						<m:MaterialLabel ui:field="txtInfoT3" /> 
-        						<m:MaterialLabel ui:field="txtInfoT6" />  						
-        					</m:MaterialColumn>
-        					<m:MaterialColumn float="RIGHT">
-        						<m:MaterialRow> <m:MaterialIcon iconType="CREATE" waves="DEFAULT"  circle="true" ui:field="icoEditTenur" /></m:MaterialRow>
-        						<m:MaterialRow> <m:MaterialIcon iconType="CLEAR" waves="DEFAULT"  circle="true" ui:field="icoClearTenur" /></m:MaterialRow>	
-        					</m:MaterialColumn>
-        				</m:MaterialRow>
-					</m:MaterialPanel>
-					
+					<g:HTMLPanel ui:field="archOwner" />        			
+        			<!-- 測試儀器 -->
+					<g:HTMLPanel ui:field="archTenur" />
         			<!-- 報告編號，格式，溫濕度，單位 -->
 					<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7" >
 						<m:MaterialRow>
@@ -133,17 +93,17 @@
 							<m:MaterialColumn> <m:MaterialLink text="刪除報告" iconType="DELETE" ui:field="lnkDeleteProdx" /> </m:MaterialColumn>
 						</m:MaterialRow>
 					</m:MaterialPanel>
-				</m:MaterialColumn><!-- the end of first column -->
+				</m:MaterialColumn>
 				
-				<m:MaterialColumn><!-- the start of second column -->
+				<m:MaterialColumn>
 					<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7" >
 						<m:MaterialRow >	
 							<m:MaterialTextBox placeholder="快速輸入" ui:field="boxScribe" />
 						</m:MaterialRow>
 						<m:MaterialRow>
-							<m:MaterialColumn> <m:MaterialLabel width="3em" text="刻度"              /> </m:MaterialColumn>
+							<m:MaterialColumn> <m:MaterialLabel width="3em" text="刻度"/> </m:MaterialColumn>
 							<m:MaterialColumn> <m:MaterialLabel width="9em" text="參考or背景值" ui:field="txtScribe2"/> </m:MaterialColumn>
-							<m:MaterialColumn> <m:MaterialLabel width="6em" text="器示值"           /> </m:MaterialColumn>
+							<m:MaterialColumn> <m:MaterialLabel width="6em" text="器示值"/> </m:MaterialColumn>
 							<m:MaterialColumn> <m:MaterialLabel width="4em" text="不確定度修剪" /> </m:MaterialColumn>
 							<m:MaterialColumn> <m:MaterialLabel width="3em" text="因子or效率"    ui:field="txtScribe5"/> </m:MaterialColumn>
 						</m:MaterialRow>
@@ -151,7 +111,7 @@
 							<m:MaterialCollection ui:field="colScribe"/>
 						</m:MaterialRow>
 						<m:MaterialModal dismissable="true" ui:field="dlgScribe">
-							<m:MaterialModalContent >
+							<m:MaterialModalContent>
 								<m:MaterialRow> <m:MaterialTextBox placeholder="刻度" ui:field="boxScribe0"/> </m:MaterialRow>
 								<m:MaterialRow> <m:MaterialTextBox placeholder="參考or背景值" ui:field="boxScribe1"/> </m:MaterialRow>
 								<m:MaterialRow> <m:MaterialTextBox placeholder="器示值" ui:field="boxScribe2"/> </m:MaterialRow>
@@ -164,53 +124,15 @@
  						</m:MaterialModal>
 					</m:MaterialPanel>
 										
-        			<!-- 射源資訊 -->
-					<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7" >
-						<m:MaterialRow>
-							<m:MaterialColumn> 
-								<m:MaterialLabel text="種類大小："/>
-								<m:MaterialLabel text="表面大小："/>								
-							</m:MaterialColumn>
-							<m:MaterialColumn>
-								<m:MaterialLabel ui:field="txtKindArea"/>
-								<m:MaterialLabel ui:field="txtSurface"/>
-							</m:MaterialColumn>
-							
-							<m:MaterialColumn>
-								<m:MaterialLabel text="涵蓋因子："/>
-								<m:MaterialLabel text="涵蓋機率："/>
-								<m:MaterialLabel text="不確定度："/>
-							</m:MaterialColumn>
-							<m:MaterialColumn>
-								<m:MaterialLabel ui:field="txtFactorK"/>
-								<m:MaterialLabel ui:field="txtFactorP"/>
-								<m:MaterialLabel ui:field="txtUncertain"/>
-							</m:MaterialColumn>
-						</m:MaterialRow>
-							
-						<m:MaterialRow>
-							<m:MaterialColumn>
-								<m:MaterialLabel text="射源活度："/>
-								<m:MaterialLabel text="射源序號："/>
-								<m:MaterialLabel text="射源認證："/>
-							</m:MaterialColumn>
-							<m:MaterialColumn>
-								<m:MaterialLabel ui:field="txtStrength"/>
-								<m:MaterialLabel ui:field="txtSerial"/>
-								<m:MaterialLabel ui:field="txtCriteron"/>
-							</m:MaterialColumn>
-						</m:MaterialRow>
-						
-					</m:MaterialPanel>
-				</m:MaterialColumn><!-- the end of second column -->				
+					<g:HTMLPanel ui:field="archEmitter" />					
+				</m:MaterialColumn>				
 			</m:MaterialRow>
 			
     	 	<m:MaterialModal type="BOTTOM_SHEET" dismissable="true" inDuration="10" outDuration="10" height="25%" ui:field="dlgSelector">
     	 		<m:MaterialLabel ui:field="txtSelectorTotal"/>
  				<m:MaterialCollection ui:field="colSelector"/>
  			</m:MaterialModal>
- 			 
-        </m:MaterialContainer>
+	</m:MaterialContainer>
 </m:MaterialPanel>
 
 </ui:UiBinder> 
