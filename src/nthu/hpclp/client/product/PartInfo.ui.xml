@@ -1,0 +1,57 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:m="urn:import:gwt.material.design.client.ui">
+<ui:style>
+</ui:style>
+
+<!-- 報告編號，格式，溫濕度，單位 -->
+<m:MaterialPanel backgroundColor="white" layoutPosition="RELATIVE" marginTop="20" padding="7">
+	<m:MaterialRow>
+		<m:MaterialColumn>
+			<m:MaterialListBox width="9rem" tooltip="報告格式" ui:field="cmbFormat" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialListBox width="9rem" tooltip="參考值單位" ui:field="cmbUnitRef" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialListBox width="9rem" tooltip="器示值單位" ui:field="cmbUnitMea" />
+		</m:MaterialColumn>
+	</m:MaterialRow>
+	
+	<m:MaterialRow>
+		<m:MaterialColumn>
+			<m:MaterialTextBox width="9rem" placeholder="校正日期" ui:field="boxStmp" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialTextBox width="9rem" placeholder="報告編號" ui:field="boxPKey" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialTextBox width="9rem" placeholder="附註事項" ui:field="boxMemo" />
+		</m:MaterialColumn>
+	</m:MaterialRow>
+	
+	<m:MaterialRow>
+		<m:MaterialColumn>
+			<m:MaterialFloatBox width="9rem" placeholder="環境溫度" ui:field="boxTemp" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialFloatBox width="9rem" placeholder="大氣壓力" ui:field="boxPress" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialFloatBox width="9rem" placeholder="相對濕度" ui:field="boxHumid" />
+		</m:MaterialColumn>
+	</m:MaterialRow>
+	
+	<m:MaterialRow>
+		<m:MaterialColumn>
+			<m:MaterialListBox width="9rem" ui:field="cmbEmitter" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialCheckBox text="Logo" value="true" ui:field="chkUseLogo" />
+		</m:MaterialColumn>
+	</m:MaterialRow>
+</m:MaterialPanel>
+	
+</ui:UiBinder> 

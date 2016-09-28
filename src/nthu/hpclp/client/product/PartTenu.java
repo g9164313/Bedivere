@@ -1,4 +1,4 @@
-package nthu.hpclp.client;
+package nthu.hpclp.client.product;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -14,17 +14,18 @@ import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
+import nthu.hpclp.client.Main;
 import nthu.hpclp.shared.ItemProdx;
 import nthu.hpclp.shared.ItemTenur;
 
-public class PartEditTenur extends Composite {
+public class PartTenu extends Composite {
 
-	private static PartEditTenurUiBinder uiBinder = GWT.create(PartEditTenurUiBinder.class);
+	private static PartTenuUiBinder uiBinder = GWT.create(PartTenuUiBinder.class);
 
-	interface PartEditTenurUiBinder extends UiBinder<Widget, PartEditTenur> {
+	interface PartTenuUiBinder extends UiBinder<Widget, PartTenu> {
 	}
 
-	public PartEditTenur() {
+	public PartTenu() {
 		initWidget(uiBinder.createAndBindUi(this));		
 		root.add(Main.dlgEditTenur);
 		root.add(Main.dlgPickTenur);

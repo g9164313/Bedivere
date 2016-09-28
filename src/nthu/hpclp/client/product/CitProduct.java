@@ -69,6 +69,6 @@ public class CitProduct extends MaterialCollectionItem implements ClickHandler {
 	
 	@Override
 	public void onClick(ClickEvent event) {		
-		root.prodx2box(prodx);
+		//root.prodx2box(prodx);
 	}
 }

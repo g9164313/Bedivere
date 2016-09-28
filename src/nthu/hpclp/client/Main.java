@@ -16,7 +16,11 @@ import nthu.hpclp.shared.ParamHub;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
+import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
+import com.google.gwt.user.client.Event;
+import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
@@ -260,7 +264,7 @@ public class Main implements EntryPoint {
 	private static nthu.hpclp.client.product.PanMain product = new  nthu.hpclp.client.product.PanMain();
 	private static nthu.hpclp.client.setting.PanMain setting = new  nthu.hpclp.client.setting.PanMain();
 	
-	private final static int PAN_DEFAULT=3;//Do we need to fix this? No~~~
+	private final static int PAN_DEFAULT=1;//Do we need to fix this? No~~~
 	private final static int PAN_MEETING=0;
 	private final static int PAN_PRODUCT=1;
 	private final static int PAN_ACCOUNT=2;
@@ -301,20 +305,36 @@ public class Main implements EntryPoint {
 		switch_panel(PAN_SETTING);
 	}
 	
-	/*private Event.NativePreviewHandler eventHook = new Event.NativePreviewHandler(){
+	private Event.NativePreviewHandler eventHook = 
+		new Event.NativePreviewHandler()
+	{
 		@Override
-		public void onPreviewNativeEvent(NativePreviewEvent event) {
-			switch (event.getTypeInt()) {
+		public void onPreviewNativeEvent(NativePreviewEvent e) {
+			/*switch (event.getTypeInt()) {
 			case Event.ONKEYDOWN:
 				int keyCode = event.getNativeEvent().getKeyCode();
 				GWT.log("key="+keyCode);
 				//if(keyCode==KeyCodes.KEY_F1){
 				//	GWT.log("press="+keyCode);
 				//}
+				event.consume();
+				break;
+			}*/
+			NativeEvent ne = e.getNativeEvent();
+			Element elt = ne.getEventTarget().cast();
+			int keycode = ne.getKeyCode();
+			boolean ctrl = ne.getCtrlKey();
+			//boolean shift = event.getShiftKey();
+			//boolean alt = event.getAltKey();
+			//boolean meta = event.getMetaKey();
+			switch (e.getTypeInt()) {
+			case Event.ONKEYDOWN:
+				System.out.println(ne.getType()+"@");
+				e.consume();
 				break;
 			}
 		}
-	};*/
+	};
 	
 	@Override
 	public void onModuleLoad() {

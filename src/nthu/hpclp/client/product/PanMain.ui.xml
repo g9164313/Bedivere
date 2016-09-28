@@ -1,138 +1,32 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder 
 	xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui"
-	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
-	xmlns:m="urn:import:gwt.material.design.client.ui" >
-	
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:m="urn:import:gwt.material.design.client.ui">
 <ui:style>
-	@external side-nav, active;
-    body{
-        background-color: #e9e9e9;
-        overflow: auto !important;
-    }
-    .side-nav li.active{
-        border-left: 4px solid #757575;
-    }
-    .bordered{
-        border-left: 2px solid #e9e9e9;
-    }
-    .animation{
-        transition: 0.4s all;
-        -webkit-transition: 0.4s all;
-        -moz-transition: 0.4s all;
-    }
 </ui:style>
 
 <m:MaterialPanel ui:field="root">
 	<!-- Header Section -->
-    <m:MaterialHeader depth="996" layoutPosition="FIXED" width="100%">
-    	<!-- NavBar Component -->
-    	<m:MaterialNavBar ui:field="navApp" >            	
-        	<m:MaterialNavSection float="LEFT" hideOn="NONE">
-                	<m:MaterialLink iconPosition="NONE" tooltip="排程" tooltipPosition="BOTTOM" iconType="EVENT" ui:field="lnkPanMeet" />
-                	<!-- <m:MaterialLink iconPosition="NONE" tooltip="報告" tooltipPosition="BOTTOM" iconType="DESCRIPTION" ui:field="lnkPanProdx" /> -->
-                	<m:MaterialLink iconPosition="NONE" tooltip="會計" tooltipPosition="BOTTOM" iconType="ACCOUNT_BALANCE" ui:field="lnkPanAccnt" />
-                	<m:MaterialLink iconPosition="NONE" tooltip="設定" tooltipPosition="BOTTOM" iconType="SETTINGS" ui:field="lnkPanSetting" />
-                </m:MaterialNavSection>
-                <m:MaterialNavSection float="RIGHT" hideOn="NONE">                	
-                    <m:MaterialLink iconPosition="NONE" tooltip="搜尋" tooltipPosition="BOTTOM" iconType="SEARCH" ui:field="lnkSearch" />
-                    <m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="BOTTOM" iconType="PRINT" activates="drpPrint">
-                    	<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpPrint" >                    		
-                    		<m:MaterialLink text="標籤"  textColor="grey darken-1" ui:field="lnkPrint2DTag" />
-                    		<m:MaterialLink text="報告"  textColor="grey darken-1" ui:field="lnkPrintOneProdx" />
-                    		<m:MaterialLink text="報告（全）"  textColor="grey darken-1" ui:field="lnkPrintAllProdx" />
-                    	</m:MaterialDropDown>
-                    </m:MaterialLink>
-                    <m:MaterialLink iconPosition="NONE" tooltip="上傳" tooltipPosition="BOTTOM" iconType="FILE_UPLOAD" ui:field="lnkUpload" />                    
-                    <m:MaterialLink iconPosition="NONE" tooltip="功能" tooltipPosition="BOTTOM" iconType="TUNE" activates="drpFunc">
-                   		<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpFunc" >
-                   			<m:MaterialLink text="顯示清單"  textColor="grey darken-1" iconType="RECEIPT" ui:field="lnkShowSelector" />
-                    		<m:MaterialLink text="最近50筆" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkRenewSelector" />
-                    		<m:MaterialLink text="清除清單"  textColor="grey darken-1" iconType="CLEAR_ALL" ui:field="lnkClearSelector" />
-                   			<m:MaterialLink text="新增報告"  textColor="grey darken-1" iconType="PLUS_ONE" ui:field="lnkCreate" />                   			
-                   		</m:MaterialDropDown>
-                   </m:MaterialLink>                  
-                </m:MaterialNavSection>
-            </m:MaterialNavBar>
-            <!-- Search Component -->
-            <m:MaterialNavBar ui:field="navSearch" backgroundColor="white" visible="false">
-                <m:MaterialSearch ui:field="boxSearch" placeholder="搜尋xxxx" active="true"/>
-            </m:MaterialNavBar>
-        </m:MaterialHeader>
- 
-        <!-- Container -->
-        <m:MaterialContainer paddingTop="70" paddingLeft="7" paddingRight="7">
-        
-        	<m:MaterialRow>
-        		<m:MaterialColumn>
-        		    <!-- 委託單位 -->
-					<g:HTMLPanel ui:field="archOwner" />        			
-        			<!-- 測試儀器 -->
-					<g:HTMLPanel ui:field="archTenur" />
-        			<!-- 報告編號，格式，溫濕度，單位 -->
-					<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7" >
-						<m:MaterialRow>
-							<m:MaterialColumn> <m:MaterialListBox width="9em" tooltip="報告格式" ui:field="cmbFormat"/> </m:MaterialColumn>
-							<m:MaterialColumn> <m:MaterialListBox width="9em" tooltip="參考值單位" ui:field="cmbUnitRef" /> </m:MaterialColumn>
-							<m:MaterialColumn> <m:MaterialListBox width="9em" tooltip="器示值單位" ui:field="cmbUnitMea" /> </m:MaterialColumn>
-						</m:MaterialRow>
-						<m:MaterialRow>
-							<m:MaterialColumn> <m:MaterialTextBox width="9em" placeholder="校正日期" ui:field="boxStmp" /> </m:MaterialColumn>
-							<m:MaterialColumn> <m:MaterialTextBox width="9em" placeholder="報告編號" ui:field="boxPKey" /> </m:MaterialColumn>							
-							<m:MaterialColumn> <m:MaterialTextBox width="9em" placeholder="附註事項" ui:field="boxMemo" /> </m:MaterialColumn>								
-						</m:MaterialRow>
-						<m:MaterialRow>
-							<m:MaterialColumn> <m:MaterialFloatBox width="9em" placeholder="環境溫度" ui:field="boxTemp" /> </m:MaterialColumn>
-							<m:MaterialColumn> <m:MaterialFloatBox width="9em" placeholder="大氣壓力" ui:field="boxPress" /> </m:MaterialColumn>
-							<m:MaterialColumn> <m:MaterialFloatBox width="9em" placeholder="相對濕度" ui:field="boxHumid" /> </m:MaterialColumn>
-						</m:MaterialRow>
-						<m:MaterialRow>							
-							<m:MaterialColumn> <m:MaterialListBox width="9em" ui:field="cmbEmitter"/> </m:MaterialColumn>
-							<m:MaterialColumn> <m:MaterialCheckBox text="使用Logo" value="true" ui:field="chkUseLogo" /> </m:MaterialColumn> 
-							<m:MaterialColumn> <m:MaterialLink text="刪除報告" iconType="DELETE" ui:field="lnkDeleteProdx" /> </m:MaterialColumn>
-						</m:MaterialRow>
-					</m:MaterialPanel>
-				</m:MaterialColumn>
-				
-				<m:MaterialColumn>
-					<m:MaterialPanel  backgroundColor="white"  layoutPosition="RELATIVE" marginTop="20"	padding="7" >
-						<m:MaterialRow >	
-							<m:MaterialTextBox placeholder="快速輸入" ui:field="boxScribe" />
-						</m:MaterialRow>
-						<m:MaterialRow>
-							<m:MaterialColumn> <m:MaterialLabel width="3em" text="刻度"/> </m:MaterialColumn>
-							<m:MaterialColumn> <m:MaterialLabel width="9em" text="參考or背景值" ui:field="txtScribe2"/> </m:MaterialColumn>
-							<m:MaterialColumn> <m:MaterialLabel width="6em" text="器示值"/> </m:MaterialColumn>
-							<m:MaterialColumn> <m:MaterialLabel width="4em" text="不確定度修剪" /> </m:MaterialColumn>
-							<m:MaterialColumn> <m:MaterialLabel width="3em" text="因子or效率"    ui:field="txtScribe5"/> </m:MaterialColumn>
-						</m:MaterialRow>
-						<m:MaterialRow>	
-							<m:MaterialCollection ui:field="colScribe"/>
-						</m:MaterialRow>
-						<m:MaterialModal dismissable="true" ui:field="dlgScribe">
-							<m:MaterialModalContent>
-								<m:MaterialRow> <m:MaterialTextBox placeholder="刻度" ui:field="boxScribe0"/> </m:MaterialRow>
-								<m:MaterialRow> <m:MaterialTextBox placeholder="參考or背景值" ui:field="boxScribe1"/> </m:MaterialRow>
-								<m:MaterialRow> <m:MaterialTextBox placeholder="器示值" ui:field="boxScribe2"/> </m:MaterialRow>
-							</m:MaterialModalContent>
-							<m:MaterialModalFooter>									
-								<m:MaterialButton text="確認" type="FLAT" ui:field="btnScribeEdit" />								
-								<m:MaterialButton text="取消" type="FLAT" ui:field="btnScribeCancel"/>
-								<m:MaterialButton text="刪除" type="FLAT" ui:field="btnScribeDelete" />
-							</m:MaterialModalFooter>
- 						</m:MaterialModal>
-					</m:MaterialPanel>
-										
-					<g:HTMLPanel ui:field="archEmitter" />					
-				</m:MaterialColumn>				
-			</m:MaterialRow>
-			
-    	 	<m:MaterialModal type="BOTTOM_SHEET" dismissable="true" inDuration="10" outDuration="10" height="25%" ui:field="dlgSelector">
-    	 		<m:MaterialLabel ui:field="txtSelectorTotal"/>
- 				<m:MaterialCollection ui:field="colSelector"/>
- 			</m:MaterialModal>
+	<m:MaterialHeader depth="996" layoutPosition="FIXED" width="100%">
+	</m:MaterialHeader>
+
+	<!-- Container -->
+	<m:MaterialContainer paddingTop="70" paddingLeft="7" paddingRight="7">
+		<m:MaterialColumn>
+			<m:MaterialRow> <g:SimplePanel ui:field="anrchOwner" /> </m:MaterialRow>
+			<m:MaterialRow> <g:SimplePanel ui:field="anrchTenur" /> </m:MaterialRow>
+			<m:MaterialRow> <g:SimplePanel ui:field="anchorInfo" /> </m:MaterialRow>
+		</m:MaterialColumn>
+		<g:SimplePanel ui:field="anchorScriber" />
+		<g:SimplePanel ui:field="anchorEmitter" />
 	</m:MaterialContainer>
+	
+	<m:MaterialModal type="BOTTOM_SHEET" dismissable="true" ui:field="dlgList">
+		<m:MaterialRow> <g:SimplePanel ui:field="anchorList1"/> </m:MaterialRow>
+		<m:MaterialRow> <g:SimplePanel ui:field="anchorList2"/> </m:MaterialRow>
+	</m:MaterialModal>
+	
 </m:MaterialPanel>
 
 </ui:UiBinder> 

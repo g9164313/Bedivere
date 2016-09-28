@@ -18,14 +18,14 @@ import nthu.hpclp.shared.ItemAccnt;
 import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemProdx;
 
-public class PartEditOwner extends Composite {
+public class PartOwne extends Composite {
 
-	private static PartEditOwnerUiBinder uiBinder = GWT.create(PartEditOwnerUiBinder.class);
+	private static PartOwneUiBinder uiBinder = GWT.create(PartOwneUiBinder.class);
 
-	interface PartEditOwnerUiBinder extends UiBinder<Widget, PartEditOwner> {
+	interface PartOwneUiBinder extends UiBinder<Widget, PartOwne> {
 	}
 
-	public PartEditOwner() {
+	public PartOwne() {
 		initWidget(uiBinder.createAndBindUi(this));
 		root.add(Main.dlgEditOwner);
 		root.add(Main.dlgPickOwner);
