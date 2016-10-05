@@ -17,7 +17,7 @@ import com.google.gwt.user.client.ui.Widget;
 public class DlgNotify extends Composite {
 
 	private static DlgNotifyUiBinder uiBinder = GWT
-			.create(DlgNotifyUiBinder.class);
+		.create(DlgNotifyUiBinder.class);
 
 	interface DlgNotifyUiBinder extends UiBinder<Widget, DlgNotify> {
 	}

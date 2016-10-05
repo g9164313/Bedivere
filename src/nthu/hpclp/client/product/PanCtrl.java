@@ -2,10 +2,7 @@ package nthu.hpclp.client.product;
 
 import java.util.ArrayList;
 
-import com.google.gwt.cell.client.Cell;
 import com.google.gwt.cell.client.EditTextCell;
-import com.google.gwt.core.shared.GWT;
-import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.SimplePager;
@@ -16,22 +13,14 @@ import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SelectionChangeEvent;
 import com.google.gwt.view.client.SingleSelectionModel;
 
-import gwt.material.design.client.MaterialDesign;
-import gwt.material.design.client.MaterialDesignDebug;
-import gwt.material.design.client.constants.IconType;
-import gwt.material.design.client.ui.MaterialIcon;
 import gwt.material.design.client.ui.MaterialLoader;
 import gwt.material.design.client.ui.MaterialModal;
-import gwt.material.design.client.ui.MaterialPanel;
-import gwt.material.design.client.ui.MaterialPushpin;
 import gwt.material.design.client.ui.MaterialToast;
 import narl.itrc.client.ExComposite;
 import nthu.hpclp.client.Main;
-import nthu.hpclp.client.setting.BaseParam.TxtCol;
 import nthu.hpclp.shared.Const;
-import nthu.hpclp.shared.ItemParam;
 import nthu.hpclp.shared.ItemProdx;
-import nthu.hpclp.shared.ParmEmitter;
+
 
 public abstract class PanCtrl extends ExComposite {
 
@@ -52,8 +41,7 @@ public abstract class PanCtrl extends ExComposite {
 	
 	@Override
 	public void onEventShow() {
-		//updateLastProdx();
-		//dlgList.openModal();
+		listUpdateLast50();
 	}
 	
 	@Override
@@ -84,7 +72,15 @@ public abstract class PanCtrl extends ExComposite {
 		@Override
 		public String getValue(ItemProdx object) {
 			switch(idx){
-			case ItemProdx.INFO_PKEY: return object.getKey();
+			case -1:
+				if(object.uuid.length()==0){
+					return "新增項目";
+				}else if(object.uuid.charAt(0)=='$'){
+					return "標記刪除";
+				}
+				return "已儲存";
+			case ItemProdx.INFO_PKEY: 
+				return object.getKey();
 			}
 			return "???";
 		}
@@ -96,6 +92,7 @@ public abstract class PanCtrl extends ExComposite {
     	grid.setSize("100%","13em");
     	grid.setEmptyTableWidget(new Label("無資料"));
     	//set all columns~~~
+    	grid.addColumn(new ColText(-1),"狀態");
     	grid.addColumn(new ColText(ItemProdx.INFO_PKEY),"報告編號");
     	//set provider~~~
     	lstProvider = new ListDataProvider<ItemProdx>();
@@ -177,11 +174,17 @@ public abstract class PanCtrl extends ExComposite {
 	}
 	//---------------------//
 	
-    protected void updateLastProdx(){
-    	updateList("ORDER BY "+Const.PRODX+".last DESC LIMIT 50");
+	protected void listClear(){
+		lstProdx = new ArrayList<ItemProdx>();
+		lstProvider.setList(lstProdx);
+    	lstProvider.refresh();
+	}
+	
+    protected void listUpdateLast50(){
+    	listUpdate("ORDER BY "+Const.PRODX+".last DESC LIMIT 50");
     }
     
-    private void updateList(final String postfix){
+    private void listUpdate(final String postfix){
     	MaterialLoader.showLoading(true);
     	Main.rpc.listProduct(
         	postfix,
@@ -197,12 +200,12 @@ public abstract class PanCtrl extends ExComposite {
         			MaterialToast.fireToast("無資料!!");
         			return;
         		}
-        		updateList(result);
+        		_list_update(result);
         	}
         });
     }
-    
-    private void updateList(ArrayList<ItemProdx> lst){
+
+    private void _list_update(ArrayList<ItemProdx> lst){
     	lstProdx = lst;
 		lstProvider.setList(lstProdx);
     	lstProvider.refresh();

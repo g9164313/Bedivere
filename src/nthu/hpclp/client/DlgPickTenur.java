@@ -12,6 +12,7 @@ import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialRow;
 import gwt.material.design.client.ui.MaterialToast;
+import narl.itrc.client.DlgBase;
 import nthu.hpclp.shared.ItemTenur;
 
 import com.google.gwt.core.client.GWT;
@@ -34,14 +35,6 @@ public class DlgPickTenur extends DlgBase<ItemTenur> {
 		refxWidget(root,btnAction,btnCancel);
 	}
 
-	@Override
-	public void onEventShow() {
-	}
-
-	@Override
-	public void onEventHide() {
-	}
-	
 	@UiField
 	MaterialModal root;
 	
@@ -146,14 +139,14 @@ public class DlgPickTenur extends DlgBase<ItemTenur> {
 	}
 	
 	@Override
-	void takeAction(ClickEvent event) {
+	public void takeAction(ClickEvent event) {
 	}
 
 	@Override
-	void eventAppear(ItemTenur item) {
+	public void eventAppear(ItemTenur item) {
 	}
 
 	@Override
-	void takeCancel(ClickEvent event) {
+	public void takeCancel(ClickEvent event) {
 	}
 }

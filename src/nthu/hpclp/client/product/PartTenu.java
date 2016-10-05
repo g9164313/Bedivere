@@ -48,14 +48,14 @@ public class PartTenu extends Composite {
 		updateBox(targetProdx.tenur);
 	}
 
-	private ItemTenur getTarget(){
+	public ItemTenur getTarget(){
 		if(targetProdx!=null){ return targetProdx.tenur; }
 		return null;
 	}
 	
-	private void updateTarget(ItemTenur itm){
-		if(targetProdx!=null){ targetProdx.tenur = itm; }
-	}
+	//private void updateTarget(ItemTenur itm){
+	//	if(targetProdx!=null){ targetProdx.tenur = itm; }
+	//}
 	
 	private void updateBox(ItemTenur itm){
     	boxTKey.setText("");
@@ -75,7 +75,7 @@ public class PartTenu extends Composite {
     		txtInfoT5.setText("");
     		txtInfoT6.setText("");
     	}    	
-    	updateTarget(itm);
+    	//updateTarget(itm);
 	}
 	
 	private final ClickHandler eventUpdate = new ClickHandler(){

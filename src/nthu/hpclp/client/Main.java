@@ -6,6 +6,7 @@ import java.util.Date;
 import gwt.material.design.client.ui.MaterialListBox;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
+import narl.itrc.client.DlgApprove;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemAccnt;
 import nthu.hpclp.shared.ItemMeeting;
@@ -78,8 +79,6 @@ public class Main implements EntryPoint {
 	
 	public static DlgPickOwner dlgPickOwner = new DlgPickOwner();
 	public static DlgPickTenur dlgPickTenur = new DlgPickTenur();
-	
-	public static DlgApprove dlgApprove = new DlgApprove();
 	
 	public static ParamHub param = new ParamHub();//enviroment parameters
 	//----------------------------//

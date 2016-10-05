@@ -1,4 +1,4 @@
-package nthu.hpclp.client;
+package narl.itrc.client;
 
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialIcon;
@@ -24,15 +24,6 @@ public class DlgApprove extends DlgBase<String> {
 		refxWidget(root,btnAction,btnCancel);
 	}
 
-	@Override
-	public void onEventShow() {
-	}
-
-	@Override
-	public void onEventHide() {
-	}
-	
-	
 	@UiField
 	MaterialModal root;
 	
@@ -51,14 +42,14 @@ public class DlgApprove extends DlgBase<String> {
 	}
 	
 	@Override
-	void eventAppear(String item) {
+	public void eventAppear(String item) {
 	}
 
 	@Override
-	void takeAction(ClickEvent event) {
+	public void takeAction(ClickEvent event) {
 	}
 
 	@Override
-	void takeCancel(ClickEvent event) {
+	public void takeCancel(ClickEvent event) {
 	}
 }

@@ -12,6 +12,7 @@ import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialRow;
 import gwt.material.design.client.ui.MaterialToast;
+import narl.itrc.client.DlgBase;
 import nthu.hpclp.shared.ItemOwner;
 
 import com.google.gwt.core.client.GWT;
@@ -34,14 +35,6 @@ public class DlgPickOwner extends DlgBase<ItemOwner> {
 		refxWidget(root,btnAction,btnCancel);
 	}
 
-	@Override
-	public void onEventShow() {
-	}
-
-	@Override
-	public void onEventHide() {
-	}
-	
 	@UiField
 	MaterialModal root;
 	
@@ -138,14 +131,14 @@ public class DlgPickOwner extends DlgBase<ItemOwner> {
 	}
 	
 	@Override
-	void eventAppear(ItemOwner item) {
+	public void eventAppear(ItemOwner item) {
 	}
 
 	@Override
-	void takeAction(ClickEvent event) {		
+	public void takeAction(ClickEvent event) {		
 	}
 
 	@Override
-	void takeCancel(ClickEvent event) {
+	public void takeCancel(ClickEvent event) {
 	}
 }

@@ -1,15 +1,14 @@
-package nthu.hpclp.client;
-
-import narl.itrc.client.ExComposite;
+package narl.itrc.client;
 
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.user.client.ui.Composite;
 
 import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialModal;
 
-public abstract class DlgBase<T> extends ExComposite {
+public abstract class DlgBase<T> extends Composite {
 
 	protected MaterialModal dlgRoot;
 	
@@ -33,26 +32,31 @@ public abstract class DlgBase<T> extends ExComposite {
 		btnCancel.addClickHandler(eventCancel);		
 	}
 
-	abstract void eventAppear(T item);
+	public abstract void eventAppear(T item);
 	
 	/**
 	 * Before dialog is appearing, user should hook event.
-	 * @param item - pass target
+	 * @param obj - pass target
 	 * @param hook1- when user click action.
 	 * @param hook2- when every is done.
-	 * @return
+	 * @return - self
 	 */
-	public DlgBase<T> appear(T item,ClickHandler hook1,ClickHandler hook2){
-		target = item;
+	public DlgBase<T> appear(T obj,ClickHandler hook1,ClickHandler hook2){
+		target = obj;
 		hookAction= hook1;
-		hookClose = hook2;
-		eventAppear(item);
+		hookCancel = hook2;
+		eventAppear(obj);
 		dlgRoot.openModal();
 		return this;
 	}
 
-	public DlgBase<T> appear(T item){
-		return appear(item,null,null);
+	/**
+	 * just show dialog,do nothing
+	 * @param obj - pass target
+	 * @return - self
+	 */
+	public DlgBase<T> appear(T obj){
+		return appear(obj,null,null);
 	}
 	
 	public T getTarget(){
@@ -60,9 +64,9 @@ public abstract class DlgBase<T> extends ExComposite {
 	}
 	
 	private ClickHandler hookAction = null;
-	private ClickHandler hookClose = null;
+	private ClickHandler hookCancel = null;
 	
-	abstract void takeAction(ClickEvent event);
+	public abstract void takeAction(ClickEvent event);
 	
 	private ClickHandler eventAction = new ClickHandler(){
 		@Override
@@ -76,12 +80,12 @@ public abstract class DlgBase<T> extends ExComposite {
 	
 	protected void dialog_done(){
 		dlgRoot.closeModal();
-		if(hookClose!=null){
-			hookClose.onClick(null);
+		if(hookCancel!=null){
+			hookCancel.onClick(null);
 		}
 	}
 	
-	abstract void takeCancel(ClickEvent event);
+	public abstract void takeCancel(ClickEvent event);
 	
 	private ClickHandler eventCancel = new ClickHandler(){
 		@Override

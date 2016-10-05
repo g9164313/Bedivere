@@ -13,6 +13,7 @@ import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
+import narl.itrc.client.DlgBase;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemOwner;
 
@@ -41,22 +42,14 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 	public DlgEditOwner() {
 		initWidget(uiBinder.createAndBindUi(this));
 		refxWidget(root,btnAction,btnCancel);
-		chainBox(
+		/*chainBox(
 			boxKey,boxName,boxStmp,
 			boxZip,boxAddr,boxPhon,
 			boxDept,boxPern,boxMail,
 			boxMemo
-		);
+		);*/
 	}
 
-	@Override
-	public void onEventShow() {
-	}
-
-	@Override
-	public void onEventHide() {
-	}
-	
 	@UiHandler("boxKey")
 	public void onChangeKey(ValueChangeEvent<String> event) {
 		String val = event.getValue();		
@@ -84,7 +77,7 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 	}
 	
 	@Override
-	void eventAppear(ItemOwner item) {
+	public void eventAppear(ItemOwner item) {
 		boxKey.setFocus(true);
 		
 		boxKey.setText(item.getKey());		
@@ -104,7 +97,7 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 	}
 
 	@Override
-	void takeAction(ClickEvent event) {
+	public void takeAction(ClickEvent event) {
 		ItemOwner item = target;
 		//mapping box to variable~~~
 		item.setKey(boxKey.getText());		
@@ -139,7 +132,7 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 	}
 
 	@Override
-	void takeCancel(ClickEvent event) {
+	public void takeCancel(ClickEvent event) {
 	}
 }
 

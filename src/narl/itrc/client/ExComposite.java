@@ -4,15 +4,13 @@ import java.util.ArrayList;
 
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialTextBox;
+import nthu.hpclp.client.Main;
 
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.event.dom.client.KeyCodes;
 import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.logical.shared.AttachEvent;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
+
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextBox;
 
@@ -20,8 +18,13 @@ public abstract class ExComposite extends Composite {
 	
 	protected DlgNotify dlgNotify = new DlgNotify();
 	
+	protected DlgApprove dlgApprove = new DlgApprove();
+	
+	protected MaterialPanel _root = new MaterialPanel();
+
 	public ExComposite(){
 		addAttachHandler(eventShowHide);//default~~~
+		_root.add(dlgApprove);
 		//RootPanel.get().addDomHandler(handler, type)
 	}
 	

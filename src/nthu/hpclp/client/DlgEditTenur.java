@@ -17,6 +17,7 @@ import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
+import narl.itrc.client.DlgBase;
 import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemTenur;
 
@@ -58,23 +59,14 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	public DlgEditTenur() {
 		initWidget(uiBinder.createAndBindUi(this));
 		refxWidget(root,btnAction,btnCancel);
-		chainBox(
+		/*chainBox(
 			boxDevVendor,boxDevSerial,boxDevNumber,
 			boxDetSerial,boxDetNumber,			
 			boxArea,boxFactor,boxSteer,
 			boxOKey,boxMemo
-		);
+		);*/
 	}
 
-	@Override
-	public void onEventShow() {
-	}
-
-	@Override
-	public void onEventHide() {
-	}
-	
-	
 	@UiHandler("drpDetType")
 	void onDropdown(SelectionEvent<Widget> event){
 		MaterialLabel txt = (MaterialLabel) event.getSelectedItem();
@@ -102,7 +94,7 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	}
 	
 	@Override
-	void eventAppear(ItemTenur item) {
+	public void eventAppear(ItemTenur item) {
 		boxDevVendor.setFocus(true);
 		
 		boxDevVendor.setText(item.getDeviceVendor());
@@ -133,7 +125,7 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	}
 	
 	@Override
-	void takeAction(ClickEvent event) {
+	public void takeAction(ClickEvent event) {
 		ItemTenur item = target;
 		//mapping box to variable~~~
 		item.setDeviceVendor(boxDevVendor.getText());
@@ -174,7 +166,7 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	}
 
 	@Override
-	void takeCancel(ClickEvent event) {
+	public void takeCancel(ClickEvent event) {
 	}
 	
 	@UiHandler("boxOKey")

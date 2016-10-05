@@ -51,16 +51,16 @@ public class PartOwne extends Composite {
 		updateBox(targetAccnt.owner);
 	}
 	
-	private ItemOwner getTarget(){
+	public ItemOwner getTarget(){
 		if(targetProdx!=null){ return targetProdx.owner; }
 		if(targetAccnt!=null){ return targetAccnt.owner; }
 		return null;
 	}
 
-	private void updateTarget(ItemOwner itm){
-		if(targetProdx!=null){ targetProdx.owner = itm; }
-		if(targetAccnt!=null){ targetAccnt.owner = itm; }
-	}
+	//private void updateTarget(ItemOwner itm){
+	//	if(targetProdx!=null){ targetProdx.owner = itm; }
+	//	if(targetAccnt!=null){ targetAccnt.owner = itm; }
+	//}
 
 	private void updateBox(ItemOwner itm){
 		boxOKey.setText("");
@@ -74,7 +74,7 @@ public class PartOwne extends Composite {
     		txtInfoO2.setText("");
     		txtInfoO3.setText("");
     	}
-    	updateTarget(itm);    	
+    	//updateTarget(itm);    	
 	}
 
 	private final ClickHandler eventUpdate = new ClickHandler(){

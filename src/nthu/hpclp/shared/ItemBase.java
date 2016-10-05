@@ -8,7 +8,7 @@ public class ItemBase implements Serializable {
 	private static final long serialVersionUID = 7096858623078746344L;
 
 	/**
-	 * When UUID is null, just delete it.<p>
+	 * When UUID is started with dollar($) sign, delete this item!!!<p>
 	 * When UUID is a empty string, create a new one and insert it to database.<p>
 	 * When UUID is valid, modify record in database.<p>
 	 */
