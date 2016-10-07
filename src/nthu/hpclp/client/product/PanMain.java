@@ -4,8 +4,7 @@ import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialSearch;
-
-import nthu.hpclp.client.Main;
+import nthu.hpclp.client.PartEmitter;
 import nthu.hpclp.client.PartOwne;
 import nthu.hpclp.shared.ItemProdx;
 
@@ -29,29 +28,25 @@ public class PanMain extends PanCtrl {
     
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));
-		initList();		
-		anrchOwner.setWidget(owne);
-		anrchTenur.setWidget(tenu);
-		anchorInfo.setWidget(info);
+		initList();
+		root.add(genReport);
+		anchorOwner.setWidget(owner);
+		anchorTenur.setWidget(tenur);
+		anchorInfo.setWidget(inform);
+		anchorScriber.setWidget(scriber);
+		anchorEmitter.setWidget(emitter);
 	}
 
 	@UiField(provided=true) 
 	MaterialPanel root = _root;
-	
     @UiField
     MaterialNavBar navApp, navSearch;
     @UiField
     MaterialSearch boxSearch;
-	
 	@UiField
-	SimplePanel anrchOwner,anrchTenur,anchorInfo;
-	
+	SimplePanel anchorOwner,anchorTenur,anchorInfo;
 	@UiField
 	SimplePanel anchorScriber,anchorEmitter;
-	
-	private PartOwne owne = new PartOwne();
-	private PartTenu tenu = new PartTenu();
-	private PartInfo info = new PartInfo();
 	
     @UiField(provided=true)
     MaterialModal dlgList = _dlgList;
@@ -60,6 +55,13 @@ public class PanMain extends PanCtrl {
     @UiField(provided=true) 
     SimplePanel anchorList2 = _anchorList2;
 
+	private PartOwne owner = new PartOwne();
+	private PartTenu tenur = new PartTenu();
+	private PartInfo inform = new PartInfo();
+	private PartScriber scriber = new PartScriber();
+	private PartEmitter emitter = new PartEmitter();
+	private DlgGenReport genReport = new DlgGenReport();
+	
     @UiHandler("lnkStartSearch")
     void onStartSearch(ClickEvent e) {
         navApp.setVisible(false);
@@ -87,9 +89,9 @@ public class PanMain extends PanCtrl {
     void onListShow(ClickEvent e){
     	dlgList.openModal();
     }
-    @UiHandler("lnkListUpdate")
+    @UiHandler("lnkListLast")
     void onListUpdate(ClickEvent e){
-    	listUpdateLast50();
+    	listLast50();
     }
     @UiHandler("lnkListClear")
     void onShowList(ClickEvent e){
@@ -98,12 +100,23 @@ public class PanMain extends PanCtrl {
     }
     @UiHandler("lnkListAddItem")
     void onListAddItem(ClickEvent e){
+    	listAddItem();
+    }
+    @UiHandler("lnkListUpload")
+    void onUploadList(ClickEvent e){
+    	listUpload();
+    }
+    
+    @UiHandler("lnkPrintReport")
+    void onPrintReport(ClickEvent e){
+    	genReport.appear();
     }
     
 	@Override
 	public void updateBox(ItemProdx itm) {
-		owne.setTarget(itm);
-		tenu.setTarget(itm);
-		info.setTarget(itm);
+		owner.setTarget(itm);
+		tenur.setTarget(itm);
+		inform.setTarget(itm);
+		scriber.setTarget(itm);
 	}	
 }

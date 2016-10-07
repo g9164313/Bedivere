@@ -236,14 +236,18 @@ public class SqlDataBase {
 	public static ItemOwner modifyOwner(ItemOwner obj) throws IllegalArgumentException {
 		try {
 			if(obj.uuid.length()==0){
+				//create a new one~~~
 				obj.uuid = UUID.randomUUID().toString();
-				setter(insertOwner,obj);//create a new one~~~
-			}else if(obj.death==false){
-				setter(updateOwner,obj);//modify it~~~
-			}else{
+				setter(insertOwner,obj);
+			}else if(obj.uuid.charAt(0)=='*'){
 				//delete it!!!
+				obj.uuid = obj.uuid.substring(1);
 				deleteOwner.setObject(1,UUID.fromString(obj.uuid));
 				deleteOwner.execute();
+				return null;
+			}else{
+				//modify it~~~
+				setter(updateOwner,obj);
 			}
 		} catch (SQLException e) {			
 			e.printStackTrace();
@@ -271,14 +275,18 @@ public class SqlDataBase {
 	public static ItemTenur modifyTenur(ItemTenur obj) throws IllegalArgumentException {
 		try {
 			if(obj.uuid.length()==0){
+				//create a new one
 				obj.uuid = UUID.randomUUID().toString();
-				setter(insertTenur,obj);//create a new one
-			}else if(obj.death==false){
-				setter(updateTenur,obj);//modify it~~~		
-			}else{
+				setter(insertTenur,obj);		
+			}else if(obj.uuid.charAt(0)=='*'){
 				//delete it!!!
+				obj.uuid = obj.uuid.substring(1);
 				deleteTenue.setObject(1,UUID.fromString(obj.uuid));
 				deleteTenue.execute();
+				return null;
+			}else{
+				//modify it~~~
+				setter(updateTenur,obj);
 			}
 		} catch (SQLException e) {			
 			e.printStackTrace();
@@ -314,13 +322,16 @@ public class SqlDataBase {
 			if(obj.uuid.length()==0){
 				obj.uuid = UUID.randomUUID().toString();
 				setter(insertAccnt,obj);//create a new one
-				//TODO:synchonize relationship
-			}else if(obj.death==false){
-				setter(updateAccnt,obj);
-			}else{
+				//TODO:synchonize relationship			
+			}else if(obj.uuid.charAt(0)=='*'){
 				//delete it!!!
+				obj.uuid = obj.uuid.substring(1);
 				deleteAccnt.setObject(1,UUID.fromString(obj.uuid));
 				deleteAccnt.execute();
+				return null;
+			}else{
+				//modify it~~~
+				setter(updateAccnt,obj);
 			}
 		} catch (SQLException e) {			
 			e.printStackTrace();
@@ -355,16 +366,20 @@ public class SqlDataBase {
 	public static ItemProdx modifyProdx(ItemProdx obj) throws IllegalArgumentException {
 		try {
 			if(obj.uuid.length()==0){
+				//create a new one
 				obj.uuid = UUID.randomUUID().toString();
-				setter(insertProdx,obj);//create a new one
+				setter(insertProdx,obj);
 				cementRelation(obj);
-			}else if(obj.death==false){
-				setter(updateProdx,obj);//modify it~~~
-				cementRelation(obj);
-			}else{
+			}else if(obj.uuid.charAt(0)=='*'){
 				//delete it!!!
+				obj.uuid = obj.uuid.substring(1);
 				deleteProdx.setObject(1,UUID.fromString(obj.uuid));
-				deleteProdx.execute();				
+				deleteProdx.execute();
+				return null;
+			}else{
+				//modify it~~~
+				setter(updateProdx,obj);
+				cementRelation(obj);		
 			}
 		} catch (SQLException e) {			
 			e.printStackTrace();

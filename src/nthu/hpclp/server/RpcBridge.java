@@ -230,9 +230,10 @@ public class RpcBridge extends RemoteServiceServlet
 		DSrcOwner.lst = new ArrayList<ItemOwner>();
 		for(ItemOwner itm:lst){
 			itm = SqlDataBase.modifyOwner(itm);
-			if(itm.death==false){
-				DSrcOwner.lst.add(itm);
+			if(itm==null){
+				continue;
 			}
+			DSrcOwner.lst.add(itm);
 		}
 		return DSrcOwner.lst;
 	}
@@ -242,9 +243,10 @@ public class RpcBridge extends RemoteServiceServlet
 		ArrayList<ItemTenur> tmp = new ArrayList<ItemTenur>();
 		for(ItemTenur itm:lst){
 			itm = SqlDataBase.modifyTenur(itm);
-			if(itm.death==false){
-				tmp.add(itm);
+			if(itm==null){
+				continue;
 			}
+			tmp.add(itm);
 		}
 		return tmp;
 	}
@@ -254,9 +256,10 @@ public class RpcBridge extends RemoteServiceServlet
 		DSrcAccount.lst = new ArrayList<ItemAccnt>();
 		for(ItemAccnt itm:lst){
 			itm = SqlDataBase.modifyAccnt(itm);
-			if(itm.death==false){
-				DSrcAccount.lst.add(itm);
+			if(itm==null){
+				continue;
 			}
+			DSrcAccount.lst.add(itm);
 		}
 		return DSrcAccount.lst;
 	}
@@ -266,9 +269,10 @@ public class RpcBridge extends RemoteServiceServlet
 		DSrcProduct.lst = new ArrayList<ItemProdx>();
 		for(ItemProdx itm:lst){
 			itm = SqlDataBase.modifyProdx(itm);
-			if(itm.death==false){
-				DSrcProduct.lst.add(itm);
+			if(itm==null){
+				continue;
 			}
+			DSrcProduct.lst.add(itm);
 		}
 		return DSrcProduct.lst;
 	}
@@ -326,6 +330,21 @@ public class RpcBridge extends RemoteServiceServlet
 	@Override
 	public String tearSPoint(String name) throws IllegalArgumentException {		
 		return Utils.Exec("rm @ -r @ "+pathSPoint+"/"+name);
+	}
+
+	@Override
+	public ArrayList<String> resetReport1() throws IllegalArgumentException {		
+		ArrayList<String> lst = new ArrayList<String>();
+		int cnt = (int) (Math.random()*5000);
+		for(int i=0; i<cnt; i++){
+			lst.add("test-"+i);
+		}
+		return lst;
+	}
+
+	@Override
+	public String checkReport1(String item) throws IllegalArgumentException {
+		return item;
 	}
 }
 

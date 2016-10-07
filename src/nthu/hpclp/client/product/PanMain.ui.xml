@@ -11,29 +11,28 @@
 	<m:MaterialHeader depth="996" layoutPosition="FIXED" width="100%">
 		<!-- NavBar Component -->
 		<m:MaterialNavBar ui:field="navApp" >            	
-			<m:MaterialNavSection float="RIGHT" hideOn="NONE"> 
-			               	
+			<m:MaterialNavSection float="RIGHT" hideOn="NONE">
+			 	
 				<m:MaterialLink iconPosition="NONE" tooltip="搜尋" tooltipPosition="BOTTOM" iconType="SEARCH" ui:field="lnkStartSearch" />
 				
 				<m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="BOTTOM" iconType="PRINT" activates="drpPrint">
 					<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpPrint" >                    		
-						<m:MaterialLink text="標籤"  textColor="grey darken-1" ui:field="lnkPrint2DTag" />
-						<m:MaterialLink text="報告"  textColor="grey darken-1" ui:field="lnkPrintOneProdx" />
-						<m:MaterialLink text="報告（全）"  textColor="grey darken-1" ui:field="lnkPrintAllProdx" />
+						<m:MaterialLink text="標籤"  ui:field="lnkPrint2DTag" />
+						<m:MaterialLink text="報告"  ui:field="lnkPrintProdx" />
+						<m:MaterialLink text="？？"  ui:field="lnkPrintReport" />
 					</m:MaterialDropDown>
 				</m:MaterialLink>
-				
-				<m:MaterialLink iconPosition="NONE" tooltip="上傳" tooltipPosition="BOTTOM" iconType="FILE_UPLOAD" ui:field="lnkUpload" />                    
-				
+         				
 				<m:MaterialLink iconPosition="NONE" tooltip="功能" tooltipPosition="BOTTOM" iconType="TUNE" activates="drpFunc">
 					<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpFunc" >
 						<m:MaterialLink text="顯示清單" textColor="grey darken-1" iconType="RECEIPT" ui:field="lnkListShow" />
-						<m:MaterialLink text="最近50筆" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkListUpdate" />
-						<m:MaterialLink text="清除清單" textColor="grey darken-1" iconType="CLEAR_ALL" ui:field="lnkListClear" />
-						<m:MaterialLink text="新增報告" textColor="grey darken-1" iconType="PLUS_ONE" ui:field="lnkListAddItem" />                   			
+						<m:MaterialLink text="最近50筆" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkListLast" />
+						<m:MaterialLink text="上傳報告" textColor="grey darken-1" iconType="FILE_UPLOAD" ui:field="lnkListUpload" /> 
+						<m:MaterialLink text="新增報告" textColor="grey darken-1" iconType="PLUS_ONE" ui:field="lnkListAddItem" />
+						<m:MaterialLink text="清除清單" textColor="grey darken-1" iconType="CLEAR_ALL" ui:field="lnkListClear" />                  			
 					</m:MaterialDropDown>
 				</m:MaterialLink>
-				                 
+				        
 			</m:MaterialNavSection>
 		</m:MaterialNavBar>
 		<!-- Search Component -->
@@ -44,13 +43,17 @@
 
 	<!-- Container -->
 	<m:MaterialContainer paddingTop="70" paddingLeft="7" paddingRight="7">
-		<m:MaterialColumn>
-			<m:MaterialRow> <g:SimplePanel ui:field="anrchOwner" /> </m:MaterialRow>
-			<m:MaterialRow> <g:SimplePanel ui:field="anrchTenur" /> </m:MaterialRow>
-			<m:MaterialRow> <g:SimplePanel ui:field="anchorInfo" /> </m:MaterialRow>
-		</m:MaterialColumn>
-		<g:SimplePanel ui:field="anchorScriber" />
-		<g:SimplePanel ui:field="anchorEmitter" />
+		<m:MaterialRow>
+			<m:MaterialColumn>
+				<g:SimplePanel ui:field="anchorOwner" />
+				<g:SimplePanel ui:field="anchorTenur" />
+				 <g:SimplePanel ui:field="anchorInfo" />
+			</m:MaterialColumn>
+			<m:MaterialColumn>
+				<g:SimplePanel ui:field="anchorScriber" />
+				<g:SimplePanel ui:field="anchorEmitter" />
+			</m:MaterialColumn>
+		</m:MaterialRow>		
 	</m:MaterialContainer>
 	
 	<m:MaterialModal type="BOTTOM_SHEET" dismissable="true" ui:field="dlgList">

@@ -2,7 +2,11 @@ package nthu.hpclp.client.product;
 
 import java.util.ArrayList;
 
-import com.google.gwt.cell.client.EditTextCell;
+import com.google.gwt.cell.client.ButtonCell;
+import com.google.gwt.cell.client.FieldUpdater;
+import com.google.gwt.cell.client.TextCell;
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.SimplePager;
@@ -41,7 +45,7 @@ public abstract class PanCtrl extends ExComposite {
 	
 	@Override
 	public void onEventShow() {
-		listUpdateLast50();
+		listLast50();
 	}
 	
 	@Override
@@ -53,7 +57,7 @@ public abstract class PanCtrl extends ExComposite {
 	
     private ArrayList<ItemProdx> lstProdx = new ArrayList<ItemProdx>();
     
-    private ListDataProvider<ItemProdx> lstProvider;
+    private ListDataProvider<ItemProdx> lstProvd;
     
 	private SingleSelectionModel<ItemProdx> lstModel;
 	
@@ -66,7 +70,7 @@ public abstract class PanCtrl extends ExComposite {
 	private class ColText extends Column<ItemProdx,String>{
 		private int idx = 0;
 		public ColText(int i) {
-			super(new EditTextCell());
+			super(new TextCell());
 			idx = i;
 		}
 		@Override
@@ -74,11 +78,11 @@ public abstract class PanCtrl extends ExComposite {
 			switch(idx){
 			case -1:
 				if(object.uuid.length()==0){
-					return "新增項目";
+					return "新增";
 				}else if(object.uuid.charAt(0)=='$'){
-					return "標記刪除";
+					return "刪除";
 				}
-				return "已儲存";
+				return "＊";
 			case ItemProdx.INFO_PKEY: 
 				return object.getKey();
 			}
@@ -86,25 +90,60 @@ public abstract class PanCtrl extends ExComposite {
 		}
 	};
 	
+	private class ColDelete extends Column<ItemProdx,String> implements 
+		FieldUpdater<ItemProdx,String>
+	{
+		private ItemProdx target;
+		public ColDelete() {
+			super(new ButtonCell());
+			setFieldUpdater(this);
+		}
+		@Override
+		public String getValue(ItemProdx object) {
+			return "刪除";
+		}
+		@Override
+		public void update(int index, ItemProdx object, String value){
+			target = object;
+			dlgApprove.appear("確認刪除？",event);//we must get confirm!!!!
+		}
+		private ClickHandler event = new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				if(target.uuid.length()!=0){
+					target.markDelete();
+					listUpload();
+				}else{
+					lstProdx.remove(target);
+			    	lstProvd.refresh();
+					lstModel.setSelected(lstProdx.get(0),true);
+				}
+			}
+		};
+	};
+	
     protected void initList(){
-    	DataGrid<ItemProdx> grid = new DataGrid<ItemProdx>();
-    	grid.setSelectionModel(lstModel);
+    	DataGrid<ItemProdx> grid = new DataGrid<ItemProdx>();    	
     	grid.setSize("100%","13em");
     	grid.setEmptyTableWidget(new Label("無資料"));
     	//set all columns~~~
-    	grid.addColumn(new ColText(-1),"狀態");
+    	grid.addColumn(new ColText(-1),"狀態");    	
     	grid.addColumn(new ColText(ItemProdx.INFO_PKEY),"報告編號");
+    	grid.addColumn(new ColDelete(),"");
+    	grid.setColumnWidth(0,"5em");
+    	grid.setColumnWidth(2,"7em");
     	//set provider~~~
-    	lstProvider = new ListDataProvider<ItemProdx>();
-    	lstProvider.addDataDisplay(grid);
+    	lstProvd = new ListDataProvider<ItemProdx>();
+    	lstProvd.addDataDisplay(grid);
     	//set grid model~~~
-    	lstModel = new SingleSelectionModel<ItemProdx>(lstProvider);
+    	lstModel = new SingleSelectionModel<ItemProdx>(lstProvd);
     	lstModel.addSelectionChangeHandler(new SelectionChangeEvent.Handler(){
 			@Override
 			public void onSelectionChange(SelectionChangeEvent event) {
 				updateBox(lstModel.getSelectedObject());
 			}
-    	});    	
+    	});
+    	grid.setSelectionModel(lstModel);
 		//control part
 		SimplePager pager = new SimplePager();
 		pager.setDisplay(grid);
@@ -174,17 +213,51 @@ public abstract class PanCtrl extends ExComposite {
 	}
 	//---------------------//
 	
-	protected void listClear(){
-		lstProdx = new ArrayList<ItemProdx>();
-		lstProvider.setList(lstProdx);
-    	lstProvider.refresh();
+	protected void listUpload(){
+		if(lstProdx.isEmpty()==true){
+    		MaterialToast.fireToast("清單內無報告");
+    		return;
+    	}
+    	MaterialLoader.showLoading(true);
+    	Main.rpc.cacheProduct(
+    		lstProdx,
+    		new AsyncCallback<ArrayList<ItemProdx>>(){
+    		@Override
+    		public void onFailure(Throwable caught) {
+    			MaterialLoader.showLoading(false);
+    			MaterialToast.fireToast("內部錯誤");
+    		}
+    		@Override
+    		public void onSuccess(ArrayList<ItemProdx> result) {
+    			MaterialLoader.showLoading(false);
+    			MaterialToast.fireToast("清單已更新");
+    			listRefresh(result);
+    		}
+    	}); 
 	}
 	
-    protected void listUpdateLast50(){
-    	listUpdate("ORDER BY "+Const.PRODX+".last DESC LIMIT 50");
+	protected void listAddItem(){
+		ItemProdx itm = new ItemProdx();
+		//TODO:curProdx.setEmitter(cmbEmitter.getSelectedValue());
+		lstProdx.add(0,itm);
+		lstProvd.refresh();
+		lstModel.setSelected(lstProdx.get(0),true);
+		updateBox(lstModel.getSelectedObject());
+		MaterialToast.fireToast("新增報告",100);
+	}
+	
+	protected void listClear(){
+		lstProdx = new ArrayList<ItemProdx>();
+		lstProvd.setList(lstProdx);
+    	lstProvd.refresh();    	
+    	updateBox(null);
+	}
+	
+    protected void listLast50(){
+    	listQuery("ORDER BY "+Const.PRODX+".last DESC LIMIT 50");
     }
     
-    private void listUpdate(final String postfix){
+    private void listQuery(final String postfix){
     	MaterialLoader.showLoading(true);
     	Main.rpc.listProduct(
         	postfix,
@@ -200,15 +273,15 @@ public abstract class PanCtrl extends ExComposite {
         			MaterialToast.fireToast("無資料!!");
         			return;
         		}
-        		_list_update(result);
+        		listRefresh(result);
         	}
         });
     }
 
-    private void _list_update(ArrayList<ItemProdx> lst){
+    private void listRefresh(ArrayList<ItemProdx> lst){
     	lstProdx = lst;
-		lstProvider.setList(lstProdx);
-    	lstProvider.refresh();
+		lstProvd.setList(lstProdx);
+    	lstProvd.refresh();
 		if(lstProdx.size()>1){
 			_dlgList.openModal();
 		}

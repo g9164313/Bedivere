@@ -42,4 +42,6 @@ public interface RPC extends RemoteService {
 	ArrayList<ItemAccnt> cacheAccount(ArrayList<ItemAccnt> lst) throws IllegalArgumentException;
 	void cacheMeeting(ArrayList<ItemMeeting> lst) throws IllegalArgumentException;
 
+	ArrayList<String> resetReport1() throws IllegalArgumentException;//reset report for all tenures
+	String checkReport1(String item) throws IllegalArgumentException;//process each item in report
 }

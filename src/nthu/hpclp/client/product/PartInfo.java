@@ -63,4 +63,6 @@ public class PartInfo extends ExComposite {
 		boxHumid.setText(itm.getHumidity());
 		chkUseLogo.setValue(itm.useLogo);
 	}
+	
+	
 }

@@ -1,0 +1,30 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:m="urn:import:gwt.material.design.client.ui">
+<ui:style>	
+</ui:style>
+
+<m:MaterialPanel backgroundColor="white" marginTop="20" padding="7" width="45vw" ui:field="root">
+	
+	<m:MaterialRow>
+		<m:MaterialTextBox placeholder="快速輸入" ui:field="boxInput" />	
+	</m:MaterialRow>
+
+	<m:MaterialRow>
+		<g:SimplePanel ui:field="anchor1"/>
+	</m:MaterialRow>
+	
+	<m:MaterialRow>
+		<g:SimplePanel ui:field="anchor2"/>
+	</m:MaterialRow>
+		
+	<m:MaterialRow>
+		<m:MaterialSwitch value="false" grid="l0" ui:field="modSwitch" />
+		<m:MaterialLabel text="進階顯示"/>
+	</m:MaterialRow>
+	
+</m:MaterialPanel>
+
+</ui:UiBinder> 

@@ -114,4 +114,13 @@ public interface RPCAsync {
 		ArrayList<ItemMeeting> lst,
 		AsyncCallback<Void> res
 	) throws IllegalArgumentException;
+	
+	void resetReport1(
+		AsyncCallback<ArrayList<String>> res
+	) throws IllegalArgumentException;
+	
+	void checkReport1(
+		String item,
+		AsyncCallback<String> res
+	) throws IllegalArgumentException;
 }

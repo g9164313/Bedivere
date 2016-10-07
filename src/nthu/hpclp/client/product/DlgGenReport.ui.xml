@@ -1,0 +1,31 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:m="urn:import:gwt.material.design.client.ui" >
+<ui:style>
+.textbox {
+  width: 100%;
+  height: 40vh;
+  padding: 4px;
+  border: 1px solid #ccc;
+  border-top: 1px solid #666;
+  font-size: 100%;
+  font-family: Arial Unicode MS, Arial, sans-serif;
+}
+</ui:style>
+
+<m:MaterialModal type="DEFAULT" width="50%" dismissable="true" inDuration="10" outDuration="10" ui:field="root" >
+	<m:MaterialModalContent>
+		<m:MaterialRow> <m:MaterialProgress width="40vw" type="DETERMINATE" ui:field="barProgress"/> </m:MaterialRow>
+		<m:MaterialRow> <m:MaterialLabel text="0%" ui:field="txtProgress"/> </m:MaterialRow>
+		<m:MaterialRow> <g:TextArea styleName="{style.textbox}" ui:field="boxMessage" /> </m:MaterialRow>
+	</m:MaterialModalContent>
+	
+	<m:MaterialModalFooter width="93%">
+		<m:MaterialButton text="關閉" type="FLAT" ui:field="btnCancel" />
+		<m:MaterialButton text="重開" type="FLAT" ui:field="btnRestart" />			
+	</m:MaterialModalFooter>
+</m:MaterialModal>
+
+</ui:UiBinder> 

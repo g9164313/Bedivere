@@ -8,7 +8,7 @@ public class ItemBase implements Serializable {
 	private static final long serialVersionUID = 7096858623078746344L;
 
 	/**
-	 * When UUID is started with dollar($) sign, delete this item!!!<p>
+	 * When UUID is started with star(*) sign, delete this item!!!<p>
 	 * When UUID is a empty string, create a new one and insert it to database.<p>
 	 * When UUID is valid, modify record in database.<p>
 	 */
@@ -19,9 +19,7 @@ public class ItemBase implements Serializable {
 	public Date last = new Date();
 	
 	public String[] info;
-	
-	public boolean death = false;
-	
+
 	public String error = "";
 	
 	public ItemBase(int size){
@@ -97,5 +95,21 @@ public class ItemBase implements Serializable {
 	
 	public void setLast(Date d){
 		stmp.setTime(d.getTime());
+	}
+	
+	public ItemBase markDelete(){
+		final char TOKEN = '*';
+		if(uuid.length()!=0){
+			if(uuid.charAt(0)=='*'){
+				return this;
+			}
+		}
+		uuid = TOKEN + uuid;
+		return this;
+	}
+	
+	public ItemBase markModify(){
+		
+		return this;
 	}
 }

@@ -21,9 +21,7 @@ import nthu.hpclp.shared.RandUtil;
 public abstract class BaseParam extends ExComposite {
 
 	protected DataGrid<ItemParam> grid = new DataGrid<ItemParam>();
-	
 	protected ListDataProvider<ItemParam> provider = new ListDataProvider<ItemParam>();
-	
 	protected SingleSelectionModel<ItemParam> model = new SingleSelectionModel<ItemParam>();
 	
 	protected SimplePanel archGrid = new SimplePanel();

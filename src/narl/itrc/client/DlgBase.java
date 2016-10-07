@@ -35,10 +35,10 @@ public abstract class DlgBase<T> extends Composite {
 	public abstract void eventAppear(T item);
 	
 	/**
-	 * Before dialog is appearing, user should hook event.
-	 * @param obj - pass target
-	 * @param hook1- when user click action.
-	 * @param hook2- when every is done.
+	 * Before dialog is appearing, user should hook event.<p>
+	 * @param obj - pass target.<p>
+	 * @param hook1 - when user click action.<p>
+	 * @param hook2 - when user cancel.<p>
 	 * @return - self
 	 */
 	public DlgBase<T> appear(T obj,ClickHandler hook1,ClickHandler hook2){
@@ -73,8 +73,9 @@ public abstract class DlgBase<T> extends Composite {
 		public void onClick(ClickEvent event) {
 			takeAction(event);
 			if(hookAction!=null){
-				hookAction.onClick(event);
+				hookAction.onClick(event);				
 			}
+			dlgRoot.closeModal();
 		}		
 	};
 	
