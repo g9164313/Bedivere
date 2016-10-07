@@ -15,7 +15,6 @@ import com.google.gwt.user.client.ui.Widget;
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialModal;
-import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialProgress;
 import nthu.hpclp.client.Main;
 
@@ -53,8 +52,17 @@ public class DlgGenReport extends Composite {
 		public void onFailure(Throwable caught) {
 		}
 		@Override
-		public void onSuccess(String result) {
-			//print(result);
+		public void onSuccess(String result) {			
+			progress(idx,max);
+			idx++;
+			if(idx>=max){
+				btnRestart.setEnabled(true);
+				return;//we complete the task~~~
+			}
+			Main.rpc.checkReport1(
+				lst.get(idx),
+				eventCheck
+			);//next turn~~~
 		}
 	};
 	
@@ -68,21 +76,22 @@ public class DlgGenReport extends Composite {
 		}
 		@Override
 		public void onSuccess(ArrayList<String> result) {
-			int max = result.size();
-			for(int idx=0; idx<max; idx++){
-				String val = result.get(idx);
-				progress(idx+1,max);
-				//Main.rpc.checkReport1(val,eventCheck);
-			}
-			print("結束");
-			btnRestart.setEnabled(true);
+			idx = 0;
+			max = result.size();
+			lst = result;
+			Main.rpc.checkReport1(
+				lst.get(idx),
+				eventCheck
+			);//launch the first task~~~
 		}
 	};
+	private int idx,max;
+	private ArrayList<String> lst;
 	
-	private void progress(float stp,float max){
-		float val = (stp/max)*100f;
+	private void progress(int stp,int max){
+		float val = ((float)stp/(float)max)*100f;
 		barProgress.setPercent(val);
-		txtProgress.setText(""+Math.round(val)+"％");
+		txtProgress.setText(""+Math.round(val)+"％ （"+stp+"/"+max+"）");
 	}
 	
 	private void print(String msg){
@@ -97,7 +106,7 @@ public class DlgGenReport extends Composite {
 	@UiHandler("btnRestart")
     void onRestart(ClickEvent e){
 		print("初始化...");
-		progress(0f,1f);
+		progress(0,1);
 		btnRestart.setEnabled(false);
 		Main.rpc.resetReport1(eventReset);
     }

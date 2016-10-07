@@ -17,8 +17,15 @@
 
 <m:MaterialModal type="DEFAULT" width="50%" dismissable="true" inDuration="10" outDuration="10" ui:field="root" >
 	<m:MaterialModalContent>
-		<m:MaterialRow> <m:MaterialProgress width="40vw" type="DETERMINATE" ui:field="barProgress"/> </m:MaterialRow>
-		<m:MaterialRow> <m:MaterialLabel text="0%" ui:field="txtProgress"/> </m:MaterialRow>
+		<m:MaterialRow> <m:MaterialProgress type="DETERMINATE" ui:field="barProgress"/> </m:MaterialRow>
+		<m:MaterialRow>
+			<m:MaterialColumn>
+				<m:MaterialLabel text="進度："/>
+			</m:MaterialColumn> 
+			<m:MaterialColumn>
+				<m:MaterialLabel ui:field="txtProgress"/>
+			</m:MaterialColumn> 
+		</m:MaterialRow>
 		<m:MaterialRow> <g:TextArea styleName="{style.textbox}" ui:field="boxMessage" /> </m:MaterialRow>
 	</m:MaterialModalContent>
 	
