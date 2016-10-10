@@ -169,13 +169,6 @@ public class ItemProdx extends ItemBase implements Serializable {
 	public static final String TXT_FMT_F4 = "效率報告";
 	public static final String TXT_FMT_F5 = "活度報告";
 
-	public static final String[] USED_TXT_FMT = {
-		TXT_FMT_F3,
-		TXT_FMT_F4,
-		TXT_FMT_F5,
-		TXT_FMT_F2
-	};
-	
 	public static int txt2fmt(String txt){
 		int fmt = FMT_F2;//default~~~
 		if(txt.equalsIgnoreCase(TXT_FMT_F1V)==true){

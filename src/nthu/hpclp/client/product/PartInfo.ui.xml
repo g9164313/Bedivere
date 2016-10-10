@@ -6,20 +6,8 @@
 <ui:style>
 </ui:style>
 
-<!-- 報告編號，格式，溫濕度，單位 -->
 <m:MaterialPanel backgroundColor="white" layoutPosition="RELATIVE" marginTop="20" padding="7">
-	<m:MaterialRow>
-		<m:MaterialColumn>
-			<m:MaterialListBox width="9rem" tooltip="報告格式" ui:field="cmbFormat" />
-		</m:MaterialColumn>
-		<m:MaterialColumn>
-			<m:MaterialListBox width="9rem" tooltip="參考值單位" ui:field="cmbUnitRef" />
-		</m:MaterialColumn>
-		<m:MaterialColumn>
-			<m:MaterialListBox width="9rem" tooltip="器示值單位" ui:field="cmbUnitMea" />
-		</m:MaterialColumn>
-	</m:MaterialRow>
-	
+
 	<m:MaterialRow>
 		<m:MaterialColumn>
 			<m:MaterialTextBox width="9rem" placeholder="校正日期" ui:field="boxStmp" />
@@ -34,7 +22,7 @@
 	
 	<m:MaterialRow>
 		<m:MaterialColumn>
-			<m:MaterialFloatBox width="9rem" placeholder="環境溫度" ui:field="boxTemp" />
+			<m:MaterialFloatBox width="9rem" placeholder="環境溫度" ui:field="boxTempu" />
 		</m:MaterialColumn>
 		<m:MaterialColumn>
 			<m:MaterialFloatBox width="9rem" placeholder="大氣壓力" ui:field="boxPress" />
@@ -46,11 +34,18 @@
 	
 	<m:MaterialRow>
 		<m:MaterialColumn>
-			<m:MaterialListBox width="9rem" ui:field="cmbEmitter" />
+			<m:MaterialListBox width="9rem" tooltip="報告格式" ui:field="cmbFormatP" />
 		</m:MaterialColumn>
 		<m:MaterialColumn>
-			<m:MaterialCheckBox text="Logo" value="true" ui:field="chkUseLogo" />
+			<m:MaterialListBox width="9rem" tooltip="參考值單位" ui:field="cmbUnitRef" />
 		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialListBox width="9rem" tooltip="器示值單位" ui:field="cmbUnitMea" />
+		</m:MaterialColumn>
+	</m:MaterialRow>
+	
+	<m:MaterialRow>
+		<m:MaterialCheckBox text="Logo" value="true" ui:field="chkUseLogo" />
 	</m:MaterialRow>
 </m:MaterialPanel>
 	

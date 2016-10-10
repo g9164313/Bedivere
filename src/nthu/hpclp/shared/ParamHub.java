@@ -20,9 +20,7 @@ public class ParamHub implements Serializable {
 	public ArrayList<ItemParam> prodxDetType = new ArrayList<ItemParam>();
 	public ArrayList<ItemParam> prodxRadUnit = new ArrayList<ItemParam>();
 	public ArrayList<ItemParam> prodxEmitter = new ArrayList<ItemParam>();
-	
 	public ArrayList<ItemParam> accntService = new ArrayList<ItemParam>();
-	
 	public ArrayList<ItemParam> otherRestDay = new ArrayList<ItemParam>();
 
 	public void gather(ArrayList<ItemParam> lst,String key,String val){

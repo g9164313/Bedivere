@@ -22,7 +22,7 @@ gwt-unitCache/
 war/WEB-INF/web.xml
 war/WEB-INF/deploy/
 war/WEB-INF/classes/
-war/narl.hpclp.main/
+war/nthu.hpclp.main/
 war/narl.itrc.main/
 deploy-*
 *.war

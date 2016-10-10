@@ -6,7 +6,6 @@ import java.util.Date;
 import gwt.material.design.client.ui.MaterialListBox;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
-import narl.itrc.client.DlgApprove;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemAccnt;
 import nthu.hpclp.shared.ItemMeeting;
@@ -158,7 +157,6 @@ public class Main implements EntryPoint {
 		});
 	}
 	
-	
 	public static void printNotify(ItemMeeting itm){
 		ArrayList<ItemMeeting> lst = new ArrayList<ItemMeeting>();
 		lst.add(itm);
@@ -187,13 +185,6 @@ public class Main implements EntryPoint {
 	}
 	//----------------------------//
 	
-	public static void initCombo(MaterialListBox box,String[] lst){
-		for(int i=0; i<lst.length; i++){
-			box.addItem(lst[i]);
-		}
-		box.setSelectedIndex(0);
-	}
-	
 	public static void initComboEmitter(MaterialListBox box){
 		box.clear();
 		for(ItemParam pair:param.prodxEmitter){
@@ -213,55 +204,12 @@ public class Main implements EntryPoint {
 			box.addItem(name,arg);
 		}
 	}
-	
-	public static int selectCombo(MaterialListBox box,String itm){
-		return selectCombo(box,itm,null,false);
-	}
-	
-	public static int selectCombo(
-		MaterialListBox box,
-		String itm,
-		String val
-	){
-		return selectCombo(box,itm,val,false);
-	}
-	
-	//TODO: deprecate this, if combo has no item, just disable it~~~
-	public static int selectCombo(
-		MaterialListBox box,
-		String itm,
-		String val,
-		boolean isEmitt
-	){
-		int cnt = box.getItemCount();
-		if(val==null){
-			val = itm;
-		}
-		for(int i=0; i<cnt; i++){
-			String _itm = box.getItemText(i);
-			String _val = box.getValue(i);
-			if(
-				itm.equalsIgnoreCase(_itm)==true||
-				val.equalsIgnoreCase(_val)==true
-			){
-				box.setSelectedIndex(i);
-				return i;
-			}
-		}
-		if(isEmitt==true){
-			combo_add_emitt(box,val);
-		}else{
-			box.addItem(itm,val);
-			box.setSelectedIndex(cnt);
-		}
-		return cnt+1;
-	}
 	//----------------------------//
 	
-	private static nthu.hpclp.client.account.PanMain account = new  nthu.hpclp.client.account.PanMain();
+	private static nthu.hpclp.client.account.PanMain account = new nthu.hpclp.client.account.PanMain();
 	private static nthu.hpclp.client.meeting.PanMain meeting = new nthu.hpclp.client.meeting.PanMain();
-	private static nthu.hpclp.client.product.PanMain product = new  nthu.hpclp.client.product.PanMain();
-	private static nthu.hpclp.client.setting.PanMain setting = new  nthu.hpclp.client.setting.PanMain();
+	private static nthu.hpclp.client.product.PanMain product = new nthu.hpclp.client.product.PanMain();
+	private static nthu.hpclp.client.setting.PanMain setting = new nthu.hpclp.client.setting.PanMain();
 	
 	private final static int PAN_DEFAULT=1;//Do we need to fix this? No~~~
 	private final static int PAN_MEETING=0;
@@ -344,7 +292,6 @@ public class Main implements EntryPoint {
 			new AsyncCallback<ParamHub>(){
 			@Override
 			public void onFailure(Throwable caught) {
-				switch_panel(PAN_DEFAULT);
 			}
 			@Override
 			public void onSuccess(ParamHub result) {

@@ -2,6 +2,7 @@ package narl.itrc.client;
 
 import java.util.ArrayList;
 
+import gwt.material.design.client.ui.MaterialListBox;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialTextBox;
 import nthu.hpclp.client.Main;
@@ -46,7 +47,52 @@ public abstract class ExComposite extends Composite {
 			}
 		}
 	};
-
+	//------------------//
+	
+	/**
+	 * select item in combo list, if no this item, just add it~~~.<p>
+	 * @param box - combo box.<p>
+	 * @param name - item name.<p>
+	 * @return
+	 */
+	protected static int cmbSelect(
+		MaterialListBox box,
+		String name
+	){
+		return cmbSelect(box,name,name);
+	}
+	
+	/**
+	 * select item in combo list, if no this item, just add it~~~.<p>
+	 * @param box - combo box.<p>
+	 * @param name - item name.<p>
+	 * @param value - item value.<p>
+	 * @return the index of combo list
+	 */
+	protected static int cmbSelect(
+		MaterialListBox box,
+		String name,
+		String value
+	){
+		int cnt = box.getItemCount();
+		if(value==null){
+			value = name;
+		}
+		for(int i=0; i<cnt; i++){
+			String _name = box.getItemText(i);
+			String _value = box.getValue(i);
+			if(
+				name.equalsIgnoreCase(_name)==true||
+				value.equalsIgnoreCase(_value)==true
+			){
+				box.setSelectedIndex(i);
+				return i;
+			}
+		}
+		box.addItem(name, value);
+		box.setSelectedIndex(cnt+1);
+		return cnt+1;
+	}
 	//------------------//
 	
 	private ArrayList<MaterialTextBox> lstBox = new ArrayList<MaterialTextBox>();
