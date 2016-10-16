@@ -4,7 +4,6 @@ import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialSearch;
-import nthu.hpclp.client.PartEmitter;
 import nthu.hpclp.client.PartOwne;
 import nthu.hpclp.shared.ItemProdx;
 
@@ -80,7 +79,7 @@ public class PanMain extends PanCtrl {
     	if(code!=KeyCodes.KEY_ENTER){
     		return;
     	}
-    	//renewSelector(query(boxSearch.getText().trim()));
+    	//TODO:search something~~~
     	boxSearch.setText("");
     	boxSearch.setFocus(true);
     }
@@ -118,5 +117,6 @@ public class PanMain extends PanCtrl {
 		tenur.setTarget(itm);
 		inform.setTarget(itm);
 		scriber.setTarget(itm);
+		emitter.setTarget(itm);
 	}	
 }

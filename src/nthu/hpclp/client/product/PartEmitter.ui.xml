@@ -1,0 +1,61 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:p1="urn:import:com.google.gwt.user.cellview.client"
+	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
+	xmlns:m="urn:import:gwt.material.design.client.ui">
+<ui:style>	
+</ui:style>
+
+<m:MaterialPanel backgroundColor="white" layoutPosition="RELATIVE" marginTop="20" padding="7" ui:field="root">
+	
+	<m:MaterialRow>
+		<m:MaterialListBox ui:field="cmbInput" />
+	</m:MaterialRow>
+	
+	<m:MaterialRow>
+		<m:MaterialColumn> <m:MaterialLabel text="種類大小：" /> </m:MaterialColumn>
+		<m:MaterialColumn> <m:MaterialLabel ui:field="txtKindArea" /> </m:MaterialColumn>
+	</m:MaterialRow>
+		
+	<m:MaterialRow>
+		<m:MaterialColumn> <m:MaterialLabel text="射源活度：" /> </m:MaterialColumn>
+		<m:MaterialColumn> <m:MaterialLabel ui:field="txtStrength" /> </m:MaterialColumn>
+	</m:MaterialRow>
+	
+	<m:MaterialRow>
+		<m:MaterialColumn> <m:MaterialLabel text="表面強度：" /> </m:MaterialColumn>
+		<m:MaterialColumn> <m:MaterialLabel ui:field="txtSurface" /> </m:MaterialColumn>
+	</m:MaterialRow>
+
+	<m:MaterialRow>
+		<m:MaterialColumn> <m:MaterialLabel text="射源序號：" /> </m:MaterialColumn>
+		<m:MaterialColumn> <m:MaterialLabel ui:field="txtSerial" /> </m:MaterialColumn>
+	</m:MaterialRow>
+	
+	<m:MaterialRow>
+		<m:MaterialColumn> <m:MaterialLabel text="射源認證：" /> </m:MaterialColumn>
+		<m:MaterialColumn> <m:MaterialLabel ui:field="txtCriteron" /> </m:MaterialColumn>
+	</m:MaterialRow>
+	
+	<m:MaterialRow>
+		<m:MaterialColumn> <m:MaterialLabel text="涵蓋因子：" /> </m:MaterialColumn>
+		<m:MaterialColumn> <m:MaterialLabel ui:field="txtFactorK" /> </m:MaterialColumn>
+	</m:MaterialRow>
+	
+	<m:MaterialRow>
+		<m:MaterialColumn> <m:MaterialLabel text="涵蓋機率：" /> </m:MaterialColumn>
+		<m:MaterialColumn> <m:MaterialLabel ui:field="txtFactorP" /> </m:MaterialColumn>
+	</m:MaterialRow>
+	
+	<m:MaterialRow>
+		<m:MaterialColumn> <m:MaterialLabel text="不確定度：" /> </m:MaterialColumn>
+		<m:MaterialColumn> <m:MaterialLabel ui:field="txtUncertain" /> </m:MaterialColumn>
+	</m:MaterialRow>
+
+</m:MaterialPanel>
+
+</ui:UiBinder>
+
+

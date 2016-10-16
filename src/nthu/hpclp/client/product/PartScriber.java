@@ -111,11 +111,15 @@ public class PartScriber extends Composite {
 		}
 		@Override
 		public String getValue(String object) {
-			String[] txt = object.split("@");
+			String[] txt = object.split("@");			
 			if(idx>=txt.length){
 				return "";
 			}
-			return txt[idx];
+			String val = txt[idx];
+			if(idx==1||idx==2){
+				val = val.replace(",","，"); 
+			}
+			return val;
 		}
 	};
 	

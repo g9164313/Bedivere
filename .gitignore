@@ -27,7 +27,7 @@ war/narl.itrc.main/
 deploy-*
 *.war
 *.gz
-
+*.gwt.rpc
 
 #compilation logs
 .gwt/
