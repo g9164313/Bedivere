@@ -21,6 +21,7 @@ import narl.itrc.server.Utils;
 import nthu.hpclp.client.RPC;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemAccnt;
+import nthu.hpclp.shared.ItemBase;
 import nthu.hpclp.shared.ItemMeeting;
 import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemParam;
@@ -331,20 +332,16 @@ public class RpcBridge extends RemoteServiceServlet
 	public String tearSPoint(String name) throws IllegalArgumentException {		
 		return Utils.Exec("rm @ -r @ "+pathSPoint+"/"+name);
 	}
-
+	//-------------------------------------//
+	
 	@Override
-	public ArrayList<String> resetReport1() throws IllegalArgumentException {		
-		ArrayList<String> lst = new ArrayList<String>();
-		int cnt = (int) (Math.random()*5000);
-		for(int i=0; i<cnt; i++){
-			lst.add("test-"+i);
-		}
-		return lst;
+	public ArrayList<ItemBase> resetReport1() throws IllegalArgumentException {		
+		return SqlReport1.reset();
 	}
 
 	@Override
-	public String checkReport1(String item) throws IllegalArgumentException {
-		return item;
+	public void groupReport1(int beg,int end) throws IllegalArgumentException {
+		SqlReport1.group(beg, end);
 	}
 }
 

@@ -39,13 +39,11 @@ public class RpcPrint extends HttpServlet {
 		}
 		
 		String appx = path.substring(pos+1);
-
+		String name = "";
+		JRDataSource dsrc = mEmptyDSrc;
+		
 		if(appx.equalsIgnoreCase("pdf")==true){
-			
-			String name = "";
-			
-			JRDataSource dsrc = mEmptyDSrc;
-			
+
 			if(path.equalsIgnoreCase(Const.PRINT_LETTER)==true){
 				name = "report_letter.jasper";
 				dsrc = new DSrcOwner();
@@ -85,7 +83,6 @@ public class RpcPrint extends HttpServlet {
 				name = "report_demand.jasper";
 				dsrc = new DSrcAccount();
 			}
-			
 			FillPdfReport(
 				res,
 				name,
@@ -93,13 +90,20 @@ public class RpcPrint extends HttpServlet {
 				dsrc
 			);
 			
-		}else if(path.equalsIgnoreCase("xls")==true){
+		}else if(appx.equalsIgnoreCase("xls")==true){
 			
+			if(path.equalsIgnoreCase("???")==true){
+				name = "export_account.jasper";
+				dsrc = new DSrcAccount();
+			}else if(path.equalsIgnoreCase(Const.REPORT_TENURE)==true){
+				name = "report_tenure.jasper";
+				dsrc = new SqlReport1.DSrcTenure();
+			}
 			FillXlsReport(
 				res, 
-				"export_account.jasper", 
+				name, 
 				mEmptyParm, 
-				new DSrcAccount()
+				dsrc
 			);
 		}
 	}
@@ -159,7 +163,7 @@ public class RpcPrint extends HttpServlet {
 			JRXlsExporter export = new JRXlsExporter();
 			export.setParameter(JRExporterParameter.OUTPUT_STREAM, stream);
 			JasperPrint print = JasperFillManager.fillReport(
-				DOC_PATH+temp,
+				DOC_PATH+"/"+temp,
 				parm,
 				dsrc
 			);

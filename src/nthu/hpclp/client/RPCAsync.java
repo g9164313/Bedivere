@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 
 import nthu.hpclp.shared.ItemAccnt;
+import nthu.hpclp.shared.ItemBase;
 import nthu.hpclp.shared.ItemMeeting;
 import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemParam;
@@ -116,11 +117,12 @@ public interface RPCAsync {
 	) throws IllegalArgumentException;
 	
 	void resetReport1(
-		AsyncCallback<ArrayList<String>> res
+		AsyncCallback<ArrayList<ItemBase>> res
 	) throws IllegalArgumentException;
 	
-	void checkReport1(
-		String item,
-		AsyncCallback<String> res
+	void groupReport1(
+		int beg,
+		int end,
+		AsyncCallback<Void> res
 	) throws IllegalArgumentException;
 }

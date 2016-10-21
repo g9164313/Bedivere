@@ -15,13 +15,15 @@ public final class Const {
 	public static final String CUSTOM_ITEM = "--自訂--";
 	
 	public static final String SPECIAL_PREFIX = "調整";
-
+	public static final String SPECIAL_PREFIX1 = "調整後";
+	
 	public static final String PRINT_SCHEDULE= "排定表.pdf";
 	public static final String PRINT_LETTER  = "信封.pdf";
 	public static final String PRINT_NOTIFY  = "校正通知單.pdf";	
 	public static final String REPORT_PRODUCT= "校正報告.pdf";
 	public static final String REPORT_DEMAND = "繳費通知單.pdf";
 	public static final String REPORT_SERVICE= "費用通知單.pdf";
+	public static final String REPORT_TENURE = "儀器報告.xls";
 	
 	public static String int2note(int val){
 		char[] digi=String.valueOf(val).toCharArray();

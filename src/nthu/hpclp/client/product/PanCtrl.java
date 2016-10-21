@@ -45,7 +45,7 @@ public abstract class PanCtrl extends ExComposite {
 	
 	@Override
 	public void onEventShow() {
-		listLast50();
+		//listLast50();
 	}
 	
 	@Override

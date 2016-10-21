@@ -15,6 +15,6 @@
 	
     <!-- allow Super Dev Mode -->
     <add-linker name="xsiframe" />
-    
+
     <entry-point class="nthu.hpclp.client.Main" />
 </module>

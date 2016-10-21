@@ -21,7 +21,6 @@ gwt-unitCache/
 # more caches and things from deploy #
 war/WEB-INF/web.xml
 war/WEB-INF/deploy/
-war/WEB-INF/classes/
 war/nthu.hpclp.main/
 war/narl.itrc.main/
 deploy-*

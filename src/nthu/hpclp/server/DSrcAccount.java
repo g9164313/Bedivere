@@ -26,37 +26,30 @@ public class DSrcAccount implements JRDataSource {
 		String name = arg0.getName();
 		
 		if (name.equals("owner_key")) {
-			
 			if(item.owner==null){ return "無此資訊"; }
 			return item.owner.getKey();
 			
 		}else if (name.equals("owner_name")) {
-			
 			if(item.owner==null){ return "無此資訊"; }
 			return item.owner.getName();
 			
 		}else if (name.equals("owner_name_key")) {
-			
 			if(item.owner==null){ return "無此資訊"; }
 			return item.owner.getName()+" （"+item.owner.getKey()+"）";
 			
 		}else if (name.equals("owner_zipcode")) {
-			
 			if(item.owner==null){ return "無此資訊"; }
 			return item.owner.getZip();
 			
 		}else if (name.equals("owner_address")) {
-			
 			if(item.owner==null){ return "無此資訊"; }
 			return item.owner.getAddress();
 			
 		}else if (name.equals("owner_full_address")) {
-			
 			if(item.owner==null){ return "無此資訊"; }
 			return item.owner.getZip()+" "+item.owner.getAddress();
 			
 		}else if (name.equals("owner_contact")) {
-			
 			if(item.owner==null){ return "無此資訊"; }			
 			String dep = item.owner.getDepartment();
 			String tie = item.owner.getPerson()+"   啟";
@@ -66,7 +59,6 @@ public class DSrcAccount implements JRDataSource {
 			return dep+" "+tie;
 			
 		}else if (name.equals("owner_contact1")) {
-			
 			if(item.owner==null){ return "無此資訊"; }
 			String dep = item.owner.getDepartment();
 			String tie = item.owner.getPerson();
@@ -76,11 +68,9 @@ public class DSrcAccount implements JRDataSource {
 			return dep+" "+tie;
 			
 		}else if (name.equals("account_key")) {
-			
 			return item.getKey();
 			
 		}else if (name.equals("account_stamp")) {
-			
 			return UtilsMisc.date2tw_ch(item.stmp);
 			
 		}else if (name.equals("deadline_stamp")) {	
@@ -89,16 +79,13 @@ public class DSrcAccount implements JRDataSource {
 			UtilsCalendar.addDaysToDate(today,15);
 			return UtilsMisc.date2tw_ch(today);
 			
-		}else if (name.equals("account_season")) {				
-			
+		}else if (name.equals("account_season")) {
 			return UtilsMisc.date2tw_ch(item.stmp);
 
 		}else if (name.equals("fare_set")) {
-			
 			return new DsrcFare(item);
 			
 		}else if (name.equals("fare_total")) {
-			
 			//used for demand report~~
 			return Const.int2note(item.getTotal());
 			
@@ -144,7 +131,6 @@ public class DSrcAccount implements JRDataSource {
 		}else if (name.equals("fare_set6_num")) {				
 			return item.getFareCount(5);		
 		}
-		
 		return null;
 	}
 		

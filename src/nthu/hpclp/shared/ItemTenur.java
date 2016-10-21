@@ -9,11 +9,11 @@ public class ItemTenur extends ItemBase implements Serializable {
 
 	public static final int INFO_TKEY = 0;	
 	public static final int INFO_DEV_VENDOR = 1;
-	public static final int INFO_DEV_SERIAL = 2;
-	public static final int INFO_DEV_NUMBER = 3;
+	public static final int INFO_DEV_SERIAL = 2;//型號
+	public static final int INFO_DEV_NUMBER = 3;//序號
 	public static final int INFO_DET_TYPE = 4;
-	public static final int INFO_DET_SERIAL = 5;
-	public static final int INFO_DET_NUMBER = 6;
+	public static final int INFO_DET_SERIAL = 5;//型號
+	public static final int INFO_DET_NUMBER = 6;//序號
 	public static final int INFO_AREA = 7;	
 	public static final int INFO_FACTOR = 8;
 	public static final int INFO_STEER = 9;	
@@ -206,12 +206,11 @@ public class ItemTenur extends ItemBase implements Serializable {
 		return pattern;
 	}
 	
-	private static String trimTypo(String txt){
-		return txt.toLowerCase()
+	public static String trimTypo(String txt){
+		return txt.trim().toLowerCase()
 			.replaceAll("\\s","")
 			.replaceAll(",","")
-			.replaceAll("－","")
-			.replaceAll("＋","")
-			.trim();		
+			.replaceAll("-","")
+			.replaceAll("＋","");		
 	}	
 }

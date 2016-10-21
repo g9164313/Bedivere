@@ -7,6 +7,7 @@ import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.TextArea;
@@ -17,6 +18,9 @@ import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialProgress;
 import nthu.hpclp.client.Main;
+import nthu.hpclp.shared.Const;
+import nthu.hpclp.shared.ItemBase;
+import nthu.hpclp.shared.ItemTenur;
 
 public class DlgGenReport extends Composite {
 
@@ -39,35 +43,15 @@ public class DlgGenReport extends Composite {
 	TextArea boxMessage;
 	@UiField
 	MaterialButton btnCancel,btnRestart;
-		
-	public void appear(){				
+	
+	public void appear(){		
+		boxMessage.setText("");
 		root.openModal();
 		onRestart(null);
 	}
 	
-	private AsyncCallback<String> eventCheck =
-		new AsyncCallback<String>()
-	{
-		@Override
-		public void onFailure(Throwable caught) {
-		}
-		@Override
-		public void onSuccess(String result) {			
-			progress(idx,max);
-			idx++;
-			if(idx>=max){
-				btnRestart.setEnabled(true);
-				return;//we complete the task~~~
-			}
-			Main.rpc.checkReport1(
-				lst.get(idx),
-				eventCheck
-			);//next turn~~~
-		}
-	};
-	
-	private AsyncCallback<ArrayList<String>> eventReset = 
-		new AsyncCallback<ArrayList<String>>()
+	private AsyncCallback<Void> eventGroup =
+		new AsyncCallback<Void>()
 	{
 		@Override
 		public void onFailure(Throwable caught) {
@@ -75,18 +59,69 @@ public class DlgGenReport extends Composite {
 			print(caught.getMessage());
 		}
 		@Override
-		public void onSuccess(ArrayList<String> result) {
-			idx = 0;
-			max = result.size();
+		public void onSuccess(Void result) {
+			if(btnRestart.isEnabled()==true){
+				return;//user may break operation!!!
+			}
+			int max = lst.size();
+			end++;
+			progress(end,max);
+			if(end>=max){
+				btnRestart.setEnabled(true);
+				//generate report
+		    	Window.open(
+			    	GWT.getHostPageBaseURL()+Const.REPORT_TENURE,
+			    	"_blank",""
+			    );
+				return;//we complete the task~~~
+			}
+			beg = end;//reset the index of list~~~ 
+			check_group();
+			Main.rpc.groupReport1(
+				beg,end,
+				eventGroup
+			);//next turn~~~
+		}
+	};
+	
+	private AsyncCallback<ArrayList<ItemBase>> eventReset = 
+		new AsyncCallback<ArrayList<ItemBase>>()
+	{
+		@Override
+		public void onFailure(Throwable caught) {
+			print("內部錯誤！！");
+			print(caught.getMessage());
+		}
+		@Override
+		public void onSuccess(ArrayList<ItemBase> result) {			
 			lst = result;
-			Main.rpc.checkReport1(
-				lst.get(idx),
-				eventCheck
+			beg = end = 0;//reset the index of list~~~
+			check_group();
+			Main.rpc.groupReport1(
+				beg,end,
+				eventGroup
 			);//launch the first task~~~
 		}
 	};
-	private int idx,max;
-	private ArrayList<String> lst;
+	
+	private int beg,end;
+	private ArrayList<ItemBase> lst;
+	
+	private void check_group(){
+		//find prefix
+		String ref = ItemTenur.trimTypo(lst.get(beg).info[0].trim());
+		//match the prefix (device serial)
+		int cnt = lst.size();
+		for(;end<cnt;end++){
+			String src = ItemTenur.trimTypo(lst.get(end).info[0].trim());
+			if(src.equals(ref)==false){
+				end--;
+				break;
+			}
+		}
+		cnt = end - beg + 1;
+		print("儀器型號（"+beg+"，"+end+"）#"+cnt+"："+ref);
+	}
 	
 	private void progress(int stp,int max){
 		float val = ((float)stp/(float)max)*100f;
@@ -94,25 +129,30 @@ public class DlgGenReport extends Composite {
 		txtProgress.setText(""+Math.round(val)+"％ （"+stp+"/"+max+"）");
 	}
 	
-	private void print(String msg){
+	private void print(String msg){		
 		String txt = boxMessage.getText();
-		txt = txt +"\r\n" + msg;
+		//if(txt.length()>=3000){
+		//	txt = msg;
+		//}else{
+			txt = txt +"\r\n" + msg;
+		//}
 		boxMessage.setText(txt);
-		boxMessage.getElement().getFirstChildElement().setScrollTop(
-			boxMessage.getElement().getFirstChildElement().getScrollHeight()
-		);//very strange method~~~~
+		//boxMessage.getElement().getFirstChildElement().setScrollTop(
+		//	boxMessage.getElement().getFirstChildElement().getScrollHeight()
+		//);//very strange method~~~~
 	}
 	
 	@UiHandler("btnRestart")
     void onRestart(ClickEvent e){
 		print("初始化...");
 		progress(0,1);
-		btnRestart.setEnabled(false);
+		btnRestart.setEnabled(false);		
 		Main.rpc.resetReport1(eventReset);
     }
 	
     @UiHandler("btnCancel")
     void onCancel(ClickEvent e){
+    	btnRestart.setEnabled(true);
     	root.closeModal();
     }
 }

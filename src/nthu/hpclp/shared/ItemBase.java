@@ -18,14 +18,33 @@ public class ItemBase implements Serializable {
 		
 	public Date last = new Date();
 	
-	public String[] info;
+	public String[] info=null,appx=null;
 
 	public String error = "";
 	
+	public ItemBase(){
+	}
+	
 	public ItemBase(int size){
+		prepare_info(size);
+	}
+	
+	public ItemBase(int size1,int size2){
+		prepare_info(size1);
+		prepare_appx(size2);
+	}
+	
+	private void prepare_info(int size){
 		info = new String[size];
 		for(int i=0; i<size; i++){
 			info[i] = "";
+		}
+	}
+	
+	private void prepare_appx(int size){
+		appx = new String[size];
+		for(int i=0; i<size; i++){
+			appx[i] = "";
 		}
 	}
 	
@@ -36,8 +55,15 @@ public class ItemBase implements Serializable {
 		dst.uuid = this.uuid;
 		dst.stmp.setTime(this.stmp.getTime());
 		dst.last.setTime(this.last.getTime());
-		for(int i=0; i<info.length; i++){
-			dst.info[i] = this.info[i];
+		if(info!=null){
+			for(int i=0; i<info.length; i++){
+				dst.info[i] = this.info[i];
+			}
+		}
+		if(appx!=null){
+			for(int i=0; i<info.length; i++){
+				dst.appx[i] = this.appx[i];
+			}
 		}
 	}
 	
@@ -97,6 +123,11 @@ public class ItemBase implements Serializable {
 		stmp.setTime(d.getTime());
 	}
 	
+	public void setDate(Date d){
+		setStmp(d);
+		setLast(d);
+	}
+	
 	public ItemBase markDelete(){
 		final char TOKEN = '*';
 		if(uuid.length()!=0){
@@ -108,8 +139,10 @@ public class ItemBase implements Serializable {
 		return this;
 	}
 	
-	public ItemBase markModify(){
-		
+	public ItemBase markModify(){		
+		if(uuid.length()!=0){
+			
+		}
 		return this;
 	}
 }

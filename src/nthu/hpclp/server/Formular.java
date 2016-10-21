@@ -25,7 +25,7 @@ public class Formular {
 			try{			
 				stat.addValue(Double.valueOf(val[i]));	
 			}catch(NumberFormatException e){
-				System.err.print("fail to parse "+val[i]);
+				System.err.printf("fail to parse %s\n",val[i]);
 				continue;
 			}
 		}

@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
 import nthu.hpclp.shared.ItemAccnt;
+import nthu.hpclp.shared.ItemBase;
 import nthu.hpclp.shared.ItemMeeting;
 import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemParam;
@@ -42,6 +43,6 @@ public interface RPC extends RemoteService {
 	ArrayList<ItemAccnt> cacheAccount(ArrayList<ItemAccnt> lst) throws IllegalArgumentException;
 	void cacheMeeting(ArrayList<ItemMeeting> lst) throws IllegalArgumentException;
 
-	ArrayList<String> resetReport1() throws IllegalArgumentException;//reset report for all tenures
-	String checkReport1(String item) throws IllegalArgumentException;//process each item in report
+	ArrayList<ItemBase> resetReport1() throws IllegalArgumentException;//reset report for all tenures
+	void groupReport1(int beg,int end) throws IllegalArgumentException;//process each item in report
 }
