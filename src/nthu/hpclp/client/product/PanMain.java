@@ -4,8 +4,11 @@ import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialSearch;
-import nthu.hpclp.client.PartOwne;
+import gwt.material.design.client.ui.MaterialToast;
+import nthu.hpclp.client.Main;
+import nthu.hpclp.client.PartOwner;
 import nthu.hpclp.shared.ItemProdx;
+import nthu.hpclp.shared.ItemTenur;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -32,8 +35,14 @@ public class PanMain extends PanCtrl {
 		anchorOwner.setWidget(owner);
 		anchorTenur.setWidget(tenur);
 		anchorInfo.setWidget(inform);
+		anchorAppx.setWidget(appxInfo);
 		anchorScriber.setWidget(scriber);
-		anchorEmitter.setWidget(emitter);
+		anchorEmitter.setWidget(emitter);		
+		addCtrlShortcut(KeyCodes.KEY_N);
+		addCtrlShortcut(KeyCodes.KEY_S);		
+		addCtrlShortcut(KeyCodes.KEY_P);
+		addCtrlShortcut(KeyCodes.KEY_T);
+		addShortcut(KeyCodes.KEY_F1);
 	}
 
 	@UiField(provided=true) 
@@ -43,7 +52,7 @@ public class PanMain extends PanCtrl {
     @UiField
     MaterialSearch boxSearch;
 	@UiField
-	SimplePanel anchorOwner,anchorTenur,anchorInfo;
+	SimplePanel anchorOwner,anchorTenur,anchorInfo,anchorAppx;
 	@UiField
 	SimplePanel anchorScriber,anchorEmitter;
 	
@@ -54,12 +63,25 @@ public class PanMain extends PanCtrl {
     @UiField(provided=true) 
     SimplePanel anchorList2 = _anchorList2;
 
-	private PartOwne owner = new PartOwne();
+	private PartOwner owner = new PartOwner();
 	private PartTenu tenur = new PartTenu();
 	private PartInfo inform = new PartInfo();
+	private PartAppx appxInfo = new PartAppx();
 	private PartScriber scriber = new PartScriber();
 	private PartEmitter emitter = new PartEmitter();
 	private DlgGenReport genReport = new DlgGenReport();
+	
+	@Override
+	public void eventShortcut(Integer keycode,Integer appx){
+		switch(keycode){
+		case KeyCodes.KEY_N: onListAddItem(null); break;//create a new one
+		case KeyCodes.KEY_S: onListSave(null); break;//save all items
+		case KeyCodes.KEY_P: onPrintProdx(null); break;//print items
+		case KeyCodes.KEY_F1:
+		case KeyCodes.KEY_T: onPrint2DTag(null); break;//print tag
+		}
+	}
+	//-----------------------------//
 	
     @UiHandler("lnkStartSearch")
     void onStartSearch(ClickEvent e) {
@@ -83,17 +105,18 @@ public class PanMain extends PanCtrl {
     	boxSearch.setText("");
     	boxSearch.setFocus(true);
     }
-    
+    //-----------------------------//
+
     @UiHandler("lnkListShow")
     void onListShow(ClickEvent e){
     	dlgList.openModal();
     }
     @UiHandler("lnkListLast")
-    void onListUpdate(ClickEvent e){
-    	listLast50();
+    void onListShowLast(ClickEvent e){
+    	listShowLast50();
     }
     @UiHandler("lnkListClear")
-    void onShowList(ClickEvent e){
+    void onListClear(ClickEvent e){
     	//Main.dlgApprove.appear("有未儲存的項目，確認清除?", hook);
     	listClear();
     }
@@ -101,15 +124,34 @@ public class PanMain extends PanCtrl {
     void onListAddItem(ClickEvent e){
     	listAddItem();
     }
-    @UiHandler("lnkListUpload")
-    void onUploadList(ClickEvent e){
-    	listUpload();
+    @UiHandler("lnkListSave")
+    void onListSave(ClickEvent e){
+    	listSaveItem();
     }
+    //-----------------------------//
     
+    @UiHandler("lnkPrint2DTag")
+    void onPrint2DTag(ClickEvent e){
+    	ItemTenur tenu = tenur.getTarget();
+    	if(tenu==null){
+    		MaterialToast.fireToast("無測試儀器？！");
+    		return;
+    	}
+    	print2DTag(tenu,
+    		appxInfo.getDate(),
+    		appxInfo.getName(),
+    		appxInfo.getMemo()
+    	);
+    }
+    @UiHandler("lnkPrintProdx")
+    void onPrintProdx(ClickEvent e){
+    	
+    }
     @UiHandler("lnkPrintReport")
     void onPrintReport(ClickEvent e){
     	genReport.appear();
     }
+    //-----------------------------//
     
 	@Override
 	public void updateBox(ItemProdx itm) {

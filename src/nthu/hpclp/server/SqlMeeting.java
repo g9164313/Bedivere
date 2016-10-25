@@ -104,12 +104,12 @@ public class SqlMeeting {
 				//same owner but different meeting day (different tenure)
 				meet = new ItemMeeting(oid,info,t_t3,t3,t0);
 				meet.lst.add(tenu);
-				tenu.owner= meet;
+				tenu.setOwner(meet);
 				lst.add(meet);				
 			}else{
 				//same owner and meeting day~~~
 				meet.lst.add(tenu);
-				tenu.owner = meet;
+				tenu.setOwner(meet);
 			}
 			//always check whether day is holiday~~~
 			String rday = restday.get(meet.getSDay());

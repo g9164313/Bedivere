@@ -23,14 +23,6 @@
 			<m:MaterialLabel ui:field="txtInfoT3" />
 			<m:MaterialLabel ui:field="txtInfoT6" />
 		</m:MaterialColumn>
-		<m:MaterialColumn float="RIGHT">
-			<m:MaterialRow>
-				<m:MaterialIcon iconType="CREATE" waves="DEFAULT" circle="true" ui:field="icoEditTenur" />
-			</m:MaterialRow>
-			<m:MaterialRow>
-				<m:MaterialIcon iconType="CLEAR" waves="DEFAULT" circle="true" ui:field="icoClearTenur" />
-			</m:MaterialRow>
-		</m:MaterialColumn>
 	</m:MaterialRow>
 </m:MaterialPanel>
 

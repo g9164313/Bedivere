@@ -10,7 +10,6 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
 import nthu.hpclp.shared.Const;
-import nthu.hpclp.shared.ItemAccnt;
 import nthu.hpclp.shared.ItemBase;
 
 public class SqlReport1 {
@@ -35,10 +34,9 @@ public class SqlReport1 {
 				"FROM product,tenure "+
 				"WHERE product.tid = tenure.id "+
 				"ORDER BY tenure.info[3] ASC, product.last ASC";
-			
-			String cmd2 = "SELECT * FROM ("+cmd1+") AS tab1 WHERE tab1.rowIndx = 1";
+			String cmd_out = "SELECT * FROM ("+cmd1+") AS tab1 WHERE tab1.rowIndx = 1";
 								
-			ResultSet rs = RpcBridge.getResult(cmd2);
+			ResultSet rs = RpcBridge.getResult(cmd_out);
 			while(rs.next()){
 				
 				ItemBase itm = new ItemBase(5);
@@ -63,23 +61,21 @@ public class SqlReport1 {
 	} 
 	
 	private static ArrayList<ItemBase> grpList = new ArrayList<ItemBase>();
-	
-	private static int staFact[] = new int[6];//校正因子(±10%, -20~-10%, -10~0%, 0~10%, 10%~20%), even number
-	private static int staMeas[] = new int[6];//實驗數據(0~1%, 1~2%, 2~3%, 3~4%, 4~5%, 5%<)
-	
+
 	public static void group(int beg,int end){
 		//reset statistic array~~~		
 		for(int i=0; i<staFact.length; i++){ staFact[i]=0; }
 		for(int i=0; i<staMeas.length; i++){ staMeas[i]=0; }
 		//group one segment
 		ItemBase grp = new ItemBase(
-			3,
+			4,
 			staFact.length+staMeas.length
 		);
 		ItemBase fst = datLst.get(beg);
 		grp.info[0] = fst.info[2];//tenure vendor
 		grp.info[1] = fst.info[3];//tenure serial
 		grp.info[2] = String.valueOf(end-beg+1);//total number
+		int cnt = 0;
 		for(int i=beg; i<=end; i++){
 			if(i==datLst.size()){
 				break;
@@ -89,10 +85,15 @@ public class SqlReport1 {
 				System.out.printf("No scribble? strange product - "+itm.info[0]);
 				continue;
 			}
-			fill_stat(itm);			
+			cnt = cnt + fill_stat(itm);			
 		}
+		grp.info[3] = String.valueOf(cnt);
 		fill_appx(grp);
 	}
+	
+	
+	private static int staFact[] = new int[6];//校正因子(±30%, <-20, -20~-10, -10~0, 0~10, 10~20, 20<), even number
+	private static int staMeas[] = new int[6];//實驗數據(0~1%, 1~2%, 2~3%, 3~4%, 4~5%, 5%<)
 	
 	private static void fill_rest(String[] val){
 		
@@ -122,6 +123,7 @@ public class SqlReport1 {
 			staMeas[0]++;
 		}else{
 			double diff = (mea_dev/(mea_cnt-1))*100.;
+			//double diff = (mea_dev/mea_avg)*100.;
 			idx = (int)Math.floor(diff);
 			if(idx>=staMeas.length){
 				idx = 5;
@@ -130,9 +132,9 @@ public class SqlReport1 {
 		}
 	}
 	
-	private static void fill_stat(ItemBase itm){
+	private static int fill_stat(ItemBase itm){
 		if(itm.appx.length==0){
-			return;
+			return 0;
 		}
 		int start = 0;
 		if(itm.appx[start].contains(Const.SPECIAL_PREFIX)==true){
@@ -145,6 +147,7 @@ public class SqlReport1 {
 				start++;
 			}while(start<itm.appx.length);
 		}
+		int cnt = 0;
 		for(int j=start; j<itm.appx.length; j++){
 			String[] val = itm.appx[j].split("@");
 			if(val.length<3){
@@ -155,7 +158,9 @@ public class SqlReport1 {
 				continue;
 			}
 			fill_rest(val);
+			cnt++;
 		}
+		return cnt;
 	}
 	
 	private static void fill_appx(ItemBase grp){
@@ -189,6 +194,8 @@ public class SqlReport1 {
 				return itm.info[1];
 			}else if(name.equals("total_number")){
 				return itm.info[2];
+			}else if(name.equals("total_measure")){
+				return itm.info[3];
 			}else if(name.equals("factor_0")){
 				return itm.appx[0];
 			}else if(name.equals("factor_1")){

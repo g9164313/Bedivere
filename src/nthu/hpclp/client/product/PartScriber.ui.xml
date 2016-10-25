@@ -6,25 +6,23 @@
 <ui:style>	
 </ui:style>
 
-<m:MaterialPanel backgroundColor="white" marginTop="20" padding="7" width="45vw" ui:field="root">
-	
+<m:MaterialPanel backgroundColor="white" marginTop="20" padding="7" ui:field="root">
+
 	<m:MaterialRow>
-		<m:MaterialTextBox placeholder="快速輸入" ui:field="boxInput" />	
+		<m:MaterialTextBox placeholder="快速輸入" width="45em" ui:field="boxInput" />	
 	</m:MaterialRow>
 
 	<m:MaterialRow>
 		<g:SimplePanel ui:field="anchor1"/>
 	</m:MaterialRow>
-	
 	<m:MaterialRow>
 		<g:SimplePanel ui:field="anchor2"/>
 	</m:MaterialRow>
-		
+	
 	<m:MaterialRow>
 		<m:MaterialSwitch value="false" grid="l0" ui:field="modSwitch" />
 		<m:MaterialLabel text="進階顯示"/>
 	</m:MaterialRow>
-	
 </m:MaterialPanel>
 
 </ui:UiBinder> 

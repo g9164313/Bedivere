@@ -15,24 +15,24 @@
 			 	
 				<m:MaterialLink iconPosition="NONE" tooltip="搜尋" tooltipPosition="BOTTOM" iconType="SEARCH" ui:field="lnkStartSearch" />
 				
-				<m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="BOTTOM" iconType="PRINT" activates="drpPrint">
-					<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpPrint" >                    		
-						<m:MaterialLink text="標籤"  ui:field="lnkPrint2DTag" />
-						<m:MaterialLink text="報告"  ui:field="lnkPrintProdx" />
-						<m:MaterialLink text="？？"  ui:field="lnkPrintReport" />
-					</m:MaterialDropDown>
-				</m:MaterialLink>
-         				
 				<m:MaterialLink iconPosition="NONE" tooltip="功能" tooltipPosition="BOTTOM" iconType="TUNE" activates="drpFunc">
 					<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpFunc" >
 						<m:MaterialLink text="顯示清單" textColor="grey darken-1" iconType="RECEIPT" ui:field="lnkListShow" />
-						<m:MaterialLink text="最近50筆" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkListLast" />
-						<m:MaterialLink text="上傳報告" textColor="grey darken-1" iconType="FILE_UPLOAD" ui:field="lnkListUpload" /> 
-						<m:MaterialLink text="新增報告" textColor="grey darken-1" iconType="PLUS_ONE" ui:field="lnkListAddItem" />
-						<m:MaterialLink text="清除清單" textColor="grey darken-1" iconType="CLEAR_ALL" ui:field="lnkListClear" />                  			
+						<m:MaterialLink text="最近50筆" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkListLast" />						
+						<m:MaterialLink text="清除清單" textColor="grey darken-1" iconType="CLEAR_ALL" ui:field="lnkListClear" />
+						<m:MaterialLink text="新增報告 Ctrl+N" textColor="grey darken-1" iconType="PLUS_ONE" ui:field="lnkListAddItem" />
+						<m:MaterialLink text="上傳報告 Ctrl+S" textColor="grey darken-1" iconType="FILE_UPLOAD" ui:field="lnkListSave" />                 			
 					</m:MaterialDropDown>
 				</m:MaterialLink>
-				        
+				
+				<m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="BOTTOM" iconType="PRINT" activates="drpPrint">
+					<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpPrint" >                    		
+						<m:MaterialLink text="實驗標籤 Ctrl+T" ui:field="lnkPrint2DTag" />
+						<m:MaterialLink text="實驗報告 Ctrl+P" ui:field="lnkPrintProdx" />
+						<m:MaterialLink text="量測統計" ui:field="lnkPrintReport" />
+					</m:MaterialDropDown>
+				</m:MaterialLink>
+				  
 			</m:MaterialNavSection>
 		</m:MaterialNavBar>
 		<!-- Search Component -->
@@ -47,7 +47,8 @@
 			<m:MaterialColumn>
 				<g:SimplePanel ui:field="anchorOwner" />
 				<g:SimplePanel ui:field="anchorTenur" />
-				 <g:SimplePanel ui:field="anchorInfo" />
+				<g:SimplePanel ui:field="anchorInfo" />
+				<g:SimplePanel ui:field="anchorAppx" />
 			</m:MaterialColumn>
 			<m:MaterialColumn>
 				<g:SimplePanel ui:field="anchorScriber" />

@@ -15,6 +15,7 @@ import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
 import nthu.hpclp.client.Main;
+import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemProdx;
 import nthu.hpclp.shared.ItemTenur;
 
@@ -29,6 +30,7 @@ public class PartTenu extends Composite {
 		initWidget(uiBinder.createAndBindUi(this));		
 		root.add(Main.dlgEditTenur);
 		root.add(Main.dlgPickTenur);
+		boxTKey.getIcon().addClickHandler(eventEdit);
 	}
 
 	@UiField
@@ -45,17 +47,13 @@ public class PartTenu extends Composite {
 	
 	public void setTarget(ItemProdx obj){
 		targetProdx = obj;
-		updateBox(targetProdx.tenur);
+		updateBox(targetProdx.getTenur());
 	}
 
 	public ItemTenur getTarget(){
-		if(targetProdx!=null){ return targetProdx.tenur; }
+		if(targetProdx!=null){ return targetProdx.getTenur(); }
 		return null;
 	}
-	
-	//private void updateTarget(ItemTenur itm){
-	//	if(targetProdx!=null){ targetProdx.tenur = itm; }
-	//}
 	
 	private void updateBox(ItemTenur itm){
     	boxTKey.setText("");
@@ -74,24 +72,62 @@ public class PartTenu extends Composite {
     		txtInfoT4.setText("");
     		txtInfoT5.setText("");
     		txtInfoT6.setText("");
-    	}    	
-    	//updateTarget(itm);
+    	}
+	}
+
+	private void update_item(ItemTenur itm){
+		if(targetProdx!=null){
+			targetProdx.setTenur(itm);
+			updateBox(itm);
+		}
+		boxTKey.setText("");
 	}
 	
-	private final ClickHandler eventUpdate = new ClickHandler(){
+	private final ClickHandler eventEdit = new ClickHandler(){
 		@Override
 		public void onClick(ClickEvent event) {
-			updateBox(Main.dlgPickTenur.getTarget());
+			if(targetProdx==null){
+				return;
+			}			
+	    	ItemTenur itm = getTarget();
+	    	if(itm==null){
+	    		return;
+	    	}
+	    	if(event==null){
+	    		//how to select a different owner???
+	    		ItemOwner owner = targetProdx.getOwner();
+				if(owner==null){
+		    		MaterialToast.fireToast("無廠商資訊");
+		    		return;
+		    	}
+	    		itm = new ItemTenur(targetProdx.getOwner());
+	    		MaterialToast.fireToast("新增儀器資料");
+	    	}else{
+	    		MaterialToast.fireToast("修改儀器資料");
+	    	}
+	    	Main.dlgEditTenur.appear(itm,eventUpdate,null);
 		}
-	}; 
+		private ClickHandler eventUpdate = new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				update_item(Main.dlgEditTenur.getTarget());
+			}
+		};
+	};
 	
     @UiHandler("boxTKey")
     void onChangeKeyTenure(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim().toLowerCase();
     	if(txt.equalsIgnoreCase("+")==true){
-    		onEditTenur(null);
+    		//onEditTenur(null);
     		return;
-    	}    	
+    	}
+    	final ClickHandler eventPickup = new ClickHandler(){
+    		@Override
+    		public void onClick(ClickEvent event) {
+    			update_item(Main.dlgPickTenur.getTarget());
+    		}
+    	};
     	String post = "WHERE "+
     		"(tenure.info[1] SIMILAR TO '%"+txt+"%') OR "+
     		"(tenure.info[2] SIMILAR TO '%"+txt+"%') OR "+
@@ -100,27 +136,6 @@ public class PartTenu extends Composite {
     		"(tenure.info[6] SIMILAR TO '%"+txt+"%') OR "+
     		"(tenure.info[7] SIMILAR TO '%"+txt+"%') OR "+
     		"(tenure.info[11] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
-    	Main.dlgPickTenur.appear(post,eventUpdate);
-    }
-    
-    @UiHandler("icoEditTenur")
-    void onEditTenur(ClickEvent e){
-    	if(targetProdx.owner==null){
-    		MaterialToast.fireToast("無廠商資訊");
-    		return;
-    	}
-    	ItemTenur itm = getTarget();
-    	if(itm==null){
-    		MaterialToast.fireToast("新增儀器資料");
-    		//TODO: how to select a different owner???
-    		itm = new ItemTenur(targetProdx.owner);
-    	}
-    	Main.dlgEditTenur.appear(itm,null,eventUpdate);
-    }
-    
-    @UiHandler("icoClearTenur")
-    void onClearTenur(ClickEvent e){
-    	updateBox(null);
-    	boxTKey.setFocus(true);
+    	Main.dlgPickTenur.appear(post,eventPickup);
     }
 }

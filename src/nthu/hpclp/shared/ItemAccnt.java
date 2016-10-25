@@ -17,7 +17,7 @@ public class ItemAccnt extends ItemBase implements Serializable {
 	
 	public boolean isFinal = false;
 	
-	public ItemOwner owner = null;
+	private ItemOwner owner = null;
 	
 	/**
 	 * This record an account item, there are three columns for one string.<p>
@@ -45,6 +45,13 @@ public class ItemAccnt extends ItemBase implements Serializable {
 	){
 		super(INFO_MAX_COL);
 		map(oid,info);
+	}
+	
+	public ItemOwner getOwner(){
+		return owner;
+	}
+	public void setOwner(ItemOwner itm){
+		owner = itm;
 	}
 	
 	public String getKey(){

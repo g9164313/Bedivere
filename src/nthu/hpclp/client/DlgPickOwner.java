@@ -53,6 +53,11 @@ public class DlgPickOwner extends DlgBase<ItemOwner> {
 		txtInfo4,txtInfo5,txtInfo6,
 		txtInfo7;
 	
+	/**
+	 * Before dialog is appearing, user can search database.<p>
+	 * @param postfix - SQL syntax
+	 * @param hook - where user click action button~~~
+	 */
 	public void appear(final String postfix,final ClickHandler hook){
 		txtInfo1.setText("");
 		txtInfo2.setText("");
@@ -79,7 +84,7 @@ public class DlgPickOwner extends DlgBase<ItemOwner> {
 					return;
 				}
 				refresh_selector(result);
-				appear(null,null,hook);
+				appear(null,hook,null);
 			}
 		});		
 	}

@@ -69,21 +69,6 @@ public class RpcBridge extends RemoteServiceServlet
 			return "";
 		}
 		return id.toString();
-	}
-		
-	@Override
-	public String genKey(String args) throws IllegalArgumentException {
-		if(args.startsWith(Const.OWNER)==true){
-			args = args.substring(Const.OWNER.length()+1);//there is a 'plus' sign
-			return SqlDataMisc.genOKey(args);
-		}if(args.startsWith(Const.ACCNT)==true){
-			args = args.substring(Const.ACCNT.length()+1);
-			return SqlDataMisc.genAKey(args);
-		}else if(args.startsWith(Const.PRODX)==true){
-			args = args.substring(Const.PRODX.length()+1);//there is a 'star' sign
-			return SqlDataMisc.genPKey(args.split(","));
-		}
-		return "";
 	}	
 	//---------------------------------//
 
@@ -172,6 +157,28 @@ public class RpcBridge extends RemoteServiceServlet
 	}
 	//---------------------------------//
 	
+	@Override
+	public String genKey(String args) throws IllegalArgumentException {
+		
+		if(args.startsWith(Const.OWNER)==true){
+			
+			args = args.substring(Const.OWNER.length()+1);//there is a 'plus' sign
+			return SqlDataMisc.genOKey(args);
+			
+		}if(args.startsWith(Const.ACCNT)==true){
+			
+			args = args.substring(Const.ACCNT.length()+1);//???
+			return SqlDataMisc.genAKey(args);
+			
+		}else if(args.startsWith(Const.PRODX)==true){
+			
+			args = args.substring(Const.PRODX.length()+1);//there is a 'star' sign
+			return SqlDataMisc.genPKey(args.split(","));
+		}
+		return "";
+	}
+	//---------------------------------//
+
 	@Override
 	public ArrayList<ItemMeeting> listMeeting(String dayFst, String dayEnd) {		
 		ArrayList<ItemMeeting> res = new ArrayList<ItemMeeting>();		
@@ -288,19 +295,12 @@ public class RpcBridge extends RemoteServiceServlet
 	
 	@Override
 	public String[] listSPoint() throws IllegalArgumentException {
-		
 		final String name="work/SPoint";
-		
 		final String[] path = {"./","../","../../"};
-
 		for(int i=0; i<path.length; i++){
-			
 			File fs = new File(path[i]+name);
-			
 			if(fs.exists()==true){
-				
 				pathSPoint = fs.getAbsolutePath()+"/";
-				
 				final FilenameFilter flt = new FilenameFilter(){
 					@Override
 					public boolean accept(File dir, String name) {
@@ -331,6 +331,32 @@ public class RpcBridge extends RemoteServiceServlet
 	@Override
 	public String tearSPoint(String name) throws IllegalArgumentException {		
 		return Utils.Exec("rm @ -r @ "+pathSPoint+"/"+name);
+	}
+	//-------------------------------------//
+	
+	private static String pathPrint = null;
+	
+	private void init_path_print(){
+		
+	}
+	
+	@Override
+	public String printTag(String[] info) throws IllegalArgumentException {
+		if(pathPrint==null){
+			init_path_print();//just once~~
+		}
+		if(pathPrint.length()==0){
+			return "無法執行程式";
+		}
+		Utils.Exec("PrintLetter @"+
+			info[0]+"@"+
+			info[1]+"@"+
+			info[2]+"@"+
+			info[3]+"@"+
+			info[4]+"@"+
+			info[5]
+		);
+		return "";
 	}
 	//-------------------------------------//
 	

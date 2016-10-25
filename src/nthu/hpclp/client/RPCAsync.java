@@ -43,6 +43,9 @@ public interface RPCAsync {
 		AsyncCallback<String> res
 	) throws IllegalArgumentException;
 	
+	
+	void printTag(String[] info,AsyncCallback<String> res) throws IllegalArgumentException;
+	
 	void listMeeting(
 		String dayFst,
 		String dayEnd,
@@ -116,6 +119,7 @@ public interface RPCAsync {
 		AsyncCallback<Void> res
 	) throws IllegalArgumentException;
 	
+
 	void resetReport1(
 		AsyncCallback<ArrayList<ItemBase>> res
 	) throws IllegalArgumentException;

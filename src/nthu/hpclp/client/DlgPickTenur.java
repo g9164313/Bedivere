@@ -13,6 +13,7 @@ import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialRow;
 import gwt.material.design.client.ui.MaterialToast;
 import narl.itrc.client.DlgBase;
+import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemTenur;
 
 import com.google.gwt.core.client.GWT;
@@ -86,9 +87,9 @@ public class DlgPickTenur extends DlgBase<ItemTenur> {
 	}
 	
 	class CitTenur extends MaterialCollectionItem implements ClickHandler {
-		public ItemTenur itm;
+		public ItemTenur tenur;
 		public CitTenur(int indx,ItemTenur item){
-			itm = item;
+			tenur = item;
 			setType(CollectionType.CHECKBOX);
 			setWaves(WavesType.DEFAULT);
 			setTitle(indx);
@@ -97,7 +98,7 @@ public class DlgPickTenur extends DlgBase<ItemTenur> {
 		private void setTitle(int indx){
 			MaterialRow row = new MaterialRow();
 			add_col(row,"",""+indx+")");
-			add_col(row,"",itm.getName());
+			add_col(row,"",tenur.getName());
 			add(row);
 		}
 		private void add_col(MaterialRow row,String size,String value){
@@ -111,22 +112,23 @@ public class DlgPickTenur extends DlgBase<ItemTenur> {
 		}
 		@Override
 		public void onClick(ClickEvent event) {
-			txtInfo1.setText(itm.getDeviceVendor());
-			txtInfo2.setText(itm.getDeviceSerial());
-			txtInfo3.setText(itm.getDeviceNumber());
-			txtInfo4.setText(itm.getDetectType());
-			txtInfo5.setText(itm.getDetectSerial());
-			txtInfo6.setText(itm.getDetectNumber());
-			txtInfo7.setText(itm.getArea());
-			txtInfo8.setText(itm.getFactor());
-			txtInfo9.setText(itm.getSteer());
-			txtInfo10.setText(itm.getMemo()+"/"+Main.fmtDate.format(itm.meet));
-			if(itm.owner!=null){
-				txtInfo11.setText(itm.owner.getFullName());
+			txtInfo1.setText(tenur.getDeviceVendor());
+			txtInfo2.setText(tenur.getDeviceSerial());
+			txtInfo3.setText(tenur.getDeviceNumber());
+			txtInfo4.setText(tenur.getDetectType());
+			txtInfo5.setText(tenur.getDetectSerial());
+			txtInfo6.setText(tenur.getDetectNumber());
+			txtInfo7.setText(tenur.getArea());
+			txtInfo8.setText(tenur.getFactor());
+			txtInfo9.setText(tenur.getSteer());
+			txtInfo10.setText(tenur.getMemo()+"/"+Main.fmtDate.format(tenur.meet));
+			ItemOwner owner = tenur.getOwner();
+			if(owner!=null){
+				txtInfo11.setText(owner.getFullName());
 			}else{
 				txtInfo11.setText("???");
 			}
-			target = itm;//remember updating target!!!
+			target = tenur;//remember updating target!!!
 		}
 	};	
 	private void refresh_selector(ArrayList<ItemTenur> result){

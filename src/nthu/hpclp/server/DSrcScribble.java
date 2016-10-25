@@ -5,6 +5,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemProdx;
+import nthu.hpclp.shared.ItemTenur;
 
 class DSrcScribble extends FieldScribble implements JRDataSource {
 	
@@ -20,8 +21,9 @@ class DSrcScribble extends FieldScribble implements JRDataSource {
 		emitt = prodx.getEmitter();
 		mFmt = prodx.format;
 		
-		mDetType = prodx.tenur.getDetectType();
-		mDetArea = prodx.tenur.getArea();
+		ItemTenur tenur = prodx.getTenur();
+		mDetType = tenur.getDetectType();
+		mDetArea = tenur.getArea();
 		mMeaUnit = prodx.getUnitMea();
 
 		if(prodx.format==ItemProdx.FMT_F4){

@@ -44,7 +44,7 @@ public abstract class DlgBase<T> extends Composite {
 	public DlgBase<T> appear(T obj,ClickHandler hook1,ClickHandler hook2){
 		target = obj;
 		hookAction= hook1;
-		hookCancel = hook2;
+		hookCancel= hook2;
 		eventAppear(obj);
 		dlgRoot.openModal();
 		return this;

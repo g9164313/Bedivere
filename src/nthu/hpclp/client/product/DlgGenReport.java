@@ -3,6 +3,7 @@ package nthu.hpclp.client.product;
 import java.util.ArrayList;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Element;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -137,9 +138,8 @@ public class DlgGenReport extends Composite {
 			txt = txt +"\r\n" + msg;
 		//}
 		boxMessage.setText(txt);
-		//boxMessage.getElement().getFirstChildElement().setScrollTop(
-		//	boxMessage.getElement().getFirstChildElement().getScrollHeight()
-		//);//very strange method~~~~
+		Element ee = boxMessage.getElement();
+		ee.setScrollTop(ee.getScrollHeight());//very strange method~~~~
 	}
 	
 	@UiHandler("btnRestart")

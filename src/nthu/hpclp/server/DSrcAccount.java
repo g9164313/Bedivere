@@ -8,6 +8,7 @@ import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemAccnt;
+import nthu.hpclp.shared.ItemOwner;
 
 public class DSrcAccount implements JRDataSource {
 	
@@ -22,46 +23,49 @@ public class DSrcAccount implements JRDataSource {
 	public Object getFieldValue(JRField arg0) throws JRException {			
 		
 		ItemAccnt item = lst.get(idx);
+		ItemOwner owner = item.getOwner();
 		
 		String name = arg0.getName();
 		
 		if (name.equals("owner_key")) {
-			if(item.owner==null){ return "無此資訊"; }
-			return item.owner.getKey();
+			if(owner==null){ return "無此資訊"; }
+			return owner.getKey();
 			
 		}else if (name.equals("owner_name")) {
-			if(item.owner==null){ return "無此資訊"; }
-			return item.owner.getName();
+			if(owner==null){ return "無此資訊"; }
+			return owner.getName();
 			
 		}else if (name.equals("owner_name_key")) {
-			if(item.owner==null){ return "無此資訊"; }
-			return item.owner.getName()+" （"+item.owner.getKey()+"）";
+			if(owner==null){ return "無此資訊"; }
+			return owner.getName()+" （"+owner.getKey()+"）";
 			
 		}else if (name.equals("owner_zipcode")) {
-			if(item.owner==null){ return "無此資訊"; }
-			return item.owner.getZip();
+			if(owner==null){ return "無此資訊"; }
+			return owner.getZip();
 			
 		}else if (name.equals("owner_address")) {
-			if(item.owner==null){ return "無此資訊"; }
-			return item.owner.getAddress();
+			if(owner==null){ return "無此資訊"; }
+			return owner.getAddress();
 			
 		}else if (name.equals("owner_full_address")) {
-			if(item.owner==null){ return "無此資訊"; }
-			return item.owner.getZip()+" "+item.owner.getAddress();
+			if(owner==null){ return "無此資訊"; }
+			return owner.getZip()+" "+owner.getAddress();
 			
 		}else if (name.equals("owner_contact")) {
-			if(item.owner==null){ return "無此資訊"; }			
-			String dep = item.owner.getDepartment();
-			String tie = item.owner.getPerson()+"   啟";
+			if(owner==null){ return "無此資訊"; }			
+			String dep = owner.getDepartment();
+			String tie = owner.getPerson()+"   啟";
 			if(dep.length()==0){
 				return tie;
 			}
 			return dep+" "+tie;
 			
 		}else if (name.equals("owner_contact1")) {
-			if(item.owner==null){ return "無此資訊"; }
-			String dep = item.owner.getDepartment();
-			String tie = item.owner.getPerson();
+			if(owner==null){ 
+				return "無此資訊";
+			}
+			String dep = owner.getDepartment();
+			String tie = owner.getPerson();
 			if(dep.length()==0){
 				return tie;
 			}

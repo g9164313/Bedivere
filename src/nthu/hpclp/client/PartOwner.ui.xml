@@ -18,14 +18,6 @@
 			<m:MaterialLabel ui:field="txtInfoO2" />
 			<m:MaterialLabel ui:field="txtInfoO3" />
 		</m:MaterialColumn>
-		<m:MaterialColumn float="RIGHT">
-			<m:MaterialRow>
-				<m:MaterialIcon iconType="CREATE" waves="DEFAULT" circle="true" ui:field="icoEditOwner" />
-			</m:MaterialRow>
-			<m:MaterialRow>
-				<m:MaterialIcon iconType="CLEAR" waves="DEFAULT" circle="true" ui:field="icoClearOwner" />
-			</m:MaterialRow>
-		</m:MaterialColumn>
 	</m:MaterialRow>
 </m:MaterialPanel>
 

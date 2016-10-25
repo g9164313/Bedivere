@@ -28,10 +28,8 @@ public class ItemProdx extends ItemBase implements Serializable {
 	public int format = FMT_F2;//default!!!
 	
 	public boolean useLogo = true;
-	
-	public ItemOwner owner = null;
-	
-	public ItemTenur tenur = null;
+	private ItemOwner owner = null;
+	private ItemTenur tenur = null;
 	
 	public ArrayList<String> scribble = new ArrayList<String>();
 	
@@ -49,15 +47,32 @@ public class ItemProdx extends ItemBase implements Serializable {
 		map(oid,info,stmp,last);
 	}
 	
+	public ItemOwner getOwner(){
+		return owner;
+	}
+	public void setOwner(ItemOwner itm){
+		owner = itm;
+	}
+	
+	public ItemTenur getTenur(){
+		return tenur;
+	}
+	public void setTenur(ItemTenur itm){
+		tenur = itm;
+	}
+	
 	public String getKey(){
 		return info[INFO_PKEY];
 	}
 	public void setKey(String val){
 		info[INFO_PKEY]=val;
 	}
-	
+
 	public String getFormat(){
 		return fmt2txt(format);
+	}	
+	public int getFormatVal(){
+		return format;
 	}
 	public void setFormat(String fmt){
 		setFormat(txt2fmt(fmt));

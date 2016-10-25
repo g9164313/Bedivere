@@ -113,11 +113,9 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 		boxLast.setText(Main.fmtStmpLast.format(item.last));
 		boxMemo.setText(item.getMemo());
 		
-		if(item.owner!=null){
-			txtOwner.setText(
-				item.owner.getKey()+" "+
-				item.owner.getName()
-			);
+		ItemOwner owner = item.getOwner();
+		if(owner!=null){
+			txtOwner.setText(owner.getKey()+" "+owner.getName());
 		}else{
 			txtOwner.setText("");
 		}
@@ -185,11 +183,8 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 				if(item==null){
 					return;
 				}
-				target.owner = item;
-				txtOwner.setText(
-					item.getKey()+" "+
-					item.getName()
-				);
+				target.setOwner(item);
+				txtOwner.setText(item.getKey()+" "+item.getName());
 				boxOKey.setText("");
 			}
 	    };

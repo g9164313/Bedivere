@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:m="urn:import:gwt.material.design.client.ui">
+<ui:style>
+</ui:style>
+
+<m:MaterialPanel backgroundColor="white" layoutPosition="RELATIVE" marginTop="20" padding="7">
+
+	<m:MaterialRow>
+		<m:MaterialColumn>
+			<m:MaterialTextBox width="9rem" placeholder="列印日期" ui:field="boxStmp" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialTextBox width="9rem" placeholder="工作人員" ui:field="boxName" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialTextBox width="9rem" placeholder="附註事項" ui:field="boxMemo" />
+		</m:MaterialColumn>
+	</m:MaterialRow>
+	
+</m:MaterialPanel>
+
+</ui:UiBinder> 

@@ -59,7 +59,7 @@ public class RpcPrint extends HttpServlet {
 				switch(itm.format){
 				default:
 				case ItemProdx.FMT_F2:
-					if(itm.tenur.isChamber()==true){
+					if(itm.getTenur().isChamber()==true){
 						name="prodx_chamber.jasper";
 					}else{
 						name="prodx_other.jasper";
@@ -109,7 +109,7 @@ public class RpcPrint extends HttpServlet {
 	}
 	//----------------------------------------//
 
-	public static String DOC_PATH = "./narl.hpclp.Jasper";	
+	public static String DOC_PATH = "./narl.hpclp.Jasper";//this path should be updated
 
 	private static Map<String,Object> mEmptyParm = new HashMap<String,Object>();
 	
@@ -168,6 +168,7 @@ public class RpcPrint extends HttpServlet {
 				dsrc
 			);
 			export.setParameter(JRExporterParameter.JASPER_PRINT, print);
+			export.setParameter(JRXlsExporterParameter.CREATE_CUSTOM_PALETTE,Boolean.TRUE);
 			export.setParameter(JRXlsExporterParameter.IS_ONE_PAGE_PER_SHEET,Boolean.FALSE);
 			export.setParameter(JRXlsExporterParameter.IS_WHITE_PAGE_BACKGROUND,Boolean.FALSE);
 			export.setParameter(JRXlsExporterParameter.IS_REMOVE_EMPTY_SPACE_BETWEEN_ROWS,Boolean.TRUE);

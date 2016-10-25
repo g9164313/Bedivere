@@ -26,22 +26,22 @@ public class ItemBase implements Serializable {
 	}
 	
 	public ItemBase(int size){
-		prepare_info(size);
+		prepareInfo(size);
 	}
 	
 	public ItemBase(int size1,int size2){
-		prepare_info(size1);
-		prepare_appx(size2);
+		prepareInfo(size1);
+		prepareAppx(size2);
 	}
 	
-	private void prepare_info(int size){
+	public void prepareInfo(int size){
 		info = new String[size];
 		for(int i=0; i<size; i++){
 			info[i] = "";
 		}
 	}
 	
-	private void prepare_appx(int size){
+	public void prepareAppx(int size){
 		appx = new String[size];
 		for(int i=0; i<size; i++){
 			appx[i] = "";

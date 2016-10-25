@@ -18,17 +18,18 @@ import nthu.hpclp.shared.ItemAccnt;
 import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemProdx;
 
-public class PartOwne extends Composite {
+public class PartOwner extends Composite {
 
-	private static PartOwneUiBinder uiBinder = GWT.create(PartOwneUiBinder.class);
+	private static PartOwnerUiBinder uiBinder = GWT.create(PartOwnerUiBinder.class);
 
-	interface PartOwneUiBinder extends UiBinder<Widget, PartOwne> {
+	interface PartOwnerUiBinder extends UiBinder<Widget, PartOwner> {
 	}
 
-	public PartOwne() {
+	public PartOwner() {
 		initWidget(uiBinder.createAndBindUi(this));
 		root.add(Main.dlgEditOwner);
 		root.add(Main.dlgPickOwner);
+		boxOKey.getIcon().addClickHandler(eventEdit);
 	}
 
 	@UiField
@@ -38,29 +39,26 @@ public class PartOwne extends Composite {
 	@UiField
 	MaterialTextBox boxOKey;
 	
-	private ItemProdx targetProdx;
 	private ItemAccnt targetAccnt;
+	private ItemProdx targetProdx;
 	
 	public void setTarget(ItemProdx obj){
+		targetAccnt = null;
 		targetProdx = obj;
-		updateBox(targetProdx.owner);
+		updateBox(targetProdx.getOwner());
 	}
 	
 	public void setTarget(ItemAccnt obj){
 		targetAccnt = obj;
-		updateBox(targetAccnt.owner);
+		targetProdx = null;
+		updateBox(targetAccnt.getOwner());
 	}
 	
-	public ItemOwner getTarget(){
-		if(targetProdx!=null){ return targetProdx.owner; }
-		if(targetAccnt!=null){ return targetAccnt.owner; }
+	public ItemOwner getTarget(){		
+		if(targetAccnt!=null){ return targetAccnt.getOwner(); }
+		if(targetProdx!=null){ return targetProdx.getOwner(); }
 		return null;
 	}
-
-	//private void updateTarget(ItemOwner itm){
-	//	if(targetProdx!=null){ targetProdx.owner = itm; }
-	//	if(targetAccnt!=null){ targetAccnt.owner = itm; }
-	//}
 
 	private void updateBox(ItemOwner itm){
 		boxOKey.setText("");
@@ -73,45 +71,62 @@ public class PartOwne extends Composite {
     		txtInfoO1.setText("");
     		txtInfoO2.setText("");
     		txtInfoO3.setText("");
-    	}
-    	//updateTarget(itm);    	
+    	}	
 	}
-
-	private final ClickHandler eventUpdate = new ClickHandler(){
+	
+	private void update_item(ItemOwner itm){
+		if(targetAccnt!=null){
+			targetAccnt.setOwner(itm);
+			updateBox(itm);
+		}
+		if(targetProdx!=null){
+			targetProdx.setOwner(itm);
+			updateBox(itm);
+		}
+		boxOKey.setText("");
+	}
+	
+	private final ClickHandler eventEdit = new ClickHandler(){		
 		@Override
 		public void onClick(ClickEvent event) {
-			updateBox(Main.dlgPickOwner.getTarget());
+			ItemOwner itm = getTarget();
+	    	if(itm==null){
+	    		return;
+	    	}
+	    	if(event==null){	    		
+	    		itm = new ItemOwner();
+	    		MaterialToast.fireToast("新增委託單位");
+	    	}else{
+	    		MaterialToast.fireToast("修改委託單位");
+	    	}
+	    	Main.dlgEditOwner.appear(itm,eventUpdate,null);
 		}
-	}; 
+		private ClickHandler eventUpdate = new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				update_item(Main.dlgEditOwner.getTarget());
+			}
+		};
+	};
 	
     @UiHandler("boxOKey")
     void onChangeKeyOwner(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim();
     	if(txt.equalsIgnoreCase("+")==true){
-    		onEditOwner(null);
+    		eventEdit.onClick(null);
     		return;
-    	}    	
+    	}
+    	final ClickHandler eventPickup = new ClickHandler(){
+			@Override
+			public void onClick(ClickEvent event) {
+				update_item(Main.dlgPickOwner.getTarget());
+			}
+    	};
     	String post = "WHERE "+
     		"(info[1] SIMILAR TO '%"+txt+"%') OR "+
     		"(info[2] SIMILAR TO '%"+txt+"%') OR "+
     		"(info[4] SIMILAR TO '%"+txt+"%') OR "+
     		"(info[6] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
-    	Main.dlgPickOwner.appear(post,eventUpdate);
-    }
-    
-    @UiHandler("icoEditOwner")
-    void onEditOwner(ClickEvent e){
-    	ItemOwner itm = getTarget();
-    	if(itm==null){
-    		MaterialToast.fireToast("新增委託單位");
-    		itm = new ItemOwner();
-    	}
-    	Main.dlgEditOwner.appear(itm,null,eventUpdate);
-    }
-
-    @UiHandler("icoClearOwner")
-    void onClearOwner(ClickEvent e){
-    	updateBox(null);
-    	boxOKey.setFocus(true);
+    	Main.dlgPickOwner.appear(post,eventPickup);
     }
 }

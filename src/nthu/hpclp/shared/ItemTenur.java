@@ -22,7 +22,7 @@ public class ItemTenur extends ItemBase implements Serializable {
 	
 	public Date meet = new Date();
 	
-	public ItemOwner owner = null;
+	private ItemOwner owner = null;
 	
 	private static final String DEF_DET_TYPE = "游離腔";
 	
@@ -58,6 +58,14 @@ public class ItemTenur extends ItemBase implements Serializable {
 		super(INFO_MAX_COL);
 		map(id,info,stmp,last);
 		this.meet.setTime(meet.getTime());
+	}
+	
+	public ItemOwner getOwner(){
+		return owner;
+	}
+	
+	public void setOwner(ItemOwner itm){
+		owner = itm;
 	}
 	
 	public String getKey(){

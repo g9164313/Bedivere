@@ -18,6 +18,7 @@ import gwt.material.design.client.ui.MaterialToast;
 import narl.itrc.client.ExComposite;
 import nthu.hpclp.client.Main;
 import nthu.hpclp.shared.Const;
+import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemParam;
 import nthu.hpclp.shared.ItemProdx;
 
@@ -111,13 +112,14 @@ public class PartInfo extends ExComposite {
     		txt.length()==0 || 
     		txt.equalsIgnoreCase("+")==true
     	){
-    		if(target.owner==null){
+    		ItemOwner itm = target.getOwner();
+    		if(itm==null){
     			MaterialToast.fireToast("無委託廠商");
     			return;
     		}
     		
     		String arg1 = Main.date2tw_y(target.stmp);
-    		String arg2 = target.owner.getKey();
+    		String arg2 = itm.getKey();
     		final AsyncCallback<String> event_gen_key = 
     			new AsyncCallback<String>()
     		{	
@@ -183,24 +185,24 @@ public class PartInfo extends ExComposite {
 	@UiHandler("cmbFormatP")
 	void onChangeFormat(ValueChangeEvent<String> event){
     	int fmt = ItemProdx.txt2fmt(cmbFormatP.getValue());
-    	String defVal;
+    	String defUnit;
     	switch(fmt){
     	default:
  		case ItemProdx.FMT_F1V:
  		case ItemProdx.FMT_F1W:
  		case ItemProdx.FMT_F2:
  		case ItemProdx.FMT_F3:
- 			defVal = "μSv·h⁻¹";
+ 			defUnit = "μSv·h⁻¹";
  			chkUseLogo.setValue(true);
  			break;
  		case ItemProdx.FMT_F4:
  		case ItemProdx.FMT_F5:
- 			defVal = "cpm";
+ 			defUnit = "cpm";
  			chkUseLogo.setValue(false);
  			break;				
  		}
-		cmbSelect(cmbUnitRef,defVal);
-		cmbSelect(cmbUnitMea,defVal);
+		cmbSelect(cmbUnitRef,defUnit);
+		cmbSelect(cmbUnitMea,defUnit);
 		if(target!=null){
 			target.setFormat(fmt);
 		}

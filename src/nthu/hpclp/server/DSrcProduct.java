@@ -6,7 +6,9 @@ import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JRField;
 import nthu.hpclp.shared.Const;
+import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemProdx;
+import nthu.hpclp.shared.ItemTenur;
 import nthu.hpclp.shared.ParmEmitter;
 
 public class DSrcProduct implements JRDataSource {
@@ -20,17 +22,16 @@ public class DSrcProduct implements JRDataSource {
 	
 	@Override
 	public Object getFieldValue(JRField arg0) throws JRException {
-		
+		ItemProdx prodx = lst.get(idx);		
+		ItemTenur tenur = prodx.getTenur();
 		String name = arg0.getName();
-		ItemProdx prodx = lst.get(idx);
-		
 		Object res = common_field(prodx,name);			
 		if(res!=null){
 			return res;
 		}
 		switch(prodx.format){
 		case ItemProdx.FMT_F2:
-			if(prodx.tenur.isChamber()==true){
+			if(tenur.isChamber()==true){
 				res = field_chamber(prodx,name);				
 			}else{
 				res = field_other(prodx,name);
@@ -74,19 +75,21 @@ public class DSrcProduct implements JRDataSource {
 	}
 
 	private Object common_field(ItemProdx prodx,String name){
-		ParmEmitter emitter = prodx.getEmitter();		
-		if(name.equals("agreement0")){ return prodx.owner.getName(); }// 單位名稱
-		if(name.equals("agreement1")){ return prodx.owner.getKey(); }// 單位代號
-		if(name.equals("agreement2")){ return prodx.owner.getAddress(); }// 單位地址
+		ItemOwner owner = prodx.getOwner();
+		ItemTenur tenur = prodx.getTenur();
+		ParmEmitter emitter = prodx.getEmitter();
+		if(name.equals("agreement0")){ return owner.getName(); }// 單位名稱
+		if(name.equals("agreement1")){ return owner.getKey(); }// 單位代號
+		if(name.equals("agreement2")){ return owner.getAddress(); }// 單位地址
 		if(name.equals("expert0")  ){ return prodx.getKey(); }// 報告編號
 		if(name.equals("expert1")  ){ return UtilsMisc.date2tw_d(prodx.stmp); }// 校正日期	
-		if(name.equals("material0")){ return prodx.tenur.getDeviceVendor(); }//儀器廠牌
-		if(name.equals("material1")){ return prodx.tenur.getDeviceSerial(); }//儀器型號
-		if(name.equals("material2")){ return prodx.tenur.getDeviceNumber(); }//儀器序號
-		if(name.equals("material3")){ return prodx.tenur.getDetectType(); }//偵檢器
-		if(name.equals("material4")){ return prodx.tenur.getDetectSerial().trim(); }//偵檢器型號
-		if(name.equals("material5")){ return prodx.tenur.getDetectNumber().trim(); }//偵檢器序號
-		if(name.equals("material6")){ return prodx.tenur.getArea(); }
+		if(name.equals("material0")){ return tenur.getDeviceVendor(); }//儀器廠牌
+		if(name.equals("material1")){ return tenur.getDeviceSerial(); }//儀器型號
+		if(name.equals("material2")){ return tenur.getDeviceNumber(); }//儀器序號
+		if(name.equals("material3")){ return tenur.getDetectType(); }//偵檢器
+		if(name.equals("material4")){ return tenur.getDetectSerial().trim(); }//偵檢器型號
+		if(name.equals("material5")){ return tenur.getDetectNumber().trim(); }//偵檢器序號
+		if(name.equals("material6")){ return tenur.getArea(); }
 		if(name.equals("expert5")  ){ return prodx.getUnitRef(); }
 		if(name.equals("expert5.1")){ return prodx.getUnitMea(); }
 		if(name.equals("expert6")  ){ return prodx.getDistance(); }	
@@ -113,6 +116,7 @@ public class DSrcProduct implements JRDataSource {
 		return null;
 	}
 	private String field_chamber(ItemProdx prodx,String name){
+		ItemTenur tenur = prodx.getTenur();
 		if(name.equals("title0")  ){ return "校正刻度"; }		
 		if(name.equals("title1")  ){ return "參考值"; }
 		if(name.equals("title1.1")){ return prodx.getUnitRef(); }		
@@ -126,7 +130,7 @@ public class DSrcProduct implements JRDataSource {
 		if(name.equals("title6")  ){ return "校正因子"; }
 		if(name.equals("title7")  ){ return "相對"; }
 		if(name.equals("title7.1")){ return "擴充不確定度"; }
-		if(name.equals("expert15")){ return prodx.tenur.getFactor(); }//方向校正因子
+		if(name.equals("expert15")){ return tenur.getFactor(); }//方向校正因子
 		return null;
 	}
 	private String field_other(ItemProdx prodx,String name){
@@ -144,6 +148,7 @@ public class DSrcProduct implements JRDataSource {
 		return null;
 	}
 	private String field_gamma(ItemProdx prodx,String name){
+		ItemTenur tenur = prodx.getTenur();
 		if(name.equals("title0")  ){ return "校正刻度"; }
 		if(name.equals("title1")  ){ return "參考值"; }
 		if(name.equals("title1.1")){ return prodx.getUnitRef(); }
@@ -161,7 +166,7 @@ public class DSrcProduct implements JRDataSource {
 		}
 		if(name.equals("title6")  ){ return "相對"; }
 		if(name.equals("title6.1")){ return "擴充不確定度"; }
-		if(name.equals("expert15")){ return prodx.tenur.getSteer(); }//廠商建議值
+		if(name.equals("expert15")){ return tenur.getSteer(); }//廠商建議值
 		return null;
 	}
 	private String field_effect(ItemProdx prodx,String name){	

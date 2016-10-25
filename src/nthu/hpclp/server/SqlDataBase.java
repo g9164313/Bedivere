@@ -153,12 +153,12 @@ public class SqlDataBase {
 		
 		String uuid = getUUID(rs,"oid");
 		if(uuid.length()!=0){
-			item.owner = new ItemOwner(
+			item.setOwner(new ItemOwner(
 				uuid,
 				getTxtArray(rs,"oinfo"),
 				rs.getTimestamp("ostamp"),
 				rs.getTimestamp("olast")
-			);
+			));
 		}
 		return item;
 	}
@@ -180,31 +180,36 @@ public class SqlDataBase {
 				item.scribble.add(v);
 			}
 		}
-				
+
 		String uuid = "";
 		uuid = getUUID(rs,"oid");
+		ItemOwner owner = null;
 		if(uuid.length()!=0){
-			item.owner = new ItemOwner(
+			owner = new ItemOwner(
 				uuid,
 				getTxtArray(rs,"oinfo"),
 				rs.getTimestamp("ostamp"),
 				rs.getTimestamp("olast")
 			);
+			item.setOwner(owner);
 		}
 		
-		uuid = getUUID(rs,"tid");		
+		uuid = getUUID(rs,"tid");
+		ItemTenur tenur = null;
 		if(uuid.length()!=0){
-			item.tenur = new ItemTenur(
+			tenur = new ItemTenur(
 				uuid,
 				getTxtArray(rs,"tinfo"),
 				rs.getTimestamp("tstamp"),
 				rs.getTimestamp("tlast")
 			);
+			item.setTenur(tenur);
+			
 			uuid = getUUID(rs,"towner");
 			if(uuid.length()!=0){
-				if(item.owner!=null){
-					if(uuid.equalsIgnoreCase(item.owner.uuid)==true){
-						item.tenur.owner = item.owner;
+				if(owner!=null){
+					if(uuid.equalsIgnoreCase(owner.uuid)==true){
+						tenur.setOwner(owner);
 						return item;
 					}
 				}
@@ -218,7 +223,7 @@ public class SqlDataBase {
 					"WHERE id='"+uuid+"'";		
 				ResultSet tmp = RpcBridge.getResult(cmd);	
 				tmp.next();
-				item.tenur.owner = unpackOwner(tmp);				
+				tenur.setOwner(unpackOwner(tmp));				
 			}
 		}
 		return item;
@@ -300,8 +305,9 @@ public class SqlDataBase {
 		mapDate(sta,3,obj.last);
 		mapDate(sta,4,obj.meet);
 		sta.setBoolean(5,true);
-		if(obj.owner!=null){
-			mapUUID(sta,6,obj.owner.uuid);
+		ItemOwner owner = obj.getOwner();
+		if(owner!=null){
+			mapUUID(sta,6,owner.uuid);
 		}else{
 			mapUUID(sta,6,null);
 		}
@@ -345,8 +351,9 @@ public class SqlDataBase {
 		mapDate(sta,3,obj.last);
 		mapArray(sta,4,obj.fare);
 		sta.setBoolean(5,obj.isFinal);
-		if(obj.owner!=null){
-			mapUUID(sta,6,obj.owner.uuid);
+		ItemOwner owner = obj.getOwner();
+		if(owner!=null){
+			mapUUID(sta,6,owner.uuid);
 		}else{
 			mapUUID(sta,6,null);
 		}
@@ -393,13 +400,15 @@ public class SqlDataBase {
 		mapDate(sta,3,obj.last);
 		sta.setInt(4,obj.format);
 		mapArray(sta,5,obj.scribble);
-		if(obj.owner!=null){
-			mapUUID(sta,6,obj.owner.uuid);
+		ItemOwner owner = obj.getOwner();
+		if(owner!=null){
+			mapUUID(sta,6,owner.uuid);
 		}else{
 			mapUUID(sta,6,null);
 		}
-		if(obj.tenur!=null){
-			mapUUID(sta,7,obj.tenur.uuid);
+		ItemTenur tenur = obj.getTenur();
+		if(tenur!=null){
+			mapUUID(sta,7,tenur.uuid);
 		}else{
 			mapUUID(sta,7,null);
 		}
@@ -408,13 +417,15 @@ public class SqlDataBase {
 	}
 	
 	private static void cementRelation(ItemProdx obj) throws SQLException{
-		if(obj.tenur==null){
+		ItemOwner owner = obj.getOwner();
+		ItemTenur tenur = obj.getTenur();
+		
+		if(tenur==null){
 			return;
 		}
-		
 		String addr = "";
-		if(obj.owner!=null){
-			addr = obj.owner.getAddress();
+		if(owner!=null){
+			addr = owner.getAddress();
 		}
 		
 		Date day = checkPeriod(obj.stmp,addr);
@@ -423,7 +434,7 @@ public class SqlDataBase {
 			"UPDATE "+Const.TENUR+
 			" SET stamp='"+day.toString()+"',"+
 			" meet='"+day.toString()+"'"+			
-			" WHERE id='"+obj.tenur.uuid+"'"
+			" WHERE id='"+tenur.uuid+"'"
 		);
 	}
 	

@@ -24,6 +24,7 @@ import narl.itrc.client.ExComposite;
 import nthu.hpclp.client.Main;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemProdx;
+import nthu.hpclp.shared.ItemTenur;
 
 
 public abstract class PanCtrl extends ExComposite {
@@ -31,21 +32,8 @@ public abstract class PanCtrl extends ExComposite {
 	public PanCtrl(){
 	}
 
-	//@Override
-	//public void onEventShow() {
-		//At this time, we can prepare enviroment paramters
-		//Main.initCombo(cmbFormat, ItemProdx.USED_TXT_FMT);
-		//TODO:Main.initCombo(cmbUnitRef, Main.param.prodxUnit);
-		//TODO:Main.initCombo(cmbUnitMea, Main.param.prodxUnit);
-		//Main.initComboEmitter(cmbEmitter);
-		//emitt = new ParmEmitter(cmbEmitter.getSelectedValue());
-		//emitt2box();
-		//onCreateProdx(null);//create the first item!!!
-	//}
-	
 	@Override
 	public void onEventShow() {
-		//listLast50();
 	}
 	
 	@Override
@@ -112,7 +100,7 @@ public abstract class PanCtrl extends ExComposite {
 			public void onClick(ClickEvent event) {
 				if(target.uuid.length()!=0){
 					target.markDelete();
-					listUpload();
+					listSaveItem();
 				}else{
 					lstProdx.remove(target);
 			    	lstProvd.refresh();
@@ -213,7 +201,7 @@ public abstract class PanCtrl extends ExComposite {
 	}
 	//---------------------//
 	
-	protected void listUpload(){
+	protected void listSaveItem(){
 		if(lstProdx.isEmpty()==true){
     		MaterialToast.fireToast("清單內無報告");
     		return;
@@ -230,7 +218,7 @@ public abstract class PanCtrl extends ExComposite {
     		@Override
     		public void onSuccess(ArrayList<ItemProdx> result) {
     			MaterialLoader.showLoading(false);
-    			MaterialToast.fireToast("清單已更新");
+    			MaterialToast.fireToast("已更新"+result.size()+"筆項目");
     			listRefresh(result);
     		}
     	}); 
@@ -253,7 +241,7 @@ public abstract class PanCtrl extends ExComposite {
     	updateBox(null);
 	}
 	
-    protected void listLast50(){
+    protected void listShowLast50(){
     	listQuery("ORDER BY "+Const.PRODX+".last DESC LIMIT 50");
     }
     
@@ -287,6 +275,47 @@ public abstract class PanCtrl extends ExComposite {
 		}
 		lstModel.setSelected(lstProdx.get(0),true);
 		updateBox(lstModel.getSelectedObject());
+    }
+    //---------------------//  
+    
+    private String validChar(String src){
+    	String dst = "";
+    	char[] cc = src.toCharArray();
+    	for(int i=0; i<cc.length; i++){
+			if(cc[i]>'\200'){
+				continue;//locale word
+			}
+    		dst = dst + cc[i];
+    	}
+    	return dst;
+    }
+    
+    protected void print2DTag(
+    	ItemTenur item,
+    	String date,
+    	String name,
+    	String memo
+    ){
+    	String[] info = new String[6];
+    	info[0] = date;//測試日期
+    	info[1] = item.getKey();//代號(t_key)
+    	info[2] = validChar(item.getDeviceSerial());//型號
+    	info[3] = validChar(item.getDeviceNumber());//序號
+    	info[4] = name;//操作員
+    	info[5] = memo;//註解
+    	Main.rpc.printTag(info,new AsyncCallback<String>(){
+			@Override
+			public void onFailure(Throwable caught) {
+				MaterialToast.fireToast("內部錯誤!!");
+			}
+			@Override
+			public void onSuccess(String result) {
+				if(result.length()==0){					
+					return;
+				}
+				MaterialToast.fireToast(result);
+			} 
+    	});
     }
 }
 
