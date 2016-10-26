@@ -16,11 +16,7 @@ import nthu.hpclp.shared.ParamHub;
 
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.dom.client.Element;
-import com.google.gwt.dom.client.NativeEvent;
 import com.google.gwt.i18n.client.DateTimeFormat;
-import com.google.gwt.user.client.Event;
-import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
@@ -51,11 +47,19 @@ public class Main implements EntryPoint {
 			yy = 0;
 		}		
 		return ""+yy;
-	}	
+	}
 	public final static String date2tw_y(){
 		return date2tw_y(new Date());
 	}
-	
+	public final static String date2tw(Date stamp){
+		String yyy = date2tw_y(stamp);
+		String mm_dd = fmtMonthDay.format(stamp);
+		return yyy+"/"+mm_dd;
+	}
+	public final static String date2tw(){
+		return date2tw(new Date());
+	}
+
 	public static boolean text2stmp(MaterialTextBox box,Date stmp){
 		String tmp = fmtStmpLast.format(stmp);
 		boolean valid = true;

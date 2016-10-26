@@ -5,7 +5,6 @@ import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialSearch;
 import gwt.material.design.client.ui.MaterialToast;
-import nthu.hpclp.client.Main;
 import nthu.hpclp.client.PartOwner;
 import nthu.hpclp.shared.ItemProdx;
 import nthu.hpclp.shared.ItemTenur;
@@ -34,21 +33,32 @@ public class PanMain extends PanCtrl {
 		root.add(genReport);
 		anchorOwner.setWidget(owner);
 		anchorTenur.setWidget(tenur);
-		anchorInfo.setWidget(inform);
-		anchorAppx.setWidget(appxInfo);
+		anchorInfo.setWidget(infor);
+		anchorAppx.setWidget(appx);
 		anchorScriber.setWidget(scriber);
 		anchorEmitter.setWidget(emitter);		
-		addCtrlShortcut(KeyCodes.KEY_N);
-		addCtrlShortcut(KeyCodes.KEY_S);		
-		addCtrlShortcut(KeyCodes.KEY_P);
-		addCtrlShortcut(KeyCodes.KEY_T);
+		addAltShortcut(KeyCodes.KEY_L);
+		addAltShortcut(KeyCodes.KEY_N);		
+		addAltShortcut(KeyCodes.KEY_S);		
+		addAltShortcut(KeyCodes.KEY_P);
+		addAltShortcut(KeyCodes.KEY_T);
 		addShortcut(KeyCodes.KEY_F1);
+		chainBox(
+			owner.boxOKey,
+			tenur.boxTKey,
+			infor.boxStmp,infor.boxPKey,
+			infor.boxTempu,infor.boxPress,infor.boxHumid,
+			scriber.boxInput,
+			null
+		);
+		owner.nextBox = tenur.boxTKey;
+		tenur.nextBox = infor.boxStmp;
 	}
 
 	@UiField(provided=true) 
 	MaterialPanel root = _root;
     @UiField
-    MaterialNavBar navApp, navSearch;
+    MaterialNavBar navAppBar, navSearch;
     @UiField
     MaterialSearch boxSearch;
 	@UiField
@@ -65,8 +75,8 @@ public class PanMain extends PanCtrl {
 
 	private PartOwner owner = new PartOwner();
 	private PartTenu tenur = new PartTenu();
-	private PartInfo inform = new PartInfo();
-	private PartAppx appxInfo = new PartAppx();
+	private PartInfo infor = new PartInfo();
+	private PartAppx appx = new PartAppx();
 	private PartScriber scriber = new PartScriber();
 	private PartEmitter emitter = new PartEmitter();
 	private DlgGenReport genReport = new DlgGenReport();
@@ -74,24 +84,35 @@ public class PanMain extends PanCtrl {
 	@Override
 	public void eventShortcut(Integer keycode,Integer appx){
 		switch(keycode){
-		case KeyCodes.KEY_N: onListAddItem(null); break;//create a new one
-		case KeyCodes.KEY_S: onListSave(null); break;//save all items
-		case KeyCodes.KEY_P: onPrintProdx(null); break;//print items
-		case KeyCodes.KEY_F1:
-		case KeyCodes.KEY_T: onPrint2DTag(null); break;//print tag
+		case KeyCodes.KEY_L://show list			
+			onListShow(null);
+			break;
+		case KeyCodes.KEY_N://create the new one
+			onListAddItem(null); 
+			break;
+		case KeyCodes.KEY_S://save all items
+			onListSave(null); 
+			break;
+		case KeyCodes.KEY_P://print items
+			onPrintProdx(null);
+			break;
+		case KeyCodes.KEY_F1://print 2D-tag
+		case KeyCodes.KEY_T: 
+			onPrint2DTag(null); 
+			break;
 		}
 	}
 	//-----------------------------//
 	
     @UiHandler("lnkStartSearch")
     void onStartSearch(ClickEvent e) {
-        navApp.setVisible(false);
+    	navAppBar.setVisible(false);
         navSearch.setVisible(true);  
         boxSearch.setFocus(true);
     }
     @UiHandler("boxSearch")
     void onCloseSearch(CloseEvent<String> event){
-    	navApp.setVisible(true);
+    	navAppBar.setVisible(true);
         navSearch.setVisible(false);
         //focus another widget???
     }
@@ -101,7 +122,7 @@ public class PanMain extends PanCtrl {
     	if(code!=KeyCodes.KEY_ENTER){
     		return;
     	}
-    	//TODO:search something~~~
+    	listQuery(txt2sql(boxSearch.getText().trim()));
     	boxSearch.setText("");
     	boxSearch.setFocus(true);
     }
@@ -109,7 +130,12 @@ public class PanMain extends PanCtrl {
 
     @UiHandler("lnkListShow")
     void onListShow(ClickEvent e){
-    	dlgList.openModal();
+    	if(isOnList==true){
+    		dlgList.closeModal();
+    	}else{
+    		isOnList = true;
+    		dlgList.openModal();    		
+    	}
     }
     @UiHandler("lnkListLast")
     void onListShowLast(ClickEvent e){
@@ -122,6 +148,7 @@ public class PanMain extends PanCtrl {
     }
     @UiHandler("lnkListAddItem")
     void onListAddItem(ClickEvent e){
+    	owner.boxOKey.setFocus(true);
     	listAddItem();
     }
     @UiHandler("lnkListSave")
@@ -138,9 +165,9 @@ public class PanMain extends PanCtrl {
     		return;
     	}
     	print2DTag(tenu,
-    		appxInfo.getDate(),
-    		appxInfo.getName(),
-    		appxInfo.getMemo()
+    		appx.getDate(),
+    		appx.getName(),
+    		appx.getMemo()
     	);
     }
     @UiHandler("lnkPrintProdx")
@@ -157,7 +184,7 @@ public class PanMain extends PanCtrl {
 	public void updateBox(ItemProdx itm) {
 		owner.setTarget(itm);
 		tenur.setTarget(itm);
-		inform.setTarget(itm);
+		infor.setTarget(itm);
 		scriber.setTarget(itm);
 		emitter.setTarget(itm);
 	}	

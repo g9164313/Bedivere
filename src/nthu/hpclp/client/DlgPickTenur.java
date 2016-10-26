@@ -81,7 +81,7 @@ public class DlgPickTenur extends DlgBase<ItemTenur> {
 					return;
 				}
 				refresh_selector(result);
-				appear(null,null,hook);
+				appear(null,hook,null);
 			}
 		});	
 	}

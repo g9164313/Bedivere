@@ -1,15 +1,10 @@
 package nthu.hpclp.client.product;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ChangeEvent;
-import com.google.gwt.event.dom.client.ChangeHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
-import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
 import gwt.material.design.client.ui.MaterialLabel;
@@ -44,6 +39,8 @@ public class PartEmitter extends ExComposite {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 	
+	public static String DefaultValue = "";
+	
 	@Override
 	public void onEventShow() {
 		cmbInput.clear();
@@ -59,9 +56,7 @@ public class PartEmitter extends ExComposite {
 				continue;
 			}
 			try{
-				int yr = Integer.valueOf(
-					name.substring(name.length()-3)
-				);
+				int yr = Integer.valueOf(name.substring(name.length()-3));
 				if(yr>year1){
 					year1 = yr;
 					year2 = year1 - 1;
@@ -78,15 +73,18 @@ public class PartEmitter extends ExComposite {
 			Option opt = new Option();
 			opt.setText(name);
 			opt.setValue(val);
-			if(
-				name.endsWith("-"+year1)==true ||
-				name.endsWith("-"+year2)==true
-			){
+			if(name.endsWith("-"+year1)==true){
 				cmbInput.add(opt);
+				
+				DefaultValue = opt.getValue();//this is a special emitter~~~~
+			}else if(name.endsWith("-"+year2)==true){
+				cmbInput.add(opt);				
 			}else if(name.contains("-gamma-")==false){
 				cmbInput.add(opt);
 			}
 		}
+		cmbInput.setSelectedValue(DefaultValue);
+		updateLabel(new ParmEmitter(DefaultValue));
 	}
 
 	@Override
@@ -96,37 +94,26 @@ public class PartEmitter extends ExComposite {
 	@UiHandler("cmbInput")
 	void onChangeListBox(ValueChangeEvent<String> event) {
 		String val = cmbInput.getSelectedValue();
-		target.setEmitter(val);
-		txtMapping();
+		if(target!=null){
+			target.setEmitter(val);
+		}
+		updateLabel(new ParmEmitter(val));
 	}
 	//---------------------------------------//
 
 	private ItemProdx target;
-	
+		
 	public void setTarget(ItemProdx obj){
 		target = obj;
-		if(target!=null){
-			txtMapping();
-			cmbMapping();
-		}else{
-			txtClear();
+		if(obj==null){
+			return;
 		}
+		ParmEmitter e = target.getEmitter();
+		updateInput(e);
+		updateLabel(e);
 	}
 	
-	private void txtMapping(){
-		ParmEmitter e = target.getEmitter();
-		txtKindArea.setText(e.getKind()+" "+e.getArea());
-		txtStrength.setText(e.getStrength());
-		txtSurface.setText(e.getSurface());
-		txtFactorK.setText(e.getFactorK());
-		txtFactorP.setText(e.getFactorP());
-		txtUncertain.setText(e.getUncertain());
-		txtSerial.setText(e.getSerial());
-		txtCriteron.setText(e.getCriterion());
-	}
-	
-	private void cmbMapping(){
-		ParmEmitter e = target.getEmitter();
+	private void updateInput(ParmEmitter e){
 		String name = e.getTitle();
 		cmbInput.getOptionElement(0).setValue(e.toString());
 		for(int i=1; i<cmbInput.getItemCount(); i++){
@@ -139,15 +126,14 @@ public class PartEmitter extends ExComposite {
 		cmbInput.setSelectedIndex(0);
 	}
 	
-	private void txtClear(){
-		txtKindArea.setText("");
-		txtStrength.setText("");
-		txtSurface.setText("");
-		txtFactorK.setText("");
-		txtFactorP.setText("");
-		txtUncertain.setText("");
-		txtSerial.setText("");
-		txtCriteron.setText("");
-		cmbInput.setSelectedIndex(0);
+	private void updateLabel(ParmEmitter e){
+		txtKindArea.setText(e.getKind()+" "+e.getArea());
+		txtStrength.setText(e.getStrength());
+		txtSurface.setText(e.getSurface());
+		txtFactorK.setText(e.getFactorK());
+		txtFactorP.setText(e.getFactorP());
+		txtUncertain.setText(e.getUncertain());
+		txtSerial.setText(e.getSerial());
+		txtCriteron.setText(e.getCriterion());
 	}
 }

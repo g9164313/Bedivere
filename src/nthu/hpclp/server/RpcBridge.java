@@ -337,7 +337,16 @@ public class RpcBridge extends RemoteServiceServlet
 	private static String pathPrint = null;
 	
 	private void init_path_print(){
-		
+		final String name="work/print-tag";
+		final String[] path = {"./","../","../../"};
+		for(int i=0; i<path.length; i++){
+			File fs = new File(path[i]+name);
+			if(fs.exists()==true){
+				pathPrint = fs.getAbsolutePath();
+				return;
+			}
+		}
+		pathPrint = "";//we fail!!!
 	}
 	
 	@Override
@@ -348,13 +357,10 @@ public class RpcBridge extends RemoteServiceServlet
 		if(pathPrint.length()==0){
 			return "無法執行程式";
 		}
-		Utils.Exec("PrintLetter @"+
-			info[0]+"@"+
-			info[1]+"@"+
-			info[2]+"@"+
-			info[3]+"@"+
-			info[4]+"@"+
-			info[5]
+		Utils.Exec(pathPrint+"@"+
+			info[0]+"@"+info[1]+"@"+
+			info[2]+"@"+info[3]+"@"+
+			info[4]+"@"+info[5]
 		);
 		return "";
 	}

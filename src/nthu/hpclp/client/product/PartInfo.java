@@ -11,7 +11,6 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 
 import gwt.material.design.client.ui.MaterialCheckBox;
-import gwt.material.design.client.ui.MaterialFloatBox;
 import gwt.material.design.client.ui.MaterialListBox;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
@@ -44,11 +43,11 @@ public class PartInfo extends ExComposite {
 
 	
     @UiField
-    MaterialTextBox boxPKey,boxStmp,boxMemo;
+    public MaterialTextBox boxPKey,boxStmp,boxMemo;
     @UiField
-    MaterialFloatBox boxTempu,boxPress,boxHumid;
+    public MaterialTextBox boxTempu,boxPress,boxHumid;
     @UiField
-	MaterialListBox cmbFormatP,cmbUnitRef,cmbUnitMea;
+	public MaterialListBox cmbFormatP,cmbUnitRef,cmbUnitMea;
     
     @UiField
     MaterialCheckBox chkUseLogo;

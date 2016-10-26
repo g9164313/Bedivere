@@ -10,6 +10,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
+import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialTextBox;
@@ -41,7 +42,7 @@ public class PartTenu extends Composite {
     	txtInfoT4,txtInfoT5,txtInfoT6;
 	
 	@UiField
-	MaterialTextBox boxTKey;
+	public MaterialTextBox boxTKey;
 	
 	private ItemProdx targetProdx;
 	
@@ -115,17 +116,22 @@ public class PartTenu extends Composite {
 		};
 	};
 	
+	public MaterialWidget nextBox = null;
+	
     @UiHandler("boxTKey")
-    void onChangeKeyTenure(ValueChangeEvent<String> event){
+    void onChangeKeyTenur(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim().toLowerCase();
     	if(txt.equalsIgnoreCase("+")==true){
-    		//onEditTenur(null);
+    		eventEdit.onClick(null);
     		return;
     	}
     	final ClickHandler eventPickup = new ClickHandler(){
     		@Override
     		public void onClick(ClickEvent event) {
     			update_item(Main.dlgPickTenur.getTarget());
+				if(nextBox!=null){
+					nextBox.setFocus(true);
+				}
     		}
     	};
     	String post = "WHERE "+

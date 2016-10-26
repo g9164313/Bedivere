@@ -144,6 +144,6 @@ public class DlgPickOwner extends DlgBase<ItemOwner> {
 	}
 
 	@Override
-	public void takeCancel(ClickEvent event) {
+	public void takeCancel(ClickEvent event) {		
 	}
 }

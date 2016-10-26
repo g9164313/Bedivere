@@ -63,7 +63,9 @@ public class SqlDataBase {
 				postfix;		
 			ResultSet rs = RpcBridge.getResult(cmd);	
 			while(rs.next()){
-				lst.add(unpackOwner(rs));
+				ItemOwner itm = unpackOwner(rs);
+				itm.purge();
+				lst.add(itm);
 			}
 		} catch (SQLException e) {			
 			System.err.print(e.getMessage());
@@ -89,7 +91,9 @@ public class SqlDataBase {
 				postfix;		
 			ResultSet rs = RpcBridge.getResult(cmd);
 			while(rs.next()){
-				lst.add(unpackTenur(rs));
+				ItemTenur itm = unpackTenur(rs);
+				itm.purge();
+				lst.add(itm);
 			}
 		} catch (SQLException e) {			
 			System.err.print(e.getMessage());
@@ -122,7 +126,9 @@ public class SqlDataBase {
 				postfix;		
 			ResultSet rs = RpcBridge.getResult(cmd);	
 			while(rs.next()){
-				lst.add(unpackProdx(rs));
+				ItemProdx itm = unpackProdx(rs);
+				itm.purge();
+				lst.add(itm);
 			}
 		} catch (SQLException e) {			
 			System.err.print(e.getMessage());
@@ -244,13 +250,13 @@ public class SqlDataBase {
 				//create a new one~~~
 				obj.uuid = UUID.randomUUID().toString();
 				setter(insertOwner,obj);
-			}else if(obj.uuid.charAt(0)=='*'){
+			}else if(obj.isDelete()==true){
 				//delete it!!!
 				obj.uuid = obj.uuid.substring(1);
 				deleteOwner.setObject(1,UUID.fromString(obj.uuid));
 				deleteOwner.execute();
 				return null;
-			}else{
+			}else if(obj.isModify()==true){
 				//modify it~~~
 				setter(updateOwner,obj);
 			}
@@ -283,13 +289,13 @@ public class SqlDataBase {
 				//create a new one
 				obj.uuid = UUID.randomUUID().toString();
 				setter(insertTenur,obj);		
-			}else if(obj.uuid.charAt(0)=='*'){
+			}else if(obj.isDelete()==true){
 				//delete it!!!
 				obj.uuid = obj.uuid.substring(1);
 				deleteTenue.setObject(1,UUID.fromString(obj.uuid));
 				deleteTenue.execute();
 				return null;
-			}else{
+			}else if(obj.isModify()==true){
 				//modify it~~~
 				setter(updateTenur,obj);
 			}
@@ -329,13 +335,13 @@ public class SqlDataBase {
 				obj.uuid = UUID.randomUUID().toString();
 				setter(insertAccnt,obj);//create a new one
 				//TODO:synchonize relationship			
-			}else if(obj.uuid.charAt(0)=='*'){
+			}else if(obj.isDelete()==true){
 				//delete it!!!
 				obj.uuid = obj.uuid.substring(1);
 				deleteAccnt.setObject(1,UUID.fromString(obj.uuid));
 				deleteAccnt.execute();
 				return null;
-			}else{
+			}else if(obj.isModify()==true){
 				//modify it~~~
 				setter(updateAccnt,obj);
 			}
@@ -377,13 +383,13 @@ public class SqlDataBase {
 				obj.uuid = UUID.randomUUID().toString();
 				setter(insertProdx,obj);
 				cementRelation(obj);
-			}else if(obj.uuid.charAt(0)=='*'){
+			}else if(obj.isDelete()==true){
 				//delete it!!!
 				obj.uuid = obj.uuid.substring(1);
 				deleteProdx.setObject(1,UUID.fromString(obj.uuid));
 				deleteProdx.execute();
 				return null;
-			}else{
+			}else if(obj.isModify()==true){
 				//modify it~~~
 				setter(updateProdx,obj);
 				cementRelation(obj);		

@@ -35,6 +35,15 @@ public class ItemProdx extends ItemBase implements Serializable {
 	
 	public ItemProdx() {
 		super(INFO_MAX_COL);
+		owner = new ItemOwner();
+		tenur = new ItemTenur();
+		default_value();
+	}
+	
+	private void default_value(){
+		info[INFO_UNIT_REF] = "μSv·h⁻¹";
+		info[INFO_UNIT_MEA] = "μSv·h⁻¹";
+		info[INFO_EMITTER] = "¹³⁷Cs-gamma-102@¹³⁷Cs@0 cm²@111 GBq, 18.5 GBq, 1850 MBq (July 1, 1996)@0 βˉ/s@無@NRSL-102174；校正日期：102年6月；校正週期：一年@2@95%@def±0.025,";
 	}
 	
 	public ItemProdx(
@@ -46,7 +55,7 @@ public class ItemProdx extends ItemBase implements Serializable {
 		super(INFO_MAX_COL);
 		map(oid,info,stmp,last);
 	}
-	
+
 	public ItemOwner getOwner(){
 		return owner;
 	}
@@ -65,7 +74,7 @@ public class ItemProdx extends ItemBase implements Serializable {
 		return info[INFO_PKEY];
 	}
 	public void setKey(String val){
-		info[INFO_PKEY]=val;
+		setInfo(INFO_PKEY,val);
 	}
 
 	public String getFormat(){
@@ -79,6 +88,7 @@ public class ItemProdx extends ItemBase implements Serializable {
 	}
 	public void setFormat(int fmt){
 		format = fmt;
+		markModify();
 	}
 
 	public String getTemperature(){
@@ -122,19 +132,8 @@ public class ItemProdx extends ItemBase implements Serializable {
 		if(temp !=null){ col[0] = temp.trim(); }
 		if(press!=null){ col[1] = press.trim(); }
 		if(humid!=null){ col[2] = humid.trim(); }	
-		info[INFO_AMBIENCE] = col[0] + "@" + col[1] + "@" + col[2];
+		setInfo(INFO_AMBIENCE,col[0]+"@"+col[1]+"@"+col[2]);
 	}
-	/*public void setAmbience(
-		Double temp,
-		Double press,
-		Double humid
-	){
-		String[] col = info[INFO_AMBIENCE].split("@");
-		if(temp !=null){ col[0] = temp.toString(); }
-		if(press!=null){ col[1] = press.toString(); }
-		if(humid!=null){ col[2] = humid.toString(); }
-		info[INFO_AMBIENCE] = col[0] + "@" + col[1] + "@" + col[2];
-	}*/
 	
 	public ParmEmitter getEmitter(){
 		return new ParmEmitter(info[INFO_EMITTER]);
@@ -143,38 +142,38 @@ public class ItemProdx extends ItemBase implements Serializable {
 		return info[INFO_EMITTER];
 	}
 	public void setEmitter(ParmEmitter parm){
-		info[INFO_EMITTER] = parm.toString();
+		setInfo(INFO_EMITTER,parm.toString());
 	}
 	public void setEmitter(String val){
-		info[INFO_EMITTER] = val;
+		setInfo(INFO_EMITTER,val);
 	}
 	
 	public String getUnitRef(){
 		return info[INFO_UNIT_REF].trim();
 	}
 	public void setUnitRef(String val){
-		info[INFO_UNIT_REF]=val;
+		setInfo(INFO_UNIT_REF,val);
 	}
 	
 	public String getUnitMea(){
 		return info[INFO_UNIT_MEA].trim();
 	}
 	public void setUnitMea(String val){
-		info[INFO_UNIT_MEA]=val;
+		setInfo(INFO_UNIT_MEA,val);
 	}
 	
 	public String getDistance(){
 		return info[INFO_DISTANCE];
 	}
 	public void setDistance(String val){
-		info[INFO_DISTANCE]=val;
+		setInfo(INFO_DISTANCE,val);
 	}
 		
 	public String getMemo(){
 		return info[INFO_MEMO];
 	}
 	public void setMemo(String val){		
-		info[INFO_MEMO]=val;		
+		setInfo(INFO_MEMO,val);		
 	}
 	
 	public static final String TXT_FMT_F1V = "F1V";

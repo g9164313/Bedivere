@@ -10,6 +10,7 @@ import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
+import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialTextBox;
@@ -37,7 +38,7 @@ public class PartOwner extends Composite {
 	@UiField
 	MaterialLabel txtInfoO1,txtInfoO2,txtInfoO3;
 	@UiField
-	MaterialTextBox boxOKey;
+	public MaterialTextBox boxOKey;
 	
 	private ItemAccnt targetAccnt;
 	private ItemProdx targetProdx;
@@ -109,6 +110,8 @@ public class PartOwner extends Composite {
 		};
 	};
 	
+	public MaterialWidget nextBox = null;
+	
     @UiHandler("boxOKey")
     void onChangeKeyOwner(ValueChangeEvent<String> event){
     	String txt = event.getValue().trim();
@@ -120,6 +123,10 @@ public class PartOwner extends Composite {
 			@Override
 			public void onClick(ClickEvent event) {
 				update_item(Main.dlgPickOwner.getTarget());
+				//goto next box???
+				if(nextBox!=null){
+					nextBox.setFocus(true);
+				}
 			}
     	};
     	String post = "WHERE "+

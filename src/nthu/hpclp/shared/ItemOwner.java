@@ -45,62 +45,62 @@ public class ItemOwner extends ItemBase implements Serializable {
 		return info[INFO_OKEY];
 	}
 	public void setKey(String txt){
-		info[INFO_OKEY] = txt;
+		setInfo(INFO_OKEY,txt);
 	}
 	
 	public String getName(){
 		return info[INFO_NAME];
 	}
 	public void setName(String txt){
-		info[INFO_NAME] = txt;
+		setInfo(INFO_NAME,txt);
 	}
 	
 	public String getZip(){
 		return info[INFO_ZIP];
 	}
 	public void setZip(String txt){
-		info[INFO_ZIP] = txt;
+		setInfo(INFO_ZIP,txt);
 	}
 	
 	public String getAddress(){
 		return info[INFO_ADDR];
 	}
 	public void setAddress(String txt){
-		info[INFO_ADDR] = txt;
+		setInfo(INFO_ADDR,txt);
 	}
 	
 	public String getDepartment(){
 		return info[INFO_DEPT];
 	}
 	public void setDepartment(String txt){
-		info[INFO_DEPT] = txt;
+		setInfo(INFO_DEPT,txt);
 	}
 	
 	public String getPerson(){
 		return info[INFO_PRSN];
 	}
 	public void setPerson(String txt){
-		info[INFO_PRSN] = txt;
+		setInfo(INFO_PRSN,txt);
 	}
 	
 	public String getPhone(){
 		return info[INFO_PHONE];
 	}
 	public void setPhone(String txt){
-		info[INFO_PHONE] = txt;
+		setInfo(INFO_PHONE,txt);
 	}
 	
 	public String getEMail(){
 		return info[INFO_EMAIL];
 	}
 	public void setEMail(String txt){
-		info[INFO_EMAIL] = txt;
+		setInfo(INFO_EMAIL,txt);
 	}
 	
 	public String getMemo(){
 		return info[INFO_MEMO];
 	}
 	public void setMemo(String txt){
-		info[INFO_MEMO] = txt;
+		setInfo(INFO_MEMO,txt);
 	}
 }

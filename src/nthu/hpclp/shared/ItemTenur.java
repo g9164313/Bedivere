@@ -28,13 +28,19 @@ public class ItemTenur extends ItemBase implements Serializable {
 	
 	public ItemTenur(){
 		super(INFO_MAX_COL);
-		info[INFO_DET_TYPE] = DEF_DET_TYPE;
+		default_value();
+		owner = new ItemOwner();
 	}
 
-	public ItemTenur(ItemOwner own){
+	public ItemTenur(ItemOwner itm){
 		super(INFO_MAX_COL);
+		default_value();
+		owner = itm;		
+	}
+	
+	private void default_value(){
 		info[INFO_DET_TYPE] = DEF_DET_TYPE;
-		owner = own;		
+		info[INFO_AREA] = "1cm²";
 	}
 	
 	public ItemTenur(
@@ -43,9 +49,7 @@ public class ItemTenur extends ItemBase implements Serializable {
 		Date stmp,
 		Date last
 	){
-		super(INFO_MAX_COL);
-		map(id,info,stmp,last);
-		this.meet.setTime(stmp.getTime());
+		this(id,info,stmp,last,last);
 	}
 	
 	public ItemTenur(
@@ -57,7 +61,7 @@ public class ItemTenur extends ItemBase implements Serializable {
 	){
 		super(INFO_MAX_COL);
 		map(id,info,stmp,last);
-		this.meet.setTime(meet.getTime());
+		meet.setTime(meet.getTime());
 	}
 	
 	public ItemOwner getOwner(){
@@ -72,7 +76,7 @@ public class ItemTenur extends ItemBase implements Serializable {
 		return info[INFO_TKEY];
 	}	
 	public void setKey(String val){
-		info[INFO_TKEY]=val;
+		setInfo(INFO_TKEY,val);
 	}
 	
 	public void copyTo(ItemTenur dst){
@@ -97,7 +101,7 @@ public class ItemTenur extends ItemBase implements Serializable {
 		return info[INFO_DEV_VENDOR];
 	}	
 	public void setDeviceVendor(String val){
-		info[INFO_DEV_VENDOR]=val;
+		setInfo(INFO_DEV_VENDOR,val);
 		genkey();
 	}	
 	
@@ -105,7 +109,7 @@ public class ItemTenur extends ItemBase implements Serializable {
 		return info[INFO_DEV_SERIAL];
 	}	
 	public void setDeviceSerial(String val){
-		info[INFO_DEV_SERIAL]=val;
+		setInfo(INFO_DEV_SERIAL,val);
 		genkey();
 	}
 
@@ -113,7 +117,7 @@ public class ItemTenur extends ItemBase implements Serializable {
 		return info[INFO_DEV_NUMBER];
 	}	
 	public void setDeviceNumber(String val){
-		info[INFO_DEV_NUMBER]=val;
+		setInfo(INFO_DEV_NUMBER,val);
 		genkey();
 	}
 		
@@ -121,14 +125,14 @@ public class ItemTenur extends ItemBase implements Serializable {
 		return info[INFO_DET_TYPE];
 	}
 	public void setDetectType(String val){
-		info[INFO_DET_TYPE]=val;
+		setInfo(INFO_DET_TYPE,val);
 	}
 	
 	public String getDetectSerial(){
 		return info[INFO_DET_SERIAL];
 	}
 	public void setDetectSerial(String val){
-		info[INFO_DET_SERIAL]=val;
+		setInfo(INFO_DET_SERIAL,val);
 		genkey();
 	}
 	
@@ -136,7 +140,7 @@ public class ItemTenur extends ItemBase implements Serializable {
 		return info[INFO_DET_NUMBER];
 	}
 	public void setDetectNumber(String val){
-		info[INFO_DET_NUMBER]=val;
+		setInfo(INFO_DET_NUMBER,val);
 		genkey();
 	}
 	
@@ -144,28 +148,28 @@ public class ItemTenur extends ItemBase implements Serializable {
 		return info[INFO_AREA];
 	}
 	public void setArea(String val){
-		info[INFO_AREA]=val;
+		setInfo(INFO_AREA,val);
 	}
 	
 	public String getFactor(){
 		return info[INFO_FACTOR];
 	}
 	public void setFactor(String val){
-		info[INFO_FACTOR]=val;
+		setInfo(INFO_FACTOR,val);
 	}
 	
 	public String getSteer(){
 		return info[INFO_STEER];
 	}
 	public void setSteer(String val){
-		info[INFO_STEER]=val;
+		setInfo(INFO_STEER,val);
 	}
 
 	public String getMemo(){
 		return info[INFO_MEMO];
 	}
 	public void setMemo(String val){
-		info[INFO_MEMO]=val;
+		setInfo(INFO_MEMO,val);
 	}
 	
 	public boolean isChamber(){

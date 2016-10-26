@@ -22,13 +22,13 @@
 	
 	<m:MaterialRow>
 		<m:MaterialColumn>
-			<m:MaterialFloatBox width="9rem" placeholder="環境溫度" ui:field="boxTempu" />
+			<m:MaterialTextBox width="9rem" placeholder="環境溫度" ui:field="boxTempu" />
 		</m:MaterialColumn>
 		<m:MaterialColumn>
-			<m:MaterialFloatBox width="9rem" placeholder="大氣壓力" ui:field="boxPress" />
+			<m:MaterialTextBox width="9rem" placeholder="大氣壓力" ui:field="boxPress" />
 		</m:MaterialColumn>
 		<m:MaterialColumn>
-			<m:MaterialFloatBox width="9rem" placeholder="相對濕度" ui:field="boxHumid" />
+			<m:MaterialTextBox width="9rem" placeholder="相對濕度" ui:field="boxHumid" />
 		</m:MaterialColumn>
 	</m:MaterialRow>
 	

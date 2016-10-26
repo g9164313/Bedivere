@@ -7,6 +7,8 @@ import com.google.gwt.cell.client.FieldUpdater;
 import com.google.gwt.cell.client.TextCell;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
+import com.google.gwt.event.logical.shared.CloseEvent;
+import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.cellview.client.Column;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.SimplePager;
@@ -29,7 +31,15 @@ import nthu.hpclp.shared.ItemTenur;
 
 public abstract class PanCtrl extends ExComposite {
 
+	protected boolean isOnList = false;
+	
 	public PanCtrl(){
+		_dlgList.addCloseHandler(new CloseHandler<MaterialModal>(){
+			@Override
+			public void onClose(CloseEvent<MaterialModal> event) {
+				isOnList = false;
+			}
+		});
 	}
 
 	@Override
@@ -62,19 +72,21 @@ public abstract class PanCtrl extends ExComposite {
 			idx = i;
 		}
 		@Override
-		public String getValue(ItemProdx object) {
+		public String getValue(ItemProdx obj) {
 			switch(idx){
 			case -1:
-				if(object.uuid.length()==0){
+				if(obj.uuid.length()==0){
 					return "新增";
-				}else if(object.uuid.charAt(0)=='$'){
+				}else if(obj.isDelete()==true){
 					return "刪除";
+				}else if(obj.isModify()==true){
+					return "修改";
 				}
-				return "＊";
+				return "---";
 			case ItemProdx.INFO_PKEY: 
-				return object.getKey();
+				return obj.getKey();
 			}
-			return "???";
+			return "？？？";
 		}
 	};
 	
@@ -142,7 +154,28 @@ public abstract class PanCtrl extends ExComposite {
     }
 	//--------------------------//
 	
-	protected String query(String txt){
+    protected void listQuery(final String postfix){
+    	MaterialLoader.showLoading(true);
+    	Main.rpc.listProduct(
+        	postfix,
+        	new AsyncCallback<ArrayList<ItemProdx>>(){
+        	@Override
+        	public void onFailure(Throwable caught) {
+        		MaterialToast.fireToast("內部錯誤!!");
+        	}
+        	@Override
+        	public void onSuccess(ArrayList<ItemProdx> result) {
+        		MaterialLoader.showLoading(false);
+        		if(result.isEmpty()==true){
+        			MaterialToast.fireToast("無資料!!");
+        			return;
+        		}
+        		listRefresh(result);
+        	}
+        });
+    }
+
+	protected String txt2sql(String txt){
 		//identify whether this is 2D-label
 		if(isQRCode(txt)==true){
 			String[] key = qrcode[1].split("_");			
@@ -157,7 +190,7 @@ public abstract class PanCtrl extends ExComposite {
 	    	Const.PRODX+".info[8] SIMILAR TO '%"+txt+"%' OR "+
 	    	Const.OWNER+".info[2] SIMILAR TO '%"+txt+"%' OR "+
 	    	Const.OWNER+".info[6] SIMILAR TO '%"+txt+"%' OR "+
-	    	Const.TENUR+".info[1] SIMILAR TO '%"+txt+"%' "+
+	    	Const.TENUR+".info[1] SIMILAR TO '%"+txt.toUpperCase()+"%' "+
 	    	"ORDER BY "+Const.PRODX+".last DESC";
 	}
     
@@ -226,12 +259,11 @@ public abstract class PanCtrl extends ExComposite {
 	
 	protected void listAddItem(){
 		ItemProdx itm = new ItemProdx();
-		//TODO:curProdx.setEmitter(cmbEmitter.getSelectedValue());
-		lstProdx.add(0,itm);
-		lstProvd.refresh();
-		lstModel.setSelected(lstProdx.get(0),true);
-		updateBox(lstModel.getSelectedObject());
-		MaterialToast.fireToast("新增報告",100);
+		itm.setEmitter(PartEmitter.DefaultValue);
+		lstProdx.add(0,itm);	
+		updateBox(itm);
+		listRefresh(lstProdx);
+		MaterialToast.fireToast("新增報告",500);
 	}
 	
 	protected void listClear(){
@@ -244,33 +276,13 @@ public abstract class PanCtrl extends ExComposite {
     protected void listShowLast50(){
     	listQuery("ORDER BY "+Const.PRODX+".last DESC LIMIT 50");
     }
-    
-    private void listQuery(final String postfix){
-    	MaterialLoader.showLoading(true);
-    	Main.rpc.listProduct(
-        	postfix,
-        	new AsyncCallback<ArrayList<ItemProdx>>(){
-        	@Override
-        	public void onFailure(Throwable caught) {
-        		MaterialToast.fireToast("內部錯誤!!");
-        	}
-        	@Override
-        	public void onSuccess(ArrayList<ItemProdx> result) {
-        		MaterialLoader.showLoading(false);
-        		if(result.isEmpty()==true){
-        			MaterialToast.fireToast("無資料!!");
-        			return;
-        		}
-        		listRefresh(result);
-        	}
-        });
-    }
 
     private void listRefresh(ArrayList<ItemProdx> lst){
     	lstProdx = lst;
 		lstProvd.setList(lstProdx);
     	lstProvd.refresh();
 		if(lstProdx.size()>1){
+			isOnList = true;
 			_dlgList.openModal();
 		}
 		lstModel.setSelected(lstProdx.get(0),true);

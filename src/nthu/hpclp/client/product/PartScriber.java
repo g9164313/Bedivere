@@ -43,7 +43,7 @@ public class PartScriber extends Composite {
 	MaterialPanel root;
 
 	@UiField
-	MaterialTextBox boxInput;
+	public MaterialTextBox boxInput;
 
 	@UiField
 	MaterialSwitch modSwitch;

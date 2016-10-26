@@ -40,7 +40,7 @@ public abstract class ExComposite extends Composite {
 		@Override
 		public void onAttachOrDetach(AttachEvent event) {
 			if(event.isAttached()==true){
-				//At this time, we can prepare enviroment paramters
+				//At this time, we can prepare environment parameters
 				onEventShow();
 			}else{
 				onEventHide();
@@ -95,23 +95,23 @@ public abstract class ExComposite extends Composite {
 	}
 	//------------------//
 	
-	private ArrayList<MaterialTextBox> lstBox = new ArrayList<MaterialTextBox>();
+	private static ArrayList<MaterialTextBox> boxChainLoop = new ArrayList<MaterialTextBox>();
 	
-	private boolean isChainBack = true;
+	private static boolean isChainLoop = true;
 	
-	protected void chainBox(MaterialTextBox... listBox){
-		lstBox.clear();
+	protected static void chainBox(MaterialTextBox... listBox){
+		boxChainLoop.clear();
 		for(MaterialTextBox box:listBox){
 			if(box==null){
-				isChainBack = false;
+				isChainLoop = false;
 				break;
 			}
-			lstBox.add(box);
-			box.addKeyDownHandler(eventChain);
+			boxChainLoop.add(box);			
+			box.addKeyDownHandler(hookChainLoop);
 		}
 	}
 	
-	private	KeyDownHandler eventChain = new KeyDownHandler(){
+	private	static KeyDownHandler hookChainLoop = new KeyDownHandler(){
 		@Override
 		public void onKeyDown(KeyDownEvent event) {
 			
@@ -126,39 +126,40 @@ public abstract class ExComposite extends Composite {
 				}
 			}
 			
-			if(event.isControlKeyDown()==true){
-				
-			}
+			//if(event.isControlKeyDown()==true){
+			//}
 			
 			MaterialTextBox cur = (MaterialTextBox)((TextBox)event.getSource()).getParent();
-			if(lstBox.contains(cur)==false){
+			if(boxChainLoop.contains(cur)==false){
 				return;
 			}
 			
-			int idx = lstBox.indexOf(cur);
+			int idx = boxChainLoop.indexOf(cur);
 			switch(code){
 			case KeyCodes.KEY_ENTER:
-			case KeyCodes.KEY_RIGHT:
+			case KeyCodes.KEY_PAGEDOWN:
 				idx++;
-				if(idx>=lstBox.size()){					
-					idx = 0;
-					if(isChainBack==false){
-						return;
+				if(idx>=boxChainLoop.size()){
+					if(isChainLoop==true){
+						idx = 0;
+					}else{
+						idx--;
 					}
 				}
 				break;			
-			case KeyCodes.KEY_LEFT:
+			case KeyCodes.KEY_PAGEUP:
 				idx--;
-				if(idx<0){					
-					idx = lstBox.size() - 1;
-					if(isChainBack==false){
-						return;
+				if(idx<0){
+					if(isChainLoop==true){
+						idx = boxChainLoop.size() - 1;
+					}else{
+						idx = 0;
 					}
 				}
 				break;
 			}
 						
-			lstBox.get(idx).setFocus(true);
+			boxChainLoop.get(idx).setFocus(true);
 		}
 	};
 	//------------------//

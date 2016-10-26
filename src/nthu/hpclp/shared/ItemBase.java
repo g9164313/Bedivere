@@ -115,12 +115,19 @@ public class ItemBase implements Serializable {
 		map(val);		
 	}
 	
+	public void setInfo(int idx,String val){
+		info[idx] = val;
+		markModify();
+	}
+	
 	public void setStmp(Date d){
 		stmp.setTime(d.getTime());
+		markModify();
 	}
 	
 	public void setLast(Date d){
 		stmp.setTime(d.getTime());
+		markModify();
 	}
 	
 	public void setDate(Date d){
@@ -128,21 +135,53 @@ public class ItemBase implements Serializable {
 		setLast(d);
 	}
 	
-	public ItemBase markDelete(){
-		final char TOKEN = '*';
+	static final char TOKEN_DELETE = '*';
+	static final char TOKEN_MODIFY = '$';
+	
+	public ItemBase purge(){
 		if(uuid.length()!=0){
-			if(uuid.charAt(0)=='*'){
-				return this;
+			char cc = uuid.charAt(0);
+			if(cc==TOKEN_DELETE || cc==TOKEN_MODIFY){
+				uuid = uuid.substring(1);
 			}
 		}
-		uuid = TOKEN + uuid;
 		return this;
 	}
 	
-	public ItemBase markModify(){		
+	public boolean isDelete(){
 		if(uuid.length()!=0){
-			
+			if(uuid.charAt(0)==TOKEN_DELETE){
+				return true;
+			}
 		}
+		return false;
+	}
+	
+	public boolean isModify(){
+		if(uuid.length()!=0){
+			if(uuid.charAt(0)==TOKEN_MODIFY){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public ItemBase markDelete(){
+		return mark_token(TOKEN_DELETE);
+	}
+	
+	public ItemBase markModify(){
+		return mark_token(TOKEN_MODIFY);
+	}
+	
+	private ItemBase mark_token(final char tkn){
+		if(uuid.length()==0){
+			return this;
+		}
+		if(uuid.charAt(0)==tkn){
+			return this;
+		}
+		uuid = tkn + uuid;
 		return this;
 	}
 }
