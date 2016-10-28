@@ -14,14 +14,14 @@ import nthu.hpclp.client.PartSelect;
 import nthu.hpclp.shared.ItemProdx;
 import nthu.hpclp.shared.ItemTenur;
 
-public class PartTenu extends PartSelect<ItemTenur> {
+public class PartTenur extends PartSelect<ItemTenur> {
 
-	private static PartTenuUiBinder uiBinder = GWT.create(PartTenuUiBinder.class);
+	private static PartTenurUiBinder uiBinder = GWT.create(PartTenurUiBinder.class);
 
-	interface PartTenuUiBinder extends UiBinder<Widget, PartTenu> {
+	interface PartTenurUiBinder extends UiBinder<Widget, PartTenur> {
 	}
 	
-	public PartTenu() {
+	public PartTenur() {
 		initWidget(uiBinder.createAndBindUi(this));		
 		root.add(Main.dlgEditTenur);
 		root.add(Main.dlgPickTenur);
@@ -30,8 +30,10 @@ public class PartTenu extends PartSelect<ItemTenur> {
 
 	@UiField
 	MaterialPanel root;
+	
 	@UiField(provided=true)
 	public MaterialTextBox boxTKey = boxKey;
+	
 	@UiField MaterialLabel
     	txtInfoT1,txtInfoT2,txtInfoT3,
     	txtInfoT4,txtInfoT5,txtInfoT6;

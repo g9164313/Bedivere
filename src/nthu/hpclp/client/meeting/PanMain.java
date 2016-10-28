@@ -90,22 +90,7 @@ public class PanMain extends Composite {
 			}
 		}
 	};
-		
-	@UiHandler("lnkPanProdx")
-	void onLnkPanProdx(ClickEvent e){
-		Main.switchToProduct();
-	}
-	
-	@UiHandler("lnkPanAccnt")
-	void onLnkPanAccnt(ClickEvent e){
-		Main.switchToAccount();
-	}
-	
-	@UiHandler("lnkPanSetting")
-	void onPanStorage(ClickEvent e){
-		Main.switchToSetting();
-	}
-	
+
     @UiHandler("lnkSearch")
     void onSearch(ClickEvent e) {
         appNav.setVisible(false);

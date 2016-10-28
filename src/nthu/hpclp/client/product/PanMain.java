@@ -5,6 +5,7 @@ import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialSearch;
 import gwt.material.design.client.ui.MaterialToast;
+import nthu.hpclp.client.Main;
 import nthu.hpclp.shared.ItemProdx;
 import nthu.hpclp.shared.ItemTenur;
 
@@ -28,11 +29,12 @@ public class PanMain extends PanCtrl {
     
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));
-		initList();
+		initList();		
 		root.add(genReport);
+		//navAppBar.add(Main.funcPager);
 		anchorOwner.setWidget(owner);
 		anchorTenur.setWidget(tenur);
-		anchorInfo.setWidget(infor);
+		anchorInfo.setWidget(inform);
 		anchorAppx.setWidget(appx);
 		anchorScriber.setWidget(scriber);
 		anchorEmitter.setWidget(emitter);		
@@ -41,17 +43,17 @@ public class PanMain extends PanCtrl {
 		addAltShortcut(KeyCodes.KEY_S);		
 		addAltShortcut(KeyCodes.KEY_P);
 		addAltShortcut(KeyCodes.KEY_T);
-		addShortcut(KeyCodes.KEY_F1);
+		addShortcut(KeyCodes.KEY_F1);		
 		chainBox(
 			owner.boxOKey,
 			tenur.boxTKey,
-			infor.boxStmp,infor.boxPKey,
-			infor.boxTempu,infor.boxPress,infor.boxHumid,
+			inform.boxStmp,inform.boxPKey,
+			inform.boxTempu,inform.boxPress,inform.boxHumid,
 			scriber.boxInput,
 			null
 		);
 		owner.nextBox = tenur.boxTKey;
-		tenur.nextBox = infor.boxStmp;
+		tenur.nextBox = inform.boxStmp;
 	}
 
 	@UiField(provided=true) 
@@ -69,17 +71,17 @@ public class PanMain extends PanCtrl {
     MaterialModal dlgList = _dlgList;
     @UiField(provided=true) 
     SimplePanel anchorList1 = _anchorList1;
-    @UiField(provided=true) 
+    @UiField(provided=true)
     SimplePanel anchorList2 = _anchorList2;
 
 	private PartOwner owner = new PartOwner();
-	private PartTenu tenur = new PartTenu();
-	private PartInfo infor = new PartInfo();
+	private PartTenur tenur = new PartTenur();
+	private PartInfo inform = new PartInfo();
 	private PartAppx appx = new PartAppx();
 	private PartScriber scriber = new PartScriber();
 	private PartEmitter emitter = new PartEmitter();
 	private DlgGenReport genReport = new DlgGenReport();
-	
+
 	@Override
 	public void eventShortcut(Integer keycode,Integer appx){
 		switch(keycode){
@@ -183,7 +185,7 @@ public class PanMain extends PanCtrl {
 	public void updateBox(ItemProdx itm) {
 		owner.setTarget(itm);
 		tenur.setTarget(itm);
-		infor.setTarget(itm);
+		inform.setTarget(itm);
 		scriber.setTarget(itm);
 		emitter.setTarget(itm);
 	}	

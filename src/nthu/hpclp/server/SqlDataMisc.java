@@ -5,7 +5,6 @@ import java.sql.SQLException;
 
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemAccnt;
-import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemProdx;
 
 /**
@@ -15,43 +14,47 @@ import nthu.hpclp.shared.ItemProdx;
  */
 public class SqlDataMisc {
 
+	/**
+	 * generate a four digital number serial-number
+	 * @param arg - a number which user wants to approximate
+	 * @return serial number
+	 */
 	public static String genOKey(String arg) {		
 		
-		if(Const.isAllDigit(arg)==false){
-			return arg;
-		}
-		
-		if(arg.length()<4){
-			for(int i=arg.length(); i<4; i++){
-				arg = arg+"%";
+		int base = 0;
+		if(arg.length()!=0){
+			try{
+				base = Integer.valueOf(arg);
+			}catch(NumberFormatException e){				
+				return arg;//not a number, just pass~~~~
 			}
 		}
 		
-		String rng0 = arg.replace('%', '0');
-		String rng9 = arg.replace('%', '9');
-		
-		final int idx=ItemOwner.INFO_OKEY+1;//SQL is 1-base.....
-		
+		int val = 0;
 		String cmd = 
-			"SELECT generate_series("+rng0+","+rng9+",1) AS key " +
+			"SELECT generate_series(1,9999,1) AS key " +
 			"EXCEPT "+
-			"(SELECT DISTINCT to_number(info["+idx+"],'9999') AS key "+ 
-			"FROM "+Const.OWNER+" "+
-			"WHERE info["+idx+"] SIMILAR TO '"+arg+"') "+ 
-			"ORDER BY key";
+			"("+
+			"SELECT DISTINCT to_number(info[1],'9999') "+ 
+			"FROM owner "+
+			"WHERE info[1] SIMILAR TO '\\d{4}' "+ 
+			") ORDER BY key DESC";
 		try {
 			ResultSet rs = RpcBridge.getResult(cmd);
-			rs.next();
-			if(rs.getRow()==0){
-				return "????";
-			}else{
-				arg = rs.getString(1);
-			}
+			int min = Integer.MAX_VALUE;
+			while(rs.next()){
+				int _v = rs.getInt(1);
+				int diff = Math.abs(base-_v);
+				if(diff<min){
+					val = _v;
+					min = diff;
+				}
+			}		
 		} catch (SQLException e) {			
 			e.printStackTrace();
-			return "";
-		}		
-		return arg;
+			return "0000";
+		}
+		return Const.formatDigit(val,4);
 	}
 	
 	public static String genAKey(String arg) {		
@@ -104,7 +107,6 @@ public class SqlDataMisc {
 				int cnt = Integer.valueOf(val[3]);				
 				patx = val[0]+"-"+val[1]+"-"+Pad0(idx,3)+"-"+cnt;
 			}
-			
 		} catch (SQLException e) {			
 			e.printStackTrace();
 			return "";

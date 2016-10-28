@@ -9,6 +9,10 @@
 <m:MaterialPanel backgroundColor="white" layoutPosition="RELATIVE" marginTop="20" padding="7">
 
 	<m:MaterialRow>
+		<m:MaterialLabel text="標籤設定"/>
+	</m:MaterialRow>
+		
+	<m:MaterialRow>
 		<m:MaterialColumn>
 			<m:MaterialTextBox width="9rem" placeholder="列印日期" ui:field="boxStmp" />
 		</m:MaterialColumn>

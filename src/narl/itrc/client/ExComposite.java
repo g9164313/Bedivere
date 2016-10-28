@@ -15,7 +15,6 @@ import com.google.gwt.event.logical.shared.AttachEvent;
 import com.google.gwt.user.client.Event;
 import com.google.gwt.user.client.Event.NativePreviewEvent;
 import com.google.gwt.user.client.ui.Composite;
-import com.google.gwt.user.client.ui.TextBox;
 
 public abstract class ExComposite extends Composite {
 	
@@ -48,7 +47,7 @@ public abstract class ExComposite extends Composite {
 			}
 		}
 	};
-	//------------------//
+	//------------------------------------//
 
 	/**
 	 * select item in combo list, if no this item, just add it~~~.<p>
@@ -94,88 +93,61 @@ public abstract class ExComposite extends Composite {
 		box.setSelectedIndex(cnt+1);
 		return cnt+1;
 	}
-	//------------------//
+	//------------------------------------//
 	
-	private static ArrayList<MaterialWidget> boxChainLoop = new ArrayList<MaterialWidget>();
-	
-	private static boolean isChainLoop = true;
-	
-	protected static void chainBox(MaterialWidget... listBox){
-		boxChainLoop.clear();
-		for(MaterialWidget box:listBox){
-			if(box==null){
-				isChainLoop = false;
-				break;
-			}
-			boxChainLoop.add(box);
-			if(box instanceof MaterialTextBox){
-				((MaterialTextBox)box).addKeyDownHandler(hookChainLoop);
-			}			
+	private static class BoxCombo implements KeyDownHandler {
+		public int idx = 0;
+		public String[] lst = null;
+		private MaterialTextBox box;
+		public BoxCombo(MaterialTextBox input,String[] list){
+			lst = list;
+			box = input;
+			box.addKeyDownHandler(this);
 		}
-	}
-	
-	private	static KeyDownHandler hookChainLoop = new KeyDownHandler(){
 		@Override
 		public void onKeyDown(KeyDownEvent event) {
-			
 			int code = event.getNativeKeyCode();
-			
-			if(code!=KeyCodes.KEY_ENTER){
-				if(code!=KeyCodes.KEY_RIGHT&&code!=KeyCodes.KEY_LEFT){
-					return;
-				}
-				if(event.isControlKeyDown()==false){
-					return;
-				}
-			}
-			
-			//if(event.isControlKeyDown()==true){
-			//}
-			
-			MaterialTextBox cur = (MaterialTextBox)((TextBox)event.getSource()).getParent();
-			if(boxChainLoop.contains(cur)==false){
-				return;
-			}
-			
-			int idx = boxChainLoop.indexOf(cur);
 			switch(code){
-			case KeyCodes.KEY_ENTER:
-			case KeyCodes.KEY_PAGEDOWN:
-				idx++;
-				if(idx>=boxChainLoop.size()){
-					if(isChainLoop==true){
-						idx = 0;
-					}else{
-						idx--;
-					}
-				}
-				break;			
-			case KeyCodes.KEY_PAGEUP:
+			case KeyCodes.KEY_UP:
 				idx--;
 				if(idx<0){
-					if(isChainLoop==true){
-						idx = boxChainLoop.size() - 1;
-					}else{
-						idx = 0;
-					}
+					idx = lst.length - 1;
 				}
+				box.setText(lst[idx]);
+				break;
+			case KeyCodes.KEY_DOWN:
+				idx++;
+				if(idx>=lst.length){
+					idx = 0;
+				}
+				box.setText(lst[idx]);
 				break;
 			}
-						
-			boxChainLoop.get(idx).setFocus(true);
 		}
 	};
-	//------------------//
 	
+	public void appendCombo(MaterialTextBox box,String[] lst){
+		new BoxCombo(box,lst);
+	}
+	//------------------------------------//
+
+	private static EventBoxChain g_chain = new EventBoxChain();
 	
+	public static void chainBox(MaterialWidget... listBox){
+		EventBoxChain.link(g_chain,listBox);
+	}		
 	
+	private EventBoxChain l_chain = new EventBoxChain();
 	
-	//------------------//
+	public void chainLocalBox(MaterialWidget... listBox){
+		EventBoxChain.link(l_chain,listBox);
+	}
+	//------------------------------------//
 
 	private boolean isHooking = false;
 	
-	private ArrayList<Integer> nullShortcut= new ArrayList<Integer>();
-	private ArrayList<Integer> ctrlShortcut= new ArrayList<Integer>();
+	private ArrayList<Integer> nullShortcut = new ArrayList<Integer>();
+	private ArrayList<Integer> ctrlShortcut = new ArrayList<Integer>();
 	private ArrayList<Integer> alt_Shortcut = new ArrayList<Integer>();
 	
 	public void eventShortcut(Integer keycode,Integer appx){

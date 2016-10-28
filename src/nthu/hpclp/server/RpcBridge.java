@@ -190,7 +190,7 @@ public class RpcBridge extends RemoteServiceServlet
 			
 		}else if(args.startsWith(Const.PRODX)==true){
 
-			args = args.substring(Const.PRODX.length()+1);//there is a 'star' sign
+			args = args.substring(Const.PRODX.length()+1);//there is a 'plus' sign
 			return SqlDataMisc.genPKey(args.split(","));
 		}
 		return "";

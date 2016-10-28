@@ -42,12 +42,12 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 	public DlgEditOwner() {
 		initWidget(uiBinder.createAndBindUi(this));
 		refxWidget(root,btnAction,btnCancel);
-		/*chainBox(
+		chainBox(
 			boxKey,boxName,boxStmp,
 			boxZip,boxAddr,boxPhon,
 			boxDept,boxPern,boxMail,
 			boxMemo
-		);*/
+		);
 	}
 
 	@UiHandler("boxKey")
@@ -64,8 +64,8 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 				MaterialToast.fireToast("內部錯誤");
 			}
 			@Override
-			public void onSuccess(String result) {
-				boxKey.setText(result);
+			public void onSuccess(String o_key) {
+				boxKey.setText(o_key);
 			}				
 		});		
 	}

@@ -149,6 +149,17 @@ public final class Const {
 		return dst.trim();
 	}
 	
+	public static String formatDigit(int val,int length){
+		String txt = String.valueOf(val);
+		int len = txt.length();
+		if(len<length){
+			for(int i=0; i<(length-len); i++){
+				txt = "0" + txt;
+			}
+		}
+		return txt;
+	}
+	
 	public static boolean isAllDigit(String txt){
 		char[] buf = txt.toCharArray();
 		for(int i=0; i<buf.length; i++){

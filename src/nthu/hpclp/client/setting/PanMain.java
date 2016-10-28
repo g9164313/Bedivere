@@ -43,19 +43,4 @@ public class PanMain extends ExComposite {
 	@Override
 	public void onEventHide() {
 	}
-	
-	@UiHandler("lnkPanMeet")
-	void onPanMeet(ClickEvent e){
-		Main.switchToMeeting();
-	}
-	
-	@UiHandler("lnkPanAccnt")
-	void onPanAccnt(ClickEvent e){
-		Main.switchToAccount();
-	}
-	
-	@UiHandler("lnkPanProdx")
-	void onPanProdx(ClickEvent e){
-		Main.switchToProduct();
-	}
 }

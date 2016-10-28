@@ -11,7 +11,6 @@ import gwt.material.design.client.ui.MaterialTextBox;
 import narl.itrc.client.ExComposite;
 import nthu.hpclp.client.Main;
 
-
 public class PartAppx extends ExComposite {
 
 	private static PartAppxUiBinder uiBinder = GWT.create(PartAppxUiBinder.class);
@@ -24,7 +23,15 @@ public class PartAppx extends ExComposite {
 		boxStmp.setText(Main.date2tw(new Date()));
 		boxName.setText("");
 		boxMemo.setText("");
-		chainBox(boxStmp,boxName,boxMemo);
+		appendCombo(
+			boxName,
+			new String[]{"d04925","w03099","w11803"}
+		);
+		appendCombo(
+			boxMemo,
+			new String[]{"EFFI","ACTI","~500","D.R./EFFI","x100(fail.)"}
+		);
+		chainLocalBox(boxStmp,boxName,boxMemo);
 	}
 
 	@UiField
@@ -39,14 +46,6 @@ public class PartAppx extends ExComposite {
 	}
 	
 	public String getMemo(){
-		/**
-		 * 註解：
-		 * 效率         - EFFI
-		 * 活度         - ACTI
-		 * 打到 500HSC/h- ~500
-		 * 劑量率＋效率 - D.R./EFFI
-		 * 檔位故障     - x100(fail.)
-		 */
 		return boxMemo.getText();
 	}
 

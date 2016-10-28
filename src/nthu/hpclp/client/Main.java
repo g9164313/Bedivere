@@ -23,69 +23,7 @@ import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
 
 public class Main implements EntryPoint {
-	
-	public final static DateTimeFormat fmtDate = DateTimeFormat.getFormat("yyyy/M/d"); 
-	
-	public final static DateTimeFormat fmtStmpLast = DateTimeFormat.getFormat("yyyy/M/d H:m");
-	
-	public final static DateTimeFormat fmtYear = DateTimeFormat.getFormat("yyyy"); 	
-	public final static DateTimeFormat fmtMonth = DateTimeFormat.getFormat("M"); 	
-	public final static DateTimeFormat fmtDay = DateTimeFormat.getFormat("d"); 
-	
-	public final static DateTimeFormat fmtMonthDay = DateTimeFormat.getFormat("MM/dd");	
-	public final static DateTimeFormat fmtWeekDay = DateTimeFormat.getFormat("EEE");	
-	public final static DateTimeFormat fmtMeeting = DateTimeFormat.getFormat("MM/dd EEE H");
-	
-	public final static DateTimeFormat fmtSQLDay = DateTimeFormat.getFormat("yyyy-M-d");
-	
-	public final static String date2tw_y(Date stamp){		
-		String year = fmtYear.format(stamp);		
-		int yy = Integer.valueOf(year);		
-		if(yy>1911){
-			yy = yy - 1911;
-		}else{
-			yy = 0;
-		}		
-		return ""+yy;
-	}
-	public final static String date2tw_y(){
-		return date2tw_y(new Date());
-	}
-	public final static String date2tw(Date stamp){
-		String yyy = date2tw_y(stamp);
-		String mm_dd = fmtMonthDay.format(stamp);
-		return yyy+"/"+mm_dd;
-	}
-	public final static String date2tw(){
-		return date2tw(new Date());
-	}
 
-	public static boolean text2stmp(MaterialTextBox box,Date stmp){
-		String tmp = fmtStmpLast.format(stmp);
-		boolean valid = true;
-		try{
-			Date dd = fmtStmpLast.parse(box.getText());
-			stmp.setTime(dd.getTime());
-			tmp = fmtStmpLast.format(stmp);
-		}catch(IllegalArgumentException e){
-			MaterialToast.fireToast("錯誤的日期格式");
-			valid = false;
-		}
-		box.setText(tmp);
-		return valid;
-	}
-	
-	public static RPCAsync rpc = GWT.create(RPC.class);
-	
-	public static DlgEditOwner dlgEditOwner = new DlgEditOwner();	
-	public static DlgEditTenur dlgEditTenur = new DlgEditTenur();
-	
-	public static DlgPickOwner dlgPickOwner = new DlgPickOwner();
-	public static DlgPickTenur dlgPickTenur = new DlgPickTenur();
-	
-	public static ParamHub param = new ParamHub();//enviroment parameters
-	//----------------------------//
-	
 	public static void printLetter(ItemOwner itm){
 		ArrayList<ItemOwner> lst = new ArrayList<ItemOwner>();
 		lst.add(itm);
@@ -209,57 +147,93 @@ public class Main implements EntryPoint {
 		}
 	}
 	//----------------------------//
+
+	public final static DateTimeFormat fmtDate = DateTimeFormat.getFormat("yyyy/M/d"); 
 	
-	private static nthu.hpclp.client.account.PanMain account = new nthu.hpclp.client.account.PanMain();
-	private static nthu.hpclp.client.meeting.PanMain meeting = new nthu.hpclp.client.meeting.PanMain();
-	private static nthu.hpclp.client.product.PanMain product = new nthu.hpclp.client.product.PanMain();
-	private static nthu.hpclp.client.setting.PanMain setting = new nthu.hpclp.client.setting.PanMain();
+	public final static DateTimeFormat fmtStmpLast = DateTimeFormat.getFormat("yyyy/M/d H:m");
 	
-	private final static int PAN_DEFAULT=1;//Do we need to fix this? No~~~
+	public final static DateTimeFormat fmtYear = DateTimeFormat.getFormat("yyyy"); 	
+	public final static DateTimeFormat fmtMonth = DateTimeFormat.getFormat("M"); 	
+	public final static DateTimeFormat fmtDay = DateTimeFormat.getFormat("d"); 
+	
+	public final static DateTimeFormat fmtMonthDay = DateTimeFormat.getFormat("MM/dd");	
+	public final static DateTimeFormat fmtWeekDay = DateTimeFormat.getFormat("EEE");	
+	public final static DateTimeFormat fmtMeeting = DateTimeFormat.getFormat("MM/dd EEE H");
+	
+	public final static DateTimeFormat fmtSQLDay = DateTimeFormat.getFormat("yyyy-M-d");
+	
+	public final static String date2tw_y(Date stamp){		
+		String year = fmtYear.format(stamp);
+		int yy = Integer.valueOf(year);		
+		if(yy>1911){
+			yy = yy - 1911;
+		}else{
+			yy = 0;
+		}		
+		return ""+yy;
+	}
+	public final static String date2tw_y(){
+		return date2tw_y(new Date());
+	}
+	public final static String date2tw(Date stamp){
+		String yyy = date2tw_y(stamp);
+		String mm_dd = fmtMonthDay.format(stamp);
+		return yyy+"/"+mm_dd;
+	}
+	public final static String date2tw(){
+		return date2tw(new Date());
+	}
+
+	public static boolean text2stmp(MaterialTextBox box,Date stmp){
+		String tmp = fmtStmpLast.format(stmp);
+		boolean valid = true;
+		try{
+			Date dd = fmtStmpLast.parse(box.getText());
+			stmp.setTime(dd.getTime());
+			tmp = fmtStmpLast.format(stmp);
+		}catch(IllegalArgumentException e){
+			MaterialToast.fireToast("錯誤的日期格式");
+			valid = false;
+		}
+		box.setText(tmp);
+		return valid;
+	}
+	//----------------------------//
+
+	public static RPCAsync rpc = GWT.create(RPC.class);
+	
+	public static ParamHub param = new ParamHub();//enviroment parameters
+	
+	public static DlgEditOwner dlgEditOwner = new DlgEditOwner();	
+	public static DlgEditTenur dlgEditTenur = new DlgEditTenur();
+	
+	public static DlgPickOwner dlgPickOwner = new DlgPickOwner();
+	public static DlgPickTenur dlgPickTenur = new DlgPickTenur();
+	
+	public static PartFuncPager funcPager = new PartFuncPager();
+	
+	//private static nthu.hpclp.client.product.PanMain product = new nthu.hpclp.client.product.PanMain();
+
 	private final static int PAN_MEETING=0;
 	private final static int PAN_PRODUCT=1;
 	private final static int PAN_ACCOUNT=2;
 	private final static int PAN_SETTING=3;
 	
+	private final static int PAN_DEFAULT=PAN_PRODUCT;//Do we need to fix this? No~~~
+	
 	private static void switch_panel(int id){
 		RootPanel.get().clear();
 		switch(id){
-		default:
-		case PAN_MEETING:
-			RootPanel.get().add(meeting);
-			break;
 		case PAN_PRODUCT:
-			RootPanel.get().add(product);			
-			break;
-		case PAN_ACCOUNT:
-			RootPanel.get().add(account);
-			break;
-		case PAN_SETTING:
-			RootPanel.get().add(setting);
+			//RootPanel.get().add(product);
 			break;
 		}
 	}
-		
-	public static void switchToMeeting(){
-		switch_panel(PAN_MEETING);		
-	}
+	//----------------------------//
 	
-	public static void switchToProduct(){
-		switch_panel(PAN_PRODUCT);
-	}
-	
-	public static void switchToAccount(){
-		switch_panel(PAN_ACCOUNT);
-	}
-	
-	public static void switchToSetting(){
-		switch_panel(PAN_SETTING);
-	}
-		
 	@Override
 	public void onModuleLoad() {
-		//MaterialLoader.showLoading(true);
-		//Event.addNativePreviewHandler(eventHook);
+		RootPanel.get().clear();
 		rpc.initServer(
 			param,
 			new AsyncCallback<ParamHub>(){
@@ -278,9 +252,11 @@ public class Main implements EntryPoint {
 					Window.setTitle(txt+"(本機端資料庫)");
 				}
 				param = res;
-				dlgEditTenur.initDetectType();
-				switch_panel(PAN_DEFAULT);
+				dlgEditTenur.initDetectType();				
+				//switch_panel(PAN_PRODUCT);
+				funcPager.initPanel();
 			}
 		});
 	}
+	//----------------------------//
 }

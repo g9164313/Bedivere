@@ -18,6 +18,12 @@ public abstract class DlgBase<T> extends Composite {
 	
 	public DlgBase(){
 	}
+
+	private EventBoxChain chain = new EventBoxChain();
+	
+	public void chainBox(MaterialWidget... listBox){
+		EventBoxChain.link(chain,listBox);
+	}
 	
 	/**
 	 * The child class must call this to override widget

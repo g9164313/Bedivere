@@ -29,8 +29,10 @@ public class PartOwner extends PartSelect<ItemOwner> {
 
 	@UiField
 	MaterialPanel root;
+	
 	@UiField(provided=true)
 	public MaterialTextBox boxOKey = boxKey;
+	
 	@UiField
 	MaterialLabel txtInfoO1,txtInfoO2,txtInfoO3;
 		
