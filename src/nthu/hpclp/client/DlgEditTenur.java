@@ -139,7 +139,6 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 		item.setSteer(boxSteer.getText());
 		
 		item.setMeet(Main.fmtStmpLast.parse(boxMeet.getText()));
-		//item.setStmp(Main.fmtStmpLast.parse(boxMeet.getText()));//future~~~~	
 		item.setLast(Main.fmtStmpLast.parse(boxLast.getText()));		
 		item.setMemo(boxMemo.getText());
 		

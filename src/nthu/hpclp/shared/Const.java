@@ -2,7 +2,8 @@ package nthu.hpclp.shared;
 
 public final class Const {
 	
-	public static final String DATABASE_URL = "jdbc:postgresql://localhost:8765/bookkeeping";
+	public static final String DATABASE_URL_MASTER = "jdbc:postgresql://140.114.104.50:8765/bookkeeping";
+	public static final String DATABASE_URL_ASSIST = "jdbc:postgresql://localhost:8765/bookkeeping";
 	public static final String DATABASE_USER = "qq";
 	public static final String DATABASE_PASS = "qq";
 		

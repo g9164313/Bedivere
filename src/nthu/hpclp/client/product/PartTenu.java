@@ -1,32 +1,26 @@
 package nthu.hpclp.client.product;
 
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.ClickEvent;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
-import com.google.gwt.uibinder.client.UiHandler;
-import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.Widget;
 
-import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialLabel;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialTextBox;
-import gwt.material.design.client.ui.MaterialToast;
+
 import nthu.hpclp.client.Main;
-import nthu.hpclp.shared.ItemOwner;
+import nthu.hpclp.client.PartSelect;
 import nthu.hpclp.shared.ItemProdx;
 import nthu.hpclp.shared.ItemTenur;
 
-public class PartTenu extends Composite {
+public class PartTenu extends PartSelect<ItemTenur> {
 
 	private static PartTenuUiBinder uiBinder = GWT.create(PartTenuUiBinder.class);
 
 	interface PartTenuUiBinder extends UiBinder<Widget, PartTenu> {
 	}
-
+	
 	public PartTenu() {
 		initWidget(uiBinder.createAndBindUi(this));		
 		root.add(Main.dlgEditTenur);
@@ -36,35 +30,45 @@ public class PartTenu extends Composite {
 
 	@UiField
 	MaterialPanel root;
-	
+	@UiField(provided=true)
+	public MaterialTextBox boxTKey = boxKey;
 	@UiField MaterialLabel
     	txtInfoT1,txtInfoT2,txtInfoT3,
     	txtInfoT4,txtInfoT5,txtInfoT6;
-	
-	@UiField
-	public MaterialTextBox boxTKey;
-	
-	private ItemProdx targetProdx;
-	
+
+	private ItemProdx parent;
+
 	public void setTarget(ItemProdx obj){
-		targetProdx = obj;
-		updateBox(targetProdx.getTenur());
+		parent = obj;
+		if(obj!=null){
+			target = parent.getTenur();
+		}else{
+			target = null;
+		}		
+		updateBox();
+	}
+	
+	@Override
+	public ItemTenur getTarget(boolean create) {
+		if(create==false){
+			return target;
+		}
+		return new ItemTenur();
 	}
 
-	public ItemTenur getTarget(){
-		if(targetProdx!=null){ return targetProdx.getTenur(); }
-		return null;
-	}
-	
-	private void updateBox(ItemTenur itm){
+	@Override
+	public void updateBox() {
     	boxTKey.setText("");
-    	if(itm!=null){
-    		txtInfoT1.setText(itm.getDeviceVendor());
-    		txtInfoT2.setText(itm.getDeviceSerial());
-    		txtInfoT3.setText(itm.getDeviceNumber());
-    		txtInfoT4.setText(itm.getDetectType());
-    		txtInfoT5.setText(itm.getDetectSerial());
-    		txtInfoT6.setText(itm.getDetectNumber());
+		if(parent!=null){
+			parent.setTenur(target);
+		}
+    	if(target!=null){
+    		txtInfoT1.setText(target.getDeviceVendor());
+    		txtInfoT2.setText(target.getDeviceSerial());
+    		txtInfoT3.setText(target.getDeviceNumber());
+    		txtInfoT4.setText(target.getDetectType());
+    		txtInfoT5.setText(target.getDetectSerial());
+    		txtInfoT6.setText(target.getDetectNumber());
     		//TODO:how to focus the next item??
     	}else{
     		txtInfoT1.setText("");
@@ -75,73 +79,4 @@ public class PartTenu extends Composite {
     		txtInfoT6.setText("");
     	}
 	}
-
-	private void update_item(ItemTenur itm){
-		if(targetProdx!=null){
-			targetProdx.setTenur(itm);
-			updateBox(itm);
-		}
-		boxTKey.setText("");
-	}
-	
-	private final ClickHandler eventEdit = new ClickHandler(){
-		@Override
-		public void onClick(ClickEvent event) {
-			if(targetProdx==null){
-				return;
-			}			
-	    	ItemTenur itm = getTarget();
-	    	if(itm==null){
-	    		return;
-	    	}
-	    	if(event==null){
-	    		//how to select a different owner???
-	    		ItemOwner owner = targetProdx.getOwner();
-				if(owner==null){
-		    		MaterialToast.fireToast("無廠商資訊");
-		    		return;
-		    	}
-	    		itm = new ItemTenur(targetProdx.getOwner());
-	    		MaterialToast.fireToast("新增儀器資料");
-	    	}else{
-	    		MaterialToast.fireToast("修改儀器資料");
-	    	}
-	    	Main.dlgEditTenur.appear(itm,eventUpdate,null);
-		}
-		private ClickHandler eventUpdate = new ClickHandler(){
-			@Override
-			public void onClick(ClickEvent event) {
-				update_item(Main.dlgEditTenur.getTarget());
-			}
-		};
-	};
-	
-	public MaterialWidget nextBox = null;
-	
-    @UiHandler("boxTKey")
-    void onChangeKeyTenur(ValueChangeEvent<String> event){
-    	String txt = event.getValue().trim().toLowerCase();
-    	if(txt.equalsIgnoreCase("+")==true){
-    		eventEdit.onClick(null);
-    		return;
-    	}
-    	final ClickHandler eventPickup = new ClickHandler(){
-    		@Override
-    		public void onClick(ClickEvent event) {
-    			update_item(Main.dlgPickTenur.getTarget());
-				if(nextBox!=null){
-					nextBox.setFocus(true);
-				}
-    		}
-    	};
-    	String post = "WHERE "+
-    		"(tenure.info[1] SIMILAR TO '%"+txt+"%') OR "+
-    		"(tenure.info[2] SIMILAR TO '%"+txt+"%') OR "+
-    		"(tenure.info[3] SIMILAR TO '%"+txt+"%') OR "+
-    		"(tenure.info[4] SIMILAR TO '%"+txt+"%') OR "+
-    		"(tenure.info[6] SIMILAR TO '%"+txt+"%') OR "+
-    		"(tenure.info[7] SIMILAR TO '%"+txt+"%') OR "+
-    		"(tenure.info[11] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ";
-    	Main.dlgPickTenur.appear(post,eventPickup);
-    }
 }

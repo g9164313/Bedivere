@@ -75,26 +75,14 @@ public class RpcBridge extends RemoteServiceServlet
 	@Override
 	public ParamHub initServer(ParamHub hub) throws IllegalArgumentException {
 		
-		try {
-			Class.forName("org.postgresql.Driver");
-			conn = DriverManager.getConnection(
-				Const.DATABASE_URL, 
-				Const.DATABASE_USER,
-				Const.DATABASE_PASS
-			);
-			SqlDataBase.prepare(conn);			
-		} catch(ClassNotFoundException e1){
-			try {
-				InitialContext cxt = new InitialContext();
-				DataSource ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/postgres" );
-				conn = ds.getConnection();
-			} catch (NamingException e2) {
-				return hub.appendError(e1.getMessage() + "\n" + e2.getMessage());
-			} catch (SQLException e2) {
-				return hub.appendError(e1.getMessage() + "\n" + e2.getMessage());
+		checkDatabase(hub,Const.DATABASE_URL_MASTER);
+		if(hub.hasError()==true){
+			hub.resetError();//reset message, we must try it again~~~~
+			checkDatabase(hub,Const.DATABASE_URL_ASSIST);
+			if(hub.hasError()==true){
+				return hub;
 			}
-		} catch (SQLException e1) {			
-			return hub.appendError(e1.getMessage());
+			hub.appendWarn("local-database");
 		}
 
 		checkParamValue(hub,hub.prodxDetType,"'DETTYPE%'");
@@ -107,6 +95,30 @@ public class RpcBridge extends RemoteServiceServlet
 		return hub;
 	}
 	
+	private void checkDatabase(ParamHub hub,String url){
+		try {
+			Class.forName("org.postgresql.Driver");
+			conn = DriverManager.getConnection(
+				url, 
+				Const.DATABASE_USER,
+				Const.DATABASE_PASS
+			);
+			SqlDataBase.prepare(conn);			
+		} catch(ClassNotFoundException e1){
+			try {
+				InitialContext cxt = new InitialContext();
+				DataSource ds = (DataSource) cxt.lookup( "java:/comp/env/jdbc/postgres" );
+				conn = ds.getConnection();
+			} catch (NamingException e1_1) {
+				hub.appendError(e1_1.getMessage());
+			} catch (SQLException e1_2) {
+				hub.appendError(e1_2.getMessage());
+			}		
+		} catch(SQLException e2) {			
+			hub.appendError(e2.getMessage());
+		}
+	}
+
 	private void checkParamValue(
 		ParamHub hub,
 		ArrayList<ItemParam> lst,
@@ -132,28 +144,34 @@ public class RpcBridge extends RemoteServiceServlet
 	}
 	
 	private void checkJasperPath(ParamHub res){
-		
+		RpcPrint.DOC_PATH = checkPath("webapps/bedivere/nthu.hpclp.jasper");
+		if(RpcPrint.DOC_PATH.length()==0){
+			RpcPrint.DOC_PATH = checkPath("nthu.hpclp.jasper");//try again~~~
+			if(RpcPrint.DOC_PATH.length()!=0){
+				return;
+			}
+			//we can't locate JASPER files, report it!!!!
+			res.appendError(
+				"Unknown jasper path!!! The local path is "+
+				new File(".").getAbsolutePath()
+			);
+		}
+	}
+	
+	private String checkPath(String name){
 		final String[] path = {
 			"./",
-			"./webapps/bedivere/",
-			"../webapps/bedivere/",
-			"../../webapps/bedivere/"			
+			"../",
+			"../../",
+			"../../../"
 		};
-		
-		final String name = "nthu.hpclp.jasper";		
-		
 		for(int i=0; i<path.length; i++){
 			File fs = new File(path[i]+name);
 			if(fs.exists()==true){
-				RpcPrint.DOC_PATH = path[i]+name;
-				return;
+				return fs.getAbsolutePath();
 			}
 		}
-		//we can't locate JASPER files, report it!!!!
-		res.appendError(
-			"FAIL: the unknown path - "+
-			new File(".").getAbsolutePath()
-		);
+		return "";//we fail!!!
 	}
 	//---------------------------------//
 	
@@ -171,7 +189,7 @@ public class RpcBridge extends RemoteServiceServlet
 			return SqlDataMisc.genAKey(args);
 			
 		}else if(args.startsWith(Const.PRODX)==true){
-			
+
 			args = args.substring(Const.PRODX.length()+1);//there is a 'star' sign
 			return SqlDataMisc.genPKey(args.split(","));
 		}
@@ -291,68 +309,62 @@ public class RpcBridge extends RemoteServiceServlet
 	}
 	//-------------------------//
 
-	private static String pathSPoint = ".";
+	private static String pathSPoint = null;
 	
 	@Override
 	public String[] listSPoint() throws IllegalArgumentException {
-		final String name="work/SPoint";
-		final String[] path = {"./","../","../../"};
-		for(int i=0; i<path.length; i++){
-			File fs = new File(path[i]+name);
-			if(fs.exists()==true){
-				pathSPoint = fs.getAbsolutePath()+"/";
-				final FilenameFilter flt = new FilenameFilter(){
-					@Override
-					public boolean accept(File dir, String name) {
-						if(name.contains("SPoint")==true){
-							return false;
-						}
-						return true;
-					}
-				};
-				String[] lst = fs.list(flt);
-				Arrays.sort(lst,Collections.reverseOrder());
-				return lst;
+		if(pathSPoint==null){
+			pathSPoint = checkPath("work/SPoint");//just once~~
+		}
+		if(pathSPoint.length()==0){
+			return null;
+		}
+		File fs = new File(pathSPoint);
+		final FilenameFilter flt = new FilenameFilter(){
+			@Override
+			public boolean accept(File dir, String name) {
+				if(name.contains("SPoint")==true){
+					return false;
+				}
+				return true;
 			}
-		}		
-		return null;
+		};
+		String[] lst = fs.list(flt);
+		Arrays.sort(lst,Collections.reverseOrder());
+		return lst;
 	}
 	
 	@Override
-	public String saveSPoint() throws IllegalArgumentException {		
-		return Utils.Exec(pathSPoint+"SPoint-save @ "+pathSPoint);
+	public String saveSPoint() throws IllegalArgumentException {
+		if(pathSPoint.length()==0){
+			return "無法執行程式";
+		}
+		return Utils.Exec(pathSPoint+"/SPoint-save @ "+pathSPoint);
 	}
 	
 	@Override
-	public String loadSPoint(String name) throws IllegalArgumentException {		
-		return Utils.Exec(pathSPoint+"SPoint-load @ "+pathSPoint+"/"+name);
+	public String loadSPoint(String name) throws IllegalArgumentException {
+		if(pathSPoint.length()==0){
+			return "無法執行程式";
+		}
+		return Utils.Exec(pathSPoint+"/SPoint-load @ "+pathSPoint+"/"+name);
 	}
 
 	@Override
-	public String tearSPoint(String name) throws IllegalArgumentException {		
+	public String tearSPoint(String name) throws IllegalArgumentException {
+		if(pathSPoint.length()==0){
+			return "無法執行程式";
+		}
 		return Utils.Exec("rm @ -r @ "+pathSPoint+"/"+name);
 	}
 	//-------------------------------------//
-	
+
 	private static String pathPrint = null;
-	
-	private void init_path_print(){
-		final String name="work/print-tag";
-		final String[] path = {"./","../","../../"};
-		for(int i=0; i<path.length; i++){
-			File fs = new File(path[i]+name);
-			if(fs.exists()==true){
-				pathPrint = fs.getAbsolutePath();
-				return;
-			}
-		}
-		pathPrint = "";//we fail!!!
-	}
 	
 	@Override
 	public String printTag(String[] info) throws IllegalArgumentException {
 		if(pathPrint==null){
-			init_path_print();//just once~~
+			pathPrint = checkPath("work/print-tag");//just once~~
 		}
 		if(pathPrint.length()==0){
 			return "無法執行程式";

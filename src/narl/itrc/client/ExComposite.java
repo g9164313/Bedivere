@@ -2,6 +2,7 @@ package narl.itrc.client;
 
 import java.util.ArrayList;
 
+import gwt.material.design.client.base.MaterialWidget;
 import gwt.material.design.client.ui.MaterialListBox;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialTextBox;
@@ -95,19 +96,21 @@ public abstract class ExComposite extends Composite {
 	}
 	//------------------//
 	
-	private static ArrayList<MaterialTextBox> boxChainLoop = new ArrayList<MaterialTextBox>();
+	private static ArrayList<MaterialWidget> boxChainLoop = new ArrayList<MaterialWidget>();
 	
 	private static boolean isChainLoop = true;
 	
-	protected static void chainBox(MaterialTextBox... listBox){
+	protected static void chainBox(MaterialWidget... listBox){
 		boxChainLoop.clear();
-		for(MaterialTextBox box:listBox){
+		for(MaterialWidget box:listBox){
 			if(box==null){
 				isChainLoop = false;
 				break;
 			}
-			boxChainLoop.add(box);			
-			box.addKeyDownHandler(hookChainLoop);
+			boxChainLoop.add(box);
+			if(box instanceof MaterialTextBox){
+				((MaterialTextBox)box).addKeyDownHandler(hookChainLoop);
+			}			
 		}
 	}
 	
@@ -162,6 +165,11 @@ public abstract class ExComposite extends Composite {
 			boxChainLoop.get(idx).setFocus(true);
 		}
 	};
+	//------------------//
+	
+	
+	
+	
 	//------------------//
 
 	private boolean isHooking = false;

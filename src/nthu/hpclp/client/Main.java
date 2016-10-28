@@ -267,13 +267,17 @@ public class Main implements EntryPoint {
 			public void onFailure(Throwable caught) {
 			}
 			@Override
-			public void onSuccess(ParamHub result) {
-				if(result.error!=null){
+			public void onSuccess(ParamHub res) {
+				if(res.hasError()==true){
 					//just post a error message~~~~
-					RootPanel.get().add(new Label(result.error));
+					RootPanel.get().add(new Label(res.getError()));
 					return;
 				}
-				param = result;
+				if(res.getWarn().contains("local-database")==true){
+					String txt = Window.getTitle();
+					Window.setTitle(txt+"(本機端資料庫)");
+				}
+				param = res;
 				dlgEditTenur.initDetectType();
 				switch_panel(PAN_DEFAULT);
 			}

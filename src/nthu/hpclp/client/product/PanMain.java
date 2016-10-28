@@ -5,7 +5,6 @@ import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialSearch;
 import gwt.material.design.client.ui.MaterialToast;
-import nthu.hpclp.client.PartOwner;
 import nthu.hpclp.shared.ItemProdx;
 import nthu.hpclp.shared.ItemTenur;
 
@@ -159,12 +158,12 @@ public class PanMain extends PanCtrl {
     
     @UiHandler("lnkPrint2DTag")
     void onPrint2DTag(ClickEvent e){
-    	ItemTenur tenu = tenur.getTarget();
-    	if(tenu==null){
+    	ItemTenur itm = tenur.getTarget(false);
+    	if(itm==null){
     		MaterialToast.fireToast("無測試儀器？！");
     		return;
     	}
-    	print2DTag(tenu,
+    	print2DTag(itm,
     		appx.getDate(),
     		appx.getName(),
     		appx.getMemo()

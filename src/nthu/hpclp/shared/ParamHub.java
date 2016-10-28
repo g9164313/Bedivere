@@ -26,20 +26,58 @@ public class ParamHub implements Serializable {
 	public void gather(ArrayList<ItemParam> lst,String key,String val){
 		lst.add(new ItemParam(key,val));
 	}
+
+	/**
+	 * some messages mayn't be a obstacle
+	 */
+	private String warn = "";
+	
+	public ParamHub appendWarn(String msg){
+		warn = warn + msg +"\n";
+		GWT.log(msg);
+		System.out.println("[WARN]"+msg);
+		return this;
+	}
+	
+	public boolean hasWarn(){
+		if(error.length()==0){
+			return false;
+		}
+		return true;
+	}
+	
+	public String getWarn(){
+		return warn;
+	}
+	
+	public void resetWarn(){
+		warn = "";
+	}
 	
 	/**
 	 * Server can put error message here~~~
 	 */
-	public String error = null;
+	private String error = null;
 	
 	public ParamHub appendError(String msg){
-		if(error==null){
-			error = msg;
-		}else{
-			error = error + msg +"\n";
-		}
+		error = error + msg +"\n";
 		GWT.log(msg);
-		System.out.println(msg);
+		System.out.println("[ERROR]"+msg);
 		return this;
+	}
+	
+	public boolean hasError(){
+		if(error.length()==0){
+			return false;
+		}
+		return true;
+	}
+	
+	public String getError(){
+		return error;
+	}
+	
+	public void resetError(){
+		error = "";
 	}
 }
