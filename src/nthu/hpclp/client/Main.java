@@ -211,24 +211,6 @@ public class Main implements EntryPoint {
 	public static DlgPickTenur dlgPickTenur = new DlgPickTenur();
 	
 	public static PartFuncPager funcPager = new PartFuncPager();
-	
-	//private static nthu.hpclp.client.product.PanMain product = new nthu.hpclp.client.product.PanMain();
-
-	private final static int PAN_MEETING=0;
-	private final static int PAN_PRODUCT=1;
-	private final static int PAN_ACCOUNT=2;
-	private final static int PAN_SETTING=3;
-	
-	private final static int PAN_DEFAULT=PAN_PRODUCT;//Do we need to fix this? No~~~
-	
-	private static void switch_panel(int id){
-		RootPanel.get().clear();
-		switch(id){
-		case PAN_PRODUCT:
-			//RootPanel.get().add(product);
-			break;
-		}
-	}
 	//----------------------------//
 	
 	@Override
@@ -252,8 +234,7 @@ public class Main implements EntryPoint {
 					Window.setTitle(txt+"(本機端資料庫)");
 				}
 				param = res;
-				dlgEditTenur.initDetectType();				
-				//switch_panel(PAN_PRODUCT);
+				dlgEditTenur.initDetectType();
 				funcPager.initPanel();
 			}
 		});

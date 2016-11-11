@@ -478,39 +478,36 @@ public class SqlDataBase {
 		}
 		return stmp;
 	}
+	//--------------------------//
 	
 	private static final String SQL_INSERT_PARAM = "INSERT INTO "+Const.PARAM+" (key,val) VALUES(?,?)";
-		
+	
 	private static final String SQL_UPDATE_PARAM = "UPDATE "+Const.PARAM+" SET val=? WHERE key=?";
-		
+	
 	private static final String SQL_DELETE_PARAM = "DELETE FROM "+Const.PARAM+" WHERE key=?";
 		
-	public static ItemParam modifyParam(ItemParam obj) throws IllegalArgumentException {
+	public static ItemParam accessParam(final int cmd,ItemParam obj) throws IllegalArgumentException {
 		try {
-			switch(obj.getState()){
-			case ItemParam.STA_CREATE:
+			switch(cmd){
+			case Const.CMD_INSERT:
 				insertParam.setString(1,obj.getKey());
 				insertParam.setString(2,obj.getVal());
 				insertParam.execute();
-				obj.setState(ItemParam.STA_IDLE);
 				break;
 			
-			case ItemParam.STA_UPDATE:				
+			case Const.CMD_UPDATE:				
 				updateParam.setString(1,obj.getVal());
 				updateParam.setString(2,obj.getKey());
 				updateParam.execute();
-				obj.setState(ItemParam.STA_IDLE);
 				break;
 			
-			case ItemParam.STA_DELETE:			
+			case Const.CMD_DELETE:	
 				deleteParam.setString(1,obj.getKey());
 				deleteParam.execute();
 				break;
 			}
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
-			
 			obj.appendError(e.getMessage());
 		}
 		return obj;

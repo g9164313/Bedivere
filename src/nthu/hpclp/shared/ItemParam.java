@@ -6,18 +6,11 @@ public class ItemParam implements Serializable {
 
 	private static final long serialVersionUID = 3403904676123063921L;
 		
-	public static final int STA_IDLE = 0;
-	public static final int STA_CREATE = 1;
-	public static final int STA_UPDATE = 2;
-	public static final int STA_DELETE = 3;
-	
-	private int sta = STA_IDLE;
-	
 	private String key="",val="";
 	
 	public ItemParam(){
 	}
-	
+
 	/**
 	 * Special constructor, the value item has separator 
 	 * @param k - key
@@ -36,21 +29,15 @@ public class ItemParam implements Serializable {
 		setVal(v);
 	}
 	
+	public ItemParam(ItemParam src){
+		copyFrom(src);
+	}
+
 	public void copyFrom(ItemParam src){
 		key = src.key;
 		val = src.val;
-		sta = src.sta;
 	}
-	
-	public void setState(int sta){
-		this.sta = sta;
-		error = null;
-	}
-	
-	public int getState(){
-		return sta;
-	}
-	
+
 	public void setKey(String txt){
 		key = txt;
 	}

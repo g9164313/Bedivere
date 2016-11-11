@@ -28,11 +28,12 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	interface DlgEditTenurUiBinder extends UiBinder<Widget, DlgEditTenur> {
 	}
 
-	@UiField
-	MaterialModal root;
-	
-	@UiField
-	MaterialButton btnAction,btnCancel;
+	@UiField(provided=true) 
+	MaterialModal root = _dlg_root;
+	@UiField(provided=true)
+	MaterialButton btnAction = _btn_action;
+	@UiField(provided=true)
+	MaterialButton btnCancel = _btn_cancel;
 	
 	@UiField
 	MaterialTextBox boxDevVendor,boxDevSerial,boxDevNumber;
@@ -58,7 +59,6 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 		
 	public DlgEditTenur() {
 		initWidget(uiBinder.createAndBindUi(this));
-		refxWidget(root,btnAction,btnCancel);
 		/*chainBox(
 			boxDevVendor,boxDevSerial,boxDevNumber,
 			boxDetSerial,boxDetNumber,			

@@ -29,12 +29,11 @@ public class PanMain extends PanCtrl {
     
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));
-		initList();		
-		root.add(genReport);
-		//navAppBar.add(Main.funcPager);
+		initList();
+		root.add(genTenuReport);		
 		anchorOwner.setWidget(owner);
 		anchorTenur.setWidget(tenur);
-		anchorInfo.setWidget(inform);
+		anchorInfo.setWidget(info);
 		anchorAppx.setWidget(appx);
 		anchorScriber.setWidget(scriber);
 		anchorEmitter.setWidget(emitter);		
@@ -47,19 +46,19 @@ public class PanMain extends PanCtrl {
 		chainBox(
 			owner.boxOKey,
 			tenur.boxTKey,
-			inform.boxStmp,inform.boxPKey,
-			inform.boxTempu,inform.boxPress,inform.boxHumid,
+			info.boxStmp,info.boxPKey,
+			info.boxTempu,info.boxPress,info.boxHumid,
 			scriber.boxInput,
 			null
 		);
 		owner.nextBox = tenur.boxTKey;
-		tenur.nextBox = inform.boxStmp;
+		tenur.nextBox = info.boxStmp;
 	}
 
 	@UiField(provided=true) 
 	MaterialPanel root = _root;
     @UiField
-    MaterialNavBar navAppBar, navSearch;
+    MaterialNavBar navAppBar,navSearch;
     @UiField
     MaterialSearch boxSearch;
 	@UiField
@@ -76,11 +75,11 @@ public class PanMain extends PanCtrl {
 
 	private PartOwner owner = new PartOwner();
 	private PartTenur tenur = new PartTenur();
-	private PartInfo inform = new PartInfo();
+	private PartInfo info = new PartInfo();
 	private PartAppx appx = new PartAppx();
 	private PartScriber scriber = new PartScriber();
 	private PartEmitter emitter = new PartEmitter();
-	private DlgGenReport genReport = new DlgGenReport();
+	private DlgGenReport genTenuReport = new DlgGenReport();
 
 	@Override
 	public void eventShortcut(Integer keycode,Integer appx){
@@ -102,6 +101,11 @@ public class PanMain extends PanCtrl {
 			onPrint2DTag(null); 
 			break;
 		}
+	}
+	
+	@Override
+	public void onEventShow() {
+		navAppBar.add(Main.funcPager);
 	}
 	//-----------------------------//
 	
@@ -177,7 +181,7 @@ public class PanMain extends PanCtrl {
     }
     @UiHandler("lnkPrintReport")
     void onPrintReport(ClickEvent e){
-    	genReport.appear();
+    	genTenuReport.appear();
     }
     //-----------------------------//
     
@@ -185,7 +189,7 @@ public class PanMain extends PanCtrl {
 	public void updateBox(ItemProdx itm) {
 		owner.setTarget(itm);
 		tenur.setTarget(itm);
-		inform.setTarget(itm);
+		info.setTarget(itm);
 		scriber.setTarget(itm);
 		emitter.setTarget(itm);
 	}	

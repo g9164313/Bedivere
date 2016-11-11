@@ -1,0 +1,25 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
+	xmlns:m="urn:import:gwt.material.design.client.ui" >
+<ui:style>
+</ui:style>
+
+<m:MaterialModal type="DEFAULT" width="50%" dismissable="true" inDuration="10" outDuration="10" ui:field="root" >
+
+<!-- 修改項目 -->
+<m:MaterialModalContent>
+	<m:MaterialTextBox placeholder="數值"  ui:field="boxValue"/>
+</m:MaterialModalContent>
+
+<!-- 確認/取消 -->
+<m:MaterialModalFooter width="95%">		
+	<m:MaterialButton text="確認" type="FLAT" ui:field="btnAction" />
+	<m:MaterialButton text="取消" type="FLAT" ui:field="btnCancel" />
+</m:MaterialModalFooter>
+	
+</m:MaterialModal>
+
+</ui:UiBinder> 

@@ -4,8 +4,8 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
 	xmlns:m="urn:import:gwt.material.design.client.ui" >
-	<ui:style>
-	</ui:style>
+<ui:style>
+</ui:style>
 	
 <m:MaterialModal type="DEFAULT" width="80%" dismissable="true" inDuration="10" outDuration="10" ui:field="root" >
 

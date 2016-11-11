@@ -57,7 +57,7 @@ public class ParamHub implements Serializable {
 	/**
 	 * Server can put error message here~~~
 	 */
-	private String error = null;
+	private String error = "";
 	
 	public ParamHub appendError(String msg){
 		error = error + msg +"\n";

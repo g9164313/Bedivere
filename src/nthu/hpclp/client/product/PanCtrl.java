@@ -28,7 +28,6 @@ import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemProdx;
 import nthu.hpclp.shared.ItemTenur;
 
-
 public abstract class PanCtrl extends ExComposite {
 
 	protected boolean isOnList = false;
@@ -42,10 +41,6 @@ public abstract class PanCtrl extends ExComposite {
 		});
 	}
 
-	@Override
-	public void onEventShow() {
-	}
-	
 	@Override
 	public void onEventHide() {
 	}

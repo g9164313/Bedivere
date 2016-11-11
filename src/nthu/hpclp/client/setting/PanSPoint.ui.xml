@@ -1,0 +1,19 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:m="urn:import:gwt.material.design.client.ui">
+<ui:style>
+</ui:style>
+
+<m:MaterialPanel ui:field="root" paddingTop="13">
+<m:MaterialRow>
+	<m:MaterialColumn> <g:SimplePanel ui:field="arch1"/> </m:MaterialColumn>
+	<m:MaterialColumn>
+		<m:MaterialRow> <m:MaterialButton text="備份" iconType="RECEIPT" ui:field="btnBackup" />	 </m:MaterialRow>
+		<m:MaterialRow> <m:MaterialButton text="回復" iconType="CLEAR_ALL" ui:field="btnRestore" /> </m:MaterialRow>
+		<m:MaterialRow> <m:MaterialButton text="同步" iconType="AUTORENEW"  ui:field="btnSyncData" /> </m:MaterialRow>
+	</m:MaterialColumn>
+</m:MaterialRow>
+</m:MaterialPanel>
+</ui:UiBinder> 

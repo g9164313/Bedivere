@@ -10,13 +10,16 @@ import gwt.material.design.client.ui.MaterialModal;
 
 public abstract class DlgBase<T> extends Composite {
 
-	protected MaterialModal dlgRoot;
+	protected MaterialModal _dlg_root = new MaterialModal();
 	
-	protected MaterialButton btnAction,btnCancel;
+	protected MaterialButton _btn_action = new MaterialButton();
+	protected MaterialButton _btn_cancel = new MaterialButton();
 	
 	protected T target;
 	
 	public DlgBase(){
+		_btn_action.addClickHandler(eventAction);
+		_btn_cancel.addClickHandler(eventCancel);
 	}
 
 	private EventBoxChain chain = new EventBoxChain();
@@ -25,19 +28,6 @@ public abstract class DlgBase<T> extends Composite {
 		EventBoxChain.link(chain,listBox);
 	}
 	
-	/**
-	 * The child class must call this to override widget
-	 * @param arg - first is MaterialModal, 
-	 * 	second is MaterialButton
-	 */
-	protected void refxWidget(MaterialWidget... arg){
-		dlgRoot = (MaterialModal)(arg[0]);
-		btnAction = (MaterialButton)(arg[1]);
-		btnAction.addClickHandler(eventAction);
-		btnCancel = (MaterialButton)(arg[2]);
-		btnCancel.addClickHandler(eventCancel);		
-	}
-
 	public abstract void eventAppear(T item);
 	
 	/**
@@ -52,7 +42,7 @@ public abstract class DlgBase<T> extends Composite {
 		hookAction= hook1;
 		hookCancel= hook2;
 		eventAppear(obj);
-		dlgRoot.openModal();
+		_dlg_root.openModal();
 		return this;
 	}
 
@@ -69,6 +59,10 @@ public abstract class DlgBase<T> extends Composite {
 		return target;
 	}
 	
+	public String toString(){
+		return "";
+	}
+	
 	private ClickHandler hookAction = null;
 	private ClickHandler hookCancel = null;
 	
@@ -81,12 +75,12 @@ public abstract class DlgBase<T> extends Composite {
 			if(hookAction!=null){
 				hookAction.onClick(event);				
 			}
-			dlgRoot.closeModal();
+			_dlg_root.closeModal();
 		}		
 	};
 	
 	protected void dialog_done(){
-		dlgRoot.closeModal();
+		_dlg_root.closeModal();
 		if(hookCancel!=null){
 			hookCancel.onClick(null);
 		}

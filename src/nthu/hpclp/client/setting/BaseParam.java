@@ -21,10 +21,13 @@ import nthu.hpclp.shared.RandUtil;
 public abstract class BaseParam extends ExComposite {
 
 	protected DataGrid<ItemParam> grid = new DataGrid<ItemParam>();
-	protected ListDataProvider<ItemParam> provider = new ListDataProvider<ItemParam>();
+	
+	protected ListDataProvider<ItemParam> lst = new ListDataProvider<ItemParam>();
+	
 	protected SingleSelectionModel<ItemParam> model = new SingleSelectionModel<ItemParam>();
 	
 	protected SimplePanel archGrid = new SimplePanel();
+	
 	protected SimplePanel archPage = new SimplePanel();
 	
 	/**
@@ -58,7 +61,7 @@ public abstract class BaseParam extends ExComposite {
 					return;//they are same~~~
 				}				
 				object.setVal(cid,value);
-				object.setState(ItemParam.STA_UPDATE);
+				//object.setState(ItemParam.STA_UPDATE);
 				
 				final AsyncCallback<ItemParam> event = new AsyncCallback<ItemParam>(){
 					@Override
@@ -73,16 +76,13 @@ public abstract class BaseParam extends ExComposite {
 							MaterialToast.fireToast("ERROR:"+result.error,5000);
 						}else{
 							MaterialToast.fireToast("已更新 "+result.getKey(),2000);
-							provider.getList().add(result);
-							provider.refresh();
+							lst.getList().add(result);
+							lst.refresh();
 						}						
 					}
 				};
-				Main.rpc.modifyParam(
-					object,
-					event
-				);
-				provider.getList().remove(object);		
+				//Main.rpc.modifyParam(object,event);
+				lst.getList().remove(object);		
 			}		
 		};
 	};
@@ -98,7 +98,7 @@ public abstract class BaseParam extends ExComposite {
 			obj.copyFrom(src);
 			obj.setVal(0,"新增項目");
 		}		
-		obj.setState(ItemParam.STA_CREATE);
+		//obj.setState(ItemParam.STA_CREATE);
 		
 		GWT.log("obj{"+obj.getKey()+", "+obj.getVal()+"}");
 		
@@ -115,12 +115,12 @@ public abstract class BaseParam extends ExComposite {
 					MaterialToast.fireToast(result.error,5000);
 				}else{
 					MaterialToast.fireToast("已新增 "+result.getKey(),2000);
-					provider.getList().add(0,result);
-					provider.refresh();
+					lst.getList().add(0,result);
+					lst.refresh();
 				}
 			}
 		};
-		Main.rpc.modifyParam(obj,event);		
+		//Main.rpc.modifyParam(obj,event);		
 	}
 	
 	protected void deleteParam(){
@@ -128,7 +128,7 @@ public abstract class BaseParam extends ExComposite {
 		if(obj==null){
 			return;
 		}
-		obj.setState(ItemParam.STA_DELETE);
+		//obj.setState(ItemParam.STA_DELETE);
 		final AsyncCallback<ItemParam> event = new AsyncCallback<ItemParam>(){
 			@Override
 			public void onFailure(Throwable caught) {
@@ -142,12 +142,12 @@ public abstract class BaseParam extends ExComposite {
 					MaterialToast.fireToast(result.error,5000);
 				}else{
 					MaterialToast.fireToast("已刪除 "+obj.getKey(),2000);
-					provider.getList().remove(obj);
-					provider.refresh();
+					lst.getList().remove(obj);
+					lst.refresh();
 				}
 			}
 		};
-		Main.rpc.modifyParam(obj,event);
+		//Main.rpc.modifyParam(obj,event);
 	}
 	
 	public BaseParam(){
@@ -184,8 +184,9 @@ public abstract class BaseParam extends ExComposite {
 		toalColumn = (style.length/2);
 		
 		grid.setSelectionModel(model);
-		grid.setSize("100%","43vh");
+		grid.setSize("100%","50vh");
 		grid.setEmptyTableWidget(new Label("無資料"));
+		
 		for(int i=0; i<toalColumn; i++){
 			grid.addColumn(new TxtCol(i),style[i*2+0]);
 			if(style[i*2+1]!=null){
@@ -194,7 +195,7 @@ public abstract class BaseParam extends ExComposite {
 		}
 		
 		//model part
-		provider.addDataDisplay(grid);
+		lst.addDataDisplay(grid);
 		//control part
 		SimplePager pager = new SimplePager();
 		pager.setDisplay(grid);

@@ -32,14 +32,14 @@ public class DlgPickOwner extends DlgBase<ItemOwner> {
 
 	public DlgPickOwner() {
 		initWidget(uiBinder.createAndBindUi(this));
-		refxWidget(root,btnAction,btnCancel);
 	}
 
-	@UiField
-	MaterialModal root;
-	
-	@UiField
-	MaterialButton btnAction,btnCancel;
+	@UiField(provided=true) 
+	MaterialModal root = _dlg_root;
+	@UiField(provided=true)
+	MaterialButton btnAction = _btn_action;
+	@UiField(provided=true)
+	MaterialButton btnCancel = _btn_cancel;
 	
 	@UiField
 	MaterialLabel txtSelTitle;

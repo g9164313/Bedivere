@@ -24,24 +24,22 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 	interface DlgEditOwnerUiBinder extends UiBinder<Widget, DlgEditOwner> {
 	}
 
-	@UiField
-	MaterialModal root;
-	
-	@UiField
-	MaterialButton btnAction,btnCancel;
+	@UiField(provided=true) 
+	MaterialModal root = _dlg_root;
+	@UiField(provided=true)
+	MaterialButton btnAction = _btn_action;
+	@UiField(provided=true)
+	MaterialButton btnCancel = _btn_cancel;
 
 	@UiField
 	MaterialTextBox boxKey,boxName,boxStmp;
-	
 	@UiField
 	MaterialTextBox boxZip,boxAddr,boxPhon;
-	
 	@UiField
 	MaterialTextBox boxDept,boxPern,boxMail,boxMemo;
 	
 	public DlgEditOwner() {
 		initWidget(uiBinder.createAndBindUi(this));
-		refxWidget(root,btnAction,btnCancel);
 		chainBox(
 			boxKey,boxName,boxStmp,
 			boxZip,boxAddr,boxPhon,

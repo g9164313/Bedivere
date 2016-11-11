@@ -1,9 +1,10 @@
 package nthu.hpclp.shared;
 
 public final class Const {
-	
-	public static final String DATABASE_URL_MASTER = "jdbc:postgresql://140.114.104.50:8765/bookkeeping";
+		
 	public static final String DATABASE_URL_ASSIST = "jdbc:postgresql://localhost:8765/bookkeeping";
+	public static final String DATABASE_URL_MASTER = DATABASE_URL_ASSIST;
+	//public static final String DATABASE_URL_MASTER = "jdbc:postgresql://140.114.104.50:8765/bookkeeping";
 	public static final String DATABASE_USER = "qq";
 	public static final String DATABASE_PASS = "qq";
 		
@@ -25,6 +26,10 @@ public final class Const {
 	public static final String REPORT_DEMAND = "繳費通知單.pdf";
 	public static final String REPORT_SERVICE= "費用通知單.pdf";
 	public static final String REPORT_TENURE = "儀器報告.xls";
+	
+	public static final int CMD_INSERT = 0;
+	public static final int CMD_UPDATE = 1;
+	public static final int CMD_DELETE = 2;
 	
 	public static String int2note(int val){
 		char[] digi=String.valueOf(val).toCharArray();

@@ -88,7 +88,8 @@ public interface RPCAsync {
 		AsyncCallback<ItemProdx> res
 	) throws IllegalArgumentException;
 	
-	void modifyParam(
+	void accessParam(
+		final int cmd,
 		ItemParam obj,
 		AsyncCallback<ItemParam> res
 	) throws IllegalArgumentException;

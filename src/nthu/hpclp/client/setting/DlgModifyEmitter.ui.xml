@@ -1,0 +1,33 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder 
+	xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
+	xmlns:m="urn:import:gwt.material.design.client.ui" >
+<ui:style>
+</ui:style>
+
+<m:MaterialModal type="DEFAULT" width="50%" dismissable="true" inDuration="10" outDuration="10" ui:field="root" >
+
+<!-- 修改項目 -->
+<m:MaterialModalContent>
+	<m:MaterialTextBox placeholder="名稱/代號" ui:field="txtTitle"/>
+	<m:MaterialTextBox placeholder="種類" ui:field="txtKind"/>
+	<m:MaterialTextBox placeholder="面積" ui:field="txtArea"/>	
+	<m:MaterialTextBox placeholder="序號" ui:field="txtSerial"/>
+	<m:MaterialTextBox placeholder="認證" ui:field="txtCriteron"/>
+	<m:MaterialTextBox placeholder="活度" ui:field="txtStrength"/>	
+	<m:MaterialTextBox placeholder="表面強度" ui:field="txtSurface"/>
+	<m:MaterialTextBox placeholder="涵蓋因子" ui:field="txtFactorK"/>
+	<m:MaterialTextBox placeholder="涵蓋機率" ui:field="txtFactorP"/>
+	<m:MaterialTextBox placeholder="不確定度" ui:field="txtUncertain"/>
+</m:MaterialModalContent>
+
+<!-- 確認/取消 -->
+<m:MaterialModalFooter width="95%">		
+	<m:MaterialButton text="確認" type="FLAT" ui:field="btnAction" />
+	<m:MaterialButton text="取消" type="FLAT" ui:field="btnCancel" />
+</m:MaterialModalFooter>
+	
+</m:MaterialModal>
+</ui:UiBinder> 

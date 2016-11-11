@@ -246,8 +246,8 @@ public class RpcBridge extends RemoteServiceServlet
 	}
 	
 	@Override
-	public ItemParam modifyParam(ItemParam obj) throws IllegalArgumentException {
-		return SqlDataBase.modifyParam(obj);
+	public ItemParam accessParam(final int cmd,ItemParam obj) throws IllegalArgumentException {
+		return SqlDataBase.accessParam(cmd,obj);
 	}
 	//---------------------------------//
 	
