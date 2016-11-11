@@ -36,9 +36,9 @@ public class PanSetting extends ExComposite {
 		archTab4.add(grid[4]);
 		archTab5.add(new PanSPoint());
 		
-		root.add(ColModify.dlgValue);
-		root.add(ColModify.dlgService);
-		root.add(ColModify.dlgEmitter);
+		root.add(ColUpdate.dlgValue);
+		root.add(ColUpdate.dlgService);
+		root.add(ColUpdate.dlgEmitter);
 	}
 
 	@UiField

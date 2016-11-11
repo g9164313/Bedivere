@@ -13,12 +13,12 @@ import nthu.hpclp.client.Main;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemParam;
 
-public class ColModify extends Column<ItemParam,String> implements 
+public class ColUpdate extends Column<ItemParam,String> implements 
 	FieldUpdater<ItemParam,String>
 {
 	private GrdParam grd = null;
 	
-	public ColModify(GrdParam root) {
+	public ColUpdate(GrdParam root) {
 		super(new ButtonCell());
 		setFieldUpdater(this);
 		grd = root;
@@ -68,7 +68,7 @@ public class ColModify extends Column<ItemParam,String> implements
 			ItemParam itm = dialog.getTarget();
 			itm.setVal(dialog.toString());
 			grd.data2grid();
-			//how to refresh environment???
+			//When user switch to another panel, it must refresh all environments!!!  
 		}
 	};
 	

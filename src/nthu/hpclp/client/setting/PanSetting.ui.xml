@@ -25,11 +25,11 @@
 					<m:MaterialTabItem waves="YELLOW" grid="s2"> <m:MaterialLink text="還原點" href="#tab5" textColor="WHITE" ui:field="lnkTab5" /> </m:MaterialTabItem>
 				</m:MaterialTab>
 			</m:MaterialColumn>
-			<m:MaterialColumn m:id="tab1" grid="s12" ui:field="archTab1"/>
-			<m:MaterialColumn m:id="tab2" grid="s12" ui:field="archTab2"/>
-			<m:MaterialColumn m:id="tab3" grid="s12" ui:field="archTab3"/>
-			<m:MaterialColumn m:id="tab4" grid="s12" ui:field="archTab4"/>
-			<m:MaterialColumn m:id="tab5" grid="s12" ui:field="archTab5"/>
+			<m:MaterialColumn m:id="tab1" grid="s12" paddingTop="13" ui:field="archTab1"/>
+			<m:MaterialColumn m:id="tab2" grid="s12" paddingTop="13" ui:field="archTab2"/>
+			<m:MaterialColumn m:id="tab3" grid="s12" paddingTop="13" ui:field="archTab3"/>
+			<m:MaterialColumn m:id="tab4" grid="s12" paddingTop="13" ui:field="archTab4"/>
+			<m:MaterialColumn m:id="tab5" grid="s12" paddingTop="13" ui:field="archTab5"/>
 		</m:MaterialRow>
 	</m:MaterialContainer>
 

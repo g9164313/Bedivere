@@ -51,8 +51,8 @@ public class GrdParam extends DataGrid<ItemParam> {
 		
 		addColumn(colKey,"名稱");
 		addColumn(colVal,"數值");
-		addColumn(new ColCreate(this));
-		addColumn(new ColModify(this));
+		addColumn(new ColInsert(this));
+		addColumn(new ColUpdate(this));
 		addColumn(new ColDelete(this));
 		
 		setColumnWidth(colKey,"10em");

@@ -126,27 +126,6 @@ public class Main implements EntryPoint {
 		});
 	}
 	//----------------------------//
-	
-	public static void initComboEmitter(MaterialListBox box){
-		box.clear();
-		for(ItemParam pair:param.prodxEmitter){
-			String val = pair.getVal();
-			//select the last emitter, it is special!!!
-			combo_add_emitt(box,val);
-		}
-		box.setSelectedIndex(0);
-	}
-	
-	private static void combo_add_emitt(MaterialListBox box,String arg){
-		int pos = arg.indexOf('@');
-		if(pos<0){
-			box.addItem("???",arg);
-		}else{
-			String name = arg.substring(0,pos);
-			box.addItem(name,arg);
-		}
-	}
-	//----------------------------//
 
 	public final static DateTimeFormat fmtDate = DateTimeFormat.getFormat("yyyy/M/d"); 
 	
@@ -202,7 +181,7 @@ public class Main implements EntryPoint {
 
 	public static RPCAsync rpc = GWT.create(RPC.class);
 	
-	public static ParamHub param = new ParamHub();//enviroment parameters
+	public static ParamHub param = new ParamHub();//Environment parameters
 	
 	public static DlgEditOwner dlgEditOwner = new DlgEditOwner();	
 	public static DlgEditTenur dlgEditTenur = new DlgEditTenur();

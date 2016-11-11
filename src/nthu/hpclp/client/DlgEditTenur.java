@@ -18,6 +18,7 @@ import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
 import narl.itrc.client.DlgBase;
+import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemTenur;
 
@@ -59,12 +60,12 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 		
 	public DlgEditTenur() {
 		initWidget(uiBinder.createAndBindUi(this));
-		/*chainBox(
+		chainBox(
 			boxDevVendor,boxDevSerial,boxDevNumber,
 			boxDetSerial,boxDetNumber,			
 			boxArea,boxFactor,boxSteer,
 			boxOKey,boxMemo
-		);*/
+		);
 	}
 
 	@UiHandler("drpDetType")
@@ -75,12 +76,12 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	
 	@UiHandler("boxArea")
 	public void onChangeArea(ValueChangeEvent<String> event) {
-		makeSpecialCharacter(boxArea);
+		Const.makeSpecialCharacter(boxArea);
 	}
 	
 	@UiHandler("boxSteer")
 	public void onChangeSteer(ValueChangeEvent<String> event) {
-		makeSpecialCharacter(boxSteer);
+		Const.makeSpecialCharacter(boxSteer);
 	}
 	
 	@UiHandler("boxMeet")
@@ -188,19 +189,6 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 			}
 	    };
 	    Main.dlgPickOwner.appear(post,eventPick);
-	}
-	
-	private void makeSpecialCharacter(MaterialTextBox box){
-		String txt = box.getText()
-			.replace("^u","μ")
-			.replace("^.","·")
-			.replace("^^","⁻")
-			.replace("^-1","⁻¹")
-			.replace("^-2","⁻²")
-			.replace("^-2","⁻³")
-			.replace("^2","²")
-			.replace("^3","³");
-		box.setText(txt);
 	}
 	
 	public void initDetectType(){

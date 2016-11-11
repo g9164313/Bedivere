@@ -1,5 +1,7 @@
 package nthu.hpclp.shared;
 
+import gwt.material.design.client.ui.MaterialTextBox;
+
 public final class Const {
 		
 	public static final String DATABASE_URL_ASSIST = "jdbc:postgresql://localhost:8765/bookkeeping";
@@ -30,6 +32,19 @@ public final class Const {
 	public static final int CMD_INSERT = 0;
 	public static final int CMD_UPDATE = 1;
 	public static final int CMD_DELETE = 2;
+	
+	public static void makeSpecialCharacter(MaterialTextBox box){
+		String txt = box.getText()
+			.replace("^u","μ")
+			.replace("^.","·")
+			.replace("^^","⁻")
+			.replace("^-1","⁻¹")
+			.replace("^-2","⁻²")
+			.replace("^-2","⁻³")
+			.replace("^2","²")
+			.replace("^3","³");
+		box.setText(txt);
+	}
 	
 	public static String int2note(int val){
 		char[] digi=String.valueOf(val).toCharArray();

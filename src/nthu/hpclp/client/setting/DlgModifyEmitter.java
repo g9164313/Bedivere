@@ -2,14 +2,17 @@ package nthu.hpclp.client.setting;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
+import com.google.gwt.uibinder.client.UiHandler;
 import com.google.gwt.user.client.ui.Widget;
 
 import gwt.material.design.client.ui.MaterialButton;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialTextBox;
 import narl.itrc.client.DlgBase;
+import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemParam;
 import nthu.hpclp.shared.ParmEmitter;
 
@@ -77,6 +80,57 @@ public class DlgModifyEmitter extends DlgBase<ItemParam> {
 		txtFactorK.setText(emitter.getFactorK());
 		txtFactorP.setText(emitter.getFactorP());
 	}
+	
+	@UiHandler("txtTitle")
+	public void onChangeBox1(ValueChangeEvent<String> event) {
+		Const.makeSpecialCharacter(txtTitle);
+	}
+	
+	@UiHandler("txtKind")
+	public void onChangeBox2(ValueChangeEvent<String> event) {
+		Const.makeSpecialCharacter(txtKind);
+	}
+	
+	@UiHandler("txtArea")
+	public void onChangeBox3(ValueChangeEvent<String> event) {
+		Const.makeSpecialCharacter(txtArea);
+	}
+	
+	@UiHandler("txtSurface")
+	public void onChangeBox4(ValueChangeEvent<String> event) {
+		Const.makeSpecialCharacter(txtSurface);
+	}
+	
+	@UiHandler("txtStrength")
+	public void onChangeBox5(ValueChangeEvent<String> event) {
+		Const.makeSpecialCharacter(txtStrength);
+	}
+	
+	@UiHandler("txtSerial")
+	public void onChangeBox6(ValueChangeEvent<String> event) {
+		Const.makeSpecialCharacter(txtSerial);
+	}
+	
+	@UiHandler("txtCriteron")
+	public void onChangeBox7(ValueChangeEvent<String> event) {
+		Const.makeSpecialCharacter(txtCriteron);
+	}
+	
+	@UiHandler("txtUncertain")
+	public void onChangeBox8(ValueChangeEvent<String> event) {
+		Const.makeSpecialCharacter(txtUncertain);
+	}
+	
+	@UiHandler("txtFactorK")
+	public void onChangeBox9(ValueChangeEvent<String> event) {
+		Const.makeSpecialCharacter(txtFactorK);
+	}
+	
+	@UiHandler("txtFactorP")
+	public void onChangeBox10(ValueChangeEvent<String> event) {
+		Const.makeSpecialCharacter(txtFactorP);
+	}
+	
 	
 	@Override
 	public void takeAction(ClickEvent event) {

@@ -10,12 +10,12 @@ import nthu.hpclp.client.Main;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemParam;
 
-public class ColCreate extends Column<ItemParam,String> implements 
+public class ColInsert extends Column<ItemParam,String> implements 
 	FieldUpdater<ItemParam,String>
 {
 	private GrdParam grd = null;
 	
-	public ColCreate(GrdParam root) {
+	public ColInsert(GrdParam root) {
 		super(new ButtonCell());
 		setFieldUpdater(this);
 		grd = root;
@@ -51,29 +51,30 @@ public class ColCreate extends Column<ItemParam,String> implements
 		}		
 		return prefix+maxVal;
 	}
-	
-	private final AsyncCallback<ItemParam> eventCreate = new AsyncCallback<ItemParam>(){
-		@Override
-		public void onFailure(Throwable caught) {
-			String msg = caught.getMessage();
-			MaterialToast.fireToast("內部錯誤："+msg,3000);
-			System.out.println(msg);
-		}
-		@Override
-		public void onSuccess(ItemParam result) {
-			grd.datum.add(0,result);
-			grd.data2grid();
-			//how to refresh environment???
-		}
-	};
 
 	@Override
 	public void update(int index, ItemParam object, String value) {
 		ItemParam itm = new ItemParam(object);
 		itm.setKey(gen_key_val());
-		Main.rpc.accessParam(Const.CMD_INSERT, itm, eventCreate);
+		Main.rpc.accessParam(Const.CMD_INSERT, itm, eventInsert);
 	}
 	
+	private final AsyncCallback<ItemParam> eventInsert = new AsyncCallback<ItemParam>(){
+		@Override
+		public void onFailure(Throwable caught) {
+			String msg = caught.getMessage();
+			MaterialToast.fireToast("內部錯誤："+msg,3000);
+			System.out.println(msg);
+			grd.data2grid();
+		}
+		@Override
+		public void onSuccess(ItemParam result) {
+			grd.datum.add(0,result);
+			grd.data2grid();
+			//When user switch to another panel, it must refresh all environments!!! 
+		}
+	};
+
 	@Override
 	public String getValue(ItemParam object) {
 		return "新增";

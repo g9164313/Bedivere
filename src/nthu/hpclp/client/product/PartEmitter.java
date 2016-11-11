@@ -45,7 +45,7 @@ public class PartEmitter extends ExComposite {
 	public void onEventShow() {
 		cmbInput.clear();
 		cmbInput.add(new Option("自訂"));//if we can't find target, just select this one~~~
-		//Cs-gamma is 'speical'
+		//Cs-gamma is 'special'
 		int year1=1, year2=1;
 		for(ItemParam parm:Main.param.prodxEmitter){
 			String val = parm.getVal();
@@ -75,8 +75,7 @@ public class PartEmitter extends ExComposite {
 			opt.setValue(val);
 			if(name.endsWith("-"+year1)==true){
 				cmbInput.add(opt);
-				
-				DefaultValue = opt.getValue();//this is a special emitter~~~~
+				DefaultValue = opt.getValue();//this is a special one~~~~
 			}else if(name.endsWith("-"+year2)==true){
 				cmbInput.add(opt);				
 			}else if(name.contains("-gamma-")==false){
