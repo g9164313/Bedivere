@@ -258,6 +258,7 @@ public class SqlDataBase {
 				return null;
 			}else if(obj.isModify()==true){
 				//modify it~~~
+				obj.uuid = obj.uuid.substring(1);
 				setter(updateOwner,obj);
 			}
 		} catch (SQLException e) {			
@@ -297,6 +298,7 @@ public class SqlDataBase {
 				return null;
 			}else if(obj.isModify()==true){
 				//modify it~~~
+				obj.uuid = obj.uuid.substring(1);
 				setter(updateTenur,obj);
 			}
 		} catch (SQLException e) {			
@@ -343,6 +345,7 @@ public class SqlDataBase {
 				return null;
 			}else if(obj.isModify()==true){
 				//modify it~~~
+				obj.uuid = obj.uuid.substring(1);
 				setter(updateAccnt,obj);
 			}
 		} catch (SQLException e) {			
@@ -391,6 +394,7 @@ public class SqlDataBase {
 				return null;
 			}else if(obj.isModify()==true){
 				//modify it~~~
+				obj.uuid = obj.uuid.substring(1);
 				setter(updateProdx,obj);
 				cementRelation(obj);		
 			}

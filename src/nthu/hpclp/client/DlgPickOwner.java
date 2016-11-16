@@ -9,6 +9,7 @@ import gwt.material.design.client.ui.MaterialCollection;
 import gwt.material.design.client.ui.MaterialCollectionItem;
 import gwt.material.design.client.ui.MaterialColumn;
 import gwt.material.design.client.ui.MaterialLabel;
+import gwt.material.design.client.ui.MaterialLoader;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialRow;
 import gwt.material.design.client.ui.MaterialToast;
@@ -59,6 +60,7 @@ public class DlgPickOwner extends DlgBase<ItemOwner> {
 	 * @param hook - where user click action button~~~
 	 */
 	public void appear(final String postfix,final ClickHandler hook){
+		MaterialLoader.showLoading(true);
 		txtInfo1.setText("");
 		txtInfo2.setText("");
 		txtInfo3.setText("");
@@ -69,10 +71,12 @@ public class DlgPickOwner extends DlgBase<ItemOwner> {
 		Main.rpc.listOwner(postfix,new AsyncCallback<ArrayList<ItemOwner>>(){
 			@Override
 			public void onFailure(Throwable caught) {
+				MaterialLoader.showLoading(false);				
 				MaterialToast.fireToast("內部錯誤\n"+caught.getMessage());
 			}
 			@Override
-			public void onSuccess(ArrayList<ItemOwner> result) {				
+			public void onSuccess(ArrayList<ItemOwner> result) {
+				MaterialLoader.showLoading(false);				
 				if(result.isEmpty()==true){
 					MaterialToast.fireToast("查無資料");
 					return;

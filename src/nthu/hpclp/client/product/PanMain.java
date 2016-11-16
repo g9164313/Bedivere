@@ -37,12 +37,12 @@ public class PanMain extends PanCtrl {
 		anchorAppx.setWidget(appx);
 		anchorScriber.setWidget(scriber);
 		anchorEmitter.setWidget(emitter);		
-		addAltShortcut(KeyCodes.KEY_L);
-		addAltShortcut(KeyCodes.KEY_N);		
-		addAltShortcut(KeyCodes.KEY_S);		
-		addAltShortcut(KeyCodes.KEY_P);
-		addAltShortcut(KeyCodes.KEY_T);
-		addShortcut(KeyCodes.KEY_F1);		
+		addAltShortcut(
+			KeyCodes.KEY_L,KeyCodes.KEY_N,KeyCodes.KEY_I,
+			KeyCodes.KEY_S,KeyCodes.KEY_P,KeyCodes.KEY_T,
+			KeyCodes.KEY_DELETE
+		);
+		addShortcut(KeyCodes.KEY_F1,KeyCodes.KEY_PAGEUP,KeyCodes.KEY_PAGEDOWN);
 		chainBox(
 			owner.boxOKey,
 			tenur.boxTKey,
@@ -87,11 +87,15 @@ public class PanMain extends PanCtrl {
 		case KeyCodes.KEY_L://show list			
 			onListShow(null);
 			break;
+		case KeyCodes.KEY_I://insert the new one
 		case KeyCodes.KEY_N://create the new one
 			onListAddItem(null); 
 			break;
+		case KeyCodes.KEY_DELETE://delete the new one
+			onListDelete(null);
+			break;
 		case KeyCodes.KEY_S://save all items
-			onListSave(null); 
+			onListUpload(null); 
 			break;
 		case KeyCodes.KEY_P://print items
 			onPrintProdx(null);
@@ -99,6 +103,12 @@ public class PanMain extends PanCtrl {
 		case KeyCodes.KEY_F1://print 2D-tag
 		case KeyCodes.KEY_T: 
 			onPrint2DTag(null); 
+			break;
+		case KeyCodes.KEY_PAGEUP:
+			listNextItem(-1);
+			break;
+		case KeyCodes.KEY_PAGEDOWN:
+			listNextItem(1);
 			break;
 		}
 	}
@@ -139,6 +149,7 @@ public class PanMain extends PanCtrl {
     		dlgList.closeModal();
     	}else{
     		isOnList = true;
+    		lstProvd.refresh();
     		dlgList.openModal();    		
     	}
     }
@@ -148,17 +159,20 @@ public class PanMain extends PanCtrl {
     }
     @UiHandler("lnkListClear")
     void onListClear(ClickEvent e){
-    	//Main.dlgApprove.appear("有未儲存的項目，確認清除?", hook);
-    	listClear();
+    	listClearItem();
     }
     @UiHandler("lnkListAddItem")
     void onListAddItem(ClickEvent e){
     	owner.boxOKey.setFocus(true);
     	listAddItem();
     }
-    @UiHandler("lnkListSave")
-    void onListSave(ClickEvent e){
-    	listSaveItem();
+    @UiHandler("lnkListUpload")
+    void onListUpload(ClickEvent e){
+    	listUploadItem();
+    }
+    @UiHandler("lnkListDelete")
+    void onListDelete(ClickEvent e){
+    	ListDeleteItem();
     }
     //-----------------------------//
     
@@ -177,7 +191,7 @@ public class PanMain extends PanCtrl {
     }
     @UiHandler("lnkPrintProdx")
     void onPrintProdx(ClickEvent e){
-    	
+    	printProduct();
     }
     @UiHandler("lnkPrintReport")
     void onPrintReport(ClickEvent e){

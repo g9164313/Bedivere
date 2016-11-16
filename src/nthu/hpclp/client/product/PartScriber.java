@@ -19,6 +19,7 @@ import com.google.gwt.user.client.ui.Widget;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.SingleSelectionModel;
 
+import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialSwitch;
 import gwt.material.design.client.ui.MaterialTextBox;
@@ -50,7 +51,7 @@ public class PartScriber extends Composite {
 	
 	@UiField 
 	SimplePanel anchor1, anchor2;
-	
+
 	private ItemProdx target;
 	private double suf,stn;
 	
@@ -77,6 +78,72 @@ public class PartScriber extends Composite {
 			provAdv.setList(dummy);
 		}
 	}
+	//---------------------------------------//
+		
+	@UiField
+	MaterialModal dlgEditor;
+	@UiField 
+	MaterialTextBox boxScribe0,boxScribe1,boxScribe2;
+	
+	private SingleSelectionModel<String> modScribe;
+	
+	private int idxScribe;
+	
+	@UiHandler("btnEditAction")
+	void onEditAction(ClickEvent e) {
+		String txt = boxScribe0.getText()+"@"+
+			boxScribe1.getText()+"@"+
+			boxScribe2.getText();
+		target.scribble.set(idxScribe,txt);
+		target.markModify();
+		provCom.refresh();
+		provAdv.refresh();
+		dlgEditor.closeModal();
+	}
+	 
+	@UiHandler("btnEditCancel")
+	void onEditCancel(ClickEvent e) {
+		dlgEditor.closeModal();
+	}
+	 
+	@UiHandler("btnEditor")
+	@SuppressWarnings("unchecked")
+	void onEditScribe(ClickEvent e) {
+		if(target==null){
+    		return;
+    	}
+		modScribe = (SingleSelectionModel<String>) gridCom.getSelectionModel();
+    	String txt = modScribe.getSelectedObject();
+    	if(txt==null){
+    		return;
+    	}    	
+    	idxScribe = target.scribble.indexOf(txt);    	
+    	String[] val = txt.split("@");
+    	switch(val.length){
+    	default:
+    	case 3:
+    		boxScribe0.setText(val[0]);
+    		boxScribe1.setText(val[1]);
+    		boxScribe2.setText(val[2]);
+    		break;
+    	case 2:
+    		boxScribe0.setText(val[0]);
+    		boxScribe1.setText(val[1]);
+    		boxScribe2.setText("");
+    		break;
+    	case 1:
+    		boxScribe0.setText(val[0]);
+    		boxScribe1.setText("");
+    		boxScribe2.setText("");
+    		break;
+    	case 0:
+    		boxScribe0.setText("");
+    		boxScribe1.setText("");
+    		boxScribe2.setText("");
+    		break;
+    	}
+    	dlgEditor.openModal();
+    }
 	//---------------------------------------//
 	
 	private void init_grid(){
@@ -163,7 +230,6 @@ public class PartScriber extends Composite {
 		gridCom.addColumn(new ColText(2),"器示值");
 		gridCom.setColumnWidth(0,"4em");
 		gridCom.setColumnWidth(1,"5em");
-		gridCom.setColumnWidth(2,"10em");
 	}
 
 	private void prepare_col_advance(){
@@ -173,8 +239,6 @@ public class PartScriber extends Composite {
 		gridAdv.addColumn(new ColText(-3),"不確定度修剪");
 		gridAdv.addColumn(new ColText(-4),"因子/反應/效率");		
 		gridAdv.setColumnWidth(0,"4em");
-		gridAdv.setColumnWidth(1,"5em");
-		gridAdv.setColumnWidth(2,"10em");
 		gridAdv.setColumnWidth(3,"10em");
 		gridAdv.setColumnWidth(4,"10em");
 	}

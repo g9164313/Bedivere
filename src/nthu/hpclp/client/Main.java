@@ -3,15 +3,12 @@ package nthu.hpclp.client;
 import java.util.ArrayList;
 import java.util.Date;
 
-import gwt.material.design.client.ui.MaterialListBox;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemAccnt;
 import nthu.hpclp.shared.ItemMeeting;
 import nthu.hpclp.shared.ItemOwner;
-import nthu.hpclp.shared.ItemParam;
-import nthu.hpclp.shared.ItemProdx;
 import nthu.hpclp.shared.ParamHub;
 
 import com.google.gwt.core.client.EntryPoint;
@@ -44,29 +41,6 @@ public class Main implements EntryPoint {
 			}
 		});
 	}
-
-	public static void printProduct(ItemProdx buf){
-		ArrayList<ItemProdx> lst = new ArrayList<ItemProdx>();
-		lst.add(buf);
-		printProduct(lst);
-	}
-	public static void printProduct(ArrayList<ItemProdx> buf){
-		//TODO:how to classify product???
-		rpc.cacheProduct(buf, new AsyncCallback<ArrayList<ItemProdx>>(){
-			@Override
-			public void onFailure(Throwable caught) {
-				MaterialToast.fireToast("內部錯誤");
-			}
-			@Override
-			public void onSuccess(ArrayList<ItemProdx> result) {				
-		    	Window.open(
-		    		GWT.getHostPageBaseURL()+Const.REPORT_PRODUCT,
-		    		"_blank",""
-		    	);
-			}
-		});
-	}
-	
 	public static void printDemand(ItemAccnt buf){
 		ArrayList<ItemAccnt> lst = new ArrayList<ItemAccnt>();
 		lst.add(buf);

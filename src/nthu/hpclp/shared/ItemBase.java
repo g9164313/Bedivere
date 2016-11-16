@@ -166,6 +166,17 @@ public class ItemBase implements Serializable {
 		return false;
 	}
 	
+	public boolean isClean(){
+		if(uuid.length()==0){
+			return false;
+		}
+		char tkn = uuid.charAt(0);
+		if(tkn==TOKEN_DELETE||tkn==TOKEN_MODIFY){
+			return false;
+		}
+		return true;
+	}
+		
 	public ItemBase markDelete(){
 		return mark_token(TOKEN_DELETE);
 	}

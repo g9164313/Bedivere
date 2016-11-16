@@ -9,7 +9,7 @@
 <m:MaterialPanel backgroundColor="white" layoutPosition="RELATIVE" marginTop="20" padding="7" ui:field="root">
 	<m:MaterialRow>
 		<m:MaterialColumn>
-			<m:MaterialTextBox placeholder="測試儀器" iconType="DEVELOPER_BOARD" width="10em" ui:field="boxTKey" />
+			<m:MaterialTextBox placeholder="儀器資料" iconType="DEVELOPER_BOARD" width="10em" ui:field="boxTKey" />
 		</m:MaterialColumn>
 		<m:MaterialColumn>
 			<m:MaterialLabel ui:field="txtInfoT1" />

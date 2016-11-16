@@ -20,18 +20,19 @@
 				<m:MaterialLink iconPosition="NONE" tooltip="搜尋" tooltipPosition="LEFT" iconType="SEARCH" ui:field="lnkStartSearch" />
 				<m:MaterialLink iconPosition="NONE" tooltip="功能" tooltipPosition="LEFT" iconType="TUNE" activates="drpFunc">
 					<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpFunc" >
-						<m:MaterialLink text="顯示清單 Alt+L" textColor="grey darken-1" iconType="RECEIPT" ui:field="lnkListShow" />
-						<m:MaterialLink text="最近50筆" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkListLast" />						
-						<m:MaterialLink text="清除清單" textColor="grey darken-1" iconType="CLEAR_ALL" ui:field="lnkListClear" />
+						<m:MaterialLink text="最近50筆" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkListLast" />	
+						<m:MaterialLink text="顯示清單 Alt+L" textColor="grey darken-1" iconType="RECEIPT" ui:field="lnkListShow" />																	
 						<m:MaterialLink text="新增報告 Alt+N" textColor="grey darken-1" iconType="PLUS_ONE" ui:field="lnkListAddItem" />
-						<m:MaterialLink text="上傳報告 Alt+S" textColor="grey darken-1" iconType="FILE_UPLOAD" ui:field="lnkListSave" />                 			
+						<m:MaterialLink text="刪除報告 Alt+Del" textColor="grey darken-1" iconType="REMOVE" ui:field="lnkListDelete" /> 
+						<m:MaterialLink text="上傳報告 Alt+S" textColor="grey darken-1" iconType="FILE_UPLOAD" ui:field="lnkListUpload" />
+						<m:MaterialLink text="清除清單" textColor="grey darken-1" iconType="CLEAR_ALL" ui:field="lnkListClear" />						                			
 					</m:MaterialDropDown>
 				</m:MaterialLink>
 				<m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="LEFT" iconType="PRINT" activates="drpPrint">
 					<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpPrint" >                    		
-						<m:MaterialLink text="實驗標籤 Alt+T" ui:field="lnkPrint2DTag" />
-						<m:MaterialLink text="實驗報告 Alt+P" ui:field="lnkPrintProdx" />
-						<m:MaterialLink text="量測統計" ui:field="lnkPrintReport" />
+						<m:MaterialLink text="實驗標籤 Alt+T" textColor="grey darken-1" ui:field="lnkPrint2DTag" />
+						<m:MaterialLink text="實驗報告 Alt+P" textColor="grey darken-1" ui:field="lnkPrintProdx" />
+						<m:MaterialLink text="量測統計" textColor="grey darken-1" ui:field="lnkPrintReport" />
 					</m:MaterialDropDown>
 				</m:MaterialLink>	  
 			</m:MaterialNavSection>

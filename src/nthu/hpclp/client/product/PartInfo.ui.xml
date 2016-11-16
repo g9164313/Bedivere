@@ -16,7 +16,7 @@
 			<m:MaterialTextBox width="9rem" placeholder="報告編號" ui:field="boxPKey" />
 		</m:MaterialColumn>
 		<m:MaterialColumn>
-			<m:MaterialTextBox width="9rem" placeholder="附註事項" ui:field="boxMemo" />
+			<m:MaterialListBox width="9rem" tooltip="報告格式" ui:field="cmbFormatP" />
 		</m:MaterialColumn>
 	</m:MaterialRow>
 	
@@ -34,13 +34,13 @@
 	
 	<m:MaterialRow>
 		<m:MaterialColumn>
-			<m:MaterialListBox width="9rem" tooltip="報告格式" ui:field="cmbFormatP" />
-		</m:MaterialColumn>
-		<m:MaterialColumn>
 			<m:MaterialListBox width="9rem" tooltip="參考值單位" ui:field="cmbUnitRef" />
 		</m:MaterialColumn>
 		<m:MaterialColumn>
 			<m:MaterialListBox width="9rem" tooltip="器示值單位" ui:field="cmbUnitMea" />
+		</m:MaterialColumn>
+		<m:MaterialColumn>
+			<m:MaterialTextBox width="9rem" placeholder="附註事項" ui:field="boxMemo" />
 		</m:MaterialColumn>
 	</m:MaterialRow>
 	

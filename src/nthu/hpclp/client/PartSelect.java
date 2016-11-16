@@ -7,12 +7,12 @@ import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
 
 import gwt.material.design.client.base.MaterialWidget;
-import gwt.material.design.client.ui.MaterialLoader;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
 import narl.itrc.client.DlgBase;
 import narl.itrc.client.ExComposite;
 import nthu.hpclp.shared.ItemOwner;
+import nthu.hpclp.shared.ItemProdx;
 import nthu.hpclp.shared.ItemTenur;
 
 public abstract class PartSelect<T> extends ExComposite {
@@ -26,6 +26,8 @@ public abstract class PartSelect<T> extends ExComposite {
 	protected MaterialTextBox boxKey = new MaterialTextBox();
 	
 	public T target;
+	
+	protected ItemProdx parent;
 	
 	public abstract T getTarget(boolean create);
 
@@ -82,6 +84,7 @@ public abstract class PartSelect<T> extends ExComposite {
 		@SuppressWarnings("unchecked")
 		@Override
 		public void onKeyPress(KeyPressEvent event) {
+			
 			int code = event.getNativeEvent().getKeyCode();	
 			if(code!=KeyCodes.KEY_ENTER){
 				return;
@@ -94,32 +97,30 @@ public abstract class PartSelect<T> extends ExComposite {
 
 			if(target instanceof ItemOwner){
 				
-				MaterialLoader.showLoading(true);
-				
-				DlgPickOwner dlg = new DlgPickOwner();
-				dlg.appear(
+				Main.dlgPickOwner.appear(
 					"WHERE "+
-				    "(info[1] SIMILAR TO '%"+txt+"%') OR "+
-				    "(info[2] SIMILAR TO '%"+txt+"%') OR "+
-				    "(info[4] SIMILAR TO '%"+txt+"%') OR "+
-				    "(info[6] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ",
+				    "info[1] SIMILAR TO '%"+txt+"%' OR "+
+				    "info[2] SIMILAR TO '%"+txt+"%' OR "+
+				    "info[4] SIMILAR TO '%"+txt+"%' OR "+
+				    "info[5] SIMILAR TO '%"+txt+"%' OR "+
+				    "info[6] SIMILAR TO '%"+txt+"%' OR "+
+				    "info[7] SIMILAR TO '%"+txt+"%' OR "+
+				    "info[8] SIMILAR TO '%"+txt+"%' ORDER BY last DESC ",
 				    eventPickup
 				);
-				dialog = (DlgBase<T>) dlg;
+				dialog = (DlgBase<T>) Main.dlgPickOwner;
 				
 			}else if(target instanceof ItemTenur){
 				
-				MaterialLoader.showLoading(true);
-				
 				Main.dlgPickTenur.appear(
 					"WHERE "+
-					"(tenure.info[1] SIMILAR TO '%"+txt+"%') OR "+
-					"(tenure.info[2] SIMILAR TO '%"+txt+"%') OR "+
-					"(tenure.info[3] SIMILAR TO '%"+txt+"%') OR "+
-					"(tenure.info[4] SIMILAR TO '%"+txt+"%') OR "+
-					"(tenure.info[6] SIMILAR TO '%"+txt+"%') OR "+
-					"(tenure.info[7] SIMILAR TO '%"+txt+"%') OR "+
-					"(tenure.info[11] SIMILAR TO '%"+txt+"%') ORDER BY last DESC ",
+					"lower(tenure.info[2]) SIMILAR TO '%"+txt+"%' OR "+
+					"lower(tenure.info[3]) SIMILAR TO '%"+txt+"%' OR "+
+					"lower(tenure.info[4]) SIMILAR TO '%"+txt+"%' OR "+
+					"tenure.info[5] SIMILAR TO '%"+txt+"%' OR "+
+					"lower(tenure.info[6]) SIMILAR TO '%"+txt+"%' OR "+
+					"lower(tenure.info[7]) SIMILAR TO '%"+txt+"%' OR "+
+					"tenure.info[1] SIMILAR TO '%"+txt+"%' ORDER BY last DESC ",
 					eventPickup
 				);
 				dialog = (DlgBase<T>) Main.dlgPickTenur;
@@ -134,14 +135,10 @@ public abstract class PartSelect<T> extends ExComposite {
 	
 	private final ClickHandler eventPickup = new ClickHandler(){
 		@Override
-		public void onClick(ClickEvent event) {
-			
-			MaterialLoader.showLoading(false);
-			
+		public void onClick(ClickEvent event) {			
 			target = dialog.getTarget();
-			
-			updateBox();
-			
+			parent.markModify();
+			updateBox();			
 			boxKey.setText("");
 			if(nextBox!=null){
 				nextBox.setFocus(true);

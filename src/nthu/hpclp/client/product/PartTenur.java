@@ -38,8 +38,6 @@ public class PartTenur extends PartSelect<ItemTenur> {
     	txtInfoT1,txtInfoT2,txtInfoT3,
     	txtInfoT4,txtInfoT5,txtInfoT6;
 
-	private ItemProdx parent;
-
 	public void setTarget(ItemProdx obj){
 		parent = obj;
 		if(obj!=null){

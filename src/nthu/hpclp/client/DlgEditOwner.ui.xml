@@ -9,7 +9,7 @@
 	
 <m:MaterialModal type="DEFAULT" width="80%" dismissable="true" inDuration="10" outDuration="10" ui:field="root" >
 
-	<m:MaterialModalContent >
+	<m:MaterialModalContent>
 		<m:MaterialRow>
 			<m:MaterialColumn>
 				<m:MaterialTextBox placeholder="公司代號" width="5em" ui:field="boxKey"/>

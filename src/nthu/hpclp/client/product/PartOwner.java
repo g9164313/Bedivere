@@ -35,8 +35,6 @@ public class PartOwner extends PartSelect<ItemOwner> {
 	
 	@UiField
 	MaterialLabel txtInfoO1,txtInfoO2,txtInfoO3;
-		
-	private ItemProdx parent;
 	
 	public void setTarget(ItemProdx obj){
 		parent = obj;

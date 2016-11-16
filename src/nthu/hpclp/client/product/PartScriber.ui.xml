@@ -19,10 +19,22 @@
 		<g:SimplePanel ui:field="anchor2"/>
 	</m:MaterialRow>
 	
-	<m:MaterialRow>
-		<m:MaterialSwitch value="false" grid="l0" ui:field="modSwitch" />
-		<m:MaterialLabel text="進階顯示"/>
-	</m:MaterialRow>
+	<m:MaterialButton text="編輯數據" waves="LIGHT" textColor="WHITE" ui:field="btnEditor"/>
+	
+	<m:MaterialSwitch value="false" grid="l0" ui:field="modSwitch"/>
+
+	<m:MaterialModal type="DEFAULT" width="80%" dismissable="true" ui:field="dlgEditor">
+		<m:MaterialModalContent>
+			<m:MaterialTextBox placeholder="刻度" ui:field="boxScribe0"/>
+			<m:MaterialTextBox placeholder="參考值" ui:field="boxScribe1"/>
+			<m:MaterialTextBox placeholder="器示值" ui:field="boxScribe2"/>			
+		</m:MaterialModalContent>
+		<m:MaterialModalFooter width="95%">		
+			<m:MaterialButton text="確認" type="FLAT" ui:field="btnEditAction" />
+			<m:MaterialButton text="取消" type="FLAT" ui:field="btnEditCancel" />
+		</m:MaterialModalFooter>
+	</m:MaterialModal>
+	
 </m:MaterialPanel>
 
 </ui:UiBinder> 

@@ -181,24 +181,26 @@ public abstract class ExComposite extends Composite {
 		}
 	};
 	
-	protected void addShortcut(int keycode){
+	protected void addShortcut(int... keycode){
 		add_shortcut(nullShortcut,keycode);
 	}
 	
-	protected void addCtrlShortcut(int keycode){
+	protected void addCtrlShortcut(int... keycode){
 		add_shortcut(ctrlShortcut,keycode);
 	}
 	
-	protected void addAltShortcut(int keycode){
+	protected void addAltShortcut(int... keycode){
 		add_shortcut(alt_Shortcut,keycode);
 	}
 
-	private void add_shortcut(ArrayList<Integer> lst,int keycode){
+	private void add_shortcut(ArrayList<Integer> lst,int... keycode){
 		if(isHooking==false){
 			Event.addNativePreviewHandler(hookShortcut);
 			isHooking = true;
 			//RootPanel.get().addDomHandler(eventHookShortcut,type);
 		}
-		lst.add(keycode);
+		for(int i=0; i<keycode.length; i++){
+			lst.add(keycode[i]);	
+		}		
 	}
 }
