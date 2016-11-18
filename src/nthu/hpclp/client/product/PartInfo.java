@@ -4,6 +4,7 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ChangeEvent;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
+import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.uibinder.client.UiHandler;
@@ -14,13 +15,14 @@ import gwt.material.design.client.ui.MaterialCheckBox;
 import gwt.material.design.client.ui.MaterialListBox;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
+import gwt.material.design.client.ui.html.Option;
 import narl.itrc.client.ExComposite;
 import nthu.hpclp.client.Main;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemParam;
 import nthu.hpclp.shared.ItemProdx;
-
+import nthu.hpclp.shared.ParmEmitter;
 
 public class PartInfo extends ExComposite {
 
@@ -40,7 +42,8 @@ public class PartInfo extends ExComposite {
 		cmbFormatP.addItem(ItemProdx.TXT_FMT_F1V);
 		cmbFormatP.addItem(ItemProdx.TXT_FMT_F1W);
 	}
-
+	
+	public PartEmitter emt = new PartEmitter();
 	
     @UiField
     public MaterialTextBox boxPKey,boxStmp,boxMemo;
@@ -50,23 +53,11 @@ public class PartInfo extends ExComposite {
 	public MaterialListBox cmbFormatP,cmbUnitRef,cmbUnitMea;
     
     @UiField
-    MaterialCheckBox chkUseLogo;
+    public MaterialCheckBox chkUseLogo;
+    
+    @UiField
+    public MaterialListBox cmbEmitter;
 
-	@Override
-	public void onEventShow() {
-		//unit may be added or deleted~~~
-		cmbUnitRef.clear();
-		cmbUnitMea.clear();
-		for(ItemParam parm:Main.param.prodxRadUnit){
-			String unit = parm.getVal();
-			cmbUnitRef.addItem(unit);
-			cmbUnitMea.addItem(unit);
-		}
-	}
-	@Override
-	public void onEventHide() {
-	}
-	
 	private ItemProdx target;
 	
 	public void setTarget(ItemProdx obj){
@@ -84,7 +75,12 @@ public class PartInfo extends ExComposite {
 			chkUseLogo.setEnabled(true);
 			cmbSelect(cmbFormatP,target.getFormat());
 			cmbSelect(cmbUnitRef,target.getUnitRef());
-			cmbSelect(cmbUnitMea,target.getUnitMea());
+			cmbSelect(cmbUnitMea,target.getUnitMea());			
+			ParmEmitter emt = target.getEmitter();
+			cmbSelect(cmbEmitter,
+				emt.getTitle(),
+				emt.toString()
+			);
 			chkUseLogo.setValue(target.useLogo);
 		}else{
 			boxPKey.setText("");
@@ -93,13 +89,97 @@ public class PartInfo extends ExComposite {
 			boxTempu.setText("");
 			boxPress.setText("");
 			boxHumid.setText("");
-			cmbFormatP.setEnabled(false);
-			cmbUnitRef.setEnabled(false);
-			cmbUnitMea.setEnabled(false);
-			chkUseLogo.setEnabled(false);
+			//cmbFormatP.setEnabled(false);
+			//cmbUnitRef.setEnabled(false);
+			//cmbUnitMea.setEnabled(false);			
+			//cmbEmitter.setEnabled(false);
+			//chkUseLogo.setEnabled(false);	
 		}
 	}
 	
+	private void init_cmb_unit(){
+		cmbUnitRef.clear();
+		cmbUnitMea.clear();
+		for(ItemParam parm:Main.param.prodxRadUnit){
+			String unit = parm.getVal();
+			cmbUnitRef.addItem(unit);
+			cmbUnitMea.addItem(unit);
+		}		
+	}
+	
+	public static String DEFAT_GAMMA_EMITTER = ParmEmitter.DEFAULT_GAMMA_VALUE;
+	
+	private void init_cmb_emitter(){
+		cmbEmitter.clear();		
+		//銫-gamma is 'special'
+		final String SPECIAL_KIND = "-gamma-";
+		int year1=105, year2=104;
+		for(ItemParam parm:Main.param.prodxEmitter){
+			String val = parm.getVal();
+			ParmEmitter e = new ParmEmitter(val);
+			String name = e.getTitle();
+			
+			if(name.contains(SPECIAL_KIND)==false){
+				continue;
+			}
+			//check tail is number!!!
+			try{
+				int pos = name.indexOf(SPECIAL_KIND);				
+				int yr = Integer.valueOf(name.substring(pos+SPECIAL_KIND.length()));
+				if(yr>year1){
+					year1 = yr;
+					year2 = year1 - 1;
+				}
+			}catch(NumberFormatException err){
+				continue;
+			}
+		}
+		int cmbIndex = 0;
+		for(ItemParam parm:Main.param.prodxEmitter){
+			String txt = parm.getVal();
+			ParmEmitter emt = new ParmEmitter(txt);
+			String name = emt.getTitle();
+			Option opt = new Option();
+			opt.setText(name);
+			opt.setTitle(name);
+			opt.setValue(txt);
+			if(name.endsWith("-"+year1)==true){
+				DEFAT_GAMMA_EMITTER = txt;
+				cmbEmitter.addItem(name,txt);
+				cmbEmitter.setItemText(cmbIndex++,name);//workaround~~~~
+			}else if(name.endsWith("-"+year2)==true){
+				cmbEmitter.addItem(name,txt);
+				cmbEmitter.setItemText(cmbIndex++,name);//workaround~~~~
+			}else if(name.contains(SPECIAL_KIND)==false){
+				cmbEmitter.addItem(name,txt);
+				cmbEmitter.setItemText(cmbIndex++,name);//workaround~~~~
+			}
+		}
+		cmbEmitter.addValueChangeHandler(new ValueChangeHandler<String>(){
+			@Override
+			public void onValueChange(ValueChangeEvent<String> event) {
+				int idx = cmbEmitter.getSelectedIndex();
+				String val = cmbEmitter.getValue(idx);
+				if(target!=null){
+					target.setEmitter(val);
+				}
+				emt.setTarget(val);
+			}
+		});
+	}	
+	//------------------------------------//
+    
+	@Override
+	public void onEventShow() {
+		init_cmb_unit();
+		init_cmb_emitter();
+		emt.setTarget(cmbEmitter.getSelectedValue());
+	}
+	
+	@Override
+	public void onEventHide() {
+	}
+
     @UiHandler("boxPKey")
     void onChangeKeyProduct(ChangeEvent event){
     	if(target==null){

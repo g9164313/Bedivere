@@ -11,15 +11,21 @@
 <m:MaterialPanel backgroundColor="white" layoutPosition="RELATIVE" marginTop="20" padding="7" ui:field="root">
 
 	<m:MaterialRow>
-		<m:MaterialListBox ui:field="cmbInput" />
-	</m:MaterialRow>
-	
-	<m:MaterialRow>
-		<m:MaterialColumn>		
+		<m:MaterialColumn>
 			<m:MaterialRow>	
-				<m:MaterialColumn> <m:MaterialLabel text="種類大小："/> </m:MaterialColumn>
-				<m:MaterialColumn> <m:MaterialLabel ui:field="txtKindArea"/> </m:MaterialColumn>
-			</m:MaterialRow> 
+				<m:MaterialColumn> <m:MaterialLabel text="名稱："/> </m:MaterialColumn>
+				<m:MaterialColumn> <m:MaterialLabel ui:field="txtTitle"/> </m:MaterialColumn>
+			</m:MaterialRow>
+			<m:MaterialRow>	
+				<m:MaterialColumn> <m:MaterialLabel text="種類："/> </m:MaterialColumn>
+				<m:MaterialColumn> <m:MaterialLabel ui:field="txtKind"/> </m:MaterialColumn>
+			</m:MaterialRow>
+		</m:MaterialColumn>
+		<m:MaterialColumn>		
+ 			<m:MaterialRow>	
+				<m:MaterialColumn> <m:MaterialLabel text="表面大小："/> </m:MaterialColumn>
+				<m:MaterialColumn> <m:MaterialLabel ui:field="txtArea"/> </m:MaterialColumn>
+			</m:MaterialRow>
 			<m:MaterialRow> 
 				<m:MaterialColumn> <m:MaterialLabel text="表面強度："/> </m:MaterialColumn>
 				<m:MaterialColumn> <m:MaterialLabel ui:field="txtSurface"/> </m:MaterialColumn>
@@ -29,11 +35,7 @@
 				<m:MaterialColumn> <m:MaterialLabel ui:field="txtSerial" /> </m:MaterialColumn>
 			</m:MaterialRow>			
 		</m:MaterialColumn>
-		<m:MaterialColumn>
-			<m:MaterialRow>
-				<m:MaterialColumn> <m:MaterialLabel text="不確定度："/> </m:MaterialColumn>
-				<m:MaterialColumn> <m:MaterialLabel ui:field="txtUncertain"/> </m:MaterialColumn>
-			</m:MaterialRow>
+		<m:MaterialColumn>			
 			<m:MaterialRow> 
 				<m:MaterialColumn> <m:MaterialLabel text="涵蓋因子："/> </m:MaterialColumn>
 				<m:MaterialColumn> <m:MaterialLabel ui:field="txtFactorK"/> </m:MaterialColumn>
@@ -41,6 +43,10 @@
 			<m:MaterialRow>
 				<m:MaterialColumn> <m:MaterialLabel text="涵蓋機率："/> </m:MaterialColumn>
 				<m:MaterialColumn> <m:MaterialLabel ui:field="txtFactorP"/> </m:MaterialColumn>
+			</m:MaterialRow>
+			<m:MaterialRow>
+				<m:MaterialColumn> <m:MaterialLabel text="不確定度："/> </m:MaterialColumn>
+				<m:MaterialColumn> <m:MaterialLabel ui:field="txtUncertain"/> </m:MaterialColumn>
 			</m:MaterialRow>
 		</m:MaterialColumn>
 	</m:MaterialRow>

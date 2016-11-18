@@ -21,6 +21,8 @@ public class ParmEmitter implements Serializable {
 	
 	private static final String DEFAULT_UNCERTAIN = "0.025";
 	
+	public static final String DEFAULT_GAMMA_VALUE = "¹³⁷Cs-gamma-102@¹³⁷Cs@0 cm²@111 GBq, 18.5 GBq, 1850 MBq (July 1, 1996)@0 βˉ/s@無@NRSL-102174；校正日期：102年6月；校正週期：一年@2@95%@def±0.025,";
+	
 	public String[] info;
 	
 	public ParmEmitter(String txt){

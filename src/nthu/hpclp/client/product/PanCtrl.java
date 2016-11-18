@@ -41,6 +41,13 @@ public abstract class PanCtrl extends ExComposite {
 			}
 		});
 	}
+	
+	protected PartOwner owner = new PartOwner();
+	protected PartTenur tenur = new PartTenur();
+	protected PartInfo info = new PartInfo();
+	protected PartAppx appx = new PartAppx();
+	protected PartScriber scriber = new PartScriber();
+	protected DlgGenReport genTenuReport = new DlgGenReport();
 
 	@Override
 	public void onEventHide() {
@@ -162,8 +169,10 @@ public abstract class PanCtrl extends ExComposite {
 	
 	protected void listAddItem(){
 		ItemProdx itm = new ItemProdx();
-		itm.setEmitter(PartEmitter.DefaultValue);
-		lstProdx.add(0,itm);	
+		itm.setUnitRef(info.cmbUnitRef.getSelectedValue());
+		itm.setUnitMea(info.cmbUnitMea.getSelectedValue());
+		itm.setEmitter(PartInfo.DEFAT_GAMMA_EMITTER);
+		lstProdx.add(0,itm);
 		updateBox(itm);
 		listRefresh(lstProdx);
 		MaterialToast.fireToast("新增報告",500);

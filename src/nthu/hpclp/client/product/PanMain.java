@@ -36,7 +36,7 @@ public class PanMain extends PanCtrl {
 		anchorInfo.setWidget(info);
 		anchorAppx.setWidget(appx);
 		anchorScriber.setWidget(scriber);
-		anchorEmitter.setWidget(emitter);		
+		anchorEmitter.setWidget(info.emt);		
 		addAltShortcut(
 			KeyCodes.KEY_L,KeyCodes.KEY_N,KeyCodes.KEY_I,
 			KeyCodes.KEY_S,KeyCodes.KEY_P,KeyCodes.KEY_T,
@@ -73,14 +73,6 @@ public class PanMain extends PanCtrl {
     @UiField(provided=true)
     SimplePanel anchorList2 = _anchorList2;
 
-	private PartOwner owner = new PartOwner();
-	private PartTenur tenur = new PartTenur();
-	private PartInfo info = new PartInfo();
-	private PartAppx appx = new PartAppx();
-	private PartScriber scriber = new PartScriber();
-	private PartEmitter emitter = new PartEmitter();
-	private DlgGenReport genTenuReport = new DlgGenReport();
-
 	@Override
 	public void eventShortcut(Integer keycode,Integer appx){
 		switch(keycode){
@@ -116,6 +108,7 @@ public class PanMain extends PanCtrl {
 	@Override
 	public void onEventShow() {
 		navAppBar.add(Main.funcPager);
+		updateBox(null);
 	}
 	//-----------------------------//
 	
@@ -205,6 +198,5 @@ public class PanMain extends PanCtrl {
 		tenur.setTarget(itm);
 		info.setTarget(itm);
 		scriber.setTarget(itm);
-		emitter.setTarget(itm);
 	}	
 }

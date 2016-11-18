@@ -75,22 +75,21 @@ public abstract class ExComposite extends Composite {
 		String value
 	){
 		int cnt = box.getItemCount();
-		if(value==null){
-			value = name;
-		}
 		for(int i=0; i<cnt; i++){
 			String _name = box.getItemText(i);
 			String _value = box.getValue(i);
 			if(
-				name.equalsIgnoreCase(_name)==true||
+				name.equalsIgnoreCase(_name)==true ||
 				value.equalsIgnoreCase(_value)==true
 			){
 				box.setSelectedIndex(i);
 				return i;
 			}
 		}
+		cnt++;
 		box.addItem(name, value);
-		box.setSelectedIndex(cnt+1);
+		box.setItemText(cnt,name);
+		box.setSelectedIndex(cnt);
 		return cnt+1;
 	}
 	//------------------------------------//

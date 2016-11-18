@@ -4,6 +4,7 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
 	xmlns:m="urn:import:gwt.material.design.client.ui">
 <ui:style>
+	.chkOffset { margin-top: 1.5rem; }
 </ui:style>
 
 <m:MaterialPanel backgroundColor="white" layoutPosition="RELATIVE" marginTop="20" padding="7">
@@ -45,7 +46,12 @@
 	</m:MaterialRow>
 	
 	<m:MaterialRow>
-		<m:MaterialCheckBox text="Logo" value="true" ui:field="chkUseLogo" />
+		<m:MaterialColumn >
+			<m:MaterialListBox width="18rem" ui:field="cmbEmitter"/>
+		</m:MaterialColumn>
+		<m:MaterialColumn styleName='{style.chkOffset}'>
+			<m:MaterialCheckBox width="9rem" text="Logo" value="true" ui:field="chkUseLogo"/>
+		</m:MaterialColumn>
 	</m:MaterialRow>
 </m:MaterialPanel>
 	
