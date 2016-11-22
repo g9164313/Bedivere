@@ -176,7 +176,12 @@ public class ItemBase implements Serializable {
 		}
 		return true;
 	}
-		
+	
+	public ItemBase markNewone(){
+		uuid = "";
+		return this;
+	}
+	
 	public ItemBase markDelete(){
 		return mark_token(TOKEN_DELETE);
 	}

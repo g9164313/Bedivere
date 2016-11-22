@@ -63,7 +63,9 @@ public class DlgPickTenur extends DlgBase<ItemTenur> {
 		txtInfo5.setText("");
 		txtInfo6.setText("");
 		txtInfo7.setText("");
-		Main.rpc.listTenure(postfix,new AsyncCallback<ArrayList<ItemTenur>>(){
+		Main.rpc.listTenur(
+			postfix,
+			new AsyncCallback<ArrayList<ItemTenur>>(){
 			@Override
 			public void onFailure(Throwable caught) {
 				MaterialToast.fireToast("內部錯誤\n"+caught.getMessage());

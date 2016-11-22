@@ -8,6 +8,10 @@ import com.google.gwt.user.client.ui.Composite;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.Widget;
 
+import nthu.hpclp.client.itembase.PanItemOwner;
+import nthu.hpclp.client.setting.PanSetting;
+
+
 public class PartFuncPager extends Composite {
 
 	private static PartFuncPagerUiBinder uiBinder = GWT.create(PartFuncPagerUiBinder.class);
@@ -21,7 +25,9 @@ public class PartFuncPager extends Composite {
 	
 	public void initPanel(){		
 		pan[PAN_PRODUCT] = new nthu.hpclp.client.product.PanMain();
-		pan[PAN_SETTING] = new nthu.hpclp.client.setting.PanSetting();
+		pan[PAN_OWNER] = new PanItemOwner();
+		//pan[PAN_TENURE] = new nthu.hpclp.client.itembase.PanItemOwner<ItemTenur>();
+		pan[PAN_SETTING] = new PanSetting();	
 		switch_panel(PAN_DEFAULT);
 	}
 	
@@ -32,12 +38,12 @@ public class PartFuncPager extends Composite {
 	
 	@UiHandler("lnkPanOwner")
 	void onLnkPanOwner(ClickEvent e){
-		//switch_panel(PAN_OWNER);
+		switch_panel(PAN_OWNER);
 	}
 	
 	@UiHandler("lnkPanTenur")
 	void onLnkPanTenur(ClickEvent e){
-		//switch_panel(PAN_TENURE);
+		switch_panel(PAN_TENURE);
 	}
 	
 	@UiHandler("lnkPanParam")
@@ -49,12 +55,13 @@ public class PartFuncPager extends Composite {
 	//private final static int PAN_MEETING=0;
 	private final static int PAN_PRODUCT=1;
 	//private final static int PAN_ACCOUNT=2;
-	//private final static int PAN_OWNER  =3;
-	//private final static int PAN_TENURE =4;	
+	private final static int PAN_OWNER  =3;
+	private final static int PAN_TENURE =4;	
 	private final static int PAN_SETTING =5;
 	private final static int PAN_MAX_SIZE=6;
 	
-	private final static int PAN_DEFAULT = PAN_PRODUCT;//Do we need to fix this? No~~~
+	private final static int PAN_DEFAULT = PAN_OWNER;
+	//private final static int PAN_DEFAULT = PAN_PRODUCT;//Do we need to fix this? No~~~
 	
 	public Composite[] pan = new Composite[PAN_MAX_SIZE];
 	

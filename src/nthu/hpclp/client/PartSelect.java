@@ -65,16 +65,11 @@ public abstract class PartSelect<T> extends ExComposite {
 		@SuppressWarnings("unchecked")
 		@Override
 		public void onClick(ClickEvent event) {
-			
 			if(target instanceof ItemOwner){			
-				
 				target = (T)Main.dlgEditOwner.getTarget();
-				
 			}else if(target instanceof ItemTenur){
-				
 				target = (T)Main.dlgEditTenur.getTarget();
 			}
-			
 			updateBox();
 		}
 	};

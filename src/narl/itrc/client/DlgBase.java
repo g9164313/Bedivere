@@ -47,6 +47,16 @@ public abstract class DlgBase<T> extends Composite {
 	}
 
 	/**
+	 * Just hook action event.<p>
+	 * @param obj - pass target.<p>
+	 * @param hook1 - when user click action.<p>
+	 * @return - self
+	 */
+	public DlgBase<T> appear(T obj,ClickHandler hook){
+		return appear(obj,hook,null);
+	}
+	
+	/**
 	 * just show dialog,do nothing
 	 * @param obj - pass target
 	 * @return - self
@@ -68,7 +78,7 @@ public abstract class DlgBase<T> extends Composite {
 	
 	public abstract void takeAction(ClickEvent event);
 	
-	private ClickHandler eventAction = new ClickHandler(){
+	protected ClickHandler eventAction = new ClickHandler(){
 		@Override
 		public void onClick(ClickEvent event) {
 			takeAction(event);
@@ -88,7 +98,7 @@ public abstract class DlgBase<T> extends Composite {
 	
 	public abstract void takeCancel(ClickEvent event);
 	
-	private ClickHandler eventCancel = new ClickHandler(){
+	protected ClickHandler eventCancel = new ClickHandler(){
 		@Override
 		public void onClick(ClickEvent event) {
 			dialog_done();

@@ -27,8 +27,11 @@ public interface RPC extends RemoteService {
 	String tearSPoint(String name) throws IllegalArgumentException;
 	String printTag(String[] info) throws IllegalArgumentException;
 
+	
 	ArrayList<ItemOwner> listOwner(String postfix);
-	ArrayList<ItemTenur> listTenure(String postfix);
+	ArrayList<ItemOwner> listOwnerByRow(int offset,int limit);
+	ArrayList<ItemTenur> listTenur(String postfix);
+	ArrayList<ItemTenur> listTenurByRow(int offset,int limit);
 	ArrayList<ItemProdx> listProduct(String postfix);
 	ArrayList<ItemMeeting> listMeeting(String dayFst, String dayEnd);
 	

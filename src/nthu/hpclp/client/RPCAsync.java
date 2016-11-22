@@ -57,8 +57,18 @@ public interface RPCAsync {
 		AsyncCallback<ArrayList<ItemOwner>> res
 	) throws IllegalArgumentException;
 	
-	void listTenure(
+	void listOwnerByRow(
+		int offset,int limit,
+		AsyncCallback<ArrayList<ItemOwner>> res
+	) throws IllegalArgumentException;
+	
+	void listTenur(
 		String postfix,
+		AsyncCallback<ArrayList<ItemTenur>> res
+	) throws IllegalArgumentException;
+	
+	void listTenurByRow(
+		int offset,int limit,
 		AsyncCallback<ArrayList<ItemTenur>> res
 	) throws IllegalArgumentException;
 	

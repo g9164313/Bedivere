@@ -42,7 +42,10 @@ public class PanMain extends PanCtrl {
 			KeyCodes.KEY_S,KeyCodes.KEY_P,KeyCodes.KEY_T,
 			KeyCodes.KEY_DELETE
 		);
-		addShortcut(KeyCodes.KEY_F1,KeyCodes.KEY_PAGEUP,KeyCodes.KEY_PAGEDOWN);
+		addShortcut(
+			KeyCodes.KEY_F1,
+			KeyCodes.KEY_PAGEUP,KeyCodes.KEY_PAGEDOWN
+		);
 		chainBox(
 			owner.boxOKey,
 			tenur.boxTKey,

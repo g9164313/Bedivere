@@ -239,7 +239,13 @@ public abstract class PanCtrl extends ExComposite {
     }
     
     protected void listNextItem(int sign){
+    	if(lstProdx.isEmpty()==true){
+    		return;
+    	}
     	ItemProdx itm = lstModel.getSelectedObject();
+    	if(itm==null){
+    		return;
+    	}
     	int idx = lstProdx.indexOf(itm);
     	idx = idx + sign;
     	int cnt = lstProdx.size();

@@ -63,9 +63,35 @@ public class SqlDataBase {
 				postfix;		
 			ResultSet rs = RpcBridge.getResult(cmd);	
 			while(rs.next()){
-				ItemOwner itm = unpackOwner(rs);
-				itm.purge();
-				lst.add(itm);
+				lst.add(unpackOwner(rs));
+			}
+		} catch (SQLException e) {			
+			System.err.print(e.getMessage());
+		}
+		return lst;
+	}
+	
+	public static ArrayList<ItemOwner> listOwnerByRow(int offset, int limit) {
+		ArrayList<ItemOwner> lst = new ArrayList<ItemOwner>();		
+		try {
+			String cmd = "SELECT ROW_NUMBER() OVER (ORDER BY info[1]) AS idx,"+
+				Const.OWNER+".id AS id, "+
+				Const.OWNER+".info AS info, "+
+				Const.OWNER+".stamp AS stamp, "+
+				Const.OWNER+".last AS last "+
+				"FROM "+Const.OWNER+" "+
+				"ORDER BY info[1] "+
+				"OFFSET "+offset+" LIMIT "+limit;		
+			ResultSet rs = RpcBridge.getResult(cmd);	
+			while(rs.next()){
+				lst.add(unpackOwner(rs));
+			}
+			//special, we got a total row number and stuff this value to the first item~~~
+			if(lst.size()!=0){			
+				rs = RpcBridge.getResult("SELECT COUNT(*) FROM "+Const.OWNER);
+				rs.next();
+				String[] val = {""+rs.getInt(1)};
+				lst.get(0).appx = val;				
 			}
 		} catch (SQLException e) {			
 			System.err.print(e.getMessage());
@@ -91,14 +117,45 @@ public class SqlDataBase {
 				postfix;		
 			ResultSet rs = RpcBridge.getResult(cmd);
 			while(rs.next()){
-				ItemTenur itm = unpackTenur(rs);
-				itm.purge();
-				lst.add(itm);
-			}
+				lst.add(unpackTenur(rs));
+			}			
 		} catch (SQLException e) {			
 			System.err.print(e.getMessage());
 		}
 		return lst;
+	}
+	
+	public static ArrayList<ItemTenur> listTenurByRow(int offset, int limit) {
+		ArrayList<ItemTenur> lst = new ArrayList<ItemTenur>();		
+		try {
+			String cmd = "SELECT ROW_NUMBER() OVER (ORDER BY info[1]) AS idx,"+
+				Const.TENUR+".id AS id, "+				
+				Const.TENUR+".info AS info, "+
+				Const.TENUR+".stamp AS stamp, "+
+				Const.TENUR+".last AS last, "+
+				Const.TENUR+".meet AS meet, "+
+				Const.OWNER+".id AS oid, "+
+				Const.OWNER+".info AS oinfo, "+
+				Const.OWNER+".stamp AS ostamp, "+
+				Const.OWNER+".last AS olast "+
+				"FROM "+Const.TENUR+" "+
+				"ORDER BY info[1] "+
+				"OFFSET "+offset+" LIMIT "+limit;		
+			ResultSet rs = RpcBridge.getResult(cmd);	
+			while(rs.next()){
+				lst.add(unpackTenur(rs));
+			}
+			//special, we got a total row number and stuff this value to the first item~~~
+			if(lst.size()!=0){			
+				rs = RpcBridge.getResult("SELECT COUNT(*) FROM "+Const.TENUR);
+				rs.next();
+				String[] val = {""+rs.getInt(1)};
+				lst.get(0).appx = val;				
+			}
+		} catch (SQLException e) {			
+			System.err.print(e.getMessage());
+		}
+		return null;
 	}
 	
 	public static ArrayList<ItemProdx> listProdx(String postfix) {

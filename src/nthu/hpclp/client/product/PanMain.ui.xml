@@ -17,8 +17,8 @@
 		<!-- NavBar Component -->
 		<m:MaterialNavBar activates="pagebar" ui:field="navAppBar">
 			<m:MaterialNavSection float="RIGHT" hideOn="NONE">
-				<m:MaterialLink iconPosition="NONE" tooltip="搜尋" tooltipPosition="LEFT" iconType="SEARCH" ui:field="lnkStartSearch" />
-				<m:MaterialLink iconPosition="NONE" tooltip="功能" tooltipPosition="LEFT" iconType="TUNE" activates="drpFunc">
+				<m:MaterialLink iconPosition="NONE" tooltipPosition="LEFT" tooltip="搜尋" iconType="SEARCH" ui:field="lnkStartSearch" />
+				<m:MaterialLink iconPosition="NONE" tooltipPosition="LEFT" tooltip="功能" iconType="TUNE" activates="drpFunc">
 					<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpFunc" >
 						<m:MaterialLink text="最近50筆" textColor="grey darken-1" iconType="AUTORENEW" ui:field="lnkListLast" />	
 						<m:MaterialLink text="顯示清單 Alt+L" textColor="grey darken-1" iconType="RECEIPT" ui:field="lnkListShow" />																	
@@ -28,7 +28,7 @@
 						<m:MaterialLink text="清除清單" textColor="grey darken-1" iconType="CLEAR_ALL" ui:field="lnkListClear" />						                			
 					</m:MaterialDropDown>
 				</m:MaterialLink>
-				<m:MaterialLink iconPosition="NONE" tooltip="列印" tooltipPosition="LEFT" iconType="PRINT" activates="drpPrint">
+				<m:MaterialLink iconPosition="NONE" tooltipPosition="LEFT" tooltip="列印" iconType="PRINT" activates="drpPrint">
 					<m:MaterialDropDown width="15em" constrainWidth="false" belowOrigin="true" activator="drpPrint" >                    		
 						<m:MaterialLink text="實驗標籤 Alt+T" textColor="grey darken-1" ui:field="lnkPrint2DTag" />
 						<m:MaterialLink text="實驗報告 Alt+P" textColor="grey darken-1" ui:field="lnkPrintProdx" />

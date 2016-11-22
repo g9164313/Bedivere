@@ -213,10 +213,18 @@ public class RpcBridge extends RemoteServiceServlet
 	public ArrayList<ItemOwner> listOwner(String postfix) throws IllegalArgumentException {
 		return SqlDataBase.listOwner(postfix);
 	}
-	
 	@Override
-	public ArrayList<ItemTenur> listTenure(String postfix) throws IllegalArgumentException {
+	public ArrayList<ItemOwner> listOwnerByRow(int offset, int limit) {
+		return SqlDataBase.listOwnerByRow(offset, limit);
+	}
+
+	@Override
+	public ArrayList<ItemTenur> listTenur(String postfix) throws IllegalArgumentException {
 		return SqlDataBase.listTenur(postfix);
+	}
+	@Override
+	public ArrayList<ItemTenur> listTenurByRow(int offset, int limit) {
+		return SqlDataBase.listTenurByRow(offset, limit);
 	}
 	
 	@Override

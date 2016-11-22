@@ -50,7 +50,7 @@ public class PanSetting extends ExComposite {
 	@UiField
 	MaterialColumn archTab1,archTab2,archTab3,archTab4,archTab5;
 	
-	private GrdParam[] grid = {null,null,null,null};
+	private GrdParam[] grid = {null,null,null,null,null};
 	
     @UiHandler("lnkTab1")
     void onLnkTab1(ClickEvent e) {
