@@ -12,6 +12,7 @@ import com.google.gwt.event.logical.shared.CloseEvent;
 import com.google.gwt.event.logical.shared.CloseHandler;
 import com.google.gwt.user.cellview.client.DataGrid;
 import com.google.gwt.user.cellview.client.TextColumn;
+import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.view.client.ListDataProvider;
 import com.google.gwt.view.client.MultiSelectionModel;
@@ -20,20 +21,27 @@ import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialSearch;
+import gwt.material.design.client.ui.MaterialToast;
 import narl.itrc.client.ExComposite;
 import nthu.hpclp.client.Main;
 import nthu.hpclp.shared.ItemBase;
-import nthu.hpclp.shared.ItemOwner;
-import nthu.hpclp.shared.ItemTenur;
 
 public abstract class PanItemBase<T> extends ExComposite {
 	
-	public PanItemBase(String type){
+	public PanItemBase(){
 		prepare_searchbar();
 		prepare_pager_idx();
-		prepare_data_grid(type);
+		prepare_data_grid();
 		_root.add(dlgPageIdx);
-		addShortcut(KeyCodes.KEY_PAGEUP, KeyCodes.KEY_PAGEDOWN);
+		addShortcut(
+			KeyCodes.KEY_PAGEUP, 
+			KeyCodes.KEY_PAGEDOWN
+		);
+		addAltShortcut(
+			KeyCodes.KEY_N,
+			KeyCodes.KEY_E,
+			KeyCodes.KEY_D
+		);
 	}
 		
 	protected MaterialPanel _root = new MaterialPanel();
@@ -44,9 +52,25 @@ public abstract class PanItemBase<T> extends ExComposite {
 	protected MaterialSearch _box_search = new MaterialSearch();
     protected MaterialLink _page_hint = new MaterialLink();
     
+    abstract void onItemCreate(ClickEvent e);
+    abstract void onItemModify(ClickEvent e);
+    abstract void onItemDelete(ClickEvent e);
+    
 	@Override
     public void eventShortcut(Integer keycode,Integer appx){
+		if(isAlive()==false){
+			return;
+		}
 		switch(keycode){
+		case KeyCodes.KEY_N:
+			onItemCreate(null);
+			break;
+		case KeyCodes.KEY_E:
+			onItemModify(null);
+			break;
+		case KeyCodes.KEY_D:
+			onItemDelete(null);
+			break;
 		case KeyCodes.KEY_PAGEUP:
 			pagePrev();
 			break;
@@ -55,7 +79,7 @@ public abstract class PanItemBase<T> extends ExComposite {
 			break;
 		}
     }
-    
+
 	@Override
 	public void onEventShow() {
 		_nav_appbar.add(Main.funcPager);//???why
@@ -82,7 +106,7 @@ public abstract class PanItemBase<T> extends ExComposite {
 	
 	protected void pagePrev(){
 		pageIdx--;
-		if(pageIdx<1){
+		if(pageIdx<=1){
 			pageIdx = 1;
 		}
 		pageUpdate();
@@ -133,6 +157,24 @@ public abstract class PanItemBase<T> extends ExComposite {
 		lst.setList(datum);
 		lst.refresh();
 	}
+	
+	protected final ClickHandler eventPageUpdate = new ClickHandler(){
+		@Override
+		public void onClick(ClickEvent event) {
+			 pageUpdate();
+		}
+	};
+	
+	protected final AsyncCallback<ArrayList<T>> rpcPageUpdate = new AsyncCallback<ArrayList<T>>(){
+		@Override
+		public void onFailure(Throwable caught) {
+			MaterialToast.fireToast("內部錯誤\n"+caught.getMessage());
+		}
+		@Override
+		public void onSuccess(ArrayList<T> result) {
+			update_grid(result);
+		}
+	};
 	//--------------------------------//
 	
 	public abstract void onSearching(String txt);
@@ -195,40 +237,17 @@ public abstract class PanItemBase<T> extends ExComposite {
 		return lst;
 	}
 	
-	private void prepare_data_grid(String type){
+	public abstract void prepare_column(DataGrid<T> grid);
+	
+	private void prepare_data_grid(){
 		grid.setSelectionModel(mod);
 		grid.setSize("100%","83vh");
-		grid.setEmptyTableWidget(new Label("無資料"));
-		
-		if(type.equalsIgnoreCase(ItemOwner.class.getName())==true){
-			
-			grid.addColumn(new ColInfo(ItemOwner.INFO_OKEY),"代號");  // - 0 
-			grid.addColumn(new ColInfo(ItemOwner.INFO_NAME),"名稱");  // - 1 
-			grid.addColumn(new ColInfo(ItemOwner.INFO_DEPT),"部門");  // - 2   
-			grid.addColumn(new ColInfo(ItemOwner.INFO_PRSN),"聯絡人");// - 3 
-			grid.addColumn(new ColInfo(ItemOwner.INFO_ZIP) ,"區號");// - 4
-			grid.addColumn(new ColInfo(ItemOwner.INFO_ADDR),"地址");// - 5 
-			grid.addColumn(new ColInfo(ItemOwner.INFO_PHONE),"聯絡方式-1");// - 6  
-			grid.addColumn(new ColInfo(ItemOwner.INFO_EMAIL),"聯絡方式-2");// - 7 
-			grid.addColumn(new ColInfo(ItemOwner.INFO_MEMO),"備註");// - 8
-
-			grid.setColumnWidth(0,"5em");
-			//grid.setColumnWidth(1,"12em");
-			grid.setColumnWidth(2,"11em");
-			grid.setColumnWidth(3,"6em");
-			grid.setColumnWidth(4,"5em");
-			grid.setColumnWidth(6,"11em");
-			grid.setColumnWidth(7,"11em");
-			grid.setColumnWidth(8,"9em");
-			 
-		}else if(type.equalsIgnoreCase(ItemTenur.class.getName())==true){
-
-		}
-		
+		grid.setEmptyTableWidget(new Label("無資料"));		
+		prepare_column(grid);
 		lst.addDataDisplay(grid);
 	}
 
-	private class ColInfo extends TextColumn<T> {
+	protected class ColInfo extends TextColumn<T> {
 		private int idx;
 		public ColInfo(int index){
 			idx = index;

@@ -4,10 +4,11 @@
 	xmlns:g="urn:import:com.google.gwt.user.client.ui"
 	xmlns:g2="urn:import:com.googlecode.gwt.charts.client.calendar"
 	xmlns:m="urn:import:gwt.material.design.client.ui" >
-	<ui:style>
-	</ui:style>
+<ui:style>
+	.chkOffset { margin-top: 1.5rem; }
+</ui:style>
 	
-<m:MaterialModal type="DEFAULT"  width="80%" dismissable="true" inDuration="10" outDuration="10" ui:field="root">
+<m:MaterialModal type="DEFAULT" width="43em" dismissable="true" inDuration="10" outDuration="10" ui:field="root">
 	
 	<m:MaterialModalContent>
 
@@ -24,16 +25,14 @@
 		</m:MaterialRow>
 		
 		<m:MaterialRow>
-			<m:MaterialColumn>
-				<!-- placeholder="偵檢器類型" -->
-				<m:MaterialButton textColor="white" backgroundColor="blue" activates="dp-3" width="11em" ui:field="btnDetType" />				
-				<m:MaterialDropDown activator="dp-3" ui:field="drpDetType"/>
+			<m:MaterialColumn>			
+				<m:MaterialListBox width="11em" ui:field="cmbDetType"/>
 			</m:MaterialColumn>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxDetSerial" placeholder="偵檢器型號" width="11em"/>				
+				<m:MaterialTextBox placeholder="偵檢器型號" width="11em" ui:field="boxDetSerial"/>				
 			</m:MaterialColumn>
 			<m:MaterialColumn>
-				<m:MaterialTextBox ui:field="boxDetNumber" placeholder="偵檢器序號" width="11em"/>
+				<m:MaterialTextBox placeholder="偵檢器序號" width="11em" ui:field="boxDetNumber"/>
 			</m:MaterialColumn>
 		</m:MaterialRow>
 				
@@ -53,7 +52,7 @@
 			<m:MaterialColumn>
 				<m:MaterialTextBox ui:field="boxOKey" placeholder="委託單位" width="11em"/>
 			</m:MaterialColumn>
-			<m:MaterialColumn>
+			<m:MaterialColumn styleName='{style.chkOffset}'>
 				<m:MaterialLabel ui:field="txtOwner" width="22em" />
 			</m:MaterialColumn>
 		</m:MaterialRow>
@@ -69,11 +68,10 @@
 				<m:MaterialTextBox placeholder="更新日期" width="11em" ui:field="boxLast" />
 			</m:MaterialColumn>
 		</m:MaterialRow>
-		
 	</m:MaterialModalContent>
 	
 	<!-- 確認/取消 -->
-	<m:MaterialModalFooter width="95%">		
+	<m:MaterialModalFooter>		
 		<m:MaterialButton text="確認" type="FLAT" ui:field="btnAction" />
 		<m:MaterialButton text="取消" type="FLAT" ui:field="btnCancel" />
 	</m:MaterialModalFooter>

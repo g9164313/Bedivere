@@ -1,4 +1,4 @@
-package nthu.hpclp.client;
+package nthu.hpclp.client.itembase;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,7 @@ import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialRow;
 import gwt.material.design.client.ui.MaterialToast;
 import narl.itrc.client.DlgBase;
+import nthu.hpclp.client.Main;
 import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemTenur;
 
@@ -24,14 +25,14 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 
-public class DlgPickTenur extends DlgBase<ItemTenur> {
+public class DlgPickupTenur extends DlgBase<ItemTenur> {
 
-	private static DlgPickTenurUiBinder uiBinder = GWT.create(DlgPickTenurUiBinder.class);
+	private static DlgPickupTenurUiBinder uiBinder = GWT.create(DlgPickupTenurUiBinder.class);
 
-	interface DlgPickTenurUiBinder extends UiBinder<Widget, DlgPickTenur> {
+	interface DlgPickupTenurUiBinder extends UiBinder<Widget, DlgPickupTenur> {
 	}
 
-	public DlgPickTenur() {
+	public DlgPickupTenur() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

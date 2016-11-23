@@ -40,7 +40,7 @@ public class PanMain extends PanCtrl {
 		addAltShortcut(
 			KeyCodes.KEY_L,KeyCodes.KEY_N,KeyCodes.KEY_I,
 			KeyCodes.KEY_S,KeyCodes.KEY_P,KeyCodes.KEY_T,
-			KeyCodes.KEY_DELETE
+			KeyCodes.KEY_D
 		);
 		addShortcut(
 			KeyCodes.KEY_F1,
@@ -78,6 +78,9 @@ public class PanMain extends PanCtrl {
 
 	@Override
 	public void eventShortcut(Integer keycode,Integer appx){
+		if(isAlive()==false){
+			return;
+		}
 		switch(keycode){
 		case KeyCodes.KEY_L://show list			
 			onListShow(null);
@@ -86,7 +89,7 @@ public class PanMain extends PanCtrl {
 		case KeyCodes.KEY_N://create the new one
 			onListAddItem(null); 
 			break;
-		case KeyCodes.KEY_DELETE://delete the new one
+		case KeyCodes.KEY_D://delete the new one
 			onListDelete(null);
 			break;
 		case KeyCodes.KEY_S://save all items

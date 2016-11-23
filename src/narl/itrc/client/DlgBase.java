@@ -33,8 +33,8 @@ public abstract class DlgBase<T> extends Composite {
 	/**
 	 * Before dialog is appearing, user should hook event.<p>
 	 * @param obj - pass target.<p>
-	 * @param hook1 - when user click action.<p>
-	 * @param hook2 - when user cancel.<p>
+	 * @param hook1 - When user click action.<p>
+	 * @param hook2 - When user cancel or After action.<p>
 	 * @return - self
 	 */
 	public DlgBase<T> appear(T obj,ClickHandler hook1,ClickHandler hook2){
@@ -104,16 +104,4 @@ public abstract class DlgBase<T> extends Composite {
 			dialog_done();
 		}		
 	};
-
-	protected String add_or_edit(String id){
-		String txt;
-		if(id==null){
-			txt = "新增";
-		}else if(id.length()==0){
-			txt = "新增";
-		}else{
-			txt = "修改";
-		}
-		return txt;
-	}
 }

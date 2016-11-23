@@ -1,9 +1,8 @@
-package nthu.hpclp.client;
+package nthu.hpclp.client.itembase;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.logical.shared.SelectionEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
@@ -12,21 +11,24 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 
 import gwt.material.design.client.ui.MaterialButton;
-import gwt.material.design.client.ui.MaterialDropDown;
 import gwt.material.design.client.ui.MaterialLabel;
+import gwt.material.design.client.ui.MaterialListBox;
 import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
 import narl.itrc.client.DlgBase;
+import narl.itrc.client.ExComposite;
+import nthu.hpclp.client.Main;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemOwner;
+import nthu.hpclp.shared.ItemParam;
 import nthu.hpclp.shared.ItemTenur;
 
-public class DlgEditTenur extends DlgBase<ItemTenur> {
+public class DlgModifyTenur extends DlgBase<ItemTenur> {
 
-	private static DlgEditTenurUiBinder uiBinder = GWT.create(DlgEditTenurUiBinder.class);
+	private static DlgModifyTenurUiBinder uiBinder = GWT.create(DlgModifyTenurUiBinder.class);
 
-	interface DlgEditTenurUiBinder extends UiBinder<Widget, DlgEditTenur> {
+	interface DlgModifyTenurUiBinder extends UiBinder<Widget, DlgModifyTenur> {
 	}
 
 	@UiField(provided=true) 
@@ -38,12 +40,9 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	
 	@UiField
 	MaterialTextBox boxDevVendor,boxDevSerial,boxDevNumber;
-		
-	@UiField
-	MaterialButton btnDetType;
-	@UiField
-	MaterialDropDown drpDetType;
 	
+	@UiField
+	MaterialListBox cmbDetType;
 	@UiField
 	MaterialTextBox boxDetSerial,boxDetNumber;
 	
@@ -58,7 +57,7 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	@UiField
 	MaterialLabel txtOwner;
 		
-	public DlgEditTenur() {
+	public DlgModifyTenur() {
 		initWidget(uiBinder.createAndBindUi(this));
 		chainBox(
 			boxDevVendor,boxDevSerial,boxDevNumber,
@@ -68,12 +67,6 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 		);
 	}
 
-	@UiHandler("drpDetType")
-	void onDropdown(SelectionEvent<Widget> event){
-		MaterialLabel txt = (MaterialLabel) event.getSelectedItem();
-		btnDetType.setText(txt.getText());
-	}
-	
 	@UiHandler("boxArea")
 	public void onChangeArea(ValueChangeEvent<String> event) {
 		Const.makeSpecialCharacter(boxArea);
@@ -102,7 +95,7 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 		boxDevSerial.setText(item.getDeviceSerial());
 		boxDevNumber.setText(item.getDeviceNumber());		
 		
-		setDetectType(item.getDetectType());		
+		init_det_type(item.getDetectType());		
 		boxDetSerial.setText(item.getDetectSerial());
 		boxDetNumber.setText(item.getDetectNumber());
 		
@@ -120,7 +113,16 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 		}else{
 			txtOwner.setText("");
 		}
-		btnAction.setText(add_or_edit(item.uuid));
+				
+		if(item.isNewone()==true){
+			btnAction.setText("新增");
+		}else if(item.isModify()==true){
+			btnAction.setText("修改");
+		}else if(item.isDelete()==true){
+			btnAction.setText("刪除");
+		}else{
+			btnAction.setText("確認");
+		}
 	}
 	
 	@Override
@@ -131,7 +133,7 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 		item.setDeviceSerial(boxDevSerial.getText());
 		item.setDeviceNumber(boxDevNumber.getText());
 		
-		item.setDetectType(btnDetType.getText());
+		item.setDetectType(cmbDetType.getSelectedValue());
 		item.setDetectSerial(boxDetSerial.getText());
 		item.setDetectNumber(boxDetNumber.getText());
 		
@@ -179,7 +181,7 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 	    final ClickHandler eventPick = new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {
-				ItemOwner item = Main.dlgPickOwner.getTarget();
+				ItemOwner item = Main.dlgPickupOwner.getTarget();
 				if(item==null){
 					return;
 				}
@@ -188,27 +190,16 @@ public class DlgEditTenur extends DlgBase<ItemTenur> {
 				boxOKey.setText("");
 			}
 	    };
-	    Main.dlgPickOwner.appear(post,eventPick);
+	    Main.dlgPickupOwner.appear(post,eventPick);
 	}
-	
-	public void initDetectType(){
-		drpDetType.clear();
-		//TODO:how to display??
-		/*String[] val = Main.param.detectType;
-		for(int i=0; i<val.length; i++){
-			drpDetType.add(new MaterialLabel(val[i]));
-		}*/
-	}
-	
-	private void setDetectType(String val){
-		btnDetType.setText(val);
-		for(Widget wid:drpDetType.getItems()){
-			MaterialLabel txt = (MaterialLabel)wid;
-			if(val.equalsIgnoreCase(txt.getText())==true){
-				return;//we found the old one~~~
+
+	private void init_det_type(String name){
+		if(cmbDetType.getItemCount()==0){
+			for(ItemParam parm:Main.param.prodxDetType){
+				cmbDetType.addItem(parm.getVal());
 			}
-		}		
-		drpDetType.add(new MaterialLabel(val));
+		}
+		ExComposite.cmbSelect(cmbDetType,name);
 	}
 }
 

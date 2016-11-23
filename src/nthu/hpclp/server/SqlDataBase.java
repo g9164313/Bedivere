@@ -128,7 +128,9 @@ public class SqlDataBase {
 	public static ArrayList<ItemTenur> listTenurByRow(int offset, int limit) {
 		ArrayList<ItemTenur> lst = new ArrayList<ItemTenur>();		
 		try {
-			String cmd = "SELECT ROW_NUMBER() OVER (ORDER BY info[1]) AS idx,"+
+			String cmd = "SELECT ROW_NUMBER() OVER (ORDER BY "+
+				"tenure.info[3],tenure.info[4],tenure.info[6],tenure.info[7]"+
+				") AS idx,"+
 				Const.TENUR+".id AS id, "+				
 				Const.TENUR+".info AS info, "+
 				Const.TENUR+".stamp AS stamp, "+
@@ -139,7 +141,8 @@ public class SqlDataBase {
 				Const.OWNER+".stamp AS ostamp, "+
 				Const.OWNER+".last AS olast "+
 				"FROM "+Const.TENUR+" "+
-				"ORDER BY info[1] "+
+				"LEFT JOIN "+Const.OWNER+" ON "+Const.OWNER+".id="+Const.TENUR+".oid "+
+				"ORDER BY tenure.info[3],tenure.info[4],tenure.info[6],tenure.info[7]"+
 				"OFFSET "+offset+" LIMIT "+limit;		
 			ResultSet rs = RpcBridge.getResult(cmd);	
 			while(rs.next()){
@@ -155,7 +158,7 @@ public class SqlDataBase {
 		} catch (SQLException e) {			
 			System.err.print(e.getMessage());
 		}
-		return null;
+		return lst;
 	}
 	
 	public static ArrayList<ItemProdx> listProdx(String postfix) {
@@ -312,7 +315,6 @@ public class SqlDataBase {
 				obj.uuid = obj.uuid.substring(1);
 				deleteOwner.setObject(1,UUID.fromString(obj.uuid));
 				deleteOwner.execute();
-				return null;
 			}else if(obj.isModify()==true){
 				//modify it~~~
 				obj.uuid = obj.uuid.substring(1);
@@ -352,7 +354,6 @@ public class SqlDataBase {
 				obj.uuid = obj.uuid.substring(1);
 				deleteTenue.setObject(1,UUID.fromString(obj.uuid));
 				deleteTenue.execute();
-				return null;
 			}else if(obj.isModify()==true){
 				//modify it~~~
 				obj.uuid = obj.uuid.substring(1);
@@ -399,7 +400,6 @@ public class SqlDataBase {
 				obj.uuid = obj.uuid.substring(1);
 				deleteAccnt.setObject(1,UUID.fromString(obj.uuid));
 				deleteAccnt.execute();
-				return null;
 			}else if(obj.isModify()==true){
 				//modify it~~~
 				obj.uuid = obj.uuid.substring(1);
@@ -448,7 +448,6 @@ public class SqlDataBase {
 				obj.uuid = obj.uuid.substring(1);
 				deleteProdx.setObject(1,UUID.fromString(obj.uuid));
 				deleteProdx.execute();
-				return null;
 			}else if(obj.isModify()==true){
 				//modify it~~~
 				obj.uuid = obj.uuid.substring(1);

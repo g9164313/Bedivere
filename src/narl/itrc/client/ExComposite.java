@@ -36,13 +36,20 @@ public abstract class ExComposite extends Composite {
 	public abstract void onEventShow();
 	public abstract void onEventHide();
 
+	private boolean flagAlive = false;
+	
+	protected boolean isAlive(){
+		return flagAlive;
+	}
+	
 	private AttachEvent.Handler eventShowHide = new AttachEvent.Handler(){
 		@Override
 		public void onAttachOrDetach(AttachEvent event) {
 			if(event.isAttached()==true){
-				//At this time, we can prepare environment parameters
+				flagAlive = true;
 				onEventShow();
 			}else{
+				flagAlive = false;
 				onEventHide();
 			}
 		}
@@ -55,7 +62,7 @@ public abstract class ExComposite extends Composite {
 	 * @param name - item name.<p>
 	 * @return
 	 */
-	protected static int cmbSelect(
+	public static int cmbSelect(
 		MaterialListBox box,
 		String name
 	){
@@ -69,7 +76,7 @@ public abstract class ExComposite extends Composite {
 	 * @param value - item value.<p>
 	 * @return the index of combo list
 	 */
-	protected static int cmbSelect(
+	public static int cmbSelect(
 		MaterialListBox box,
 		String name,
 		String value

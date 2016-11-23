@@ -1,4 +1,4 @@
-package nthu.hpclp.client;
+package nthu.hpclp.client.itembase;
 
 import java.util.ArrayList;
 
@@ -14,6 +14,7 @@ import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialRow;
 import gwt.material.design.client.ui.MaterialToast;
 import narl.itrc.client.DlgBase;
+import nthu.hpclp.client.Main;
 import nthu.hpclp.shared.ItemOwner;
 
 import com.google.gwt.core.client.GWT;
@@ -24,14 +25,14 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Widget;
 
-public class DlgPickOwner extends DlgBase<ItemOwner> {
+public class DlgPickupOwner extends DlgBase<ItemOwner> {
 
-	private static DlgPickOwnerUiBinder uiBinder = GWT.create(DlgPickOwnerUiBinder.class);
+	private static DlgPickupOwnerUiBinder uiBinder = GWT.create(DlgPickupOwnerUiBinder.class);
 
-	interface DlgPickOwnerUiBinder extends UiBinder<Widget, DlgPickOwner> {
+	interface DlgPickupOwnerUiBinder extends UiBinder<Widget, DlgPickupOwner> {
 	}
 
-	public DlgPickOwner() {
+	public DlgPickupOwner() {
 		initWidget(uiBinder.createAndBindUi(this));
 	}
 

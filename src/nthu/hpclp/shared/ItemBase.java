@@ -166,6 +166,13 @@ public class ItemBase implements Serializable {
 		return false;
 	}
 	
+	public boolean isNewone(){
+		if(uuid.length()!=0){
+			return false;
+		}
+		return true;
+	}
+	
 	public boolean isClean(){
 		if(uuid.length()==0){
 			return false;
@@ -194,7 +201,8 @@ public class ItemBase implements Serializable {
 		if(uuid.length()==0){
 			return this;
 		}
-		if(uuid.charAt(0)==tkn){
+		char fst = uuid.charAt(0);
+		if(fst==TOKEN_DELETE || fst==TOKEN_MODIFY){
 			return this;
 		}
 		uuid = tkn + uuid;

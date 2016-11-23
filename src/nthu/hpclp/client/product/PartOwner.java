@@ -22,8 +22,8 @@ public class PartOwner extends PartSelect<ItemOwner> {
 
 	public PartOwner() {
 		initWidget(uiBinder.createAndBindUi(this));
-		root.add(Main.dlgEditOwner);
-		root.add(Main.dlgPickOwner);
+		root.add(Main.dlgModifyOwner);
+		root.add(Main.dlgPickupOwner);
 		boxOKey.getIcon().addClickHandler(eventEdit);
 	}
 

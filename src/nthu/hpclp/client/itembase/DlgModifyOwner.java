@@ -1,4 +1,4 @@
-package nthu.hpclp.client;
+package nthu.hpclp.client.itembase;
 
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.dom.client.ClickEvent;
@@ -14,14 +14,15 @@ import gwt.material.design.client.ui.MaterialModal;
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
 import narl.itrc.client.DlgBase;
+import nthu.hpclp.client.Main;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemOwner;
 
-public class DlgEditOwner extends DlgBase<ItemOwner> {
+public class DlgModifyOwner extends DlgBase<ItemOwner> {
 
-	private static DlgEditOwnerUiBinder uiBinder = GWT.create(DlgEditOwnerUiBinder.class);
+	private static DlgModifyOwnerUiBinder uiBinder = GWT.create(DlgModifyOwnerUiBinder.class);
 
-	interface DlgEditOwnerUiBinder extends UiBinder<Widget, DlgEditOwner> {
+	interface DlgModifyOwnerUiBinder extends UiBinder<Widget, DlgModifyOwner> {
 	}
 
 	@UiField(provided=true) 
@@ -38,7 +39,7 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 	@UiField
 	MaterialTextBox boxDept,boxPern,boxMail,boxMemo;
 	
-	public DlgEditOwner() {
+	public DlgModifyOwner() {
 		initWidget(uiBinder.createAndBindUi(this));
 		chainBox(
 			boxKey,boxName,boxStmp,
@@ -91,7 +92,15 @@ public class DlgEditOwner extends DlgBase<ItemOwner> {
 		boxMail.setText(item.getEMail());
 		boxMemo.setText(item.getMemo());
 		
-		btnAction.setText(add_or_edit(item.uuid));
+		if(item.isNewone()==true){
+			btnAction.setText("新增");
+		}else if(item.isModify()==true){
+			btnAction.setText("修改");
+		}else if(item.isDelete()==true){
+			btnAction.setText("刪除");
+		}else{
+			btnAction.setText("確認");
+		}		
 	}
 
 	@Override

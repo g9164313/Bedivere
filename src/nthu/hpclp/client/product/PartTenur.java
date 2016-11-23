@@ -23,8 +23,8 @@ public class PartTenur extends PartSelect<ItemTenur> {
 	
 	public PartTenur() {
 		initWidget(uiBinder.createAndBindUi(this));		
-		root.add(Main.dlgEditTenur);
-		root.add(Main.dlgPickTenur);
+		root.add(Main.dlgModifyTenur);
+		root.add(Main.dlgPickupTenur);
 		boxTKey.getIcon().addClickHandler(eventEdit);
 	}
 

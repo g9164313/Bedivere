@@ -48,7 +48,7 @@ public class CpiOwner extends Composite {
 		if(meet.isRestday()==true){
 			return;
 		}
-		Main.dlgEditOwner.appear(
+		Main.dlgModifyOwner.appear(
 			meet,null,new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {

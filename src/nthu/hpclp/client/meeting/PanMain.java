@@ -67,8 +67,8 @@ public class PanMain extends Composite {
 	public PanMain() {
 		initWidget(uiBinder.createAndBindUi(this));		
 		initSearch();
-		root.add(Main.dlgEditOwner);
-		root.add(Main.dlgEditTenur);		
+		root.add(Main.dlgModifyOwner);
+		root.add(Main.dlgModifyTenur);		
 		addAttachHandler(eventShowHide);
 
 		new ChartLoader(ChartPackage.CALENDAR).loadApi(new Runnable(){

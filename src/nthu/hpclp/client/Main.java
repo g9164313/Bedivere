@@ -5,6 +5,10 @@ import java.util.Date;
 
 import gwt.material.design.client.ui.MaterialTextBox;
 import gwt.material.design.client.ui.MaterialToast;
+import nthu.hpclp.client.itembase.DlgModifyOwner;
+import nthu.hpclp.client.itembase.DlgModifyTenur;
+import nthu.hpclp.client.itembase.DlgPickupOwner;
+import nthu.hpclp.client.itembase.DlgPickupTenur;
 import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemAccnt;
 import nthu.hpclp.shared.ItemMeeting;
@@ -157,11 +161,11 @@ public class Main implements EntryPoint {
 	
 	public static ParamHub param = new ParamHub();//Environment parameters
 	
-	public static DlgEditOwner dlgEditOwner = new DlgEditOwner();	
-	public static DlgEditTenur dlgEditTenur = new DlgEditTenur();
+	public static DlgModifyOwner dlgModifyOwner = new DlgModifyOwner();	
+	public static DlgModifyTenur dlgModifyTenur = new DlgModifyTenur();
 	
-	public static DlgPickOwner dlgPickOwner = new DlgPickOwner();
-	public static DlgPickTenur dlgPickTenur = new DlgPickTenur();
+	public static DlgPickupOwner dlgPickupOwner = new DlgPickupOwner();
+	public static DlgPickupTenur dlgPickupTenur = new DlgPickupTenur();
 	
 	public static PartFuncPager funcPager = new PartFuncPager();
 	//----------------------------//
@@ -187,7 +191,6 @@ public class Main implements EntryPoint {
 					Window.setTitle(txt+"(本機端資料庫)");
 				}
 				param = res;
-				dlgEditTenur.initDetectType();
 				funcPager.initPanel();
 			}
 		});

@@ -51,7 +51,7 @@ public class CpiTenure extends Composite {
 	
 	@UiHandler("icoEdit")
 	void onEditItem(ClickEvent e){
-		Main.dlgEditTenur.appear(
+		Main.dlgModifyTenur.appear(
 			tenu, null, new ClickHandler(){
 			@Override
 			public void onClick(ClickEvent event) {

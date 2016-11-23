@@ -41,7 +41,7 @@ public abstract class PartSelect<T> extends ExComposite {
 			}
 			if(target instanceof ItemOwner){
 				
-				Main.dlgEditOwner.appear(
+				Main.dlgModifyOwner.appear(
 					(ItemOwner)target,
 					eventEditDone,
 					null
@@ -49,7 +49,7 @@ public abstract class PartSelect<T> extends ExComposite {
 				
 			}else if(target instanceof ItemTenur){
 				
-				Main.dlgEditTenur.appear(
+				Main.dlgModifyTenur.appear(
 					(ItemTenur)target,
 					eventEditDone,
 					null
@@ -66,9 +66,9 @@ public abstract class PartSelect<T> extends ExComposite {
 		@Override
 		public void onClick(ClickEvent event) {
 			if(target instanceof ItemOwner){			
-				target = (T)Main.dlgEditOwner.getTarget();
+				target = (T)Main.dlgModifyOwner.getTarget();
 			}else if(target instanceof ItemTenur){
-				target = (T)Main.dlgEditTenur.getTarget();
+				target = (T)Main.dlgModifyTenur.getTarget();
 			}
 			updateBox();
 		}
@@ -92,7 +92,7 @@ public abstract class PartSelect<T> extends ExComposite {
 
 			if(target instanceof ItemOwner){
 				
-				Main.dlgPickOwner.appear(
+				Main.dlgPickupOwner.appear(
 					"WHERE "+
 				    "info[1] SIMILAR TO '%"+txt+"%' OR "+
 				    "info[2] SIMILAR TO '%"+txt+"%' OR "+
@@ -103,11 +103,11 @@ public abstract class PartSelect<T> extends ExComposite {
 				    "info[8] SIMILAR TO '%"+txt+"%' ORDER BY last DESC ",
 				    eventPickup
 				);
-				dialog = (DlgBase<T>) Main.dlgPickOwner;
+				dialog = (DlgBase<T>) Main.dlgPickupOwner;
 				
 			}else if(target instanceof ItemTenur){
 				
-				Main.dlgPickTenur.appear(
+				Main.dlgPickupTenur.appear(
 					"WHERE "+
 					"lower(tenure.info[2]) SIMILAR TO '%"+txt+"%' OR "+
 					"lower(tenure.info[3]) SIMILAR TO '%"+txt+"%' OR "+
@@ -118,7 +118,7 @@ public abstract class PartSelect<T> extends ExComposite {
 					"tenure.info[1] SIMILAR TO '%"+txt+"%' ORDER BY last DESC ",
 					eventPickup
 				);
-				dialog = (DlgBase<T>) Main.dlgPickTenur;
+				dialog = (DlgBase<T>) Main.dlgPickupTenur;
 				
 			}else{
 				MaterialToast.fireToast("no support type",1000);
