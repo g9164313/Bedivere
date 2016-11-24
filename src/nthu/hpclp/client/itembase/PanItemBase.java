@@ -91,15 +91,16 @@ public abstract class PanItemBase<T> extends ExComposite {
 	}
 	//--------------------------------//
     
-	private final int PAGE_COUNT = 30;
+	protected final int PAGE_COUNT = 30;
 	
 	private int pageIdx = 1;//one-base!!!
-	private int pageMax = 0;//total pager~~~
+	private int pageMax = 1;//total pager~~~
 	
 	protected void pageNext(){
 		pageIdx++;
 		if(pageIdx>pageMax){
 			pageIdx = pageMax;
+			return;//we don't need to refresh grid again~~~~
 		}
 		pageUpdate();
 	}
@@ -108,12 +109,21 @@ public abstract class PanItemBase<T> extends ExComposite {
 		pageIdx--;
 		if(pageIdx<=1){
 			pageIdx = 1;
+			return;//we don't need to refresh grid again~~~~
 		}
 		pageUpdate();
 	}
 	
+	protected void resetOnePage(){
+		pageIdx = pageMax = 1;
+	}
+	
 	protected void pageUpdate(){
-		getDatum((pageIdx-1)*PAGE_COUNT,PAGE_COUNT);
+		getDatum(
+			(pageIdx-1)*PAGE_COUNT,
+			PAGE_COUNT,
+			_box_search.getText().trim()
+		);
 	}
 	
 	protected DlgPageIndex dlgPageIdx = new DlgPageIndex();
@@ -139,19 +149,25 @@ public abstract class PanItemBase<T> extends ExComposite {
 		});
     }
     
-	public abstract void getDatum(int offset,int limit);
+	public abstract void getDatum(int offset,int limit,String postfix);
 	
 	protected void update_grid(ArrayList<T> datum){
-		if(datum.size()!=0){
-			//update total number~~~
-			int cnt = Integer.valueOf(((ItemBase)datum.get(0)).appx[0]);
-			pageMax = cnt/PAGE_COUNT;
-			if((cnt%PAGE_COUNT)!=0){
-				pageMax++;
+		if(datum.size()!=0){			
+			ItemBase itm = (ItemBase)datum.get(0);
+			if(itm.appx!=null){
+				//we have it, update total page number~~~
+				int cnt = Integer.valueOf(itm.appx[0]);
+				pageMax = cnt/PAGE_COUNT;
+				if((cnt%PAGE_COUNT)!=0){
+					pageMax++;
+				}
+			}else{
+				//we don't have this information, so just reset this variable~~~~
+				pageMax = 1;
 			}
 		}else{
 			//reset pager!!!!
-			pageIdx = pageMax = 0;
+			resetOnePage();
 		}
 		_page_hint.setText(""+pageIdx+"/"+pageMax);
 		lst.setList(datum);
@@ -202,9 +218,9 @@ public abstract class PanItemBase<T> extends ExComposite {
 		    	if(code!=KeyCodes.KEY_ENTER){
 		    		return;
 		    	}
-		    	String txt = _box_search.getText().trim();
-		    	onSearching(txt);
-		    	_box_search.setText("");
+		    	onSearching(_box_search.getText().trim());
+		    	//we don't need to clear search text
+		    	//let user list table again~~
 		    	_box_search.setFocus(true);
 			}
 		});

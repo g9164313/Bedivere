@@ -13,6 +13,7 @@ import gwt.material.design.client.ui.MaterialLink;
 import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialSearch;
+import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.client.Main;
 
@@ -93,13 +94,26 @@ public class PanItemOwner extends PanItemBase<ItemOwner> {
     
 	@Override
 	public void onSearching(String txt) {
-		//searching???
+		resetOnePage();//just one page~~~
+		getDatum(0,PAGE_COUNT,txt);
 	}
 
 	@Override
-	public void getDatum(int offset, int limit) {
-		//MaterialLoader.showLoading(true);
-		Main.rpc.listOwnerByRow(offset,limit,rpcPageUpdate);
+	public void getDatum(int offset, int limit,String postfix) {
+		if(postfix.length()==0){
+			Main.rpc.listOwnerByRow(offset,limit,rpcPageUpdate);
+		}else{
+			postfix = "WHERE "+
+				Const.OWNER+".info[1] SIMILAR TO '%"+postfix+"%' OR "+
+				Const.OWNER+".info[2] SIMILAR TO '%"+postfix+"%' OR "+
+				Const.OWNER+".info[4] SIMILAR TO '%"+postfix+"%' OR "+
+				Const.OWNER+".info[5] SIMILAR TO '%"+postfix+"%' OR "+
+				Const.OWNER+".info[6] SIMILAR TO '%"+postfix+"%' OR "+
+				Const.OWNER+".info[7] SIMILAR TO '%"+postfix+"%' OR "+
+				Const.OWNER+".info[8] SIMILAR TO '%"+postfix+"%' "+
+				"ORDER BY "+Const.OWNER+".info[1]";
+			Main.rpc.listOwner(postfix,rpcPageUpdate);
+		}
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import gwt.material.design.client.ui.MaterialNavBar;
 import gwt.material.design.client.ui.MaterialPanel;
 import gwt.material.design.client.ui.MaterialSearch;
 import nthu.hpclp.client.Main;
+import nthu.hpclp.shared.Const;
 import nthu.hpclp.shared.ItemOwner;
 import nthu.hpclp.shared.ItemTenur;
 
@@ -95,13 +96,26 @@ public class PanItemTenur extends PanItemBase<ItemTenur>{
     
 	@Override
 	public void onSearching(String txt) {
-		//searching???
+		resetOnePage();//just one page~~~
+		getDatum(0,PAGE_COUNT,txt);
 	}
 
 	@Override
-	public void getDatum(int offset, int limit) {
-		//MaterialLoader.showLoading(true);
-		Main.rpc.listTenurByRow(offset,limit,rpcPageUpdate);
+	public void getDatum(int offset, int limit,String postfix) {
+		if(postfix.length()==0){
+			Main.rpc.listTenurByRow(offset,limit,rpcPageUpdate);
+		}else{
+			postfix = "WHERE "+
+				"lower("+Const.TENUR+".info[2]) SIMILAR TO '%"+postfix+"%' OR "+
+				"lower("+Const.TENUR+".info[3]) SIMILAR TO '%"+postfix+"%' OR "+
+				"lower("+Const.TENUR+".info[4]) SIMILAR TO '%"+postfix+"%' OR "+
+				Const.TENUR+".info[5] SIMILAR TO '"+postfix+"' OR "+
+				"lower("+Const.TENUR+".info[6]) SIMILAR TO '%"+postfix+"%' OR "+
+				"lower("+Const.TENUR+".info[7]) SIMILAR TO '%"+postfix+"%' OR "+
+				Const.TENUR+".info[1] SIMILAR TO '%"+postfix+"%' "+
+				"ORDER BY "+Const.TENUR+".info[2] ASC,"+Const.TENUR+".info[3] ASC";
+			Main.rpc.listTenur(postfix, rpcPageUpdate);
+		}
 	}
 
 	@Override
