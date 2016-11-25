@@ -33,14 +33,14 @@ public class PanSPoint extends ExComposite {
 	public PanSPoint() {
 		initWidget(uiBinder.createAndBindUi(this));
 		initAddins(root);
-		init_data_grid();
-		arch1.setWidget(grd);	
+		init_data_grid();		
+		anchor.add(grd);
 	}
 	
 	@UiField
 	MaterialPanel root;
 	@UiField
-	SimplePanel arch1;
+	SimplePanel anchor;
 	
 	@Override
 	public void onEventShow() {
@@ -51,7 +51,7 @@ public class PanSPoint extends ExComposite {
 	public void onEventHide() {
 	}
 	
-	private void list_spoint(){
+	public void list_spoint(){
 		final AsyncCallback<String[]> event = new AsyncCallback<String[]>(){
 			@Override
 			public void onFailure(Throwable caught) {
@@ -69,7 +69,7 @@ public class PanSPoint extends ExComposite {
 		};
 		Main.rpc.listSPoint(event);
 	}
-		
+	
     @UiHandler("btnBackup")
     void onBackup(ClickEvent e) {
     	MaterialLoader.showLoading(true);	
@@ -89,7 +89,8 @@ public class PanSPoint extends ExComposite {
     
     @UiHandler("btnSyncData")
     void onSyncRemote(ClickEvent e) {
-    	//How to do this task???
+    	MaterialLoader.showLoading(true);	
+		Main.rpc.syncSPoint(eventRunDone);
     }
 
 	private final AsyncCallback<String> eventRunDone = new AsyncCallback<String>(){
@@ -120,7 +121,7 @@ public class PanSPoint extends ExComposite {
 			}
 		};
 		grd.setSelectionModel(mod);
-		grd.setSize("90%","90%");
+		grd.setSize("20em","30em");
 		grd.setEmptyTableWidget(new Label("無資料"));
 		grd.addColumn(col,"還原點");
 		
@@ -128,6 +129,6 @@ public class PanSPoint extends ExComposite {
 		SimplePager pager = new SimplePager();
 		pager.setDisplay(grd);
 		//model part
-		lst.addDataDisplay(grd);		
+		lst.addDataDisplay(grd);
 	}	
 }

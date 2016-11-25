@@ -23,11 +23,11 @@ public interface RPC extends RemoteService {
 	
 	String[] listSPoint() throws IllegalArgumentException;	
 	String saveSPoint() throws IllegalArgumentException;	
+	String syncSPoint() throws IllegalArgumentException;
 	String loadSPoint(String name) throws IllegalArgumentException;
-	String tearSPoint(String name) throws IllegalArgumentException;
+
 	String printTag(String[] info) throws IllegalArgumentException;
 
-	
 	ArrayList<ItemOwner> listOwner(String postfix);
 	ArrayList<ItemOwner> listOwnerByRow(int offset,int limit);
 	ArrayList<ItemTenur> listTenur(String postfix);

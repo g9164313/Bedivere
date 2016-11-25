@@ -6,9 +6,9 @@
 <ui:style>
 </ui:style>
 
-<m:MaterialPanel ui:field="root" paddingTop="13">
+<m:MaterialPanel paddingTop="13" ui:field="root" >
 <m:MaterialRow>
-	<m:MaterialColumn> <g:SimplePanel ui:field="arch1"/> </m:MaterialColumn>
+	<m:MaterialColumn> <g:SimplePanel ui:field="anchor"/> </m:MaterialColumn>
 	<m:MaterialColumn>
 		<m:MaterialRow> <m:MaterialButton text="備份" iconType="RECEIPT" ui:field="btnBackup" />	 </m:MaterialRow>
 		<m:MaterialRow> <m:MaterialButton text="回復" iconType="CLEAR_ALL" ui:field="btnRestore" /> </m:MaterialRow>
@@ -16,4 +16,5 @@
 	</m:MaterialColumn>
 </m:MaterialRow>
 </m:MaterialPanel>
+
 </ui:UiBinder> 

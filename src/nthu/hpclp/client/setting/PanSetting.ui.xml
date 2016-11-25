@@ -12,7 +12,6 @@
 		<!-- NavBar Component -->
 		<m:MaterialNavBar ui:field="navAppBar" />
 	</m:MaterialHeader>
-	
 	<!-- body section -->
 	<m:MaterialContainer paddingTop="70">
 		<m:MaterialRow backgroundColor="GREEN">
@@ -32,6 +31,6 @@
 			<m:MaterialColumn m:id="tab5" grid="s12" paddingTop="13" ui:field="archTab5"/>
 		</m:MaterialRow>
 	</m:MaterialContainer>
-
 </m:MaterialPanel>
+
 </ui:UiBinder> 

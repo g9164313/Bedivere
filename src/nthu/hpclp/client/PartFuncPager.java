@@ -63,6 +63,7 @@ public class PartFuncPager extends Composite {
 	
 	//private final static int PAN_DEFAULT = PAN_OWNER;
 	//private final static int PAN_DEFAULT = PAN_TENURE;
+	//private final static int PAN_DEFAULT = PAN_SETTING;
 	private final static int PAN_DEFAULT = PAN_PRODUCT;//Do we need to fix this? No~~~
 	
 	public Composite[] pan = new Composite[PAN_MAX_SIZE];

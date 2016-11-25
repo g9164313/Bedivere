@@ -32,18 +32,16 @@ public interface RPCAsync {
 	void saveSPoint(
 		AsyncCallback<String> res
 	) throws IllegalArgumentException;
-
+	
+	void syncSPoint(
+		AsyncCallback<String> res
+	) throws IllegalArgumentException;
+	
 	void loadSPoint(
 		String name,
 		AsyncCallback<String> res
 	) throws IllegalArgumentException;
-	
-	void tearSPoint(
-		String name,
-		AsyncCallback<String> res
-	) throws IllegalArgumentException;
-	
-	
+
 	void printTag(String[] info,AsyncCallback<String> res) throws IllegalArgumentException;
 	
 	void listMeeting(

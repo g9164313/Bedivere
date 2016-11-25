@@ -347,7 +347,15 @@ public class RpcBridge extends RemoteServiceServlet
 		if(pathSPoint.length()==0){
 			return "無法執行程式";
 		}
-		return Utils.Exec(pathSPoint+"/SPoint-save @ "+pathSPoint);
+		return Utils.Exec(pathSPoint+"/SPoint-save");
+	}
+
+	@Override
+	public String syncSPoint() throws IllegalArgumentException {
+		if(pathSPoint.length()==0){
+			return "無法執行程式";
+		}
+		return Utils.Exec(pathSPoint+"/SPoint-sync");
 	}
 	
 	@Override
@@ -356,14 +364,6 @@ public class RpcBridge extends RemoteServiceServlet
 			return "無法執行程式";
 		}
 		return Utils.Exec(pathSPoint+"/SPoint-load @ "+pathSPoint+"/"+name);
-	}
-
-	@Override
-	public String tearSPoint(String name) throws IllegalArgumentException {
-		if(pathSPoint.length()==0){
-			return "無法執行程式";
-		}
-		return Utils.Exec("rm @ -r @ "+pathSPoint+"/"+name);
 	}
 	//-------------------------------------//
 

@@ -40,7 +40,7 @@ public final class Const {
 			.replace("^^","⁻")
 			.replace("^-1","⁻¹")
 			.replace("^-2","⁻²")
-			.replace("^-2","⁻³")
+			.replace("^-3","⁻³")
 			.replace("^2","²")
 			.replace("^3","³");
 		box.setText(txt);
